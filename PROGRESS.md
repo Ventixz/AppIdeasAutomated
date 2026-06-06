@@ -9,7 +9,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 ## Tier 1 — Beginner
 
 - [x] Bin2Dec — 2026-06-06
-- [ ] Border Radius Previewer
+- [x] Border Radius Previewer — 2026-06-06
 - [ ] Calculator
 - [ ] Christmas Lights
 - [ ] Cause Effect App
