@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Border Radius Previewer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Border Radius Previewer</h1>
+    <p class="subtitle">Drag the sliders to round each corner, then copy the CSS.</p>
+
+    <div class="preview-wrap">
+      <div id="preview" class="preview"></div>
+    </div>
+
+    <div class="controls">
+      <div class="control">
+        <label for="tl">Top-left <span id="tl-value" class="value">0px</span></label>
+        <input id="tl" type="range" min="0" max="200" value="0" data-corner="top-left" />
+      </div>
+      <div class="control">
+        <label for="tr">Top-right <span id="tr-value" class="value">0px</span></label>
+        <input id="tr" type="range" min="0" max="200" value="0" data-corner="top-right" />
+      </div>
+      <div class="control">
+        <label for="br">Bottom-right <span id="br-value" class="value">0px</span></label>
+        <input id="br" type="range" min="0" max="200" value="0" data-corner="bottom-right" />
+      </div>
+      <div class="control">
+        <label for="bl">Bottom-left <span id="bl-value" class="value">0px</span></label>
+        <input id="bl" type="range" min="0" max="200" value="0" data-corner="bottom-left" />
+      </div>
+    </div>
+
+    <div class="code">
+      <code id="code-output">border-radius: 0px 0px 0px 0px;</code>
+      <button id="copy-button" type="button">Copy</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
