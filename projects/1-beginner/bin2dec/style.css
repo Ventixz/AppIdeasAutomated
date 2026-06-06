@@ -1,0 +1,103 @@
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #38bdf8;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --error: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1rem;
+}
+
+.card {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  color: var(--muted);
+}
+
+label {
+  display: block;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: #0f172a;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus {
+  border-color: var(--accent);
+}
+
+.error {
+  min-height: 1.25rem;
+  margin: 0.5rem 0 0;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+.result {
+  margin-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  background: #0f172a;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+}
+
+.result-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+output {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.hint {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
