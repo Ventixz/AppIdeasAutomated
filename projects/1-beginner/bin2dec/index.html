@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bin2Dec — Binary to Decimal Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Bin2Dec</h1>
+    <p class="subtitle">Convert a binary (base&nbsp;2) number to decimal (base&nbsp;10).</p>
+
+    <label for="binary-input">Binary digits</label>
+    <input
+      id="binary-input"
+      type="text"
+      inputmode="numeric"
+      autocomplete="off"
+      placeholder="e.g. 10110"
+      aria-describedby="error-message"
+    />
+
+    <p id="error-message" class="error" role="alert"></p>
+
+    <div class="result">
+      <span class="result-label">Decimal</span>
+      <output id="decimal-output">0</output>
+    </div>
+
+    <p class="hint">Tip: the standard exercise allows up to 8 digits, but this app accepts any length.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
