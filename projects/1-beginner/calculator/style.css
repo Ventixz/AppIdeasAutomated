@@ -1,0 +1,133 @@
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #38bdf8;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --key: #334155;
+  --key-hover: #475569;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1rem;
+}
+
+.card {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  color: var(--muted);
+}
+
+.subtitle code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+}
+
+.display {
+  display: block;
+  margin-top: 1.5rem;
+  background: #0f172a;
+  border-radius: 10px;
+  padding: 1.25rem 1rem;
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 2.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.display.error {
+  color: #f87171;
+}
+
+.pad {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+
+.key {
+  border: none;
+  background: var(--key);
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 1rem 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.key:hover {
+  background: var(--key-hover);
+}
+
+.key:active {
+  transform: translateY(1px);
+}
+
+.key-op {
+  background: #1e40af;
+  color: #dbeafe;
+}
+
+.key-op:hover {
+  background: #1d4ed8;
+}
+
+.key-op.active {
+  background: var(--accent);
+  color: #0f172a;
+}
+
+.key-fn,
+.key-clear {
+  background: #475569;
+  color: var(--muted);
+}
+
+.key-fn:hover,
+.key-clear:hover {
+  background: #64748b;
+}
+
+.key-equals {
+  background: var(--accent);
+  color: #0f172a;
+}
+
+.key-equals:hover {
+  background: #7dd3fc;
+}
+
+.key-zero {
+  grid-column: span 2;
+}
