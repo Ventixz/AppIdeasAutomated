@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Calculator</h1>
+    <p class="subtitle">An 8-digit calculator — no <code>eval()</code> under the hood.</p>
+
+    <output id="display" class="display">0</output>
+
+    <div class="pad">
+      <button class="key key-clear" data-action="all-clear">AC</button>
+      <button class="key key-clear" data-action="clear">C</button>
+      <button class="key key-fn" data-action="sign">+/−</button>
+      <button class="key key-op" data-action="operator" data-op="/">÷</button>
+
+      <button class="key" data-digit="7">7</button>
+      <button class="key" data-digit="8">8</button>
+      <button class="key" data-digit="9">9</button>
+      <button class="key key-op" data-action="operator" data-op="*">×</button>
+
+      <button class="key" data-digit="4">4</button>
+      <button class="key" data-digit="5">5</button>
+      <button class="key" data-digit="6">6</button>
+      <button class="key key-op" data-action="operator" data-op="-">−</button>
+
+      <button class="key" data-digit="1">1</button>
+      <button class="key" data-digit="2">2</button>
+      <button class="key" data-digit="3">3</button>
+      <button class="key key-op" data-action="operator" data-op="+">+</button>
+
+      <button class="key key-zero" data-digit="0">0</button>
+      <button class="key" data-action="decimal">.</button>
+      <button class="key key-equals" data-action="equals">=</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
