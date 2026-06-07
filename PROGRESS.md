@@ -10,7 +10,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 
 - [x] Bin2Dec — 2026-06-06
 - [x] Border Radius Previewer — 2026-06-06
-- [ ] Calculator
+- [x] Calculator — 2026-06-07
 - [ ] Christmas Lights
 - [ ] Cause Effect App
 - [ ] Color Cycle
