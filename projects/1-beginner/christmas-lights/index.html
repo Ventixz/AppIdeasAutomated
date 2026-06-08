@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christmas Lights</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Christmas Lights</h1>
+    <p class="subtitle">A row of twinkling lights that fade their brightness in and out.</p>
+
+    <div id="display" class="display" aria-live="off"></div>
+
+    <div class="controls">
+      <button id="toggle" class="btn btn-primary">Start</button>
+
+      <label class="field">
+        Speed
+        <input id="interval" type="range" min="60" max="1200" step="20" value="300" />
+        <span id="intervalValue" class="value">300 ms</span>
+      </label>
+
+      <label class="field">
+        Color
+        <input id="color" type="color" value="#ff3b30" />
+      </label>
+
+      <label class="field">
+        Min intensity
+        <input id="intensity" type="range" min="0" max="90" step="5" value="15" />
+        <span id="intensityValue" class="value">15%</span>
+      </label>
+
+      <label class="field">
+        Bulb size
+        <input id="size" type="range" min="16" max="72" step="4" value="40" />
+        <span id="sizeValue" class="value">40 px</span>
+      </label>
+
+      <label class="field">
+        Rows
+        <input id="rows" type="range" min="1" max="7" step="1" value="3" />
+        <span id="rowsValue" class="value">3</span>
+      </label>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
