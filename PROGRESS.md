@@ -12,7 +12,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Border Radius Previewer — 2026-06-06
 - [x] Calculator — 2026-06-07
 - [x] Christmas Lights — 2026-06-08
-- [ ] Cause Effect App
+- [x] Cause Effect App — 2026-06-09
 - [ ] Color Cycle
 - [ ] Countdown Timer
 - [ ] CSV2JSON App

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cause &amp; Effect</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Cause &amp; Effect</h1>
+    <p class="subtitle">Pick a name from the list to reveal that person's details in the pane beside it.</p>
+
+    <div class="layout">
+      <ul id="summary" class="summary" role="listbox" aria-label="People"></ul>
+
+      <section id="detail" class="detail" aria-live="polite">
+        <p class="empty">Select a name to see the details.</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
