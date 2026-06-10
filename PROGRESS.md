@@ -13,7 +13,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Calculator — 2026-06-07
 - [x] Christmas Lights — 2026-06-08
 - [x] Cause Effect App — 2026-06-09
-- [ ] Color Cycle
+- [x] Color Cycle — 2026-06-10
 - [ ] Countdown Timer
 - [ ] CSV2JSON App
 - [ ] Dollars to Cents

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Cycle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Color Cycle</h1>
+    <p class="subtitle">
+      Set a starting color and a per-channel increment, then press Start to watch
+      the box drift through RGB space — one step every interval.
+    </p>
+
+    <div class="layout">
+      <section class="preview">
+        <div id="swatch" class="swatch" aria-live="polite"></div>
+        <output id="readout" class="readout">rgb(0, 0, 0)</output>
+      </section>
+
+      <form id="controls" class="controls" autocomplete="off">
+        <fieldset id="channels">
+          <legend>Channels</legend>
+
+          <div class="channel">
+            <label for="start-r">Red</label>
+            <input id="start-r" class="hex" type="text" maxlength="2" value="00" inputmode="latin" />
+            <span class="incr-label">+/step</span>
+            <input id="incr-r" class="incr" type="number" value="1" min="-255" max="255" />
+          </div>
+
+          <div class="channel">
+            <label for="start-g">Green</label>
+            <input id="start-g" class="hex" type="text" maxlength="2" value="00" inputmode="latin" />
+            <span class="incr-label">+/step</span>
+            <input id="incr-g" class="incr" type="number" value="3" min="-255" max="255" />
+          </div>
+
+          <div class="channel">
+            <label for="start-b">Blue</label>
+            <input id="start-b" class="hex" type="text" maxlength="2" value="00" inputmode="latin" />
+            <span class="incr-label">+/step</span>
+            <input id="incr-b" class="incr" type="number" value="6" min="-255" max="255" />
+          </div>
+        </fieldset>
+
+        <div class="row">
+          <label for="interval">Interval (ms)</label>
+          <input id="interval" type="number" value="250" min="50" max="2000" step="50" />
+        </div>
+
+        <div class="row">
+          <label for="format">Display as</label>
+          <select id="format">
+            <option value="rgb">RGB</option>
+            <option value="hex">HEX</option>
+            <option value="hsl">HSL</option>
+          </select>
+        </div>
+
+        <p id="warning" class="warning" role="alert" hidden>
+          Color fields take two hexadecimal digits (0–9, A–F).
+        </p>
+
+        <button id="toggle" type="button" class="toggle">Start</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
