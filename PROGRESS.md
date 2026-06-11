@@ -14,7 +14,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Christmas Lights — 2026-06-08
 - [x] Cause Effect App — 2026-06-09
 - [x] Color Cycle — 2026-06-10
-- [ ] Countdown Timer
+- [x] Countdown Timer — 2026-06-11
 - [ ] CSV2JSON App
 - [ ] Dollars to Cents
 - [ ] Dynamic CSS Variables
