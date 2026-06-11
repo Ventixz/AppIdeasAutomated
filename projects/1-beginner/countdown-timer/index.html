@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Countdown Timer</h1>
+    <p class="subtitle">
+      Name an event, pick a date (and optionally a time), then press Add to
+      watch the days, hours, minutes, and seconds tick down — all with builtin
+      date math, no libraries.
+    </p>
+
+    <form id="controls" class="controls" autocomplete="off">
+      <div class="row">
+        <label for="name">Event</label>
+        <input id="name" type="text" placeholder="New Year's Day" />
+      </div>
+
+      <div class="row two">
+        <div>
+          <label for="date">Date</label>
+          <input id="date" type="date" />
+        </div>
+        <div>
+          <label for="time">Time <span class="opt">(optional)</span></label>
+          <input id="time" type="time" />
+        </div>
+      </div>
+
+      <p id="warning" class="warning" role="alert" hidden></p>
+
+      <button id="add" type="submit" class="toggle">Add countdown</button>
+    </form>
+
+    <ul id="events" class="events" aria-live="polite"></ul>
+    <p id="empty" class="empty">No events yet — add one above.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
