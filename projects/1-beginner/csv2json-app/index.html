@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSV2JSON App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>CSV2JSON App</h1>
+    <p class="subtitle">
+      Paste a block of CSV, pick your delimiter, and convert it to formatted
+      JSON. The first row is treated as the header — each column becomes a key.
+      No libraries, all parsing done by hand.
+    </p>
+
+    <form id="controls" class="controls" autocomplete="off">
+      <div class="row two">
+        <div>
+          <label for="delimiter">Delimiter</label>
+          <select id="delimiter">
+            <option value=",">Comma ( , )</option>
+            <option value=";">Semicolon ( ; )</option>
+            <option value="\t">Tab</option>
+            <option value="|">Pipe ( | )</option>
+          </select>
+        </div>
+        <div class="check">
+          <label for="numbers" class="inline">
+            <input id="numbers" type="checkbox" checked />
+            Cast numbers &amp; booleans
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="csv">CSV input</label>
+        <textarea id="csv" spellcheck="false" placeholder="name,age,active
+Ada,36,true
+Linus,54,false"></textarea>
+      </div>
+
+      <p id="warning" class="warning" role="alert" hidden></p>
+
+      <div class="actions">
+        <button id="convert" type="submit" class="toggle">Convert to JSON</button>
+        <button id="sample" type="button" class="ghost">Load sample</button>
+        <button id="clear" type="button" class="ghost">Clear</button>
+      </div>
+    </form>
+
+    <div class="output">
+      <div class="output-head">
+        <label for="json">JSON output</label>
+        <button id="copy" type="button" class="ghost" disabled>Copy</button>
+      </div>
+      <textarea id="json" spellcheck="false" readonly placeholder="Converted JSON appears here…"></textarea>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
