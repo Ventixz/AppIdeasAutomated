@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dollars to Cents</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Dollars to Cents</h1>
+    <p class="subtitle">
+      Type a dollar amount and see it as a whole number of cents — then watch it
+      get broken into the fewest coins possible. No frameworks, just math.
+    </p>
+
+    <form id="controls" class="controls" autocomplete="off">
+      <div class="row">
+        <label for="dollars">Dollar amount</label>
+        <div class="money">
+          <span class="prefix">$</span>
+          <input
+            id="dollars"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            placeholder="2.75"
+          />
+        </div>
+      </div>
+
+      <p id="warning" class="warning" role="alert" hidden></p>
+
+      <div class="actions">
+        <button id="convert" type="submit" class="toggle">Convert</button>
+        <button id="clear" type="button" class="ghost">Clear</button>
+      </div>
+    </form>
+
+    <div id="result" class="result" hidden>
+      <p class="total">
+        <span id="total-cents" class="big">0</span>
+        <span class="unit">cents</span>
+      </p>
+
+      <h2 class="breakdown-title">Fewest coins</h2>
+      <ul id="breakdown" class="breakdown"></ul>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
