@@ -16,7 +16,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Color Cycle — 2026-06-10
 - [x] Countdown Timer — 2026-06-11
 - [x] CSV2JSON App — 2026-06-12
-- [ ] Dollars to Cents
+- [x] Dollars to Cents — 2026-06-13
 - [ ] Dynamic CSS Variables
 - [ ] First DB App
 - [ ] Flip Image
