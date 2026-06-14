@@ -1,0 +1,110 @@
+:root {
+  --bg: #0b132b;
+  --panel: #1c2541;
+  --panel-2: #243056;
+  --ink: #e9edf7;
+  --muted: #9aa6c4;
+  --accent: #3a86ff;
+  --danger: #ff5d73;
+  --done: #38d39f;
+
+  /* The dynamic field state — JS only ever rewrites these three. */
+  --field-bg: #ffffff;
+  --field-border: transparent;
+  --field-scale: 1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at top, #1c2541, var(--bg));
+  color: var(--ink);
+}
+
+.card {
+  width: min(520px, 100%);
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+h1 { margin: 0 0 0.25rem; font-size: 1.6rem; }
+.subtitle { margin: 0 0 1.5rem; color: var(--muted); }
+
+.controls { display: grid; gap: 1rem; margin-bottom: 1.25rem; }
+.row { display: grid; gap: 0.35rem; }
+label { font-size: 0.9rem; color: var(--muted); }
+
+/* Every field reads its colors from CSS variables. Default state is set on
+   :root; per-field error states are set inline on the element by script.js. */
+input {
+  background: var(--field-bg);
+  color: #0b132b;
+  border: 2px solid var(--field-border);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  font-size: 1.1rem;
+  width: 100%;
+  transform: scale(var(--field-scale));
+  transform-origin: left center;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+input:focus { outline: none; border-color: var(--accent); }
+
+.warning { margin: 0; color: var(--danger); font-size: 0.85rem; min-height: 1.1em; }
+.warning:not([hidden]) { display: block; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+.toggle {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+.toggle:hover { filter: brightness(1.08); }
+
+.ghost {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+.ghost:hover { border-color: var(--accent); }
+
+.hint {
+  margin: 1.25rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--panel-2);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.hint code {
+  background: var(--panel-2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+  color: var(--ink);
+}
+
+.success {
+  background: rgba(56, 211, 159, 0.12);
+  border: 1px solid var(--done);
+  color: var(--done);
+}
