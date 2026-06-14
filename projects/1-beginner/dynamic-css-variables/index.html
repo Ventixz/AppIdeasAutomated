@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic CSS Variables</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Dynamic CSS Variables</h1>
+    <p class="subtitle">
+      A login form whose field colors are driven entirely by CSS variables.
+      Validation doesn't touch any color directly — it just flips a custom
+      property and lets the cascade do the rest.
+    </p>
+
+    <form id="login" class="controls" autocomplete="off" novalidate>
+      <div class="row">
+        <label for="userid">User ID</label>
+        <input id="userid" name="userid" type="text" placeholder="testuser" />
+      </div>
+
+      <div class="row">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="mypassword" />
+      </div>
+
+      <p id="warning" class="warning" role="alert" hidden></p>
+
+      <div class="actions">
+        <button id="login-btn" type="submit" class="toggle">Login</button>
+        <button id="cancel" type="reset" class="ghost">Cancel</button>
+      </div>
+    </form>
+
+    <p class="hint">
+      Try it: the demo accepts <code>testuser</code> / <code>mypassword</code>.
+      Empty fields, spaces, or wrong values each paint the box a different color.
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
