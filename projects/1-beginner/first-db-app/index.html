@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First DB App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>First DB App</h1>
+    <p class="subtitle">
+      A hands-on tour of <strong>IndexedDB</strong>, the browser's built-in
+      database. Load a set of sample customers, query them back, and clear the
+      store — every operation persists across page reloads and is narrated in the
+      log below. No libraries; just the raw IndexedDB API.
+    </p>
+
+    <div class="actions" role="group" aria-label="Database controls">
+      <button id="load" type="button" class="toggle">Load DB</button>
+      <button id="query" type="button" class="ghost">Query DB</button>
+      <button id="clear" type="button" class="ghost">Clear DB</button>
+    </div>
+
+    <p id="notice" class="notice" role="status" aria-live="polite">
+      Ready. Click <strong>Load DB</strong> to seed the database.
+    </p>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Query results</h2>
+        <span id="count" class="badge" hidden>0</span>
+      </div>
+      <div id="results" class="results" aria-live="polite">
+        <p class="empty">No results yet — run a query.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Operation log</h2>
+        <button id="log-clear" type="button" class="ghost small">Clear log</button>
+      </div>
+      <ol id="log" class="log" aria-live="polite"></ol>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
