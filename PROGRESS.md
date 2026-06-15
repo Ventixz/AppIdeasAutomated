@@ -18,7 +18,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] CSV2JSON App — 2026-06-12
 - [x] Dollars to Cents — 2026-06-13
 - [x] Dynamic CSS Variables — 2026-06-14
-- [ ] First DB App
+- [x] First DB App — 2026-06-15
 - [ ] Flip Image
 - [ ] GitHub Status
 - [ ] Hello
