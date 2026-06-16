@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flip Image</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Flip Image</h1>
+      <p class="tagline">
+        One image, repeated in a 2&times;2 matrix. Use the arrows around each
+        cell to flip it vertically (&uarr;&darr;) or horizontally (&larr;&rarr;).
+      </p>
+    </header>
+
+    <section class="controls">
+      <label for="url-input">Image URL</label>
+      <div class="url-row">
+        <input
+          id="url-input"
+          type="url"
+          placeholder="https://example.com/photo.jpg"
+          autocomplete="off"
+        />
+        <button id="display-btn" type="button">Display</button>
+        <button id="reset-btn" type="button" class="secondary">Reset all flips</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- The 2x2 matrix. Each cell is built by script.js so the markup
+         (image + four directional arrows) stays in one place. -->
+    <section class="matrix" id="matrix" aria-label="Image matrix"></section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
