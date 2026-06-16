@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **11 / 35** |
+| 1 | Beginner | 🚧 In progress — **12 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -45,6 +45,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 9 | [Dollars to Cents](./projects/1-beginner/dollars-to-cents/) | Beginner | 2026-06-13 |
 | 10 | [Dynamic CSS Variables](./projects/1-beginner/dynamic-css-variables/) | Beginner | 2026-06-14 |
 | 11 | [First DB App](./projects/1-beginner/first-db-app/) | Beginner | 2026-06-15 |
+| 12 | [Flip Image](./projects/1-beginner/flip-image/) | Beginner | 2026-06-16 |
 
 ## Repository layout
 
