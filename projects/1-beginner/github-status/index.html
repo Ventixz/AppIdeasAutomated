@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Status</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>GitHub Status</h1>
+      <p class="tagline">
+        Live operational status for GitHub's components, pulled straight from
+        the official <a href="https://www.githubstatus.com/" target="_blank"
+        rel="noopener">GitHub Status</a> JSON API.
+      </p>
+    </header>
+
+    <section class="controls">
+      <button id="get-status-btn" type="button">Get Status</button>
+      <p id="overall" class="overall" role="status" aria-live="polite"></p>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <!-- Component rows are rendered here by script.js. -->
+    <ul class="components" id="components" aria-label="GitHub components"></ul>
+
+    <footer>
+      <p id="updated" class="updated"></p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
