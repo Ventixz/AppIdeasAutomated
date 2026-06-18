@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello — geo-aware greeting login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <header class="card__header">
+      <h1>Hello</h1>
+      <p class="subtitle">A mock login that greets you in your native language.</p>
+    </header>
+
+    <!-- Login panel -->
+    <form id="login-form" class="panel" novalidate>
+      <label class="field">
+        <span class="field__label">Username</span>
+        <input id="username" type="text" autocomplete="username" placeholder="ada" />
+        <span class="field__error" data-for="username"></span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Password</span>
+        <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" />
+        <span class="field__error" data-for="password"></span>
+      </label>
+
+      <details class="advanced">
+        <summary>Advanced (bonus)</summary>
+        <label class="field">
+          <span class="field__label">Language code override</span>
+          <input id="lang-override" type="text" maxlength="5" placeholder="e.g. fr, es, ja" />
+          <span class="hint">Leave blank to auto-detect from your location.</span>
+        </label>
+      </details>
+
+      <button id="login-btn" type="submit" class="btn">Log in</button>
+    </form>
+
+    <!-- Result panel (shown after a successful login) -->
+    <section id="result" class="panel result hidden" aria-live="polite">
+      <p id="greeting" class="greeting"></p>
+
+      <dl id="geo-details" class="geo">
+        <!-- filled in by script.js -->
+      </dl>
+
+      <button id="logout-btn" type="button" class="btn btn--ghost">Log out</button>
+    </section>
+
+    <p id="farewell" class="farewell hidden" aria-live="polite"></p>
+  </main>
+
+  <footer class="page-footer">
+    <p>
+      Greeting via <a href="https://fourtonfish.com/hellosalut/" target="_blank" rel="noopener">Fourtonfish HelloSalut</a>,
+      geolocation via <a href="https://ipapi.co" target="_blank" rel="noopener">ipapi.co</a>.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
