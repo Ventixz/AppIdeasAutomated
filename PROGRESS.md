@@ -21,7 +21,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] First DB App — 2026-06-15
 - [x] Flip Image — 2026-06-16
 - [x] GitHub Status — 2026-06-17
-- [ ] Hello
+- [x] Hello — 2026-06-18
 - [ ] IOT Mailbox Simulator
 - [ ] JS Input Validation
 - [ ] JSON2CSV App
