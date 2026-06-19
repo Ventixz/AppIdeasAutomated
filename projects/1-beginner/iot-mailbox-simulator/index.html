@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IOT Mailbox Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <header class="card__header">
+      <h1>IOT Mailbox Simulator</h1>
+      <p class="subtitle">A mock smart mailbox that notifies you when mail arrives.</p>
+    </header>
+
+    <!-- Control panel -->
+    <section class="panel controls">
+      <div class="field field--inline">
+        <label class="field__label" for="interval">Monitoring interval (ms)</label>
+        <input id="interval" type="number" min="200" step="100" value="1000" />
+      </div>
+
+      <div class="buttons">
+        <button id="start-btn" type="button" class="btn">Start Monitoring</button>
+        <button id="stop-btn" type="button" class="btn btn--ghost" disabled>Stop Monitoring</button>
+        <button id="reset-btn" type="button" class="btn btn--ghost">Reset</button>
+      </div>
+    </section>
+
+    <!-- Notification panel -->
+    <section class="panel notification" aria-live="polite">
+      <div id="mailbox" class="mailbox mailbox--closed">📪</div>
+      <p id="status" class="status">Idle — monitoring is stopped.</p>
+    </section>
+
+    <!-- Log panel -->
+    <section class="panel">
+      <div class="log__header">
+        <h2>Activity log</h2>
+        <button id="clear-log-btn" type="button" class="link-btn">Clear</button>
+      </div>
+      <ul id="log" class="log" aria-live="polite"></ul>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <p>
+      Idea: <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/IOT-Mailbox-App.md" target="_blank" rel="noopener">app-ideas / IOT-Mailbox</a>.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
