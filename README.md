@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **14 / 35** |
+| 1 | Beginner | 🚧 In progress — **15 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -48,6 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 12 | [Flip Image](./projects/1-beginner/flip-image/) | Beginner | 2026-06-16 |
 | 13 | [GitHub Status](./projects/1-beginner/github-status/) | Beginner | 2026-06-17 |
 | 14 | [Hello](./projects/1-beginner/hello/) | Beginner | 2026-06-18 |
+| 15 | [IOT Mailbox Simulator](./projects/1-beginner/iot-mailbox-simulator/) | Beginner | 2026-06-19 |
 
 ## Repository layout
 

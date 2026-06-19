@@ -22,7 +22,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Flip Image — 2026-06-16
 - [x] GitHub Status — 2026-06-17
 - [x] Hello — 2026-06-18
-- [ ] IOT Mailbox Simulator
+- [x] IOT Mailbox Simulator — 2026-06-19
 - [ ] JS Input Validation
 - [ ] JSON2CSV App
 - [ ] Key Value
