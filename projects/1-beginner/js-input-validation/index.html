@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS Input Validation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Sign up</h1>
+    <p class="lead">Every field is validated live with RegEx. The button unlocks
+      only when all three are valid.</p>
+
+    <form id="form" novalidate>
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="off"
+               aria-describedby="username-hint username-error" />
+        <small id="username-hint" class="hint">Letters only, no spaces.</small>
+        <small id="username-error" class="error" role="alert"></small>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="text" autocomplete="off"
+               aria-describedby="email-hint email-error" />
+        <small id="email-hint" class="hint">Must be a @gmail.com address.</small>
+        <small id="email-error" class="error" role="alert"></small>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="text" autocomplete="off"
+               aria-describedby="password-hint password-error" />
+        <small id="password-hint" class="hint">Exactly 5 capital letters, 6
+          symbols, and 2 hyphens — in any order, nothing else.</small>
+        <small id="password-error" class="error" role="alert"></small>
+      </div>
+
+      <button id="submit" type="submit" disabled>Create account</button>
+      <p id="success" class="success" role="status" hidden>✅ All inputs valid — account created!</p>
+    </form>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
