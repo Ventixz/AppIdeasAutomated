@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **16 / 35** |
+| 1 | Beginner | 🚧 In progress — **17 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -50,6 +50,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 14 | [Hello](./projects/1-beginner/hello/) | Beginner | 2026-06-18 |
 | 15 | [IOT Mailbox Simulator](./projects/1-beginner/iot-mailbox-simulator/) | Beginner | 2026-06-19 |
 | 16 | [JS Input Validation](./projects/1-beginner/js-input-validation/) | Beginner | 2026-06-20 |
+| 17 | [JSON2CSV App](./projects/1-beginner/json2csv-app/) | Beginner | 2026-06-21 |
 
 ## Repository layout
 

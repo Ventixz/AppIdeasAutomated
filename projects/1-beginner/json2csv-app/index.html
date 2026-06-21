@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON2CSV App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>JSON2CSV App</h1>
+    <p class="subtitle">
+      Paste a JSON array of objects, pick your delimiter, and convert it to CSV.
+      The union of every object's keys becomes the header row. No libraries —
+      the CSV is assembled and quoted by hand.
+    </p>
+
+    <form id="controls" class="controls" autocomplete="off">
+      <div class="row two">
+        <div>
+          <label for="delimiter">Delimiter</label>
+          <select id="delimiter">
+            <option value=",">Comma ( , )</option>
+            <option value=";">Semicolon ( ; )</option>
+            <option value="\t">Tab</option>
+            <option value="|">Pipe ( | )</option>
+          </select>
+        </div>
+        <div class="check">
+          <label for="header" class="inline">
+            <input id="header" type="checkbox" checked />
+            Include header row
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="json">JSON input</label>
+        <textarea id="json" spellcheck="false" placeholder='[
+  { "name": "Ada", "age": 36, "active": true },
+  { "name": "Linus", "age": 54, "active": false }
+]'></textarea>
+        <input id="file" type="file" accept=".json,application/json" hidden />
+      </div>
+
+      <p id="warning" class="warning" role="alert" hidden></p>
+
+      <div class="actions">
+        <button id="convert" type="submit" class="toggle">Convert to CSV</button>
+        <button id="open" type="button" class="ghost">Open file…</button>
+        <button id="sample" type="button" class="ghost">Load sample</button>
+        <button id="clear" type="button" class="ghost">Clear</button>
+      </div>
+    </form>
+
+    <div class="output">
+      <div class="output-head">
+        <label for="csv">CSV output</label>
+        <div class="output-actions">
+          <button id="download" type="button" class="ghost" disabled>Download</button>
+          <button id="copy" type="button" class="ghost" disabled>Copy</button>
+        </div>
+      </div>
+      <textarea id="csv" spellcheck="false" readonly placeholder="Converted CSV appears here…"></textarea>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
