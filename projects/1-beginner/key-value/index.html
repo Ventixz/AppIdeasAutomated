@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Key Value</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="panel" tabindex="0">
+      <h1>Key Value</h1>
+      <p class="hint">Press any key to see how the browser encodes it.</p>
+
+      <section class="readout" id="readout" aria-live="polite">
+        <div class="field">
+          <span class="label">key value</span>
+          <output class="value" id="keyValue">—</output>
+        </div>
+        <div class="field">
+          <span class="label">key code</span>
+          <output class="value" id="keyCode">—</output>
+        </div>
+      </section>
+
+      <section class="modifiers">
+        <div class="modifier" id="mod-alt">
+          <span class="label">alt</span>
+          <span class="state">False</span>
+        </div>
+        <div class="modifier" id="mod-ctrl">
+          <span class="label">control</span>
+          <span class="state">False</span>
+        </div>
+        <div class="modifier" id="mod-meta">
+          <span class="label">meta</span>
+          <span class="state">False</span>
+        </div>
+        <div class="modifier" id="mod-shift">
+          <span class="label">shift</span>
+          <span class="state">False</span>
+        </div>
+      </section>
+
+      <label class="sound-toggle">
+        <input type="checkbox" id="soundToggle" checked />
+        Play a tone on each keypress
+      </label>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
