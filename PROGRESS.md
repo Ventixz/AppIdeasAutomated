@@ -25,7 +25,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] IOT Mailbox Simulator — 2026-06-19
 - [x] JS Input Validation — 2026-06-20
 - [x] JSON2CSV App — 2026-06-21
-- [ ] Key Value
+- [x] Key Value — 2026-06-22
 - [ ] Lorem Ipsum Generator
 - [ ] Notes App
 - [ ] Pearson Regression
