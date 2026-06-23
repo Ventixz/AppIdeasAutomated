@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lorem Ipsum Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="panel">
+      <h1>Lorem Ipsum Generator</h1>
+      <p class="hint">Generate placeholder text for your mockups and layouts.</p>
+
+      <form class="controls" id="controls">
+        <div class="field">
+          <label for="count">How many</label>
+          <input type="number" id="count" min="1" max="50" value="3" />
+        </div>
+
+        <div class="field">
+          <label for="unit">Of</label>
+          <select id="unit">
+            <option value="paragraphs">Paragraphs</option>
+            <option value="sentences">Sentences</option>
+            <option value="words">Words</option>
+          </select>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="classic" checked />
+          Start with “Lorem ipsum…”
+        </label>
+
+        <button type="submit" id="generate">Generate</button>
+      </form>
+
+      <div class="output-bar">
+        <span class="stats" id="stats" aria-live="polite"></span>
+        <button type="button" id="copy" class="copy" disabled>Copy</button>
+      </div>
+
+      <output class="output" id="output" aria-live="polite"></output>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
