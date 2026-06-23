@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **18 / 35** |
+| 1 | Beginner | 🚧 In progress — **19 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -52,6 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 16 | [JS Input Validation](./projects/1-beginner/js-input-validation/) | Beginner | 2026-06-20 |
 | 17 | [JSON2CSV App](./projects/1-beginner/json2csv-app/) | Beginner | 2026-06-21 |
 | 18 | [Key Value](./projects/1-beginner/key-value/) | Beginner | 2026-06-22 |
+| 19 | [Lorem Ipsum Generator](./projects/1-beginner/lorem-ipsum-generator/) | Beginner | 2026-06-23 |
 
 ## Repository layout
 
