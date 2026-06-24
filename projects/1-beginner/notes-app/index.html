@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Notes</h1>
+      <button id="new-note" class="primary" type="button">+ New note</button>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <input
+          id="search"
+          class="search"
+          type="search"
+          placeholder="Search notes…"
+          aria-label="Search notes"
+        />
+        <ul id="note-list" class="note-list" aria-label="Saved notes"></ul>
+        <p id="empty-list" class="empty-list">No notes yet. Create one to get started.</p>
+      </aside>
+
+      <section class="editor" id="editor" hidden>
+        <div class="editor-bar">
+          <span id="created-at" class="created-at"></span>
+          <div class="editor-actions">
+            <button id="toggle-preview" class="ghost" type="button">Preview</button>
+            <button id="delete-note" class="danger" type="button">Delete</button>
+          </div>
+        </div>
+        <input
+          id="note-title"
+          class="title-input"
+          type="text"
+          placeholder="Title"
+          aria-label="Note title"
+        />
+        <textarea
+          id="note-body"
+          class="body-input"
+          placeholder="Write your note… Markdown is supported."
+          aria-label="Note body"
+        ></textarea>
+        <div id="preview" class="preview" hidden></div>
+        <p class="save-state" id="save-state">Saved</p>
+      </section>
+
+      <section class="placeholder" id="placeholder">
+        <p>Select a note, or create a new one.</p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
