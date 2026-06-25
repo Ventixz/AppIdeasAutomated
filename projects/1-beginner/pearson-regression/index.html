@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pearson Regression</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Pearson Regression</h1>
+      <p class="tagline">Measure how strongly two data sets move together.</p>
+    </header>
+
+    <main class="layout">
+      <section class="panel input-panel">
+        <h2>Add an observation</h2>
+        <form id="point-form" class="point-form" novalidate>
+          <div class="field">
+            <label for="x">x</label>
+            <input id="x" name="x" type="text" inputmode="decimal" placeholder="e.g. 12.5" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="y">y</label>
+            <input id="y" name="y" type="text" inputmode="decimal" placeholder="e.g. 8" autocomplete="off" />
+          </div>
+          <button id="add" class="primary" type="submit">Add point</button>
+        </form>
+        <p id="error" class="error" role="alert" hidden></p>
+
+        <div class="actions">
+          <button id="calculate" class="accent" type="button" disabled>Calculate</button>
+          <button id="sample" type="button">Load sample data</button>
+          <button id="clear" class="danger" type="button" disabled>Clear all</button>
+        </div>
+
+        <div class="upload">
+          <label for="file" class="upload-label">Or upload a CSV / two-column file</label>
+          <input id="file" type="file" accept=".csv,.txt,text/csv,text/plain" />
+        </div>
+      </section>
+
+      <section class="panel table-panel">
+        <h2>Data points <span id="count" class="count">(0)</span></h2>
+        <div class="table-wrap">
+          <table id="data-table">
+            <thead>
+              <tr><th>#</th><th>x</th><th>y</th><th aria-label="remove"></th></tr>
+            </thead>
+            <tbody id="data-body"></tbody>
+          </table>
+          <p id="empty-table" class="empty">No data yet. Add at least two points, or load the sample.</p>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
+        <h2>Results</h2>
+        <div id="results" class="results" hidden>
+          <dl class="stats">
+            <div><dt>Mean x (x̄)</dt><dd id="mean-x">—</dd></div>
+            <div><dt>Mean y (ȳ)</dt><dd id="mean-y">—</dd></div>
+            <div><dt>Std dev x (σₓ)</dt><dd id="std-x">—</dd></div>
+            <div><dt>Std dev y (σᵧ)</dt><dd id="std-y">—</dd></div>
+          </dl>
+          <div class="coefficient">
+            <span class="coefficient-label">Pearson&nbsp;r</span>
+            <span id="coefficient" class="coefficient-value">—</span>
+            <span id="interpretation" class="interpretation"></span>
+          </div>
+        </div>
+        <p id="results-empty" class="empty">Add data and press <strong>Calculate</strong> to see the correlation.</p>
+
+        <figure class="chart-wrap">
+          <canvas id="chart" width="520" height="360" role="img"
+                  aria-label="Scatter plot of the data points with a regression line"></canvas>
+          <figcaption id="chart-caption" class="chart-caption">Scatter plot &amp; regression line appear after you calculate.</figcaption>
+        </figure>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Means, standard deviations and the coefficient are all computed by hand — no
+      statistics libraries. Idea from
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Pearson-Regression-App.md">app-ideas</a>.
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
