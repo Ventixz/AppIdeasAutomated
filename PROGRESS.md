@@ -28,7 +28,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Key Value — 2026-06-22
 - [x] Lorem Ipsum Generator — 2026-06-23
 - [x] Notes App — 2026-06-24
-- [ ] Pearson Regression
+- [x] Pearson Regression — 2026-06-25
 - [ ] Pomodoro Clock
 - [ ] Product Landing Page
 - [ ] Quiz App
