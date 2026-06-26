@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Clock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Pomodoro Clock</h1>
+    <p class="subtitle">Work in focused 25-minute sprints, separated by short breaks.</p>
+
+    <div class="phase" id="phase">Work</div>
+
+    <div class="dial" id="dial">
+      <div class="time" id="time">25:00</div>
+      <div class="round" id="round">Round 1 · break in 4</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn primary" id="startPause">Start</button>
+      <button class="btn" id="stop">Stop</button>
+      <button class="btn" id="reset">Reset</button>
+    </div>
+
+    <details class="settings">
+      <summary>Session lengths</summary>
+      <div class="settings-grid">
+        <label>
+          Work (min)
+          <input type="number" id="workMin" min="1" max="180" value="25" />
+        </label>
+        <label>
+          Short break (min)
+          <input type="number" id="shortMin" min="1" max="60" value="5" />
+        </label>
+        <label>
+          Long break (min)
+          <input type="number" id="longMin" min="1" max="60" value="10" />
+        </label>
+      </div>
+      <p class="hint">A long break replaces every 4th short break. Changes apply
+        the next time a session starts.</p>
+    </details>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
