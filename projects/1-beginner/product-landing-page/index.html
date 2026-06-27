@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprout — The self-watering smart planter</title>
+  <meta name="description" content="Sprout is a self-watering smart planter that keeps your plants thriving. Light, water and nutrients, handled automatically." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== Header / nav ===== -->
+  <header class="site-header">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">🌱</span>
+      <span class="brand-name">Sprout</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#benefits">Why Sprout</a>
+      <a href="#pricing">Buy</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ===== Hero with product image ===== -->
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Meet Sprout</p>
+        <h1>Plants that water themselves.</h1>
+        <p class="lede">
+          Sprout is a self-watering smart planter that measures soil moisture,
+          light and temperature, then keeps your plants perfectly cared for —
+          even while you're away.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#pricing">Buy Sprout — $79</a>
+          <a class="btn btn-ghost" href="#features">See features</a>
+        </div>
+        <p class="reassure">Free shipping · 30-day returns · 2-year warranty</p>
+      </div>
+
+      <!-- Product image (inline SVG, no asset files) -->
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 240 260" role="img" aria-label="Sprout smart planter">
+          <defs>
+            <linearGradient id="pot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff"/>
+              <stop offset="1" stop-color="#e6ede7"/>
+            </linearGradient>
+            <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5bbf7a"/>
+              <stop offset="1" stop-color="#2f8f53"/>
+            </linearGradient>
+          </defs>
+          <!-- leaves -->
+          <path d="M120 120 C90 80 70 70 60 40 C100 50 120 80 120 120 Z" fill="url(#leaf)"/>
+          <path d="M120 120 C150 80 170 70 180 40 C140 50 120 80 120 120 Z" fill="url(#leaf)"/>
+          <path d="M120 130 C110 90 120 60 120 30 C130 60 130 95 120 130 Z" fill="url(#leaf)"/>
+          <!-- pot -->
+          <path d="M70 130 L170 130 L156 230 Q120 244 84 230 Z" fill="url(#pot)" stroke="#cdd8cf"/>
+          <rect x="64" y="120" width="112" height="18" rx="9" fill="#ffffff" stroke="#cdd8cf"/>
+          <!-- status light -->
+          <circle cx="120" cy="200" r="7" fill="#5bbf7a"/>
+          <circle cx="120" cy="200" r="13" fill="none" stroke="#5bbf7a" stroke-opacity="0.4"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===== Features list ===== -->
+    <section id="features" class="section">
+      <h2>Everything your plant needs, automated</h2>
+      <ul class="features">
+        <li>
+          <span class="ficon" aria-hidden="true">💧</span>
+          <h3>Self-watering reservoir</h3>
+          <p>A 1.2 L tank waters on demand for up to three weeks between refills.</p>
+        </li>
+        <li>
+          <span class="ficon" aria-hidden="true">📡</span>
+          <h3>Soil &amp; light sensors</h3>
+          <p>Moisture, temperature and light are sampled every five minutes.</p>
+        </li>
+        <li>
+          <span class="ficon" aria-hidden="true">💡</span>
+          <h3>Adaptive grow light</h3>
+          <p>A full-spectrum LED tops up sunlight on short or cloudy days.</p>
+        </li>
+        <li>
+          <span class="ficon" aria-hidden="true">📱</span>
+          <h3>Companion app</h3>
+          <p>Track every plant and get a nudge before the tank runs dry.</p>
+        </li>
+        <li>
+          <span class="ficon" aria-hidden="true">🔋</span>
+          <h3>Month-long battery</h3>
+          <p>USB-C charging with up to 30 days on a single charge.</p>
+        </li>
+        <li>
+          <span class="ficon" aria-hidden="true">🌿</span>
+          <h3>Plant library</h3>
+          <p>200+ presets dial in the right routine for each species.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== Benefits / how it improves your life ===== -->
+    <section id="benefits" class="section section-alt">
+      <h2>Why people love Sprout</h2>
+      <div class="benefits">
+        <article>
+          <h3>Never kill a plant again</h3>
+          <p>
+            Over- and under-watering cause most plant deaths. Sprout keeps soil
+            moisture in the ideal band automatically, so greenery thrives without
+            guesswork.
+          </p>
+        </article>
+        <article>
+          <h3>Reclaim your weekends</h3>
+          <p>
+            Go away for a fortnight without a plant-sitter. The reservoir and
+            grow light keep working while you're out, and the app keeps you posted.
+          </p>
+        </article>
+        <article>
+          <h3>A calmer, greener home</h3>
+          <p>
+            Houseplants are proven to lift mood and clean indoor air. Sprout makes
+            keeping them effortless — even if you've never owned a plant before.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Pricing / purchase ===== -->
+    <section id="pricing" class="section">
+      <h2>Get your Sprout</h2>
+      <div class="plans">
+        <article class="plan">
+          <h3>Sprout One</h3>
+          <p class="price">$79</p>
+          <ul>
+            <li>1 smart planter</li>
+            <li>Companion app</li>
+            <li>2-year warranty</li>
+          </ul>
+          <button class="btn btn-primary buy" data-plan="Sprout One" data-price="79">Buy now</button>
+        </article>
+        <article class="plan plan-featured">
+          <p class="badge">Most popular</p>
+          <h3>Sprout Trio</h3>
+          <p class="price">$199</p>
+          <ul>
+            <li>3 smart planters</li>
+            <li>Companion app</li>
+            <li>Free priority shipping</li>
+          </ul>
+          <button class="btn btn-primary buy" data-plan="Sprout Trio" data-price="199">Buy now</button>
+        </article>
+        <article class="plan">
+          <h3>Sprout Garden</h3>
+          <p class="price">$349</p>
+          <ul>
+            <li>6 smart planters</li>
+            <li>Companion app</li>
+            <li>Free priority shipping</li>
+          </ul>
+          <button class="btn btn-primary buy" data-plan="Sprout Garden" data-price="349">Buy now</button>
+        </article>
+      </div>
+      <p id="cart-status" class="cart-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ===== Newsletter signup ===== -->
+    <section id="newsletter" class="section section-alt">
+      <h2>Stay in the loop</h2>
+      <p class="section-sub">Be first to hear about new colours, plant presets and offers.</p>
+      <form id="newsletter-form" class="inline-form" novalidate>
+        <label class="sr-only" for="news-email">Email address</label>
+        <input id="news-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        <button class="btn btn-primary" type="submit">Notify me</button>
+        <p id="newsletter-msg" class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="section">
+      <h2>Frequently asked questions</h2>
+      <div class="faq">
+        <details>
+          <summary>How often do I refill the water tank?</summary>
+          <p>About once every three weeks for a typical houseplant. The app warns you a few days before it runs low.</p>
+        </details>
+        <details>
+          <summary>Does it work with any plant?</summary>
+          <p>Yes. The plant library covers 200+ common species, and you can create a custom routine for anything else.</p>
+        </details>
+        <details>
+          <summary>Do I need Wi-Fi?</summary>
+          <p>No. Sprout waters and lights on its own. Wi-Fi only adds app notifications and remote stats.</p>
+        </details>
+        <details>
+          <summary>What's the warranty?</summary>
+          <p>Every Sprout comes with a 2-year warranty and a 30-day, no-questions-asked return window.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===== Contact (form + email) ===== -->
+    <section id="contact" class="section section-alt">
+      <h2>Talk to us</h2>
+      <p class="section-sub">
+        Questions before you buy? Email us any time at
+        <a href="mailto:hello@sproutplanter.example">hello@sproutplanter.example</a>
+        or send a message below.
+      </p>
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="field">
+          <label for="c-name">Name</label>
+          <input id="c-name" name="name" type="text" required />
+        </div>
+        <div class="field">
+          <label for="c-email">Email</label>
+          <input id="c-email" name="email" type="email" required />
+        </div>
+        <div class="field field-full">
+          <label for="c-message">Message</label>
+          <textarea id="c-message" name="message" rows="4" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+        <p id="contact-msg" class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>🌱 Sprout · A demo landing page · Built automatically by Claude Code</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
