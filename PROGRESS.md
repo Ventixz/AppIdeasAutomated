@@ -30,7 +30,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Notes App — 2026-06-24
 - [x] Pearson Regression — 2026-06-25
 - [x] Pomodoro Clock — 2026-06-26
-- [ ] Product Landing Page
+- [x] Product Landing Page — 2026-06-27
 - [ ] Quiz App
 - [ ] Recipe App
 - [ ] Random Meal Generator
