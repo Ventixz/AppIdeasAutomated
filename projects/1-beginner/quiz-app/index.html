@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <!-- Start screen: pick a quiz -->
+    <section id="start" class="screen">
+      <h1>Quiz App</h1>
+      <p class="lead">Pick a topic and test your knowledge.</p>
+
+      <label class="field">
+        <span>Choose a quiz</span>
+        <select id="quiz-picker"></select>
+      </label>
+
+      <p id="best-line" class="best" hidden></p>
+
+      <button id="start-btn" class="primary">Start quiz</button>
+    </section>
+
+    <!-- Question screen -->
+    <section id="quiz" class="screen" hidden>
+      <header class="quiz-bar">
+        <span id="progress" class="pill">Question 1 / 5</span>
+        <span id="timer" class="pill">0:00</span>
+      </header>
+
+      <div class="track"><div id="track-fill"></div></div>
+
+      <h2 id="question">Question text</h2>
+      <ul id="answers" class="answers"></ul>
+
+      <button id="next-btn" class="primary" disabled>Next</button>
+    </section>
+
+    <!-- Result screen -->
+    <section id="result" class="screen" hidden>
+      <h2 id="verdict">Verdict</h2>
+      <div class="score-ring" id="score-ring">
+        <span id="score-pct">0%</span>
+      </div>
+      <ul class="stats">
+        <li><span>Score</span><strong id="score-line">0 / 5</strong></li>
+        <li><span>Time</span><strong id="time-line">0:00</strong></li>
+        <li><span>Best</span><strong id="best-result">—</strong></li>
+      </ul>
+      <div class="actions">
+        <button id="share-btn" class="ghost">Share result</button>
+        <button id="retry-btn" class="primary">Try another</button>
+      </div>
+      <p id="share-note" class="share-note" hidden></p>
+    </section>
+  </main>
+
+  <footer class="page-foot">
+    Built automatically by Claude Code ·
+    <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Quiz-App.md">idea</a>
+  </footer>
+
+  <script src="quizzes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
