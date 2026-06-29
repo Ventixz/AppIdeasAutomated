@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>🍽️ Recipe App</h1>
+      <p class="tagline">Recipes are just culinary algorithms — pick one and follow the steps.</p>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <label class="search" for="search">
+          <span class="visually-hidden">Search recipes</span>
+          <input
+            id="search"
+            type="search"
+            placeholder="Search recipes or meal type…"
+            autocomplete="off"
+          />
+        </label>
+        <ul id="recipe-list" class="recipe-list" aria-label="Recipe titles"></ul>
+        <p id="no-results" class="no-results" hidden>No recipes match that search.</p>
+      </aside>
+
+      <section id="card-area" class="card-area" aria-live="polite">
+        <!-- Recipe card is rendered here -->
+      </section>
+    </main>
+
+    <footer class="footer">
+      Built automatically by a Claude Code routine ·
+      idea from
+      <a
+        href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Recipe-App.md"
+        >app-ideas / Recipe App</a
+      >
+    </footer>
+
+    <script src="recipes.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
