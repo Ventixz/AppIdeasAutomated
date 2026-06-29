@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **24 / 35** |
+| 1 | Beginner | 🚧 In progress — **25 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -58,6 +58,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 22 | [Pomodoro Clock](./projects/1-beginner/pomodoro-clock/) | Beginner | 2026-06-26 |
 | 23 | [Product Landing Page](./projects/1-beginner/product-landing-page/) | Beginner | 2026-06-27 |
 | 24 | [Quiz App](./projects/1-beginner/quiz-app/) | Beginner | 2026-06-28 |
+| 25 | [Recipe App](./projects/1-beginner/recipe-app/) | Beginner | 2026-06-29 |
 
 ## Repository layout
 
