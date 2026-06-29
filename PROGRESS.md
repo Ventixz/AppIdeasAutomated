@@ -32,7 +32,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Pomodoro Clock — 2026-06-26
 - [x] Product Landing Page — 2026-06-27
 - [x] Quiz App — 2026-06-28
-- [ ] Recipe App
+- [x] Recipe App — 2026-06-29
 - [ ] Random Meal Generator
 - [ ] Random Number Generator
 - [ ] Roman to Decimal Converter
