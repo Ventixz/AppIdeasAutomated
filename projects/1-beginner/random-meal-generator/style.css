@@ -1,0 +1,217 @@
+:root {
+  --bg: #fbf7f0;
+  --panel: #ffffff;
+  --ink: #2c2420;
+  --muted: #8a7d72;
+  --accent: #c4561e;
+  --accent-soft: #f7e6db;
+  --line: #ece3d8;
+  --shadow: 0 8px 30px rgba(80, 50, 20, 0.08);
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.topbar {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.tagline {
+  margin: 0.4rem 0 1.25rem;
+  color: var(--muted);
+}
+
+/* Generate button -------------------------------------------------------- */
+.generate {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.12s, background 0.15s, opacity 0.15s;
+}
+
+.generate:hover {
+  background: #a9491a;
+}
+
+.generate:active {
+  transform: translateY(1px);
+}
+
+.generate:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* Layout ----------------------------------------------------------------- */
+.layout {
+  max-width: 820px;
+  margin: 1rem auto;
+  padding: 0 1.25rem;
+}
+
+.meal-area {
+  min-height: 300px;
+}
+
+/* Meal card -------------------------------------------------------------- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card-hero img {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.25rem 1.5rem 1.75rem;
+}
+
+.card-body h2 {
+  margin: 0 0 0.5rem;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.section-title {
+  margin: 1.25rem 0 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ingredients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredients li {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.ingredients .amount {
+  flex: 0 0 6.5rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.instructions {
+  margin: 0.5rem 0 0;
+  white-space: pre-line;
+}
+
+.video {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 */
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Empty / loading / error states ----------------------------------------- */
+.empty,
+.loading,
+.error {
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.error {
+  border-color: #e6b9b0;
+  color: #b23b3b;
+}
+
+.empty .big,
+.loading .big,
+.error .big {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.75rem;
+  border: 4px solid var(--accent-soft);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 2rem 1rem 2.5rem;
+}
+
+.footer a {
+  color: var(--accent);
+}
