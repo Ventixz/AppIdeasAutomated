@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Meal Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>🍴 Random Meal Generator</h1>
+      <p class="tagline">Out of ideas for dinner? Let the API decide for you.</p>
+      <button id="generate" class="generate" type="button">Surprise me</button>
+    </header>
+
+    <main class="layout" aria-live="polite">
+      <!-- Meal card / loading / error states are rendered here -->
+      <section id="meal-area" class="meal-area">
+        <div class="empty">
+          <span class="big">🍽️</span>
+          Hit <strong>Surprise me</strong> to pull a random recipe.
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Built automatically by a Claude Code routine · idea from
+      <a
+        href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Random-Meal-Generator.md"
+        >app-ideas / Random Meal Generator</a
+      >
+      · meals from <a href="https://www.themealdb.com">TheMealDB</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

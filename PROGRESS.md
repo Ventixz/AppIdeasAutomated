@@ -33,7 +33,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Product Landing Page — 2026-06-27
 - [x] Quiz App — 2026-06-28
 - [x] Recipe App — 2026-06-29
-- [ ] Random Meal Generator
+- [x] Random Meal Generator — 2026-06-30
 - [ ] Random Number Generator
 - [ ] Roman to Decimal Converter
 - [ ] Slider Design
