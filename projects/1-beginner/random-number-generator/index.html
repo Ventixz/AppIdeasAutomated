@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Number Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Random Number Generator</h1>
+    <p class="subtitle">Pick a range, hit generate, get a number.</p>
+
+    <div class="result" id="result" aria-live="polite">
+      <span class="result-number" id="number">—</span>
+    </div>
+
+    <form class="range" id="form" novalidate>
+      <label>
+        Minimum
+        <input type="number" id="min" value="1" step="any" />
+      </label>
+      <label>
+        Maximum
+        <input type="number" id="max" value="100" step="any" />
+      </label>
+
+      <fieldset class="options">
+        <label class="check">
+          <input type="checkbox" id="decimals" />
+          Allow decimals
+        </label>
+        <label class="places" data-enabled="false">
+          Places
+          <input type="number" id="places" value="2" min="0" max="10" step="1" />
+        </label>
+      </fieldset>
+
+      <p class="error" id="error" role="alert" hidden></p>
+
+      <button type="submit" class="btn primary">Generate</button>
+    </form>
+
+    <p class="hint">Negatives and decimals are both fair game.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

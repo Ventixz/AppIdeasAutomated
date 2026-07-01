@@ -34,7 +34,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Quiz App — 2026-06-28
 - [x] Recipe App — 2026-06-29
 - [x] Random Meal Generator — 2026-06-30
-- [ ] Random Number Generator
+- [x] Random Number Generator — 2026-07-01
 - [ ] Roman to Decimal Converter
 - [ ] Slider Design
 - [ ] Stopwatch App
