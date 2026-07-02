@@ -35,7 +35,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Recipe App — 2026-06-29
 - [x] Random Meal Generator — 2026-06-30
 - [x] Random Number Generator — 2026-07-01
-- [ ] Roman to Decimal Converter
+- [x] Roman to Decimal Converter — 2026-07-02
 - [ ] Slider Design
 - [ ] Stopwatch App
 - [ ] TrueOrFalse
