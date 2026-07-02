@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roman to Decimal Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <h1>Roman ⇄ Decimal</h1>
+    <p class="subtitle">Type in one box; the other fills in as you go.</p>
+
+    <div class="direction" role="group" aria-label="Conversion direction">
+      <button type="button" class="dir-btn active" id="toRoman" data-mode="dec2rom">
+        Decimal → Roman
+      </button>
+      <button type="button" class="dir-btn" id="toDecimal" data-mode="rom2dec">
+        Roman → Decimal
+      </button>
+    </div>
+
+    <form id="form" novalidate>
+      <label class="field">
+        <span class="field-label" id="inLabel">Decimal (1–3999)</span>
+        <input type="text" id="input" autocomplete="off" spellcheck="false"
+               placeholder="e.g. 2026" aria-describedby="error" />
+      </label>
+
+      <div class="arrow" aria-hidden="true">↓</div>
+
+      <label class="field">
+        <span class="field-label" id="outLabel">Roman numeral</span>
+        <output class="result" id="output" for="input">—</output>
+      </label>
+
+      <p class="error" id="error" role="alert" hidden></p>
+    </form>
+
+    <p class="hint">Roman numerals run I, V, X, L, C, D, M (1–3999).</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
