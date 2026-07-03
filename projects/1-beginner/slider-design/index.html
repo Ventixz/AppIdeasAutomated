@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slider Design</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1>Slider Design</h1>
+    <p class="subtitle">Auto-rotates every few seconds — or drive it yourself.</p>
+
+    <section class="slider" aria-roledescription="carousel" aria-label="Featured slides">
+      <div class="stage" id="stage" aria-live="polite">
+        <!-- Slides are injected by script.js -->
+      </div>
+
+      <button class="nav prev" id="prev" type="button" aria-label="Previous slide">‹</button>
+      <button class="nav next" id="next" type="button" aria-label="Next slide">›</button>
+
+      <button class="playpause" id="playpause" type="button" aria-label="Pause automatic rotation">
+        ⏸
+      </button>
+    </section>
+
+    <div class="dots" id="dots" role="tablist" aria-label="Choose a slide"></div>
+
+    <p class="hint">
+      Slides advance on their own. Hover to pause, use ‹ › or the dots to steer,
+      or the ⏸ button to stop the timer.
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
