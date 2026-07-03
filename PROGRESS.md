@@ -36,7 +36,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Random Meal Generator — 2026-06-30
 - [x] Random Number Generator — 2026-07-01
 - [x] Roman to Decimal Converter — 2026-07-02
-- [ ] Slider Design
+- [x] Slider Design — 2026-07-03
 - [ ] Stopwatch App
 - [ ] TrueOrFalse
 - [ ] Vigenere Cipher

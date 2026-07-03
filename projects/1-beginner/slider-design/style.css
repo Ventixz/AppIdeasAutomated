@@ -1,0 +1,149 @@
+:root {
+  --bg: #0b132b;
+  --ink: #e9edf7;
+  --muted: #9aa6c4;
+  --accent: #3a86ff;
+  --slide-h: clamp(240px, 46vw, 420px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(circle at top, #1c2541, var(--bg));
+  color: var(--ink);
+}
+
+.wrap { width: min(680px, 100%); text-align: center; }
+h1 { margin: 0 0 0.25rem; font-size: 1.6rem; }
+.subtitle { margin: 0 0 1.5rem; color: var(--muted); font-size: 0.9rem; }
+
+/* --- Slider frame ---------------------------------------------------- */
+.slider {
+  position: relative;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  /* Bonus: 3D perspective so slides can rotate through depth on change. */
+  perspective: 1400px;
+}
+
+.stage {
+  position: relative;
+  height: var(--slide-h);
+  border-radius: 18px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* --- Individual slides ----------------------------------------------- */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.6rem;
+  color: #fff;
+  opacity: 0;
+  /* Bonus: smooth cross-fade + 3D swing between slides. */
+  transform: rotateY(12deg) scale(1.04);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  backface-visibility: hidden;
+}
+.slide.active {
+  opacity: 1;
+  transform: rotateY(0) scale(1);
+  pointer-events: auto;
+}
+/* A leaving slide swings out the opposite way. */
+.slide.leaving {
+  opacity: 0;
+  transform: rotateY(-12deg) scale(1.04);
+}
+
+/* Bonus: text content overlaid on top of each image. */
+.slide-caption {
+  position: relative;
+  z-index: 1;
+  text-align: left;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  max-width: 82%;
+  backdrop-filter: blur(2px);
+}
+.slide-caption h2 { margin: 0 0 0.3rem; font-size: 1.35rem; }
+.slide-caption p { margin: 0; font-size: 0.9rem; opacity: 0.92; }
+
+/* --- Navigation buttons ---------------------------------------------- */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(11, 19, 43, 0.55);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 150ms ease, transform 150ms ease;
+  z-index: 2;
+}
+.nav:hover { background: var(--accent); }
+.nav:active { transform: translateY(-50%) scale(0.92); }
+.nav.prev { left: 0.8rem; }
+.nav.next { right: 0.8rem; }
+
+.playpause {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(11, 19, 43, 0.55);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 150ms ease;
+}
+.playpause:hover { background: var(--accent); }
+
+/* --- Dot indicators -------------------------------------------------- */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.1rem 0 0;
+}
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: none;
+  background: #2a3661;
+  cursor: pointer;
+  padding: 0;
+  transition: background 150ms ease, transform 150ms ease;
+}
+.dot:hover { transform: scale(1.2); }
+.dot.active { background: var(--accent); transform: scale(1.25); }
+
+.hint { margin: 1.1rem 0 0; color: var(--muted); font-size: 0.75rem; }
+
+/* Respect users who prefer no motion: drop the 3D swing, keep the fade. */
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slide.leaving { transform: none; transition: opacity 300ms ease; }
+}
