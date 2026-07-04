@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **29 / 35** |
+| 1 | Beginner | 🚧 In progress — **30 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -63,6 +63,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 27 | [Random Number Generator](./projects/1-beginner/random-number-generator/) | Beginner | 2026-07-01 |
 | 28 | [Roman to Decimal Converter](./projects/1-beginner/roman-to-decimal-converter/) | Beginner | 2026-07-02 |
 | 29 | [Slider Design](./projects/1-beginner/slider-design/) | Beginner | 2026-07-03 |
+| 30 | [Stopwatch App](./projects/1-beginner/stopwatch-app/) | Beginner | 2026-07-04 |
 
 ## Repository layout
 

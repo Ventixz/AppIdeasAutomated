@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="stopwatch">
+    <h1>Stopwatch</h1>
+
+    <div class="display" role="timer" aria-live="off">
+      <span id="time" aria-label="elapsed time">00:00.00</span>
+    </div>
+
+    <div class="controls">
+      <button id="startStop" class="btn btn-primary">Start</button>
+      <button id="lap" class="btn" disabled>Lap</button>
+      <button id="reset" class="btn" disabled>Reset</button>
+    </div>
+
+    <ol id="laps" class="laps" aria-label="recorded laps"></ol>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

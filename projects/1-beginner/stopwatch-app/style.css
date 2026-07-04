@@ -1,0 +1,129 @@
+:root {
+  --bg: #0f1226;
+  --panel: #1a1f3a;
+  --accent: #5b8def;
+  --accent-strong: #3a6fe0;
+  --danger: #e0574a;
+  --text: #f2f4ff;
+  --muted: #8a90b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at top, #1c2140, var(--bg));
+  color: var(--text);
+  padding: 1.5rem;
+}
+
+.stopwatch {
+  width: min(100%, 420px);
+  background: var(--panel);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.display {
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2.6rem, 12vw, 3.6rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.75rem;
+}
+
+.display #time {
+  display: inline-block;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 0.85rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: #262c4d;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.btn-primary.running {
+  background: var(--danger);
+}
+
+.laps {
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.laps li {
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
+  padding: 0.6rem 0.25rem;
+  border-bottom: 1px solid #2a305233;
+  color: var(--muted);
+}
+
+.laps li .lap-index {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.laps li.best .lap-time {
+  color: #4bd4a0;
+}
+
+.laps li.worst .lap-time {
+  color: var(--danger);
+}
