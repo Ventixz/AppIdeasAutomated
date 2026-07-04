@@ -37,7 +37,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Random Number Generator — 2026-07-01
 - [x] Roman to Decimal Converter — 2026-07-02
 - [x] Slider Design — 2026-07-03
-- [ ] Stopwatch App
+- [x] Stopwatch App — 2026-07-04
 - [ ] TrueOrFalse
 - [ ] Vigenere Cipher
 - [ ] Wind Chill
