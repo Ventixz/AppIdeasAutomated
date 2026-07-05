@@ -38,7 +38,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Roman to Decimal Converter — 2026-07-02
 - [x] Slider Design — 2026-07-03
 - [x] Stopwatch App — 2026-07-04
-- [ ] TrueOrFalse
+- [x] TrueOrFalse — 2026-07-05
 - [ ] Vigenere Cipher
 - [ ] Wind Chill
 - [ ] Word Frequency
