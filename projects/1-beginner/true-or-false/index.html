@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrueOrFalse</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="tof">
+    <h1>True or False</h1>
+    <p class="tagline">Evaluate a JavaScript comparison between two values.</p>
+
+    <form id="form" class="grid" novalidate>
+      <div class="operand">
+        <label for="left">Left value</label>
+        <input id="left" type="text" value="1" autocomplete="off" spellcheck="false" />
+        <select id="leftType" aria-label="Left value type">
+          <option value="string">String</option>
+          <option value="number" selected>Number</option>
+          <option value="boolean">Boolean</option>
+        </select>
+      </div>
+
+      <div class="op">
+        <label for="operator">Operator</label>
+        <input id="operator" type="text" value="===" autocomplete="off" spellcheck="false"
+               list="operators" aria-describedby="ophint" />
+        <datalist id="operators">
+          <option value="==="></option>
+          <option value="!=="></option>
+          <option value="=="></option>
+          <option value="!="></option>
+          <option value="&gt;"></option>
+          <option value="&lt;"></option>
+          <option value="&gt;="></option>
+          <option value="&lt;="></option>
+        </datalist>
+        <span id="ophint" class="hint">=== !== == != &gt; &lt; &gt;= &lt;=</span>
+      </div>
+
+      <div class="operand">
+        <label for="right">Right value</label>
+        <input id="right" type="text" value="1" autocomplete="off" spellcheck="false" />
+        <select id="rightType" aria-label="Right value type">
+          <option value="string">String</option>
+          <option value="number" selected>Number</option>
+          <option value="boolean">Boolean</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Evaluate</button>
+    </form>
+
+    <div id="expression" class="expression" aria-hidden="true"></div>
+
+    <div id="result" class="result" role="status" aria-live="polite">
+      <span class="placeholder">Result appears here.</span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
