@@ -39,7 +39,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Slider Design — 2026-07-03
 - [x] Stopwatch App — 2026-07-04
 - [x] TrueOrFalse — 2026-07-05
-- [ ] Vigenere Cipher
+- [x] Vigenere Cipher — 2026-07-06
 - [ ] Wind Chill
 - [ ] Word Frequency
 - [ ] Weather App
