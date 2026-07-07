@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Windchill</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wc">
+    <h1>Windchill</h1>
+    <p class="tagline">How cold it <em>feels</em> once the wind gets involved.</p>
+
+    <form id="form" class="grid" novalidate>
+      <div class="field">
+        <span class="label">Measurement system</span>
+        <div class="toggle" role="radiogroup" aria-label="Measurement system">
+          <label class="opt">
+            <input type="radio" name="units" value="metric" checked />
+            <span>Metric (°C, km/h)</span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="units" value="english" />
+            <span>English (°F, mph)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="temp">Actual temperature (<span class="u-temp">°C</span>)</label>
+        <input id="temp" type="number" inputmode="decimal" step="any"
+               autocomplete="off" placeholder="e.g. -5" />
+      </div>
+
+      <div class="field">
+        <label for="wind">Wind speed (<span class="u-wind">km/h</span>)</label>
+        <input id="wind" type="number" inputmode="decimal" step="any" min="0"
+               autocomplete="off" placeholder="e.g. 20" />
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="calculate" class="btn btn-primary">Calculate</button>
+      </div>
+    </form>
+
+    <div class="output">
+      <span id="resultLabel" class="label">Wind chill</span>
+      <div id="result" class="result" role="status" aria-live="polite"
+           aria-labelledby="resultLabel">
+        <span class="placeholder">Enter a temperature and wind speed, then press Calculate.</span>
+      </div>
+    </div>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
