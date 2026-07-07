@@ -40,7 +40,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Stopwatch App — 2026-07-04
 - [x] TrueOrFalse — 2026-07-05
 - [x] Vigenere Cipher — 2026-07-06
-- [ ] Wind Chill
+- [x] Wind Chill — 2026-07-07
 - [ ] Word Frequency
 - [ ] Weather App
 

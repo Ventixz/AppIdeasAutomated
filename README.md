@@ -26,7 +26,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **32 / 35** |
+| 1 | Beginner | 🚧 In progress — **33 / 35** |
 | 2 | Intermediate | 🔒 Locked |
 | 3 | Advanced | 🔒 Locked |
 
@@ -66,6 +66,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 30 | [Stopwatch App](./projects/1-beginner/stopwatch-app/) | Beginner | 2026-07-04 |
 | 31 | [TrueOrFalse](./projects/1-beginner/true-or-false/) | Beginner | 2026-07-05 |
 | 32 | [Vigenère Cipher](./projects/1-beginner/vigenere-cipher/) | Beginner | 2026-07-06 |
+| 33 | [Windchill](./projects/1-beginner/windchill/) | Beginner | 2026-07-07 |
 
 ## Repository layout
 
