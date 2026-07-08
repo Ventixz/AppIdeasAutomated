@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Frequency</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wf">
+    <h1>Word Frequency</h1>
+    <p class="tagline">Tally how often each word shows up in a block of text.</p>
+
+    <form id="form" class="grid" novalidate>
+      <div class="field">
+        <label for="text">Text to analyze <span class="count"><span id="used">0</span> / 2048</span></label>
+        <textarea id="text" maxlength="2048" rows="7" autocomplete="off"
+                  placeholder="Paste or type text here — or fetch a web page below."></textarea>
+      </div>
+
+      <details class="url-box">
+        <summary>Analyze a web page instead <span class="badge">bonus</span></summary>
+        <div class="field url-field">
+          <label for="url">Page URL</label>
+          <div class="url-row">
+            <input id="url" type="url" inputmode="url" autocomplete="off"
+                   placeholder="https://example.com" />
+            <button type="button" id="fetch" class="btn btn-ghost">Fetch</button>
+          </div>
+          <p class="hint">The page's visible text is loaded into the box above, then you can Translate it.</p>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button type="submit" id="translate" class="btn btn-primary">Translate</button>
+        <button type="button" id="clear" class="btn btn-ghost">Clear</button>
+      </div>
+    </form>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    <section id="results" class="results" hidden>
+      <div class="summary" id="summary"></div>
+
+      <div class="chart" id="chart" aria-hidden="true"></div>
+
+      <table class="freq" aria-label="Word frequency, most frequent first">
+        <thead>
+          <tr><th scope="col" class="rank">#</th><th scope="col">Word</th><th scope="col" class="num">Count</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

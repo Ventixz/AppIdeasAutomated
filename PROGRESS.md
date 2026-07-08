@@ -41,7 +41,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] TrueOrFalse — 2026-07-05
 - [x] Vigenere Cipher — 2026-07-06
 - [x] Wind Chill — 2026-07-07
-- [ ] Word Frequency
+- [x] Word Frequency — 2026-07-08
 - [ ] Weather App
 
 ## Tier 2 — Intermediate
