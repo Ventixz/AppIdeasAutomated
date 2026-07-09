@@ -42,13 +42,48 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 - [x] Vigenere Cipher — 2026-07-06
 - [x] Wind Chill — 2026-07-07
 - [x] Word Frequency — 2026-07-08
-- [ ] Weather App
+- [x] Weather App — 2026-07-09
+
+**Tier 1 complete — all 35 Beginner projects built. Tier 2 is now unlocked.**
 
 ## Tier 2 — Intermediate
 
-_Locked until every Tier 1 project above is checked. Populate from the
-[app-ideas Tier 2 list](https://github.com/florinpop17/app-ideas#tier-2-projects)
-when the first Tier 2 build starts._
+Unlocked 2026-07-09 after Tier 1 was finished. The routine now works down this
+list, one project per day.
+
+- [ ] Bit Masks
+- [ ] Book Finder App
+- [ ] Calculator CLI
+- [ ] Card Memory Game
+- [ ] Charity Finder App
+- [ ] Chrome Theme Extension
+- [ ] Currency Converter
+- [ ] Drawing App
+- [ ] Emoji Translator App
+- [ ] Flashcards App
+- [ ] Flip Art App
+- [ ] Game Suggestion App
+- [ ] GitHub Profiles
+- [ ] HighStriker Game
+- [ ] Image Scanner
+- [ ] Markdown Previewer
+- [ ] Markdown Table Generator
+- [ ] Math Editor
+- [ ] Meme Generator App
+- [ ] Name Generation using RNNs
+- [ ] Password Generator
+- [ ] Podcast Directory
+- [ ] QR Code Badge Generator
+- [ ] Regular Expression Helper
+- [ ] Sales Receipts App
+- [ ] Simple Online Store
+- [ ] Sports Bracket Generator
+- [ ] String Art
+- [ ] This or That Game
+- [ ] Timezone Slackbot
+- [ ] To-Do App
+- [ ] Typing Practice
+- [ ] Voting App
 
 ## Tier 3 — Advanced
 
