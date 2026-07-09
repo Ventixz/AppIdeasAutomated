@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wa" id="app">
+    <h1>Weather</h1>
+    <p class="tagline">Type a city and press Enter to see its current weather.</p>
+
+    <form id="form" class="grid" novalidate>
+      <div class="field">
+        <label for="city">City</label>
+        <div class="city-row">
+          <input id="city" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="e.g. Tokyo, London, São Paulo" />
+          <button type="submit" class="btn" id="go">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <section id="card" class="card" hidden>
+      <div class="card-head">
+        <div>
+          <h2 id="place"></h2>
+          <p id="local-time" class="muted"></p>
+        </div>
+        <div id="daynight" class="daynight" title=""></div>
+      </div>
+
+      <div class="card-body">
+        <div class="icon" id="icon" aria-hidden="true">☀️</div>
+        <div class="temps">
+          <p class="temp"><span id="temp">--</span>&deg;C</p>
+          <p id="condition" class="condition">—</p>
+        </div>
+      </div>
+
+      <dl class="stats">
+        <div><dt>Feels like</dt><dd><span id="feels">--</span>&deg;C</dd></div>
+        <div><dt>Humidity</dt><dd><span id="humidity">--</span>%</dd></div>
+        <div><dt>Wind</dt><dd><span id="wind">--</span> km/h</dd></div>
+      </dl>
+    </section>
+
+    <p class="footnote">
+      Data from <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>
+      — free, no API key required. Your last city is remembered on this device.
+    </p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
