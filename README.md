@@ -26,9 +26,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Tier | Level | Status |
 | --- | --- | --- |
-| 1 | Beginner | 🚧 In progress — **34 / 35** |
-| 2 | Intermediate | 🔒 Locked |
+| 1 | Beginner | ✅ Complete — **35 / 35** |
+| 2 | Intermediate | 🚧 In progress — **0 / 33** |
 | 3 | Advanced | 🔒 Locked |
+
+> 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
+> has been built. As of 2026-07-09 the routine has unlocked **Tier 2
+> (Intermediate)** and now works down that list, one project per day.
 
 ## Projects built so far
 
@@ -68,6 +72,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 32 | [Vigenère Cipher](./projects/1-beginner/vigenere-cipher/) | Beginner | 2026-07-06 |
 | 33 | [Windchill](./projects/1-beginner/windchill/) | Beginner | 2026-07-07 |
 | 34 | [Word Frequency](./projects/1-beginner/word-frequency/) | Beginner | 2026-07-08 |
+| 35 | [Weather App](./projects/1-beginner/weather-app/) | Beginner | 2026-07-09 |
 
 ## Repository layout
 
