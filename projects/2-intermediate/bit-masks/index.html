@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bit Masks — City Timezone Search</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header">
+        <h1>Bit Masks</h1>
+        <p class="app__tagline">
+          Find cities by GMT offset using bitwise operations — not a single
+          <code>===</code> in sight.
+        </p>
+      </header>
+
+      <section class="search" aria-label="Search cities by timezone">
+        <label class="search__label" for="gmt-input">GMT offset</label>
+        <input
+          id="gmt-input"
+          class="search__input"
+          type="number"
+          min="-12"
+          max="12"
+          step="1"
+          value="0"
+          inputmode="numeric"
+        />
+        <button id="find-btn" class="search__btn" type="button">Find Cities</button>
+        <label class="search__invert">
+          <input id="invert-toggle" type="checkbox" />
+          Invert (find cities <em>not</em> in this zone)
+        </label>
+      </section>
+
+      <p id="summary" class="summary" role="status" aria-live="polite"></p>
+
+      <section class="results" aria-label="Search results">
+        <h2 class="results__title">Matches</h2>
+        <ul id="results-list" class="results__list"></ul>
+      </section>
+
+      <section class="cities" aria-label="City list">
+        <div class="cities__head">
+          <h2 class="cities__title">Cities</h2>
+          <div class="cities__controls">
+            <button id="check-all" class="link-btn" type="button">Select all</button>
+            <button id="uncheck-all" class="link-btn" type="button">Clear</button>
+          </div>
+        </div>
+        <p class="cities__hint">
+          Only checked cities are searched. Each row shows the city's timezone
+          bit inside the 25-bit mask (GMT +12 … −12).
+        </p>
+        <ul id="city-list" class="cities__list"></ul>
+      </section>
+
+      <footer class="app__footer">
+        <p>
+          Idea:
+          <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Bit-Masks-App.md">
+            app-ideas / Bit Masks</a>. Built automatically by a Claude Code routine.
+        </p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
