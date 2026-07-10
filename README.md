@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **0 / 33** |
+| 2 | Intermediate | 🚧 In progress — **1 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -73,17 +73,20 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 33 | [Windchill](./projects/1-beginner/windchill/) | Beginner | 2026-07-07 |
 | 34 | [Word Frequency](./projects/1-beginner/word-frequency/) | Beginner | 2026-07-08 |
 | 35 | [Weather App](./projects/1-beginner/weather-app/) | Beginner | 2026-07-09 |
+| 36 | [Bit Masks](./projects/2-intermediate/bit-masks/) | Intermediate | 2026-07-10 |
 
 ## Repository layout
 
 ```
 projects/
-  1-beginner/
+  1-beginner/         # Tier 1 apps
     bin2dec/          # one folder per app
       index.html
       style.css
       script.js
       README.md
+  2-intermediate/     # Tier 2 apps
+    bit-masks/
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

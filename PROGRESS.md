@@ -51,7 +51,7 @@ Source list: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
 Unlocked 2026-07-09 after Tier 1 was finished. The routine now works down this
 list, one project per day.
 
-- [ ] Bit Masks
+- [x] Bit Masks — 2026-07-10
 - [ ] Book Finder App
 - [ ] Calculator CLI
 - [ ] Card Memory Game
