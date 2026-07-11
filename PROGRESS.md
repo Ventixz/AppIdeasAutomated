@@ -52,7 +52,7 @@ Unlocked 2026-07-09 after Tier 1 was finished. The routine now works down this
 list, one project per day.
 
 - [x] Bit Masks — 2026-07-10
-- [ ] Book Finder App
+- [x] Book Finder App — 2026-07-11
 - [ ] Calculator CLI
 - [ ] Card Memory Game
 - [ ] Charity Finder App
