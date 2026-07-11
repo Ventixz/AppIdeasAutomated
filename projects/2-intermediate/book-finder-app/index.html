@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Finder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>📚 Book Finder</h1>
+      <p class="app__tagline">Search millions of books by title, author, or subject.</p>
+    </header>
+
+    <form id="search-form" class="search" role="search">
+      <label class="search__field">
+        <span class="visually-hidden">Search query</span>
+        <input
+          id="query"
+          type="search"
+          class="search__input"
+          placeholder="Try &quot;The Hobbit&quot; or &quot;Ursula K. Le Guin&quot;…"
+          autocomplete="off"
+          autofocus
+        />
+      </label>
+      <select id="search-by" class="search__select" aria-label="Search by">
+        <option value="q">All</option>
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="subject">Subject</option>
+      </select>
+      <button type="submit" class="search__button">Search</button>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <div id="loader" class="loader" hidden aria-hidden="true">
+      <span class="loader__dot"></span>
+      <span class="loader__dot"></span>
+      <span class="loader__dot"></span>
+    </div>
+
+    <ul id="results" class="results" aria-live="polite"></ul>
+  </main>
+
+  <footer class="page-footer">
+    Data from the free <a href="https://openlibrary.org/developers/api" target="_blank" rel="noopener">Open Library API</a>.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
