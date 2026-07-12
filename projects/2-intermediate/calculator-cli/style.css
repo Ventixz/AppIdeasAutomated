@@ -1,0 +1,127 @@
+:root {
+  --bg: #0b1021;
+  --term-bg: #11162b;
+  --term-border: #232a45;
+  --text: #d7dcf0;
+  --muted: #8891b4;
+  --green: #5ef2a0;
+  --red: #ff6b7f;
+  --amber: #ffce5c;
+  --accent: #7aa2ff;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  background: radial-gradient(1200px 600px at 50% -10%, #1a2145 0%, var(--bg) 60%);
+  color: var(--text);
+  font-family: var(--mono);
+}
+
+.terminal {
+  width: min(760px, 100%);
+  background: var(--term-bg);
+  border: 1px solid var(--term-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  background: #0d132a;
+  border-bottom: 1px solid var(--term-border);
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot--red { background: var(--red); }
+.dot--amber { background: var(--amber); }
+.dot--green { background: var(--green); }
+
+.titlebar__name {
+  margin-left: 0.5rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.line { margin: 0; }
+.line--cmd { color: var(--text); }
+.line--cmd .sign { color: var(--green); margin-right: 0.5rem; }
+.line--out { color: var(--accent); }
+.line--err { color: var(--red); }
+.line--muted { color: var(--muted); }
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.1rem;
+  border-top: 1px solid var(--term-border);
+  background: #0d132a;
+}
+
+.prompt__sign { color: var(--green); font-weight: 700; }
+
+.prompt__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  caret-color: var(--green);
+}
+
+.prompt__input::placeholder { color: #4b5378; }
+
+.hint {
+  width: min(760px, 100%);
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.hint code {
+  color: var(--text);
+  background: rgba(122, 162, 255, 0.12);
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+}
+
+.hint kbd {
+  color: var(--text);
+  background: #1b2242;
+  border: 1px solid var(--term-border);
+  border-radius: 4px;
+  padding: 0 0.3rem;
+}
