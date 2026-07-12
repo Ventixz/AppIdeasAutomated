@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>calc — Calculator CLI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="terminal" aria-label="Calculator CLI demo terminal">
+    <header class="titlebar">
+      <span class="dot dot--red"></span>
+      <span class="dot dot--amber"></span>
+      <span class="dot dot--green"></span>
+      <span class="titlebar__name">calc — a tiny arithmetic CLI</span>
+    </header>
+
+    <div id="output" class="screen" role="log" aria-live="polite" aria-label="Terminal output"></div>
+
+    <form id="prompt-form" class="prompt" autocomplete="off">
+      <label for="cmd" class="prompt__sign" aria-hidden="true">$</label>
+      <input
+        id="cmd"
+        class="prompt__input"
+        name="cmd"
+        type="text"
+        spellcheck="false"
+        aria-label="Type a calc command"
+        placeholder="add 2 3 5" />
+    </form>
+  </main>
+
+  <p class="hint">
+    A live, in-browser copy of the same engine that powers the Node CLI. Try
+    <code>add 2 3 5</code>, <code>add even 1 2 3 4</code>, <code>div 100 5 2</code>,
+    <code>pow 2 10</code>, <code>sqrt 144</code>, or <code>help</code>.
+    Use <kbd>↑</kbd>/<kbd>↓</kbd> for history.
+  </p>
+
+  <script src="calc-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

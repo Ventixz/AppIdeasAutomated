@@ -53,7 +53,7 @@ list, one project per day.
 
 - [x] Bit Masks — 2026-07-10
 - [x] Book Finder App — 2026-07-11
-- [ ] Calculator CLI
+- [x] Calculator CLI — 2026-07-12
 - [ ] Card Memory Game
 - [ ] Charity Finder App
 - [ ] Chrome Theme Extension

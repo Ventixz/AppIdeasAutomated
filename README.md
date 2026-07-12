@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **2 / 33** |
+| 2 | Intermediate | 🚧 In progress — **3 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -75,6 +75,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 35 | [Weather App](./projects/1-beginner/weather-app/) | Beginner | 2026-07-09 |
 | 36 | [Bit Masks](./projects/2-intermediate/bit-masks/) | Intermediate | 2026-07-10 |
 | 37 | [Book Finder](./projects/2-intermediate/book-finder-app/) | Intermediate | 2026-07-11 |
+| 38 | [Calculator CLI](./projects/2-intermediate/calculator-cli/) | Intermediate | 2026-07-12 |
 
 ## Repository layout
 
@@ -94,10 +95,20 @@ README.md             # this file
 
 ## Running an app
 
-These are dependency-free static apps. Open any project's `index.html` in a browser:
+Most projects are dependency-free static apps. Open any project's `index.html`
+in a browser:
 
 ```bash
 open projects/1-beginner/bin2dec/index.html
+```
+
+A few Tier 2 ideas are inherently command-line tools. The **Calculator CLI**,
+for example, ships a real dependency-free Node script *and* a browser terminal
+that runs the same engine:
+
+```bash
+node projects/2-intermediate/calculator-cli/calc.js add 2 3 5   # -> 10
+open projects/2-intermediate/calculator-cli/index.html          # same engine, in the browser
 ```
 
 ---
