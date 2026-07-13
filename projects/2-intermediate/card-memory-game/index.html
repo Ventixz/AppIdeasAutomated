@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Memory Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>🧠 Card Memory Game</h1>
+      <p class="app__tagline">Flip the cards, find every matching pair, beat the clock.</p>
+    </header>
+
+    <section class="controls" aria-label="Game controls">
+      <div class="controls__group">
+        <label class="controls__label" for="difficulty">Difficulty</label>
+        <select id="difficulty" class="controls__select">
+          <option value="easy">Easy — 4×4, 90s</option>
+          <option value="medium" selected>Medium — 6×6, 120s</option>
+          <option value="hard">Hard — 8×8, 180s</option>
+        </select>
+      </div>
+
+      <div class="controls__stats" role="group" aria-label="Live game stats">
+        <div class="stat">
+          <span class="stat__label">Time</span>
+          <span class="stat__value" id="timer" aria-live="polite">0:00</span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">Moves</span>
+          <span class="stat__value" id="moves">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">Pairs</span>
+          <span class="stat__value" id="pairs">0 / 0</span>
+        </div>
+      </div>
+
+      <button id="start" class="btn btn--primary" type="button">Start game</button>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite">
+      Pick a difficulty and press <strong>Start game</strong>.
+    </p>
+
+    <section class="board-wrap">
+      <div id="board" class="board" aria-label="Memory board" role="grid"></div>
+    </section>
+
+    <section class="records" aria-label="Best records">
+      <h2 class="records__title">Your records</h2>
+      <table class="records__table">
+        <thead>
+          <tr><th>Difficulty</th><th>Wins</th><th>Losses</th><th>Best time</th></tr>
+        </thead>
+        <tbody id="records-body"></tbody>
+      </table>
+      <button id="clear-stats" class="btn btn--ghost" type="button">Reset records</button>
+    </section>
+  </main>
+
+  <!-- Win / lose dialog -->
+  <div id="overlay" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+      <h2 id="dialog-title" class="dialog__title"></h2>
+      <p id="dialog-body" class="dialog__body"></p>
+      <button id="dialog-again" class="btn btn--primary" type="button">Play again</button>
+    </div>
+  </div>
+
+  <footer class="app__footer">
+    <p>
+      Built by an automated <a href="https://claude.com/claude-code">Claude Code</a> routine —
+      day 39 of <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>.
+      Idea:
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Card-Memory-Game.md">Card Memory Game</a>.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
