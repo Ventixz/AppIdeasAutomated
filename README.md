@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **3 / 33** |
+| 2 | Intermediate | 🚧 In progress — **4 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -76,6 +76,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 36 | [Bit Masks](./projects/2-intermediate/bit-masks/) | Intermediate | 2026-07-10 |
 | 37 | [Book Finder](./projects/2-intermediate/book-finder-app/) | Intermediate | 2026-07-11 |
 | 38 | [Calculator CLI](./projects/2-intermediate/calculator-cli/) | Intermediate | 2026-07-12 |
+| 39 | [Card Memory Game](./projects/2-intermediate/card-memory-game/) | Intermediate | 2026-07-13 |
 
 ## Repository layout
 
