@@ -1,0 +1,356 @@
+:root {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --brand: #0d9488;
+  --brand-dark: #0f766e;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.55;
+}
+
+/* Masthead ---------------------------------------------------------------- */
+
+.masthead {
+  background: linear-gradient(135deg, var(--brand), #0891b2);
+  color: #fff;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+
+.masthead__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.masthead__tagline {
+  margin: 0 auto;
+  max-width: 42rem;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Splash ------------------------------------------------------------------ */
+
+.splash {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.splash__heading {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+/* Buttons ----------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.08s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  box-shadow: var(--shadow);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--brand-dark);
+}
+
+/* Search form ------------------------------------------------------------- */
+
+.search {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  align-items: end;
+}
+
+.search__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.search__field label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.search__select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+.search__select:focus {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.search__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  background: #ccfbf1;
+  color: var(--brand-dark);
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  vertical-align: middle;
+  letter-spacing: 0;
+}
+
+/* Status ------------------------------------------------------------------ */
+
+.status {
+  margin: 1.25rem 0 0.5rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.status--empty {
+  color: #b45309;
+}
+
+/* Results grid ------------------------------------------------------------ */
+
+.results {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card__logo {
+  align-self: flex-start;
+}
+
+.card__logo img {
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  display: block;
+}
+
+.card__id {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.card__name {
+  margin: 0.1rem 0 0.2rem;
+  font-size: 1.2rem;
+}
+
+.card__name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card__name a:hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+.card__address {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.card__mission {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.card__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #f0fdfa;
+  color: var(--brand-dark);
+  border: 1px solid #99f6e4;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+.card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.card__actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Dialog ------------------------------------------------------------------ */
+
+.dialog {
+  border: none;
+  border-radius: var(--radius);
+  padding: 2rem;
+  max-width: 30rem;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.35);
+}
+
+.dialog::backdrop {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.dialog__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.dialog__org {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dialog__title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 1.4rem;
+}
+
+.dialog__summary {
+  margin: 0 0 1.25rem;
+  color: var(--ink);
+}
+
+.progress {
+  height: 12px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand), #0891b2);
+}
+
+.dialog__funding {
+  margin: 0.75rem 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+.dialog__pct {
+  color: var(--muted);
+}
+
+/* Footer ------------------------------------------------------------------ */
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  background: var(--surface);
+}
+
+.footer a {
+  color: var(--brand-dark);
+  font-weight: 600;
+}
+
+.footer__links {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+}
