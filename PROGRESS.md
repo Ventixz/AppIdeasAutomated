@@ -55,7 +55,7 @@ list, one project per day.
 - [x] Book Finder App — 2026-07-11
 - [x] Calculator CLI — 2026-07-12
 - [x] Card Memory Game — 2026-07-13
-- [ ] Charity Finder App
+- [x] Charity Finder App — 2026-07-14
 - [ ] Chrome Theme Extension
 - [ ] Currency Converter
 - [ ] Drawing App

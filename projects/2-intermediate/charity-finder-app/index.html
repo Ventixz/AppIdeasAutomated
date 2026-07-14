@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charity Finder</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <h1 class="masthead__title">🤝 Charity Finder</h1>
+      <p class="masthead__tagline">
+        Discover charitable organizations that match what you care about — by
+        name, by the country they call home, and by the causes they champion.
+      </p>
+    </header>
+
+    <main class="wrap">
+      <!-- Splash / overview -->
+      <section id="splash" class="splash">
+        <h2 class="splash__heading">Find a cause worth supporting</h2>
+        <p>
+          Every organization below is a real charity. Filter the directory to
+          shortlist the ones that fit your interests, then open a card to read
+          its mission and jump straight to its website or a live project.
+        </p>
+        <button id="get-started" class="btn btn--primary" type="button">
+          Browse charities
+        </button>
+      </section>
+
+      <!-- Search interface -->
+      <section id="finder" class="finder" hidden>
+        <form id="search-form" class="search" novalidate>
+          <div class="search__field">
+            <label for="f-name">Organization name</label>
+            <select id="f-name" class="search__select">
+              <option value="">Any organization</option>
+            </select>
+          </div>
+
+          <div class="search__field">
+            <label for="f-home">Home country</label>
+            <select id="f-home" class="search__select">
+              <option value="">Any home country</option>
+            </select>
+          </div>
+
+          <div class="search__field">
+            <label for="f-serves">Countries served</label>
+            <select id="f-serves" class="search__select">
+              <option value="">Any country served</option>
+            </select>
+          </div>
+
+          <div class="search__field">
+            <label for="f-theme">Cause / theme <span class="tag">bonus</span></label>
+            <select id="f-theme" class="search__select">
+              <option value="">Any theme</option>
+            </select>
+          </div>
+
+          <div class="search__actions">
+            <button class="btn btn--primary" type="submit">Search</button>
+            <button class="btn" id="reset" type="reset">Clear</button>
+          </div>
+        </form>
+
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+
+        <div id="results" class="results" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <!-- Project detail dialog (bonus) -->
+    <dialog id="project-dialog" class="dialog">
+      <button class="dialog__close" data-close aria-label="Close">✕</button>
+      <div id="project-body"></div>
+    </dialog>
+
+    <footer class="footer">
+      <p>
+        Built by an automated
+        <a href="https://claude.com/claude-code" target="_blank" rel="noopener"
+          >Claude Code</a
+        >
+        routine, working through
+        <a
+          href="https://github.com/florinpop17/app-ideas"
+          target="_blank"
+          rel="noopener"
+          >florinpop17/app-ideas</a
+        >.
+      </p>
+      <nav class="footer__links" aria-label="Social links">
+        <a href="https://github.com/florinpop17/app-ideas" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.globalgiving.org/" target="_blank" rel="noopener">GlobalGiving</a>
+      </nav>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
