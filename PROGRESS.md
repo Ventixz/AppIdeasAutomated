@@ -56,7 +56,7 @@ list, one project per day.
 - [x] Calculator CLI — 2026-07-12
 - [x] Card Memory Game — 2026-07-13
 - [x] Charity Finder App — 2026-07-14
-- [ ] Chrome Theme Extension
+- [x] Chrome Theme Extension — 2026-07-15
 - [ ] Currency Converter
 - [ ] Drawing App
 - [ ] Emoji Translator App
