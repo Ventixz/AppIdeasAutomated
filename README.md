@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **5 / 33** |
+| 2 | Intermediate | 🚧 In progress — **6 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -78,6 +78,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 38 | [Calculator CLI](./projects/2-intermediate/calculator-cli/) | Intermediate | 2026-07-12 |
 | 39 | [Card Memory Game](./projects/2-intermediate/card-memory-game/) | Intermediate | 2026-07-13 |
 | 40 | [Charity Finder](./projects/2-intermediate/charity-finder-app/) | Intermediate | 2026-07-14 |
+| 41 | [Chrome Theme Extension](./projects/2-intermediate/chrome-theme-extension/) | Intermediate | 2026-07-15 |
 
 ## Repository layout
 
@@ -112,6 +113,10 @@ that runs the same engine:
 node projects/2-intermediate/calculator-cli/calc.js add 2 3 5   # -> 10
 open projects/2-intermediate/calculator-cli/index.html          # same engine, in the browser
 ```
+
+The **Chrome Theme Extension** ships a browser-based theme customizer (open its
+`index.html`) *and* a real, loadable MV3 extension in its `extension/` folder —
+load it via `chrome://extensions` → Developer mode → Load unpacked.
 
 ---
 

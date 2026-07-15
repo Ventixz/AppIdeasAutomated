@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Personal Theme + Night Light",
+  "version": "1.0.0",
+  "description": "A customizable new-tab theme with a blue-light night-light filter that auto-activates after sunset. Built from florinpop17/app-ideas.",
+  "permissions": ["storage", "alarms"],
+  "action": {
+    "default_title": "Theme & Night Light",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["filter.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

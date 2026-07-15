@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h1>🌙 Night Light</h1>
+
+    <label class="row">
+      <span>Force on now</span>
+      <input type="checkbox" id="forced" />
+    </label>
+
+    <label class="row">
+      <span>Auto after sunset</span>
+      <input type="checkbox" id="auto" />
+    </label>
+
+    <label class="col">
+      <span>Strength <b id="strength-out">40%</b></span>
+      <input type="range" id="strength" min="0" max="80" step="5" />
+    </label>
+
+    <p id="state" class="state"></p>
+
+    <a class="link" id="theme-link" href="newtab.html" target="_blank">
+      Customize new-tab theme →
+    </a>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
