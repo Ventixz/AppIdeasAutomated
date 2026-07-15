@@ -1,0 +1,94 @@
+:root {
+  --ntp: #0f172a;
+  --text: #f8fafc;
+  --accent: #6366f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.ntp {
+  min-height: 100vh;
+  background: var(--ntp);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+.clock {
+  font-size: clamp(3rem, 12vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.greet {
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
+
+.shortcuts {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.chip {
+  padding: 0.55rem 1.1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid var(--accent);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.palette-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.palette-tray {
+  position: absolute;
+  top: 4rem;
+  right: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 28px);
+  gap: 8px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.palette-tray button {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+}
