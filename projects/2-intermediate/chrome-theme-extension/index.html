@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chrome Theme Extension — Customizer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <h1 class="masthead__title">🎨 Chrome Theme Extension</h1>
+      <p class="masthead__tagline">
+        Design a personal browser theme, preview it live, and export a ready-to-load
+        Chrome extension — with a built-in <strong>night light</strong> blue-light
+        filter that switches on by itself after sunset.
+      </p>
+    </header>
+
+    <main class="wrap">
+      <div class="grid">
+        <!-- ── Controls ─────────────────────────────────────────────── -->
+        <section class="panel" aria-labelledby="controls-h">
+          <h2 id="controls-h" class="panel__h">Customize</h2>
+
+          <div class="field">
+            <label for="preset">Start from a palette</label>
+            <select id="preset" class="select">
+              <option value="">Custom</option>
+            </select>
+            <p class="hint">
+              Palettes marked <span class="tag tag--a11y">color-safe</span> are
+              tuned for common forms of color blindness.
+            </p>
+          </div>
+
+          <div class="swatches">
+            <div class="swatch">
+              <label for="c-frame">Window frame</label>
+              <input type="color" id="c-frame" value="#1f2937" />
+            </div>
+            <div class="swatch">
+              <label for="c-toolbar">Toolbar</label>
+              <input type="color" id="c-toolbar" value="#111827" />
+            </div>
+            <div class="swatch">
+              <label for="c-ntp">New-tab background</label>
+              <input type="color" id="c-ntp" value="#0f172a" />
+            </div>
+            <div class="swatch">
+              <label for="c-text">Toolbar text</label>
+              <input type="color" id="c-text" value="#e5e7eb" />
+            </div>
+            <div class="swatch">
+              <label for="c-accent">Accent</label>
+              <input type="color" id="c-accent" value="#6366f1" />
+            </div>
+            <div class="swatch">
+              <label for="c-ntptext">New-tab text</label>
+              <input type="color" id="c-ntptext" value="#f8fafc" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="theme-name">Theme name</label>
+            <input type="text" id="theme-name" class="input" value="My Theme" maxlength="40" />
+          </div>
+
+          <hr class="rule" />
+
+          <h3 class="panel__sub">🌙 Night light <span class="tag">bonus</span></h3>
+          <div class="field field--row">
+            <label class="toggle">
+              <input type="checkbox" id="nl-on" />
+              <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              <span>Manual override</span>
+            </label>
+          </div>
+          <div class="field">
+            <label for="nl-strength">Filter strength <output id="nl-strength-out">40%</output></label>
+            <input type="range" id="nl-strength" min="0" max="80" value="40" />
+          </div>
+          <div class="field field--row">
+            <label class="toggle">
+              <input type="checkbox" id="nl-auto" checked />
+              <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              <span>Auto after sunset (19:00–06:00)</span>
+            </label>
+          </div>
+          <p class="hint" id="nl-status" role="status" aria-live="polite"></p>
+
+          <div class="actions">
+            <button class="btn btn--primary" id="export">⬇ Export extension files</button>
+            <button class="btn" id="randomize">🎲 Surprise me</button>
+          </div>
+        </section>
+
+        <!-- ── Live preview ─────────────────────────────────────────── -->
+        <section class="panel" aria-labelledby="preview-h">
+          <h2 id="preview-h" class="panel__h">Live preview</h2>
+
+          <div class="browser" id="browser">
+            <div class="browser__chrome">
+              <div class="browser__tabs">
+                <span class="browser__tab browser__tab--active">🎨 New Tab</span>
+                <span class="browser__tab">app-ideas</span>
+                <span class="browser__dot"></span>
+              </div>
+              <div class="browser__toolbar">
+                <span class="browser__nav">←</span>
+                <span class="browser__nav">→</span>
+                <span class="browser__nav">⟳</span>
+                <span class="browser__omni">🔒 chrome://newtab</span>
+                <span class="browser__nav">⋮</span>
+              </div>
+            </div>
+            <div class="browser__ntp" id="ntp">
+              <div class="ntp__clock" id="ntp-clock">00:00</div>
+              <div class="ntp__search">Search the web…</div>
+              <div class="ntp__shortcuts">
+                <span class="ntp__chip">Docs</span>
+                <span class="ntp__chip">Mail</span>
+                <span class="ntp__chip">GitHub</span>
+                <span class="ntp__chip">Music</span>
+              </div>
+            </div>
+            <!-- the blue-light overlay the real extension injects -->
+            <div class="browser__nightlight" id="nightlight"></div>
+          </div>
+
+          <p class="preview-note">
+            The warm wash above is exactly what the extension's content script
+            overlays on every page when night light is on.
+          </p>
+        </section>
+      </div>
+
+      <!-- ── Export output ──────────────────────────────────────────── -->
+      <section class="panel export-out" id="export-out" hidden aria-labelledby="export-h">
+        <h2 id="export-h" class="panel__h">Your extension</h2>
+        <p>
+          These are the files the customizer generated. Save each into a folder,
+          then in Chrome open <code>chrome://extensions</code>, enable
+          <strong>Developer mode</strong>, and click
+          <strong>Load unpacked</strong>. Full steps are in the
+          <a href="./README.md">README</a>.
+        </p>
+        <div class="tabs" role="tablist">
+          <button class="tabs__btn tabs__btn--active" data-file="manifest">manifest.json</button>
+          <button class="tabs__btn" data-file="filter">filter.js</button>
+        </div>
+        <pre class="code" id="code-block"><code id="code"></code></pre>
+        <button class="btn" id="copy">Copy to clipboard</button>
+        <span id="copy-done" class="copied" hidden>Copied!</span>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Built by an automated
+        <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+        routine, working through
+        <a href="https://github.com/florinpop17/app-ideas" target="_blank" rel="noopener"
+          >florinpop17/app-ideas</a
+        >.
+      </p>
+      <nav class="footer__links" aria-label="Links">
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Chrome-Theme-Extension.md" target="_blank" rel="noopener">Spec</a>
+        <a href="https://developer.chrome.com/docs/extensions/get-started" target="_blank" rel="noopener">Chrome docs</a>
+      </nav>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
