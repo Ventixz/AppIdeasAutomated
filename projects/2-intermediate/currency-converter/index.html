@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__head">
+      <h1>💱 Currency Converter</h1>
+      <p class="app__sub">Convert an amount from one currency to another using
+        live exchange rates.</p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label class="field field--amount">
+          <span class="field__label">Amount</span>
+          <input
+            id="amount"
+            class="field__input"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            value="1"
+            aria-describedby="error" />
+        </label>
+      </div>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <div class="row row--currencies">
+        <label class="field">
+          <span class="field__label">From</span>
+          <select id="from" class="field__input field__select"></select>
+        </label>
+
+        <button id="swap" class="swap" type="button" title="Swap currencies"
+          aria-label="Swap source and destination currencies">⇄</button>
+
+        <label class="field">
+          <span class="field__label">To</span>
+          <select id="to" class="field__input field__select"></select>
+        </label>
+      </div>
+
+      <div class="result" id="result" aria-live="polite">
+        <div class="result__amount" id="resultAmount">—</div>
+        <div class="result__rate" id="resultRate"></div>
+      </div>
+
+      <p class="status" id="status">Loading rates…</p>
+    </section>
+
+    <footer class="app__foot">
+      <p>🤖 Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+        routine — day 42 of <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>.</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
