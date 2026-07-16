@@ -57,7 +57,7 @@ list, one project per day.
 - [x] Card Memory Game — 2026-07-13
 - [x] Charity Finder App — 2026-07-14
 - [x] Chrome Theme Extension — 2026-07-15
-- [ ] Currency Converter
+- [x] Currency Converter — 2026-07-16
 - [ ] Drawing App
 - [ ] Emoji Translator App
 - [ ] Flashcards App
