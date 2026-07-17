@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drawing App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🎨 Drawing App</h1>
+    <p class="tagline">Sketch on the canvas, pick your colours and tools, then save your art.</p>
+  </header>
+
+  <main class="layout">
+    <aside class="toolbar" aria-label="Drawing tools">
+      <div class="tool-group">
+        <h2>Tool</h2>
+        <div class="segmented" role="radiogroup" aria-label="Drawing tool">
+          <button class="seg is-active" data-tool="pen" role="radio" aria-checked="true">✏️ Pen</button>
+          <button class="seg" data-tool="eraser" role="radio" aria-checked="false">🩹 Eraser</button>
+          <button class="seg" data-tool="line" role="radio" aria-checked="false">╱ Line</button>
+          <button class="seg" data-tool="rectangle" role="radio" aria-checked="false">▭ Rect</button>
+          <button class="seg" data-tool="circle" role="radio" aria-checked="false">◯ Circle</button>
+          <button class="seg" data-tool="star" role="radio" aria-checked="false">★ Star</button>
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" id="fill-toggle" />
+          Fill shapes
+        </label>
+      </div>
+
+      <div class="tool-group">
+        <h2>Colour</h2>
+        <label class="field">
+          <span>Current</span>
+          <input type="color" id="colour" value="#38bdf8" aria-label="Drawing colour" />
+        </label>
+        <div class="swatches" id="swatches" aria-label="Preset colours"></div>
+      </div>
+
+      <div class="tool-group">
+        <h2>Size <span class="size-value" id="size-value">6</span>px</h2>
+        <input type="range" id="size" min="1" max="60" value="6" aria-label="Tool size" />
+      </div>
+
+      <div class="tool-group actions">
+        <button id="undo" class="btn" title="Undo last stroke">↩ Undo</button>
+        <button id="clear" class="btn btn-warn" title="Clear the whole canvas">🗑 Clear</button>
+        <button id="save" class="btn btn-primary" title="Download as PNG">⬇ Save PNG</button>
+      </div>
+    </aside>
+
+    <section class="canvas-wrap">
+      <canvas id="board" width="900" height="620" aria-label="Drawing canvas"></canvas>
+      <p class="hint" id="hint">Click and drag on the canvas to draw.</p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Built by an automated <a href="https://claude.com/claude-code">Claude Code</a> routine —
+      day 43 of <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

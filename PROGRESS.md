@@ -58,7 +58,7 @@ list, one project per day.
 - [x] Charity Finder App — 2026-07-14
 - [x] Chrome Theme Extension — 2026-07-15
 - [x] Currency Converter — 2026-07-16
-- [ ] Drawing App
+- [x] Drawing App — 2026-07-17
 - [ ] Emoji Translator App
 - [ ] Flashcards App
 - [ ] Flip Art App
