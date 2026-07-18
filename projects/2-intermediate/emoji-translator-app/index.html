@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Translator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__head">
+      <h1>😀 Emoji Translator</h1>
+      <p class="app__sub">Type a sentence and turn the words it recognises into
+        emoji. Anything untranslatable is left exactly as you wrote it.</p>
+    </header>
+
+    <section class="card">
+      <div class="row row--lang">
+        <label class="field">
+          <span class="field__label">Input language</span>
+          <select id="language" class="field__input field__select"></select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="field">
+          <span class="field__label">Your text</span>
+          <textarea
+            id="input"
+            class="field__input field__area"
+            rows="3"
+            autocomplete="off"
+            placeholder="I love pizza and my dog when it is sunny"
+            aria-describedby="error"></textarea>
+        </label>
+      </div>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <div class="actions">
+        <button id="translate" class="btn btn--primary" type="button">Translate</button>
+        <button id="clear" class="btn" type="button">Clear</button>
+      </div>
+
+      <div class="output" id="output" aria-live="polite">
+        <span class="output__placeholder">Your emoji translation appears here…</span>
+      </div>
+
+      <p class="status" id="status"></p>
+    </section>
+
+    <footer class="app__foot">
+      <p>🤖 Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+        routine — day 44 of <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>.</p>
+    </footer>
+  </main>
+
+  <script src="dictionary.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
