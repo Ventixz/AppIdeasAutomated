@@ -59,7 +59,7 @@ list, one project per day.
 - [x] Chrome Theme Extension — 2026-07-15
 - [x] Currency Converter — 2026-07-16
 - [x] Drawing App — 2026-07-17
-- [ ] Emoji Translator App
+- [x] Emoji Translator App — 2026-07-18
 - [ ] Flashcards App
 - [ ] Flip Art App
 - [ ] Game Suggestion App
