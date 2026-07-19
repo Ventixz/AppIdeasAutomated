@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcards App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__head">
+      <h1>Flashcards</h1>
+      <p class="app__sub">
+        A random question, four choices, instant feedback. Test what you know.
+      </p>
+    </header>
+
+    <section class="card" aria-live="polite">
+      <div class="scoreline">
+        <span id="deck-label" class="scoreline__pos">Card 0 of 0</span>
+        <span id="score-mini" class="scoreline__score">0 / 0</span>
+      </div>
+
+      <div id="flashcard" class="flashcard">
+        <p id="question" class="flashcard__q">Loading…</p>
+        <ul id="options" class="options"></ul>
+
+        <p id="feedback" class="feedback" role="status"></p>
+
+        <div id="info" class="info" hidden></div>
+      </div>
+
+      <div class="actions">
+        <button id="more-info" class="btn" type="button">More Info</button>
+        <button id="next" class="btn btn--primary" type="button">Next Question</button>
+      </div>
+
+      <div class="actions actions--secondary">
+        <button id="results" class="btn btn--sm" type="button">Results</button>
+        <button id="shuffle" class="btn btn--sm" type="button">Shuffle</button>
+        <button id="reset" class="btn btn--sm" type="button">Reset</button>
+      </div>
+
+      <div id="results-panel" class="results-panel" hidden></div>
+    </section>
+
+    <footer class="app__foot">
+      <p>
+        An automated <a href="https://claude.com/claude-code">Claude Code</a>
+        routine build ·
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/FlashCards-App.md">app-ideas / FlashCards</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="deck.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
