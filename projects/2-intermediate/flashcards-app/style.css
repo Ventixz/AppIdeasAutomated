@@ -1,0 +1,180 @@
+:root {
+  --bg: #0f172a;
+  --bg-grad: radial-gradient(1200px 600px at 50% -10%, #1e293b, #0f172a);
+  --card: #1e293b;
+  --card-2: #273449;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #22d3ee;
+  --error: #f87171;
+  --ok: #4ade80;
+  --border: #334155;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg-grad), var(--bg);
+}
+
+.app { width: 100%; max-width: 560px; }
+
+.app__head { text-align: center; margin-bottom: 1.25rem; }
+.app__head h1 { margin: 0 0 .35rem; font-size: 1.7rem; }
+.app__sub { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.45; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, .35);
+}
+
+.scoreline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.scoreline__score { color: var(--accent); font-weight: 700; }
+
+.flashcard__q {
+  margin: 0 0 1.1rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  min-height: 2.4em;
+}
+
+.options {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: .6rem;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .8rem .9rem;
+  font-size: 1rem;
+  text-align: left;
+  color: var(--text);
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .12s, border-color .15s, background .15s;
+}
+.option:hover:not(:disabled) { border-color: var(--accent); }
+.option:active:not(:disabled) { transform: translateY(1px); }
+.option:disabled { cursor: default; opacity: .95; }
+
+.option__key {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--accent);
+  background: rgba(56, 189, 248, .12);
+  border-radius: 8px;
+}
+
+.option--correct {
+  border-color: var(--ok);
+  background: rgba(74, 222, 128, .14);
+}
+.option--correct .option__key { color: var(--ok); background: rgba(74, 222, 128, .18); }
+
+.option--wrong {
+  border-color: var(--error);
+  background: rgba(248, 113, 113, .14);
+}
+.option--wrong .option__key { color: var(--error); background: rgba(248, 113, 113, .18); }
+
+.feedback {
+  margin: 0 0 .5rem;
+  min-height: 1.4em;
+  font-size: .95rem;
+  font-weight: 600;
+}
+.feedback--ok { color: var(--ok); }
+.feedback--err { color: var(--error); }
+
+.info {
+  margin: .3rem 0 0;
+  padding: .8rem .9rem;
+  font-size: .9rem;
+  line-height: 1.5;
+  color: var(--muted);
+  background: var(--card-2);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.actions { display: flex; gap: .6rem; margin-top: 1.1rem; }
+.actions--secondary { margin-top: .6rem; }
+
+.btn {
+  flex: 1;
+  padding: .8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .12s, filter .15s, border-color .15s;
+}
+.btn:hover { border-color: var(--accent); }
+.btn:active { transform: translateY(1px); }
+.btn--sm { flex: 1; padding: .6rem .7rem; font-size: .85rem; font-weight: 600; }
+
+.btn--primary {
+  flex: 2;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border: none;
+}
+.btn--primary:hover { filter: brightness(1.08); }
+
+.results-panel {
+  margin-top: 1.1rem;
+  padding: 1rem 1.1rem;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-size: .95rem;
+}
+.results-panel__grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .4rem 1rem;
+  margin-top: .6rem;
+  color: var(--muted);
+}
+.results-panel__grid span:nth-child(even) { color: var(--text); font-weight: 700; text-align: right; }
+
+.app__foot { margin-top: 1.25rem; text-align: center; }
+.app__foot p { margin: 0; font-size: .78rem; color: var(--muted); }
+.app__foot a { color: var(--accent); text-decoration: none; }
+.app__foot a:hover { text-decoration: underline; }
