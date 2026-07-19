@@ -60,7 +60,7 @@ list, one project per day.
 - [x] Currency Converter — 2026-07-16
 - [x] Drawing App — 2026-07-17
 - [x] Emoji Translator App — 2026-07-18
-- [ ] Flashcards App
+- [x] Flashcards App — 2026-07-19
 - [ ] Flip Art App
 - [ ] Game Suggestion App
 - [ ] GitHub Profiles
