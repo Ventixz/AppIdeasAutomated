@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flip Art</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Flip Art</h1>
+    <p class="tagline">Build a flip-book animation by arranging a sequence of frames.</p>
+  </header>
+
+  <main>
+    <!-- Configuration Panel -->
+    <section class="panel" aria-labelledby="config-heading">
+      <div class="panel__head">
+        <h2 id="config-heading">Configuration</h2>
+        <button id="add-slot" class="btn btn--ghost" type="button" title="Add another frame slot">+ Slot</button>
+      </div>
+
+      <div id="thumbs" class="thumbs" role="list" aria-label="Animation frames"></div>
+
+      <div class="config-controls">
+        <label class="slider-label" for="speed">
+          Transition Speed
+          <input id="speed" type="range" min="100" max="1500" step="50" value="500" />
+          <span id="speed-value" class="speed-value">500 ms/frame</span>
+        </label>
+
+        <label class="slider-label" for="transition">
+          Transition Type
+          <select id="transition">
+            <option value="none">none (instant)</option>
+            <option value="ease">ease</option>
+            <option value="ease-in">ease-in</option>
+            <option value="ease-out">ease-out</option>
+            <option value="ease-in-out">ease-in-out</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="ops">
+        <button id="sample" class="btn btn--ghost" type="button">Load Sample Frames</button>
+        <button id="clear" class="btn btn--ghost" type="button">Clear Configuration</button>
+        <button id="play" class="btn btn--primary" type="button" disabled>Start Animation</button>
+      </div>
+    </section>
+
+    <!-- Animation Display Panel -->
+    <section class="panel" aria-labelledby="stage-heading">
+      <h2 id="stage-heading">Animation</h2>
+      <div class="stage" aria-live="polite">
+        <img id="stage-img" alt="Animation playback" />
+        <p id="stage-empty" class="stage__empty">Add frames, then press <strong>Start Animation</strong>.</p>
+      </div>
+      <p id="frame-counter" class="frame-counter"></p>
+    </section>
+  </main>
+
+  <!-- Hidden file input, reused by every slot -->
+  <input id="file-input" type="file" accept="image/*" hidden />
+
+  <footer>
+    <p>An automated <a href="https://claude.com/claude-code">Claude Code</a> routine ·
+      idea from <a href="https://github.com/florinpop17/app-ideas">app-ideas</a></p>
+  </footer>
+
+  <script src="frames.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

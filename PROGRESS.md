@@ -61,7 +61,7 @@ list, one project per day.
 - [x] Drawing App — 2026-07-17
 - [x] Emoji Translator App — 2026-07-18
 - [x] Flashcards App — 2026-07-19
-- [ ] Flip Art App
+- [x] Flip Art App — 2026-07-20
 - [ ] Game Suggestion App
 - [ ] GitHub Profiles
 - [ ] HighStriker Game
