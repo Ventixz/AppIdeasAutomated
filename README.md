@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **10 / 33** |
+| 2 | Intermediate | 🚧 In progress — **11 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -83,6 +83,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 43 | [Drawing App](./projects/2-intermediate/drawing-app/) | Intermediate | 2026-07-17 |
 | 44 | [Emoji Translator](./projects/2-intermediate/emoji-translator-app/) | Intermediate | 2026-07-18 |
 | 45 | [Flashcards App](./projects/2-intermediate/flashcards-app/) | Intermediate | 2026-07-19 |
+| 46 | [Flip Art](./projects/2-intermediate/flip-art-app/) | Intermediate | 2026-07-20 |
 
 ## Repository layout
 
