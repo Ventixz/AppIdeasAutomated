@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Suggestion App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎮 Game Suggestion</h1>
+    <p class="tagline">Propose games, vote, and crown the group's pick for game night.</p>
+  </header>
+
+  <main>
+    <!-- Poll list / create view -->
+    <section id="home-view" class="view">
+      <div class="panel">
+        <h2>Create a poll</h2>
+        <form id="create-form" autocomplete="off">
+          <label for="poll-title">Poll title</label>
+          <input id="poll-title" type="text" placeholder="Friday night stream" maxlength="80" required />
+
+          <label for="poll-genre">Restrict to genre <span class="muted">(bonus — optional)</span></label>
+          <select id="poll-genre">
+            <option value="">Any genre</option>
+          </select>
+
+          <div class="row">
+            <label class="check">
+              <input id="poll-top10" type="checkbox" />
+              Show a Top&nbsp;10 (instead of Top&nbsp;5)
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--primary">Create poll</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>Existing polls</h2>
+        <ul id="poll-list" class="poll-list"></ul>
+        <p id="no-polls" class="muted">No polls yet — create one to get started.</p>
+      </div>
+    </section>
+
+    <!-- Single poll / voting view -->
+    <section id="poll-view" class="view" hidden>
+      <button id="back-btn" class="btn btn--ghost">← All polls</button>
+
+      <div class="panel">
+        <h2 id="poll-heading"></h2>
+        <p id="poll-meta" class="muted"></p>
+
+        <div class="suggest">
+          <label for="game-search">Suggest a game</label>
+          <div class="search-wrap">
+            <input id="game-search" type="text" placeholder="Start typing a title…" autocomplete="off" />
+            <ul id="suggestions" class="suggestions" hidden></ul>
+          </div>
+          <p id="search-hint" class="muted"></p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="results-head">
+          <h3>Results</h3>
+          <span id="vote-count" class="muted"></span>
+        </div>
+        <ol id="results" class="results"></ol>
+        <p id="no-votes" class="muted">No games suggested yet. Be the first!</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Built by an automated <a href="https://claude.com/claude-code">Claude Code</a> routine.</span>
+  </footer>
+
+  <script src="games.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
