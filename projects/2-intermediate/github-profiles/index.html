@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Profiles</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>GitHub Profiles</h1>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle colour theme">
+      <span class="theme-icon">🌙</span>
+    </button>
+  </header>
+
+  <main class="wrap">
+    <form id="search-form" class="search" autocomplete="off">
+      <input
+        id="search-input"
+        class="search-input"
+        type="text"
+        placeholder="Search a GitHub username…"
+        aria-label="GitHub username"
+        required
+      />
+      <button class="search-btn" type="submit">Search</button>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <section id="card" class="card" hidden>
+      <img id="avatar" class="avatar" alt="" />
+      <div class="card-body">
+        <div class="card-head">
+          <h2 id="name" class="name"></h2>
+          <a id="login" class="login" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <p id="bio" class="bio"></p>
+
+        <ul class="stats">
+          <li><span id="followers" class="stat-num">0</span><span class="stat-label">Followers</span></li>
+          <li><span id="following" class="stat-num">0</span><span class="stat-label">Following</span></li>
+          <li><span id="repos" class="stat-num">0</span><span class="stat-label">Repos</span></li>
+        </ul>
+
+        <h3 class="repos-title">Top repositories</h3>
+        <ul id="repo-list" class="repo-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      Built by an automated <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude&nbsp;Code</a>
+      routine · day 48 of <a href="https://github.com/florinpop17/app-ideas" target="_blank" rel="noopener">app-ideas</a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

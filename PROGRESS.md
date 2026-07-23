@@ -63,7 +63,7 @@ list, one project per day.
 - [x] Flashcards App — 2026-07-19
 - [x] Flip Art App — 2026-07-20
 - [x] Game Suggestion App — 2026-07-21
-- [ ] GitHub Profiles
+- [x] GitHub Profiles — 2026-07-23
 - [ ] HighStriker Game
 - [ ] Image Scanner
 - [ ] Markdown Previewer
