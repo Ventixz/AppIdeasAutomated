@@ -64,7 +64,7 @@ list, one project per day.
 - [x] Flip Art App — 2026-07-20
 - [x] Game Suggestion App — 2026-07-21
 - [x] GitHub Profiles — 2026-07-23
-- [ ] HighStriker Game
+- [x] HighStriker Game — 2026-07-24
 - [ ] Image Scanner
 - [ ] Markdown Previewer
 - [ ] Markdown Table Generator

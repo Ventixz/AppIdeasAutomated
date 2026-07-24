@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HighStriker — Test Your Strength</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🔨 HighStriker</h1>
+    <button id="soundToggle" class="ghost" aria-pressed="true" title="Toggle sound">🔊</button>
+  </header>
+
+  <main class="stage">
+    <div class="scoreboard">
+      <div class="stat">
+        <span class="stat-value" id="score">0</span>
+        <span class="stat-label">Points</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="bells">0</span>
+        <span class="stat-label">Bells rung</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="attempts">0</span>
+        <span class="stat-label">Attempts</span>
+      </div>
+    </div>
+
+    <p id="message" class="message" aria-live="polite">Time your strike — hit the base when the meter is hot!</p>
+
+    <div class="tower" id="tower">
+      <!-- Bell at the top -->
+      <div class="bell" id="bell" title="Ring me!">
+        <div class="bell-dome"></div>
+        <div class="bell-clapper"></div>
+      </div>
+
+      <!-- The rail the puck travels along, with height zone markers -->
+      <div class="rail" id="rail">
+        <span class="zone zone-5" style="bottom:100%">5</span>
+        <span class="zone zone-4" style="bottom:75%">4</span>
+        <span class="zone zone-3" style="bottom:50%">3</span>
+        <span class="zone zone-2" style="bottom:25%">2</span>
+        <span class="zone zone-1" style="bottom:12.5%">1</span>
+        <div class="puck" id="puck"></div>
+      </div>
+
+      <!-- The levered striking platform / base -->
+      <div class="base" id="base">
+        <div class="lever"></div>
+        <div class="pad" id="pad">STRIKE PAD</div>
+      </div>
+    </div>
+
+    <!-- Timing power meter: the swinging bar you try to stop at the top -->
+    <div class="meter" aria-hidden="true">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
+
+    <div class="controls">
+      <button id="strike" class="primary">Strike! 🔨</button>
+      <button id="clear" class="secondary">Clear</button>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <p>Get to <strong>10 points</strong> to win. A perfect strike rings the bell for 5.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
