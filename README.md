@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **13 / 33** |
+| 2 | Intermediate | 🚧 In progress — **14 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -86,6 +86,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 46 | [Flip Art](./projects/2-intermediate/flip-art-app/) | Intermediate | 2026-07-20 |
 | 47 | [Game Suggestion](./projects/2-intermediate/game-suggestion-app/) | Intermediate | 2026-07-21 |
 | 48 | [GitHub Profiles](./projects/2-intermediate/github-profiles/) | Intermediate | 2026-07-23 |
+| 49 | [HighStriker Game](./projects/2-intermediate/highstriker-game/) | Intermediate | 2026-07-24 |
 
 ## Repository layout
 
