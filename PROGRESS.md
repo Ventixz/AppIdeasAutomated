@@ -65,7 +65,7 @@ list, one project per day.
 - [x] Game Suggestion App — 2026-07-21
 - [x] GitHub Profiles — 2026-07-23
 - [x] HighStriker Game — 2026-07-24
-- [ ] Image Scanner
+- [x] Image Scanner — 2026-07-25
 - [ ] Markdown Previewer
 - [ ] Markdown Table Generator
 - [ ] Math Editor

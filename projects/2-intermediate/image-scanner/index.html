@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Scanner — extract contacts from photos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>📇 Image Scanner</h1>
+    <p class="tagline">Pull phone numbers, emails and links out of a photo.</p>
+  </header>
+
+  <main>
+    <!-- Capture / import -->
+    <section class="panel" aria-labelledby="capture-h">
+      <h2 id="capture-h">1 · Add an image</h2>
+      <div class="actions">
+        <label class="btn">
+          📷 Capture photo
+          <input id="captureInput" type="file" accept="image/*" capture="environment" hidden />
+        </label>
+        <label class="btn">
+          🖼️ Import image
+          <input id="importInput" type="file" accept="image/*" hidden />
+        </label>
+      </div>
+
+      <div id="preview" class="preview" hidden>
+        <img id="previewImg" alt="Selected scan" />
+      </div>
+
+      <p id="ocrStatus" class="status" role="status"></p>
+
+      <!-- Fallback / manual text layer -->
+      <details id="textFallback" class="fallback">
+        <summary>Text didn't come through? Type or paste it here</summary>
+        <p class="hint">
+          On-device OCR uses your browser's experimental <code>TextDetector</code>.
+          Where it isn't available, paste the text you can read in the photo and
+          the same extraction runs on it.
+        </p>
+        <textarea id="manualText" rows="5"
+          placeholder="e.g. Call Dana at (555) 123-4567 or email dana@example.com — more at https://example.com"></textarea>
+        <button id="extractBtn" class="btn btn-primary" type="button">Extract contacts</button>
+      </details>
+    </section>
+
+    <!-- Results -->
+    <section class="panel" aria-labelledby="results-h">
+      <div class="panel-head">
+        <h2 id="results-h">2 · Extracted details</h2>
+        <button id="saveScanBtn" class="btn" type="button" disabled>💾 Save scan</button>
+      </div>
+      <div id="results" class="cards">
+        <p class="empty">Nothing scanned yet.</p>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="panel" aria-labelledby="history-h">
+      <div class="panel-head">
+        <h2 id="history-h">3 · Scan history</h2>
+        <button id="clearHistoryBtn" class="btn btn-danger" type="button">Clear all</button>
+      </div>
+      <input id="historySearch" class="search" type="search"
+        placeholder="Search history — text, tag, phone, email…" />
+      <div id="history" class="history">
+        <p class="empty">No saved scans yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footnote">
+    Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+    routine · day 50 of <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
