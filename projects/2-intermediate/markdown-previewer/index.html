@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Previewer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Markdown Previewer</h1>
+    <div class="actions">
+      <button id="copyHtmlBtn" type="button" title="Copy the rendered HTML source">📋 Copy HTML</button>
+      <button id="clearBtn" type="button" title="Clear the editor">🗑 Clear</button>
+      <button id="sampleBtn" type="button" title="Load a sample document">✨ Sample</button>
+      <label class="live-toggle">
+        <input type="checkbox" id="liveToggle" checked />
+        Live preview
+      </label>
+    </div>
+  </header>
+
+  <main class="split">
+    <section class="pane">
+      <div class="pane-head">
+        <span>Markdown</span>
+        <span class="counts" id="counts">0 chars</span>
+      </div>
+      <textarea id="editor" spellcheck="false"
+        placeholder="Type GitHub-flavored markdown here…"></textarea>
+      <div class="render-row">
+        <button id="renderBtn" type="button">Render →</button>
+        <span class="saved-note" id="savedNote"></span>
+      </div>
+    </section>
+
+    <section class="pane">
+      <div class="pane-head">
+        <span>Preview</span>
+      </div>
+      <article id="preview" class="preview markdown-body"></article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Rendered by a hand-written vanilla-JS markdown parser — no libraries.
+    Part of an <a href="../../../README.md">automated Claude Code routine</a>.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
