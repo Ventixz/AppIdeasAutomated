@@ -168,7 +168,7 @@ function refresh() {
 }
 
 /* A tiny renderer just for the preview — parses our own markdown table back
-   into a real HTML table (with alignment), plus **bold**/*italic*/`code`. */
+   into a real HTML table (with alignment), plus bold, italic and inline code. */
 function markdownTableToHtml(md) {
   const rows = md.split('\n').filter((l) => l.trim());
   if (rows.length < 2) return '<p class="empty">Nothing to preview.</p>';
