@@ -1,0 +1,149 @@
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --panel-2: #273449;
+  --line: #334155;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #0ea5e9;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ---- top bar ---- */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.topbar h1 { font-size: 1.15rem; margin: 0; margin-right: auto; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+.dim { font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 0.3rem; }
+.dim input {
+  width: 3.4rem;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.85rem;
+}
+
+button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+button:hover { background: #31435c; border-color: var(--accent); }
+button:active { transform: translateY(1px); }
+
+/* ---- layout ---- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  min-height: calc(100vh - 120px);
+}
+.pane { background: var(--bg); padding: 1rem 1.2rem; display: flex; flex-direction: column; min-width: 0; }
+.pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0.4rem 0 0.5rem;
+}
+.hint { text-transform: none; letter-spacing: 0; color: var(--accent); }
+
+/* ---- editable grid ---- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+#grid { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+#grid th, #grid td {
+  border: 1px solid var(--line);
+  padding: 0.45rem 0.6rem;
+  min-width: 5rem;
+  outline: none;
+}
+#grid th { background: var(--panel-2); font-weight: 600; }
+#grid td:focus, #grid th:focus { box-shadow: inset 0 0 0 2px var(--accent-2); }
+#grid .active { box-shadow: inset 0 0 0 2px var(--accent); }
+
+/* ---- toolbar ---- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 0.9rem; }
+.tool-group { display: flex; align-items: center; gap: 0.35rem; }
+.tool-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.toolbar button { padding: 0.35rem 0.55rem; }
+#alignScope {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.32rem 0.4rem;
+  font-size: 0.8rem;
+}
+.active-note { font-size: 0.78rem; color: var(--muted); margin: 0.7rem 0 0; }
+
+/* ---- output ---- */
+#output {
+  width: 100%;
+  min-height: 8.5rem;
+  resize: vertical;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* ---- preview ---- */
+.preview { overflow-x: auto; }
+.preview table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.preview th, .preview td { border: 1px solid var(--line); padding: 0.45rem 0.6rem; }
+.preview th { background: var(--panel-2); }
+.preview code {
+  background: var(--panel-2);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.preview .empty { color: var(--muted); font-style: italic; }
+
+.footer {
+  padding: 0.8rem 1.2rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+}
+.footer code { background: var(--panel-2); padding: 0.05rem 0.3rem; border-radius: 4px; }
+.footer a { color: var(--accent); }
+
+@media (max-width: 760px) {
+  .split { grid-template-columns: 1fr; }
+}
