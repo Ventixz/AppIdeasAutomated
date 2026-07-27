@@ -67,7 +67,7 @@ list, one project per day.
 - [x] HighStriker Game — 2026-07-24
 - [x] Image Scanner — 2026-07-25
 - [x] Markdown Previewer — 2026-07-26
-- [ ] Markdown Table Generator
+- [x] Markdown Table Generator — 2026-07-27
 - [ ] Math Editor
 - [ ] Meme Generator App
 - [ ] Name Generation using RNNs
