@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Table Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Markdown Table Generator</h1>
+    <div class="actions">
+      <label class="dim">Rows
+        <input type="number" id="rowInput" min="1" max="50" value="3" />
+      </label>
+      <label class="dim">Cols
+        <input type="number" id="colInput" min="1" max="20" value="3" />
+      </label>
+      <button id="buildBtn" type="button" title="Build a fresh table of this size">🧱 New table</button>
+      <button id="sampleBtn" type="button" title="Load a sample table">✨ Sample</button>
+    </div>
+  </header>
+
+  <main class="split">
+    <section class="pane">
+      <div class="pane-head">
+        <span>Table editor</span>
+        <span class="hint" id="dimNote">3 × 3</span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="grid"><tbody></tbody></table>
+      </div>
+
+      <div class="toolbar">
+        <div class="tool-group">
+          <span class="tool-label">Add</span>
+          <button data-act="row-above" type="button" title="Insert a row above the active cell">Row ↑</button>
+          <button data-act="row-below" type="button" title="Insert a row below the active cell">Row ↓</button>
+          <button data-act="col-left" type="button" title="Insert a column left of the active cell">Col ←</button>
+          <button data-act="col-right" type="button" title="Insert a column right of the active cell">Col →</button>
+        </div>
+        <div class="tool-group">
+          <span class="tool-label">Delete</span>
+          <button data-act="del-row" type="button" title="Delete the active row">Row ✕</button>
+          <button data-act="del-col" type="button" title="Delete the active column">Col ✕</button>
+        </div>
+        <div class="tool-group">
+          <span class="tool-label">Align</span>
+          <button data-act="align-left" type="button" title="Align left">⇤</button>
+          <button data-act="align-center" type="button" title="Align center">↔</button>
+          <button data-act="align-right" type="button" title="Align right">⇥</button>
+          <select id="alignScope" title="What the align buttons act on">
+            <option value="column">column</option>
+            <option value="cell">cell</option>
+            <option value="row">row</option>
+            <option value="table">whole table</option>
+          </select>
+        </div>
+      </div>
+      <p class="active-note" id="activeNote">Click a cell to make it active, then use the tools above.</p>
+    </section>
+
+    <section class="pane">
+      <div class="pane-head">
+        <span>Markdown</span>
+        <button id="copyBtn" type="button" title="Copy the markdown to the clipboard">📋 Copy</button>
+      </div>
+      <textarea id="output" spellcheck="false" readonly></textarea>
+
+      <div class="pane-head">
+        <span>Preview</span>
+      </div>
+      <div id="preview" class="preview"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    First row is the header. Alignment is written into the markdown separator row
+    (<code>:---</code>, <code>:--:</code>, <code>--:</code>).
+    Part of an <a href="../../../README.md">automated Claude Code routine</a>.
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
