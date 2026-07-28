@@ -68,7 +68,7 @@ list, one project per day.
 - [x] Image Scanner — 2026-07-25
 - [x] Markdown Previewer — 2026-07-26
 - [x] Markdown Table Generator — 2026-07-27
-- [ ] Math Editor
+- [x] Math Editor — 2026-07-28
 - [ ] Meme Generator App
 - [ ] Name Generation using RNNs
 - [ ] Password Generator
