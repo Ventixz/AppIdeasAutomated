@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-head">
+    <h1>Math Editor</h1>
+    <p class="tagline">Write a document, drop in real math formulas, save &amp; reload — all intact.</p>
+  </header>
+
+  <main class="app">
+    <div class="titlebar">
+      <input id="doc-title" type="text" placeholder="Document title…" aria-label="Document title" value="My homework">
+    </div>
+
+    <div class="toolbar" role="toolbar" aria-label="Formatting">
+      <div class="group">
+        <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
+        <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
+        <button type="button" data-cmd="underline" title="Underline"><u>U</u></button>
+      </div>
+
+      <div class="group">
+        <label class="ctl">Size
+          <select id="font-size" aria-label="Font size">
+            <option value="2">Small</option>
+            <option value="3" selected>Normal</option>
+            <option value="5">Large</option>
+            <option value="6">Huge</option>
+          </select>
+        </label>
+        <label class="ctl">Colour
+          <input id="fore-color" type="color" value="#111827" aria-label="Text colour">
+        </label>
+      </div>
+
+      <div class="group">
+        <button type="button" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
+        <button type="button" data-cmd="formatBlock" data-val="h2" title="Heading">H</button>
+        <button type="button" data-cmd="removeFormat" title="Clear formatting">✕ Fmt</button>
+      </div>
+
+      <div class="group">
+        <button type="button" id="insert-formula" class="primary" title="Insert a math formula">∑ Formula</button>
+        <label class="filebtn" title="Insert an image">
+          🖼 Image<input id="image-file" type="file" accept="image/*" hidden>
+        </label>
+      </div>
+    </div>
+
+    <div id="doc" class="doc" contenteditable="true" spellcheck="true"
+         aria-label="Document body"></div>
+
+    <div class="actions">
+      <button type="button" id="save-btn" class="primary">💾 Save (.mathdoc)</button>
+      <label class="filebtn">📂 Load<input id="load-file" type="file" accept=".mathdoc,.json,application/json" hidden></label>
+      <button type="button" id="export-btn">⬇ Export HTML</button>
+      <button type="button" id="clear-btn" class="danger">🗑 Clear</button>
+    </div>
+  </main>
+
+  <!-- Formula editor dialog -->
+  <dialog id="formula-dialog" class="formula-dialog">
+    <form id="formula-form" method="dialog">
+      <h2>Insert / edit formula</h2>
+      <p class="hint">Write LaTeX-style math. Try <code>\frac{a}{b}</code>,
+        <code>x^2</code>, <code>\sqrt{n}</code>, <code>\sum_{i=1}^{n}</code>,
+        <code>\alpha</code>.</p>
+
+      <div class="snippets">
+        <button type="button" data-snippet="\frac{}{}">frac</button>
+        <button type="button" data-snippet="^{}">x^n</button>
+        <button type="button" data-snippet="_{}">x_i</button>
+        <button type="button" data-snippet="\sqrt{}">√</button>
+        <button type="button" data-snippet="\sum_{i=1}^{n}">∑</button>
+        <button type="button" data-snippet="\int_{a}^{b}">∫</button>
+        <button type="button" data-snippet="\pi">π</button>
+        <button type="button" data-snippet="\alpha">α</button>
+        <button type="button" data-snippet="\times">×</button>
+        <button type="button" data-snippet="\leq">≤</button>
+      </div>
+
+      <textarea id="latex-input" rows="3" placeholder="e^{i\pi} + 1 = 0"
+                aria-label="LaTeX source" autocomplete="off" spellcheck="false"></textarea>
+
+      <label class="display-row">
+        <input type="checkbox" id="display-toggle"> Display on its own line (block)
+      </label>
+
+      <div class="preview-wrap">
+        <span class="preview-label">Preview</span>
+        <div id="formula-preview" class="preview"></div>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" id="formula-cancel">Cancel</button>
+        <button type="submit" class="primary">Insert</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+
+  <footer class="app-foot">
+    <p>Formulas compile from LaTeX to native <strong>MathML</strong> — no libraries.
+       Source idea:
+       <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/math-editor.md">app-ideas / Math Editor</a>.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
