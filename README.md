@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **18 / 33** |
+| 2 | Intermediate | 🚧 In progress — **19 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -91,6 +91,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 51 | [Markdown Previewer](./projects/2-intermediate/markdown-previewer/) | Intermediate | 2026-07-26 |
 | 52 | [Markdown Table Generator](./projects/2-intermediate/markdown-table-generator/) | Intermediate | 2026-07-27 |
 | 53 | [Math Editor](./projects/2-intermediate/math-editor/) | Intermediate | 2026-07-28 |
+| 54 | [Meme Generator](./projects/2-intermediate/meme-generator-app/) | Intermediate | 2026-07-29 |
 
 ## Repository layout
 
