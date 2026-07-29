@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meme Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🖼️ Meme Generator</h1>
+    <p class="tagline">Drop an image, add text, drag it around, draw on it, then save or share.</p>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="canvas" width="600" height="600"></canvas>
+        <p class="placeholder" id="placeholder">Upload an image to begin →</p>
+      </div>
+      <p class="hint" id="hint">Tip: drag either text line to reposition it. Switch to a Draw tool to sketch on top.</p>
+    </section>
+
+    <aside class="controls">
+      <div class="control-group">
+        <h2>1 · Image</h2>
+        <label class="file-btn">
+          <input type="file" id="imageInput" accept="image/*" />
+          <span>Upload image</span>
+        </label>
+        <button class="ghost" id="sampleBtn" type="button">Use a sample</button>
+      </div>
+
+      <div class="control-group">
+        <h2>2 · Text</h2>
+        <label class="field">
+          <span>Top text</span>
+          <input type="text" id="topText" placeholder="TOP TEXT" />
+        </label>
+        <label class="field">
+          <span>Bottom text</span>
+          <input type="text" id="bottomText" placeholder="BOTTOM TEXT" />
+        </label>
+      </div>
+
+      <div class="control-group">
+        <h2>3 · Style</h2>
+        <label class="field">
+          <span>Color</span>
+          <input type="color" id="textColor" value="#ffffff" />
+        </label>
+        <label class="field">
+          <span>Outline</span>
+          <input type="color" id="outlineColor" value="#000000" />
+        </label>
+        <label class="field">
+          <span>Size <output id="sizeOut">48</output>px</span>
+          <input type="range" id="fontSize" min="16" max="120" value="48" />
+        </label>
+        <label class="field">
+          <span>Font</span>
+          <select id="fontFamily">
+            <option value="Impact, 'Anton', sans-serif">Impact</option>
+            <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'Comic Sans MS', 'Comic Sans', cursive">Comic Sans</option>
+            <option value="'Courier New', monospace">Courier</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="control-group">
+        <h2>4 · Draw</h2>
+        <div class="tool-row" role="group" aria-label="Drawing tool">
+          <button class="tool active" data-tool="none" type="button">Move text</button>
+          <button class="tool" data-tool="free" type="button">Pencil</button>
+          <button class="tool" data-tool="rect" type="button">Rectangle</button>
+          <button class="tool" data-tool="circle" type="button">Circle</button>
+        </div>
+        <label class="field">
+          <span>Brush color</span>
+          <input type="color" id="brushColor" value="#e63946" />
+        </label>
+        <label class="field">
+          <span>Brush width <output id="brushOut">6</output>px</span>
+          <input type="range" id="brushWidth" min="1" max="40" value="6" />
+        </label>
+        <button class="ghost" id="undoBtn" type="button">Undo last shape</button>
+        <button class="ghost" id="clearDrawBtn" type="button">Clear drawings</button>
+      </div>
+
+      <div class="control-group">
+        <h2>5 · Export</h2>
+        <button class="primary" id="saveBtn" type="button">💾 Save meme</button>
+        <div class="share-row" aria-label="Share">
+          <button class="share tw" id="shareTwitter" type="button">Twitter / X</button>
+          <button class="share rd" id="shareReddit" type="button">Reddit</button>
+          <button class="share fb" id="shareFacebook" type="button">Facebook</button>
+        </div>
+        <p class="hint small">Sharing opens a pre-filled post. Attach the meme you just saved.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <p>
+      Built from the
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Meme-Generator-App.md" target="_blank" rel="noopener">app-ideas Meme Generator</a>
+      spec · part of an automated Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
