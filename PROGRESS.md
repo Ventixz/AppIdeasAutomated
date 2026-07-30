@@ -70,7 +70,7 @@ list, one project per day.
 - [x] Markdown Table Generator — 2026-07-27
 - [x] Math Editor — 2026-07-28
 - [x] Meme Generator App — 2026-07-29
-- [ ] Name Generation using RNNs
+- [x] Name Generation using RNNs — 2026-07-30
 - [ ] Password Generator
 - [ ] Podcast Directory
 - [ ] QR Code Badge Generator
