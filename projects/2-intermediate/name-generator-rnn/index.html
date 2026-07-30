@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Name Generator — a tiny RNN in your browser</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <header>
+      <h1>🧠 Name Generator</h1>
+      <p class="tagline">
+        A character-level <strong>recurrent neural network</strong> (a GRU) that
+        trains <em>live in your browser</em> on a list of names, then invents new
+        ones — no libraries, no server, no pre-baked weights.
+      </p>
+    </header>
+
+    <!-- training panel -->
+    <section id="training" class="panel">
+      <div class="train-row">
+        <span id="train-status" class="status">Warming up the network…</span>
+        <span id="loss-label" class="loss">loss —</span>
+      </div>
+      <div class="bar"><div id="bar-fill" class="bar-fill"></div></div>
+      <canvas id="loss-chart" width="560" height="70" aria-label="training loss over time"></canvas>
+    </section>
+
+    <!-- controls -->
+    <section class="panel controls" id="controls" hidden>
+      <div class="control">
+        <label for="prefix">Start with (2–3 letters)</label>
+        <input id="prefix" type="text" maxlength="3" placeholder="e.g. ma" autocomplete="off" />
+        <small>Leave blank to let the network start from scratch.</small>
+      </div>
+
+      <div class="control">
+        <label for="temp">Creativity <span id="temp-val">1.0</span></label>
+        <input id="temp" type="range" min="0.5" max="1.5" step="0.05" value="1.0" />
+        <small>Low = safe &amp; familiar · High = wild &amp; weird.</small>
+      </div>
+
+      <div class="control">
+        <label for="count">How many</label>
+        <input id="count" type="number" min="1" max="30" value="10" />
+      </div>
+
+      <div class="buttons">
+        <button id="generate" class="primary">Generate names</button>
+        <button id="retrain" class="ghost" title="Reinitialise and train again">Retrain ↻</button>
+      </div>
+    </section>
+
+    <section class="panel" id="results-panel" hidden>
+      <h2>Fresh names <small id="results-hint">(click one to copy)</small></h2>
+      <ul id="results" class="results"></ul>
+    </section>
+
+    <details class="how">
+      <summary>How does this actually work?</summary>
+      <p>
+        Every name is just a <strong>sequence of letters</strong>. The network reads
+        names one character at a time and learns to predict the next letter given
+        everything it has seen so far — including a special “end of name” marker so it
+        learns where names stop. That prediction is a probability distribution over
+        the alphabet.
+      </p>
+      <p>
+        The model is a <strong>GRU cell</strong> — update and reset gates over a hidden
+        state — with a softmax output layer, trained by
+        <strong>backpropagation through time</strong> with the Adam optimiser. All of
+        that math is hand-written in plain JavaScript in
+        <code>rnn.js</code>; the loss curve above is the network genuinely getting
+        better in real time.
+      </p>
+      <p>
+        To generate, we sample the next letter from the learned distribution and feed
+        it back in. Your prefix simply <em>seeds</em> the hidden state before sampling
+        begins. The <em>creativity</em> slider is the softmax <em>temperature</em>.
+      </p>
+    </details>
+  </main>
+
+  <footer class="site-footer">
+    Part of an automated <a href="https://claude.com/claude-code">Claude Code</a>
+    routine that builds one <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>
+    project per day.
+  </footer>
+
+  <script src="corpus.js"></script>
+  <script src="rnn.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
