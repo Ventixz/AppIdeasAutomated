@@ -71,7 +71,7 @@ list, one project per day.
 - [x] Math Editor — 2026-07-28
 - [x] Meme Generator App — 2026-07-29
 - [x] Name Generation using RNNs — 2026-07-30
-- [ ] Password Generator
+- [x] Password Generator — 2026-07-31
 - [ ] Podcast Directory
 - [ ] QR Code Badge Generator
 - [ ] Regular Expression Helper
