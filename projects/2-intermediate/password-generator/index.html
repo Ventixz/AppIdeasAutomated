@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__head">
+      <h1>🔐 Password Generator</h1>
+      <p class="app__sub">
+        Build a strong, random password. Choose a length, pick which character
+        types to include, then generate and copy.
+      </p>
+    </header>
+
+    <section class="card">
+      <!-- Generated password display -->
+      <div class="output" id="output">
+        <span class="output__placeholder">Your password will appear here…</span>
+      </div>
+
+      <!-- Strength meter (bonus) -->
+      <div class="strength" aria-live="polite">
+        <div class="strength__bar">
+          <div class="strength__fill" id="strengthFill"></div>
+        </div>
+        <span class="strength__label" id="strengthLabel">—</span>
+      </div>
+
+      <!-- Length -->
+      <div class="row">
+        <div class="field">
+          <label class="field__label" for="length">
+            Length <span class="length-value" id="lengthValue">16</span>
+          </label>
+          <input
+            type="range"
+            id="length"
+            class="slider"
+            min="4"
+            max="64"
+            value="16"
+          />
+        </div>
+      </div>
+
+      <!-- Character type options -->
+      <fieldset class="row options">
+        <legend class="field__label">Include</legend>
+        <label class="opt">
+          <input type="checkbox" id="uppercase" checked />
+          <span>Uppercase <code>A–Z</code></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="lowercase" checked />
+          <span>Lowercase <code>a–z</code></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="numbers" checked />
+          <span>Numbers <code>0–9</code></span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="symbols" />
+          <span>Symbols <code>!@#$…</code></span>
+        </label>
+      </fieldset>
+
+      <p class="error" id="error"></p>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn--primary" id="generate">Generate password</button>
+        <button class="btn" id="copy">Copy to clipboard</button>
+      </div>
+
+      <p class="status" id="status"></p>
+    </section>
+
+    <footer class="app__foot">
+      <p>
+        Built by an automated
+        <a href="https://claude.com/claude-code">Claude Code</a> routine ·
+        <a href="https://github.com/florinpop17/app-ideas">app-ideas</a>
+      </p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
