@@ -72,7 +72,7 @@ list, one project per day.
 - [x] Meme Generator App — 2026-07-29
 - [x] Name Generation using RNNs — 2026-07-30
 - [x] Password Generator — 2026-07-31
-- [ ] Podcast Directory
+- [x] Podcast Directory — 2026-08-01
 - [ ] QR Code Badge Generator
 - [ ] Regular Expression Helper
 - [ ] Sales Receipts App
