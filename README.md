@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **21 / 33** |
+| 2 | Intermediate | 🚧 In progress — **22 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -94,6 +94,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 54 | [Meme Generator](./projects/2-intermediate/meme-generator-app/) | Intermediate | 2026-07-29 |
 | 55 | [Name Generator (RNN)](./projects/2-intermediate/name-generator-rnn/) | Intermediate | 2026-07-30 |
 | 56 | [Password Generator](./projects/2-intermediate/password-generator/) | Intermediate | 2026-07-31 |
+| 57 | [Podcast Directory](./projects/2-intermediate/podcast-directory/) | Intermediate | 2026-08-01 |
 
 ## Repository layout
 

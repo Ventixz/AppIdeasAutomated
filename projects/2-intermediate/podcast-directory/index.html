@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Podcast Directory</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Podcast Directory</h1>
+      <p class="tagline">
+        Recent episodes from two podcasts, merged and sorted newest&nbsp;first.
+      </p>
+    </header>
+
+    <!-- Bonus: summary with per-podcast counts and include toggles -->
+    <section class="summary" aria-label="Podcast summary">
+      <h2>Podcasts</h2>
+      <ul id="summary-list" class="summary-list"></ul>
+      <p class="total" id="total-line"></p>
+    </section>
+
+    <section class="table-wrap" aria-label="Episodes">
+      <table class="episodes">
+        <thead>
+          <tr>
+            <th scope="col" class="col-icon"><span class="sr-only">Play</span></th>
+            <th scope="col">Episode</th>
+            <th scope="col">Podcast</th>
+            <th scope="col" class="col-date">Broadcast</th>
+          </tr>
+        </thead>
+        <tbody id="episode-rows"></tbody>
+      </table>
+      <p id="empty-note" class="empty-note" hidden>
+        No podcasts selected — tick a checkbox above to show episodes.
+      </p>
+    </section>
+  </main>
+
+  <script src="episodes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
