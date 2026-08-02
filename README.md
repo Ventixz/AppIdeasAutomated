@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **22 / 33** |
+| 2 | Intermediate | 🚧 In progress — **23 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -95,6 +95,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 55 | [Name Generator (RNN)](./projects/2-intermediate/name-generator-rnn/) | Intermediate | 2026-07-30 |
 | 56 | [Password Generator](./projects/2-intermediate/password-generator/) | Intermediate | 2026-07-31 |
 | 57 | [Podcast Directory](./projects/2-intermediate/podcast-directory/) | Intermediate | 2026-08-01 |
+| 58 | [QRCode Badge Generator](./projects/2-intermediate/qrcode-badge-generator/) | Intermediate | 2026-08-02 |
 
 ## Repository layout
 
@@ -133,6 +134,10 @@ open projects/2-intermediate/calculator-cli/index.html          # same engine, i
 The **Chrome Theme Extension** ships a browser-based theme customizer (open its
 `index.html`) *and* a real, loadable MV3 extension in its `extension/` folder —
 load it via `chrome://extensions` → Developer mode → Load unpacked.
+
+The **QRCode Badge Generator** vendors the `qrcode-generator` NPM package (the
+one its spec calls for) alongside the app, so it produces genuinely scannable QR
+badges with no build step and no network access.
 
 ---
 
