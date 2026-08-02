@@ -73,7 +73,7 @@ list, one project per day.
 - [x] Name Generation using RNNs — 2026-07-30
 - [x] Password Generator — 2026-07-31
 - [x] Podcast Directory — 2026-08-01
-- [ ] QR Code Badge Generator
+- [x] QR Code Badge Generator — 2026-08-02
 - [ ] Regular Expression Helper
 - [ ] Sales Receipts App
 - [ ] Simple Online Store

@@ -1,0 +1,192 @@
+:root {
+  --bg: #0f172a;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --brand: #2563eb;
+  --brand-dark: #1d4ed8;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --badge-red: #e11d48;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(1200px 600px at 20% -10%, #1e293b, var(--bg));
+  padding: 2rem 1rem 3rem;
+}
+
+.page-head {
+  max-width: 960px;
+  margin: 0 auto 1.75rem;
+  text-align: center;
+  color: #e2e8f0;
+}
+.page-head h1 { margin: 0 0 .4rem; font-size: 2rem; letter-spacing: -.02em; }
+.tagline { margin: 0 auto; max-width: 44rem; color: #94a3b8; line-height: 1.5; }
+
+.layout {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 1.4rem 1.4rem 1.6rem;
+  box-shadow: 0 12px 30px rgba(2, 6, 23, .35);
+}
+.panel h2 { margin: 0 0 1rem; font-size: 1.15rem; }
+
+/* Form */
+.field { display: block; margin-bottom: .9rem; }
+.field > span {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  margin-bottom: .3rem;
+  color: #334155;
+}
+.field .req { color: var(--danger); text-decoration: none; }
+.field .opt { color: var(--muted); font-weight: 400; font-style: normal; }
+.field input {
+  width: 100%;
+  padding: .6rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: .95rem;
+  transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+.field input.invalid { border-color: var(--danger); }
+
+.errors {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+.errors:not(:empty) {
+  background: var(--danger-bg);
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  padding: .6rem .8rem;
+}
+.errors li {
+  color: var(--danger);
+  font-size: .84rem;
+  padding: .12rem 0 .12rem 1.1rem;
+  position: relative;
+}
+.errors li::before { content: "⚠"; position: absolute; left: 0; }
+
+.actions { display: flex; gap: .6rem; justify-content: flex-end; }
+.btn {
+  border: 0;
+  border-radius: 9px;
+  padding: .6rem 1.1rem;
+  font-size: .92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, transform .05s, opacity .15s;
+}
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--brand); color: #fff; }
+.btn.primary:hover { background: var(--brand-dark); }
+.btn.ghost { background: #f1f5f9; color: #334155; }
+.btn.ghost:hover { background: #e2e8f0; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Badge */
+.badge-empty {
+  border: 2px dashed var(--line);
+  border-radius: 12px;
+  padding: 2.2rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.badge {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+}
+.badge-header {
+  background: var(--badge-red);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .8rem;
+  padding: .55rem;
+}
+.badge-name {
+  font-size: 1.9rem;
+  font-weight: 800;
+  padding: 1rem .8rem .4rem;
+  word-break: break-word;
+}
+.badge-info {
+  margin: 0;
+  padding: 0 1.2rem .6rem;
+  font-size: .88rem;
+  color: #334155;
+}
+.badge-info .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .2rem 0;
+  border-top: 1px solid var(--line);
+}
+.badge-info dt { font-weight: 600; color: var(--muted); }
+.badge-info dd { margin: 0; text-align: right; word-break: break-all; }
+
+.badge-qr {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.badge-qr svg, .badge-qr img { width: 190px; height: 190px; }
+.badge-foot {
+  font-size: .75rem;
+  color: var(--muted);
+  padding: 0 1rem 1rem;
+}
+
+.print-btn { display: block; width: 100%; margin-top: 1rem; }
+
+.page-foot {
+  max-width: 960px;
+  margin: 2.5rem auto 0;
+  text-align: center;
+  color: #64748b;
+  font-size: .8rem;
+}
+.page-foot a { color: #93c5fd; }
+
+/* Print: only the badge on the page */
+@media print {
+  body { background: #fff; padding: 0; }
+  .page-head, .page-foot, .input-panel, .print-btn, #badge-empty { display: none !important; }
+  .layout { display: block; }
+  .badge-panel { box-shadow: none; padding: 0; }
+  .badge-panel h2 { display: none; }
+  .badge { width: 3.5in; margin: .5in auto; border-color: #000; }
+}
