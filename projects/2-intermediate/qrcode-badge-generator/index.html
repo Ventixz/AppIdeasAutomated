@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QRCode Badge Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="page-head">
+    <h1>QRCode Badge Generator</h1>
+    <p class="tagline">
+      Collect attendee details at an event and turn them into a scannable name
+      badge. The QR code encodes a vCard, so a phone camera reads it straight
+      into Contacts.
+    </p>
+  </header>
+
+  <main class="layout">
+    <!-- Input panel -->
+    <section class="panel input-panel" aria-labelledby="input-heading">
+      <h2 id="input-heading">Attendee details</h2>
+
+      <form id="badge-form" novalidate>
+        <label class="field">
+          <span>Name <abbr title="required" class="req">*</abbr></span>
+          <input type="text" id="name" name="name"
+                 placeholder="First Last" autocomplete="name" />
+        </label>
+
+        <label class="field">
+          <span>Email <abbr title="required" class="req">*</abbr></span>
+          <input type="email" id="email" name="email"
+                 placeholder="you@example.com" autocomplete="email" />
+        </label>
+
+        <label class="field">
+          <span>Twitter <em class="opt">(optional)</em></span>
+          <input type="text" id="twitter" name="twitter"
+                 placeholder="@handle" autocomplete="off" />
+        </label>
+
+        <label class="field">
+          <span>GitHub <em class="opt">(optional)</em></span>
+          <input type="text" id="github" name="github"
+                 placeholder="username" autocomplete="off" />
+        </label>
+
+        <ul id="errors" class="errors" role="alert" aria-live="assertive"></ul>
+
+        <div class="actions">
+          <button type="button" id="cancel" class="btn ghost">Cancel</button>
+          <button type="submit" id="create" class="btn primary">Create badge</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Badge panel -->
+    <section class="panel badge-panel" aria-labelledby="badge-heading">
+      <h2 id="badge-heading">Badge preview</h2>
+
+      <div id="badge-empty" class="badge-empty">
+        Fill in the form and press <strong>Create badge</strong> to see the
+        printable badge here.
+      </div>
+
+      <div id="badge" class="badge" hidden>
+        <div class="badge-header">HELLO my name is</div>
+        <div class="badge-name" id="b-name"></div>
+        <dl class="badge-info">
+          <div class="row"><dt>Email</dt><dd id="b-email"></dd></div>
+          <div class="row" id="b-twitter-row"><dt>Twitter</dt><dd id="b-twitter"></dd></div>
+          <div class="row" id="b-github-row"><dt>GitHub</dt><dd id="b-github"></dd></div>
+        </dl>
+        <div class="badge-qr" id="b-qr" aria-label="Scannable QR code"></div>
+        <div class="badge-foot">Scan me to save this contact</div>
+      </div>
+
+      <button type="button" id="print" class="btn primary print-btn" disabled>
+        Print badge
+      </button>
+    </section>
+  </main>
+
+  <footer class="page-foot">
+    Built by an automated Claude Code routine ·
+    <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/QRCode-Badge-App.md">app-ideas spec</a>
+    · QR encoding by the
+    <a href="https://github.com/kazuhikoarase/qrcode-generator">qrcode-generator</a> package (MIT)
+  </footer>
+
+  <!-- Vendored QRCode Generator NPM package + UTF-8 support -->
+  <script src="qrcode.js"></script>
+  <script src="qrcode_UTF8.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
