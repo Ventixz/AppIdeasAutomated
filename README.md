@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **23 / 33** |
+| 2 | Intermediate | 🚧 In progress — **24 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -96,6 +96,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 56 | [Password Generator](./projects/2-intermediate/password-generator/) | Intermediate | 2026-07-31 |
 | 57 | [Podcast Directory](./projects/2-intermediate/podcast-directory/) | Intermediate | 2026-08-01 |
 | 58 | [QRCode Badge Generator](./projects/2-intermediate/qrcode-badge-generator/) | Intermediate | 2026-08-02 |
+| 59 | [Regular Expression Helper](./projects/2-intermediate/regexp-helper/) | Intermediate | 2026-08-03 |
 
 ## Repository layout
 
@@ -138,6 +139,14 @@ load it via `chrome://extensions` → Developer mode → Load unpacked.
 The **QRCode Badge Generator** vendors the `qrcode-generator` NPM package (the
 one its spec calls for) alongside the app, so it produces genuinely scannable QR
 badges with no build step and no network access.
+
+The **Regular Expression Helper** keeps its matching logic in a pure,
+DOM-free module (`regex-core.js`) and ships a dependency-free, Jest-compatible
+test suite for it — run it standalone with `node`:
+
+```bash
+node projects/2-intermediate/regexp-helper/tests.js   # -> All 15 tests passed.
+```
 
 ---
 

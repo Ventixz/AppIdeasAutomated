@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regular Expression Helper</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="page-head">
+    <h1>Regular Expression Helper</h1>
+    <p class="tagline">
+      A concise way to describe a pattern that can test, search, match, replace
+      or split a string. Type a regular expression, give it some text to run
+      against, and see exactly what it finds — with every match highlighted.
+    </p>
+  </header>
+
+  <main class="layout">
+    <!-- Input panel -->
+    <section class="panel input-panel" aria-labelledby="input-heading">
+      <h2 id="input-heading">Pattern &amp; test string</h2>
+
+      <form id="regex-form" novalidate>
+        <label class="field">
+          <span>Regular expression <abbr title="required" class="req">*</abbr></span>
+          <div class="regex-input">
+            <span class="slash">/</span>
+            <input type="text" id="pattern" name="pattern"
+                   placeholder="\b[a-z]+\b" autocomplete="off"
+                   autocapitalize="off" spellcheck="false" />
+            <span class="slash">/</span>
+            <input type="text" id="flags" name="flags" class="flags-input"
+                   placeholder="flags" autocomplete="off"
+                   autocapitalize="off" spellcheck="false" readonly
+                   aria-label="Active flags" />
+          </div>
+        </label>
+
+        <fieldset class="field flags-field">
+          <legend><span>Flags <em class="opt">(optional)</em></span></legend>
+          <div class="flag-list">
+            <label class="flag"><input type="checkbox" id="flag-g" value="g" /> <code>g</code> global</label>
+            <label class="flag"><input type="checkbox" id="flag-i" value="i" /> <code>i</code> case&nbsp;insensitive</label>
+            <label class="flag"><input type="checkbox" id="flag-m" value="m" /> <code>m</code> multiline</label>
+            <label class="flag"><input type="checkbox" id="flag-y" value="y" /> <code>y</code> sticky</label>
+          </div>
+        </fieldset>
+
+        <label class="field">
+          <span>Function <em class="opt">(optional)</em></span>
+          <select id="fn" name="fn">
+            <option value="test">test() — does the pattern match?</option>
+            <option value="search">search() — index of first match</option>
+            <option value="match" selected>match() — the matched text</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Test string <abbr title="required" class="req">*</abbr></span>
+          <textarea id="text" name="text" rows="6"
+                    placeholder="Enter the text you want to run the expression against…"
+                    spellcheck="false"></textarea>
+        </label>
+
+        <ul id="errors" class="errors" role="alert" aria-live="assertive"></ul>
+
+        <div class="actions">
+          <button type="button" id="clear" class="btn ghost">Clear</button>
+          <button type="submit" id="run" class="btn primary">Run</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Result panel -->
+    <section class="panel result-panel" aria-labelledby="result-heading">
+      <h2 id="result-heading">Result</h2>
+
+      <div id="result-empty" class="result-empty">
+        Enter a pattern and a test string, then press <strong>Run</strong> to see
+        the matches highlighted here.
+      </div>
+
+      <div id="result" hidden>
+        <p id="summary" class="summary" aria-live="polite"></p>
+        <div class="highlight-box">
+          <div id="highlight" class="highlight" aria-label="Test string with matches highlighted"></div>
+        </div>
+        <table class="matches" id="matches-table" hidden>
+          <thead><tr><th>#</th><th>Match</th><th>Index</th></tr></thead>
+          <tbody id="matches-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-foot">
+    Built by an automated Claude Code routine ·
+    <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/RegExp-Helper-App.md">app-ideas spec</a>
+    · Pattern matching powered by the browser's own
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp"><code>RegExp</code></a>
+  </footer>
+
+  <script src="regex-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
