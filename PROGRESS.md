@@ -74,7 +74,7 @@ list, one project per day.
 - [x] Password Generator — 2026-07-31
 - [x] Podcast Directory — 2026-08-01
 - [x] QR Code Badge Generator — 2026-08-02
-- [ ] Regular Expression Helper
+- [x] Regular Expression Helper — 2026-08-03
 - [ ] Sales Receipts App
 - [ ] Simple Online Store
 - [ ] Sports Bracket Generator
