@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **24 / 33** |
+| 2 | Intermediate | 🚧 In progress — **25 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -97,6 +97,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 57 | [Podcast Directory](./projects/2-intermediate/podcast-directory/) | Intermediate | 2026-08-01 |
 | 58 | [QRCode Badge Generator](./projects/2-intermediate/qrcode-badge-generator/) | Intermediate | 2026-08-02 |
 | 59 | [Regular Expression Helper](./projects/2-intermediate/regexp-helper/) | Intermediate | 2026-08-03 |
+| 60 | [Sales Receipts App](./projects/2-intermediate/sales-receipts-app/) | Intermediate | 2026-08-04 |
 
 ## Repository layout
 
@@ -146,6 +147,16 @@ test suite for it — run it standalone with `node`:
 
 ```bash
 node projects/2-intermediate/regexp-helper/tests.js   # -> All 15 tests passed.
+```
+
+The **Sales Receipts App** is a frontend point-of-sale terminal that saves each
+finished sale into the browser's own **IndexedDB** — no server, no accounts,
+fully offline. Its cart and money logic is kept pure (integer cents, immutable
+updates) in `receipt-core.js`, separate from the DOM and from storage, so it
+ships its own dependency-free, Jest-compatible test suite:
+
+```bash
+node projects/2-intermediate/sales-receipts-app/tests.js   # -> All 16 tests passed.
 ```
 
 ---
