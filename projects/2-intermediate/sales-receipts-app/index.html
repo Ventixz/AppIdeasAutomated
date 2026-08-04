@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Receipts — Point of Sale</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="page-head">
+    <h1>🧾 Sales Receipts</h1>
+    <p class="tagline">
+      A tiny point-of-sale terminal. Tap items to ring them up, check out to save
+      the receipt in your browser's own database, and pull the day's takings back
+      up at any time — all offline, no server, no accounts.
+    </p>
+  </header>
+
+  <main class="layout">
+    <!-- Purchase panel: the tappable catalogue -->
+    <section class="panel purchase-panel" aria-labelledby="purchase-heading">
+      <h2 id="purchase-heading">Purchase</h2>
+      <p class="hint">Tap an item to add it to the current sale.</p>
+      <div id="item-grid" class="item-grid" role="group" aria-label="Items for sale">
+        <!-- item buttons injected by script.js -->
+      </div>
+    </section>
+
+    <!-- Receipt panel: the running sale -->
+    <section class="panel receipt-panel" aria-labelledby="receipt-heading">
+      <h2 id="receipt-heading">Receipt</h2>
+
+      <label class="field customer-field">
+        <span>Customer name <small>(optional)</small></span>
+        <input type="text" id="customer" name="customer" placeholder="Guest"
+               autocomplete="off" maxlength="40" />
+      </label>
+
+      <p id="receipt-time" class="receipt-time" aria-live="polite"></p>
+
+      <ul id="receipt-lines" class="receipt-lines" aria-live="polite">
+        <!-- current cart lines injected by script.js -->
+      </ul>
+      <p id="receipt-empty" class="receipt-empty">No items yet — tap something above.</p>
+
+      <div class="total-row">
+        <span>Total</span>
+        <span id="total" class="total-amount">$0.00</span>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="clear-entry" class="btn btn-soft">Clear Entry</button>
+        <button type="button" id="cancel-all" class="btn btn-soft">Cancel All</button>
+        <button type="button" id="checkout" class="btn btn-primary">Checkout</button>
+      </div>
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <!-- Daily sales report -->
+  <section class="panel report-panel" aria-labelledby="report-heading">
+    <div class="report-head">
+      <h2 id="report-heading">Daily Sales</h2>
+      <div class="report-actions">
+        <button type="button" id="daily-sales" class="btn btn-soft">Show Daily Sales</button>
+        <button type="button" id="clear-db" class="btn btn-danger">Clear All (wipe DB)</button>
+      </div>
+    </div>
+    <div id="report-summary" class="report-summary" aria-live="polite"></div>
+    <div id="report-body" class="report-body"></div>
+  </section>
+
+  <footer class="page-foot">
+    <p>
+      Built automatically by a <a href="https://claude.com/claude-code">Claude Code</a>
+      routine · idea from
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Sales-DB-App.md">app-ideas</a>
+    </p>
+  </footer>
+
+  <script src="inventory.js"></script>
+  <script src="receipt-core.js"></script>
+  <script src="db.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
