@@ -75,7 +75,7 @@ list, one project per day.
 - [x] Podcast Directory — 2026-08-01
 - [x] QR Code Badge Generator — 2026-08-02
 - [x] Regular Expression Helper — 2026-08-03
-- [ ] Sales Receipts App
+- [x] Sales Receipts App — 2026-08-04
 - [ ] Simple Online Store
 - [ ] Sports Bracket Generator
 - [ ] String Art
