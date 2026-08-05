@@ -1,0 +1,229 @@
+/* style.css — Corner Shop storefront styling. */
+
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --ink: #1c2230;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #2f6df6;
+  --accent-ink: #ffffff;
+  --good: #10893e;
+  --shadow: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ---- top bar ----------------------------------------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem 1.25rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.topnav { display: flex; align-items: center; gap: .5rem; }
+
+.link-btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  font-size: .95rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.link-btn:hover { border-color: var(--accent); }
+.cart-btn { position: relative; }
+.badge {
+  display: inline-block;
+  min-width: 1.25rem;
+  padding: 0 .35rem;
+  margin-left: .25rem;
+  font-size: .8rem;
+  line-height: 1.25rem;
+  text-align: center;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+/* ---- layout ------------------------------------------------------------ */
+.view {
+  flex: 1;
+  width: min(1000px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: .85rem;
+  padding: 1rem;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+
+/* ---- buttons ----------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  border: 0;
+  border-radius: 8px;
+  padding: .6rem 1.1rem;
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--accent-ink);
+  transition: filter .15s;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn.secondary {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn.danger { background: #d64545; }
+.btn:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+
+/* ---- landing ----------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: linear-gradient(160deg, #eaf0ff, #f6f7fb);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.hero h1 { font-size: 2.2rem; margin: 0 0 .5rem; }
+.hero p { color: var(--muted); font-size: 1.1rem; margin: 0 0 1.5rem; }
+.hero .cta { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+
+/* ---- product grid ------------------------------------------------------ */
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.page-head h2 { margin: 0; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.card .thumb { font-size: 2.75rem; text-align: center; }
+.card h3 { margin: .25rem 0 0; font-size: 1.05rem; }
+.card .blurb { color: var(--muted); font-size: .88rem; flex: 1; margin: 0; }
+.card .price { font-weight: 700; font-size: 1.05rem; }
+.card .row { display: flex; gap: .5rem; }
+.card .row .btn { flex: 1; text-align: center; }
+
+/* ---- product details --------------------------------------------------- */
+.detail {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.detail .bigthumb { font-size: 6rem; text-align: center; }
+.detail h2 { margin: 0 0 .25rem; }
+.detail .id { color: var(--muted); font-size: .8rem; letter-spacing: .04em; }
+.detail .price { font-size: 1.5rem; font-weight: 700; margin: .5rem 0; }
+.detail .stock { color: var(--good); font-size: .85rem; }
+.detail .stock.out { color: #d64545; }
+.detail .actions { display: flex; gap: .75rem; margin-top: 1rem; flex-wrap: wrap; }
+
+/* ---- cart -------------------------------------------------------------- */
+.cart-table { width: 100%; border-collapse: collapse; }
+.cart-table th, .cart-table td {
+  text-align: left;
+  padding: .75rem .5rem;
+  border-bottom: 1px solid var(--line);
+}
+.cart-table th { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.cart-table td.num, .cart-table th.num { text-align: right; }
+.qty-input {
+  width: 4rem;
+  padding: .35rem .4rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: .95rem;
+  text-align: center;
+}
+.cart-total-row td { font-weight: 700; font-size: 1.05rem; border-bottom: 0; }
+.cart-actions { display: flex; gap: .75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.link-remove {
+  border: 0; background: none; color: #d64545;
+  cursor: pointer; font-size: .85rem; text-decoration: underline;
+}
+
+/* ---- empty / confirmation states -------------------------------------- */
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 3rem 1rem;
+}
+.confirm {
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+.confirm .check { font-size: 3rem; }
+.confirm h2 { margin: .5rem 0; }
+.confirm .order-no {
+  display: inline-block;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 1.3rem;
+  background: #eef3ff;
+  color: var(--accent);
+  padding: .4rem .9rem;
+  border-radius: 8px;
+  margin: .5rem 0 1.25rem;
+}
+
+/* ---- responsive -------------------------------------------------------- */
+@media (max-width: 560px) {
+  .detail { grid-template-columns: 1fr; }
+  .detail .bigthumb { font-size: 4rem; }
+  .hero h1 { font-size: 1.7rem; }
+}
