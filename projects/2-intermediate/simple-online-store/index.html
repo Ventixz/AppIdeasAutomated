@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corner Shop — Simple Online Store</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/" data-nav="/">🛍️ Corner Shop</a>
+    <nav class="topnav">
+      <button data-nav="/products" class="link-btn">View Products</button>
+      <button data-nav="/cart" class="link-btn cart-btn">
+        Shopping Cart <span id="cartBadge" class="badge" hidden>0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="view" class="view"><!-- rendered by script.js --></main>
+
+  <footer class="footer">
+    <span>🤖 Built by an automated Claude Code routine · frontend-only, no server.</span>
+  </footer>
+
+  <!-- Order of loading matters: data, then pure logic, then DOM wiring. -->
+  <script src="catalog.js"></script>
+  <script src="store-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
