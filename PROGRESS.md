@@ -76,7 +76,7 @@ list, one project per day.
 - [x] QR Code Badge Generator — 2026-08-02
 - [x] Regular Expression Helper — 2026-08-03
 - [x] Sales Receipts App — 2026-08-04
-- [ ] Simple Online Store
+- [x] Simple Online Store — 2026-08-05
 - [ ] Sports Bracket Generator
 - [ ] String Art
 - [ ] This or That Game
