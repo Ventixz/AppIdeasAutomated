@@ -77,7 +77,7 @@ list, one project per day.
 - [x] Regular Expression Helper — 2026-08-03
 - [x] Sales Receipts App — 2026-08-04
 - [x] Simple Online Store — 2026-08-05
-- [ ] Sports Bracket Generator
+- [x] Sports Bracket Generator — 2026-08-06
 - [ ] String Art
 - [ ] This or That Game
 - [ ] Timezone Slackbot

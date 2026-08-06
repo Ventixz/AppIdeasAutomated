@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sports Bracket Generator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>🏆 Sports Bracket Generator</h1>
+      <p class="tagline">
+        Name a tournament, set the dates, drop in your teams — and watch the
+        bracket draw itself. Click a team to advance them round by round.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="setup-heading">
+        <h2 id="setup-heading">Set up the tournament</h2>
+        <form id="setup-form" novalidate>
+          <div class="field">
+            <label for="tname">Tournament name</label>
+            <input id="tname" name="tname" type="text" placeholder="Summer Cup 2026" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="start">Start date</label>
+              <input id="start" name="start" type="date" />
+            </div>
+            <div class="field">
+              <label for="end">End date</label>
+              <input id="end" name="end" type="date" />
+            </div>
+          </div>
+          <p id="date-warning" class="warning" role="alert" hidden></p>
+
+          <div class="field">
+            <label for="teams">Number of competing teams</label>
+            <input id="teams" name="teams" type="number" min="2" max="64" step="1" value="8" />
+          </div>
+          <p id="team-warning" class="warning" role="alert" hidden></p>
+
+          <fieldset class="field names-field">
+            <legend>
+              Team names <span class="muted">(optional — seeded 1 to N)</span>
+            </legend>
+            <div id="team-names" class="team-names"></div>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit" class="primary">Generate bracket</button>
+            <button type="button" id="clear-btn" class="ghost">Clear saved</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel bracket-panel" aria-labelledby="bracket-heading">
+        <div class="bracket-header">
+          <h2 id="bracket-heading">Bracket</h2>
+          <p id="bracket-meta" class="muted"></p>
+        </div>
+        <div id="champion-banner" class="champion" hidden></div>
+        <div id="bracket" class="bracket" tabindex="0">
+          <p class="empty-hint">Fill in the form and hit <em>Generate bracket</em>.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="pagefoot">
+      <p>
+        Part of an
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Sports-Bracket-Generator.md"
+          >app-ideas</a
+        >
+        build, made by an automated Claude Code routine.
+      </p>
+    </footer>
+
+    <script src="bracket-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
