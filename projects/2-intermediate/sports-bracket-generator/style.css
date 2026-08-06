@@ -1,0 +1,316 @@
+:root {
+  --bg: #0f1720;
+  --panel: #172230;
+  --panel-2: #1f2d3d;
+  --ink: #e8eef5;
+  --muted: #93a4b7;
+  --line: #2c3e52;
+  --accent: #4fd1a5;
+  --accent-ink: #06231a;
+  --warn-bg: #3a2a12;
+  --warn-ink: #ffd9a0;
+  --win: #4fd1a5;
+  --radius: 10px;
+  --gap: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.topbar {
+  padding: 28px 20px 12px;
+  text-align: center;
+}
+.topbar h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+}
+.tagline {
+  margin: 0 auto;
+  max-width: 620px;
+  color: var(--muted);
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 20px 48px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--gap);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.panel h2 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+
+/* ---- form ---- */
+.field {
+  margin-bottom: 14px;
+}
+.field-row {
+  display: flex;
+  gap: 12px;
+}
+.field-row .field {
+  flex: 1;
+}
+label,
+legend {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  width: 100%;
+  padding: 9px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.names-field {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.names-field legend {
+  padding: 0 6px;
+}
+.team-names {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.team-names .seed-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.team-names .seed-input span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  width: 22px;
+  text-align: right;
+  flex: none;
+}
+.team-names input {
+  padding: 6px 8px;
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 7px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+button.primary:hover {
+  filter: brightness(1.08);
+}
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--line);
+}
+button.ghost:hover {
+  color: var(--ink);
+}
+
+.warning {
+  margin: -6px 0 12px;
+  padding: 8px 10px;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+  border-radius: 7px;
+  font-size: 0.85rem;
+}
+.muted {
+  color: var(--muted);
+}
+
+/* ---- bracket ---- */
+.bracket-panel {
+  min-height: 260px;
+  overflow: hidden;
+}
+.bracket-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.champion {
+  margin: 12px 0 4px;
+  padding: 12px 14px;
+  background: linear-gradient(90deg, #123, #1c3b30);
+  border: 1px solid var(--win);
+  border-radius: 8px;
+  font-weight: 600;
+}
+.champion .trophy {
+  margin-right: 6px;
+}
+
+.bracket {
+  display: flex;
+  gap: 40px;
+  overflow-x: auto;
+  padding: 18px 4px 10px;
+}
+.empty-hint {
+  color: var(--muted);
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-width: 190px;
+}
+.round-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.match {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+.match-date {
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 3px 8px 0;
+}
+.match-date input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  background: transparent;
+  border: 1px dashed var(--line);
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: none;
+  width: 100%;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.slot + .slot {
+  border-top: 1px solid var(--line);
+}
+.slot:hover:not(:disabled) {
+  background: #24374b;
+}
+.slot:disabled {
+  cursor: default;
+  color: var(--muted);
+}
+.slot .seed {
+  font-size: 0.7rem;
+  color: var(--muted);
+  width: 18px;
+  flex: none;
+}
+.slot .name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.slot .score {
+  width: 34px;
+  flex: none;
+  padding: 2px 4px;
+  font-size: 0.8rem;
+  text-align: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--ink);
+}
+.slot.won {
+  background: rgba(79, 209, 165, 0.14);
+}
+.slot.won .name {
+  color: var(--win);
+  font-weight: 600;
+}
+.slot.won::after {
+  content: "▸";
+  color: var(--win);
+}
+.slot.bye .name,
+.slot.tbd .name {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.pagefoot {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 10px 20px 40px;
+}
+.pagefoot a {
+  color: var(--accent);
+}
