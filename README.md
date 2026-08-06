@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **26 / 33** |
+| 2 | Intermediate | 🚧 In progress — **27 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -99,6 +99,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 59 | [Regular Expression Helper](./projects/2-intermediate/regexp-helper/) | Intermediate | 2026-08-03 |
 | 60 | [Sales Receipts App](./projects/2-intermediate/sales-receipts-app/) | Intermediate | 2026-08-04 |
 | 61 | [Simple Online Store](./projects/2-intermediate/simple-online-store/) | Intermediate | 2026-08-05 |
+| 62 | [Sports Bracket Generator](./projects/2-intermediate/sports-bracket-generator/) | Intermediate | 2026-08-06 |
 
 ## Repository layout
 
@@ -158,6 +159,17 @@ ships its own dependency-free, Jest-compatible test suite:
 
 ```bash
 node projects/2-intermediate/sales-receipts-app/tests.js   # -> All 16 tests passed.
+```
+
+The **Sports Bracket Generator** draws a full single-elimination bracket from a
+team count, seeds it with the standard recursive order, hands out first-round
+byes for odd/non-power-of-two counts, and lets you click a team to advance them.
+All of the seeding and advancement logic is pure and DOM-free in
+`bracket-core.js` (immutable `setWinner`, no `Math.random()`), with its own
+dependency-free test suite:
+
+```bash
+node projects/2-intermediate/sports-bracket-generator/tests.js   # -> All 19 tests passed.
 ```
 
 ---
