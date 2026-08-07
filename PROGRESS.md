@@ -78,7 +78,7 @@ list, one project per day.
 - [x] Sales Receipts App — 2026-08-04
 - [x] Simple Online Store — 2026-08-05
 - [x] Sports Bracket Generator — 2026-08-06
-- [ ] String Art
+- [x] String Art — 2026-08-07
 - [ ] This or That Game
 - [ ] Timezone Slackbot
 - [ ] To-Do App

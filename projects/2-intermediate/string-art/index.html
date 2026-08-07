@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>String Art</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>String Art</h1>
+    <p class="tagline">
+      A multicolored line drifts across the canvas, bounces off the walls, and
+      leaves a fading ripple behind it. Pure canvas — no animation libraries.
+    </p>
+  </header>
+
+  <main>
+    <div class="stage">
+      <canvas id="canvas" width="720" height="480" aria-label="String art animation"></canvas>
+    </div>
+
+    <form id="controls" class="controls" aria-label="Animation controls">
+      <div class="field">
+        <label for="lines">Lines <output id="linesOut">1</output></label>
+        <input id="lines" type="range" min="1" max="8" value="1" step="1" />
+      </div>
+      <div class="field">
+        <label for="length">Line length <output id="lengthOut">160</output>px</label>
+        <input id="length" type="range" min="40" max="400" value="160" step="10" />
+      </div>
+      <div class="field">
+        <label for="speed">Velocity <output id="speedOut">4</output></label>
+        <input id="speed" type="range" min="1" max="12" value="4" step="1" />
+      </div>
+      <div class="field">
+        <label for="trail">Trail length <output id="trailOut">16</output></label>
+        <input id="trail" type="range" min="4" max="40" value="16" step="1" />
+      </div>
+      <div class="buttons">
+        <button type="button" id="pause">Pause</button>
+        <button type="button" id="reset">Reset</button>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <p>
+      Built from the
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/String-Art.md">app-ideas / String Art</a>
+      spec as part of an automated daily Claude routine.
+    </p>
+  </footer>
+
+  <script src="stringart-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
