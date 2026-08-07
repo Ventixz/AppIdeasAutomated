@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **27 / 33** |
+| 2 | Intermediate | 🚧 In progress — **28 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -100,6 +100,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 60 | [Sales Receipts App](./projects/2-intermediate/sales-receipts-app/) | Intermediate | 2026-08-04 |
 | 61 | [Simple Online Store](./projects/2-intermediate/simple-online-store/) | Intermediate | 2026-08-05 |
 | 62 | [Sports Bracket Generator](./projects/2-intermediate/sports-bracket-generator/) | Intermediate | 2026-08-06 |
+| 63 | [String Art](./projects/2-intermediate/string-art/) | Intermediate | 2026-08-07 |
 
 ## Repository layout
 
@@ -170,6 +171,17 @@ dependency-free test suite:
 
 ```bash
 node projects/2-intermediate/sports-bracket-generator/tests.js   # -> All 19 tests passed.
+```
+
+The **String Art** app animates a multicolored line that bounces around the
+canvas and leaves a fading ripple behind it — pure Canvas 2D, no animation
+library (a spec constraint). All the geometry (wall reflection, speed-preserving
+angle jitter, the trail fade curve) lives in a pure, DOM-free `stringart-core.js`
+whose randomness is injected, so it ships a deterministic, dependency-free test
+suite that drives 5000 steps and asserts the line never leaves the bounds:
+
+```bash
+node projects/2-intermediate/string-art/tests.js   # -> All 14 tests passed.
 ```
 
 ---
