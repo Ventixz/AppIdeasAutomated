@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>This or That?</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <h1>This <span class="or">or</span> That?</h1>
+      <p class="tag">Pick the image you like better. A fresh pair appears every time.</p>
+    </header>
+
+    <section class="arena" id="arena" aria-label="Choose your favourite">
+      <button class="choice" id="choiceA" type="button" aria-label="Choose the left image">
+        <span class="choice__img" id="imgA"></span>
+        <span class="choice__label" id="labelA"></span>
+        <span class="choice__pct" id="pctA" aria-hidden="true"></span>
+      </button>
+
+      <div class="versus" aria-hidden="true">VS</div>
+
+      <button class="choice" id="choiceB" type="button" aria-label="Choose the right image">
+        <span class="choice__img" id="imgB"></span>
+        <span class="choice__label" id="labelB"></span>
+        <span class="choice__pct" id="pctB" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <p class="counter" id="counter" role="status"></p>
+
+    <section class="board" aria-label="Leaderboard">
+      <div class="board__head">
+        <h2>Top 10 voted</h2>
+        <button class="reset" id="reset" type="button">Reset votes</button>
+      </div>
+      <ol class="board__list" id="board"></ol>
+      <p class="board__empty" id="boardEmpty">No votes yet — start picking!</p>
+    </section>
+
+    <footer class="foot">
+      <p>
+        Part of <strong>AppIdeasAutomated</strong> — an automated Claude Code
+        routine. Idea:
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/This-or-That-Game.md">app-ideas / This or That</a>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="thisorthat-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
