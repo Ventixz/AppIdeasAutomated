@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **28 / 33** |
+| 2 | Intermediate | 🚧 In progress — **29 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -101,6 +101,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 61 | [Simple Online Store](./projects/2-intermediate/simple-online-store/) | Intermediate | 2026-08-05 |
 | 62 | [Sports Bracket Generator](./projects/2-intermediate/sports-bracket-generator/) | Intermediate | 2026-08-06 |
 | 63 | [String Art](./projects/2-intermediate/string-art/) | Intermediate | 2026-08-07 |
+| 64 | [This or That Game](./projects/2-intermediate/this-or-that-game/) | Intermediate | 2026-08-08 |
 
 ## Repository layout
 
@@ -182,6 +183,18 @@ suite that drives 5000 steps and asserts the line never leaves the bounds:
 
 ```bash
 node projects/2-intermediate/string-art/tests.js   # -> All 14 tests passed.
+```
+
+The **This or That Game** shows two images and records which one you prefer, then
+slides in a fresh pair — with a live **Top 10 leaderboard** of the most-voted
+images (a spec bonus). With no network allowed, each image is a deterministic SVG
+built from a hash of its id, and votes persist to `localStorage` as the offline
+stand-in for the spec's "store voting data in a database". All the pairing, vote
+tally, and leaderboard logic is pure and DOM-free in `thisorthat-core.js` (rng
+injected), with its own dependency-free test suite:
+
+```bash
+node projects/2-intermediate/this-or-that-game/tests.js   # -> All 15 tests passed.
 ```
 
 ---
