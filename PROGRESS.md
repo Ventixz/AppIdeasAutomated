@@ -79,7 +79,7 @@ list, one project per day.
 - [x] Simple Online Store — 2026-08-05
 - [x] Sports Bracket Generator — 2026-08-06
 - [x] String Art — 2026-08-07
-- [ ] This or That Game
+- [x] This or That Game — 2026-08-08
 - [ ] Timezone Slackbot
 - [ ] To-Do App
 - [ ] Typing Practice
