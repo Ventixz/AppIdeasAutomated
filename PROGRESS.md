@@ -80,7 +80,7 @@ list, one project per day.
 - [x] Sports Bracket Generator — 2026-08-06
 - [x] String Art — 2026-08-07
 - [x] This or That Game — 2026-08-08
-- [ ] Timezone Slackbot
+- [x] Timezone Slackbot — 2026-08-09
 - [ ] To-Do App
 - [ ] Typing Practice
 - [ ] Voting App
