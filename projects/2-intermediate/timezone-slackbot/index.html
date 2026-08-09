@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timezone Slackbot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="workspace">
+      <div class="ws-logo">#</div>
+      <div class="ws-meta">
+        <div class="ws-name">acme-team</div>
+        <div class="ws-channel"># scheduling</div>
+      </div>
+    </header>
+
+    <main class="messages" id="messages" aria-live="polite">
+      <div class="msg bot">
+        <div class="avatar bot-avatar">tz</div>
+        <div class="msg-body">
+          <div class="msg-head"><span class="author">Timezone Bot</span> <span class="badge">APP</span></div>
+          <div class="msg-text">
+            👋 Type <code>/tz name name …</code> to see everyone's local time.
+            Try one of the quick commands below, or list your own people.
+            <div class="known">Known members: <span id="roster"></span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="examples" id="examples">
+      <button class="chip" data-cmd="/tz alice grace hiroshi">/tz alice grace hiroshi</button>
+      <button class="chip" data-cmd="/tz bob diana keahi">/tz bob diana keahi</button>
+      <button class="chip" data-cmd="/tz alice bob carlos diana emeka farah grace hiroshi isla keahi">/tz everyone</button>
+    </div>
+
+    <form class="composer" id="composer" autocomplete="off">
+      <input
+        type="text"
+        id="input"
+        name="input"
+        placeholder="Message #scheduling — e.g. /tz alice bob"
+        aria-label="Slack message"
+      />
+      <button type="submit" id="send">Send</button>
+    </form>
+  </div>
+
+  <script src="tz-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
