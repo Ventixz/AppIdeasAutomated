@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **29 / 33** |
+| 2 | Intermediate | 🚧 In progress — **30 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -102,6 +102,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 62 | [Sports Bracket Generator](./projects/2-intermediate/sports-bracket-generator/) | Intermediate | 2026-08-06 |
 | 63 | [String Art](./projects/2-intermediate/string-art/) | Intermediate | 2026-08-07 |
 | 64 | [This or That Game](./projects/2-intermediate/this-or-that-game/) | Intermediate | 2026-08-08 |
+| 65 | [Timezone Slackbot](./projects/2-intermediate/timezone-slackbot/) | Intermediate | 2026-08-09 |
 
 ## Repository layout
 
@@ -195,6 +196,18 @@ injected), with its own dependency-free test suite:
 
 ```bash
 node projects/2-intermediate/this-or-that-game/tests.js   # -> All 15 tests passed.
+```
+
+The **Timezone Slackbot** mocks a Slack `/tz name name …` command: it replies
+with an alternating-row table of each teammate's local time, timezone
+abbreviation (the spec bonus), and UTC offset. The whole logic layer —
+command parsing, case/`@`-tolerant lookup, and the day-crossing local-time math
+that emits `(+1d)`/`(-1d)` markers — lives in a DOM-free `tz-core.js` with the
+"current moment" injected as an argument, so it stays fully deterministic and
+ships its own dependency-free test suite:
+
+```bash
+node projects/2-intermediate/timezone-slackbot/tests.js   # -> 39 passed, 0 failed.
 ```
 
 ---
