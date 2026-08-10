@@ -81,7 +81,7 @@ list, one project per day.
 - [x] String Art — 2026-08-07
 - [x] This or That Game — 2026-08-08
 - [x] Timezone Slackbot — 2026-08-09
-- [ ] To-Do App
+- [x] To-Do App — 2026-08-10
 - [ ] Typing Practice
 - [ ] Voting App
 
