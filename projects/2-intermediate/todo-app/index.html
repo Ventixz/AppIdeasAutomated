@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-head">
+      <h1>To-Do</h1>
+      <p class="tagline">Write down everything you want to get done. Saved right here in your browser.</p>
+    </header>
+
+    <form id="composer" class="composer" autocomplete="off">
+      <input
+        id="new-todo"
+        class="new-todo"
+        type="text"
+        placeholder="What needs doing?"
+        aria-label="New to-do"
+        maxlength="240"
+      />
+      <button type="submit" class="add-btn">Add</button>
+    </form>
+
+    <nav class="filters" id="filters" aria-label="Filter to-dos">
+      <button class="filter" data-filter="all" type="button">All <span class="badge" data-count="total">0</span></button>
+      <button class="filter" data-filter="active" type="button">Active <span class="badge" data-count="active">0</span></button>
+      <button class="filter" data-filter="completed" type="button">Done <span class="badge" data-count="completed">0</span></button>
+    </nav>
+
+    <ul id="list" class="list" aria-live="polite"></ul>
+
+    <p id="empty" class="empty" hidden></p>
+
+    <footer class="app-foot">
+      <span id="summary" class="summary"></span>
+      <button id="clear-completed" class="clear-btn" type="button" hidden>Clear completed</button>
+    </footer>
+  </main>
+
+  <p class="credit">
+    An automated <a href="https://claude.com/claude-code">Claude Code</a> routine —
+    idea from <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/To-Do-App.md">app-ideas / To-Do App</a>.
+  </p>
+
+  <script src="todo-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
