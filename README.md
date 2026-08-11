@@ -27,7 +27,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **31 / 33** |
+| 2 | Intermediate | 🚧 In progress — **32 / 33** |
 | 3 | Advanced | 🔒 Locked |
 
 > 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
@@ -104,6 +104,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 64 | [This or That Game](./projects/2-intermediate/this-or-that-game/) | Intermediate | 2026-08-08 |
 | 65 | [Timezone Slackbot](./projects/2-intermediate/timezone-slackbot/) | Intermediate | 2026-08-09 |
 | 66 | [To-Do App](./projects/2-intermediate/todo-app/) | Intermediate | 2026-08-10 |
+| 67 | [Typing Practice](./projects/2-intermediate/typing-practice/) | Intermediate | 2026-08-11 |
 
 ## Repository layout
 
