@@ -82,7 +82,7 @@ list, one project per day.
 - [x] This or That Game — 2026-08-08
 - [x] Timezone Slackbot — 2026-08-09
 - [x] To-Do App — 2026-08-10
-- [ ] Typing Practice
+- [x] Typing Practice — 2026-08-11
 - [ ] Voting App
 
 ## Tier 3 — Advanced

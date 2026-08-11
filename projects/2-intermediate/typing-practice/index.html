@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Practice</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Typing Practice</h1>
+      <p class="tagline">Type each word before the timer runs out. Every hit makes it a little faster.</p>
+    </header>
+
+    <section class="scoreboard" aria-label="scoreboard">
+      <div class="stat">
+        <span class="stat-value" id="score">0 / 0</span>
+        <span class="stat-label">correct / tries</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="timer">3.0s</span>
+        <span class="stat-label">time per word</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="streak">0</span>
+        <span class="stat-label">streak</span>
+      </div>
+    </section>
+
+    <div class="timer-bar" aria-hidden="true"><div class="timer-fill" id="timerFill"></div></div>
+
+    <section class="stage">
+      <div class="prompt" id="prompt">— — —</div>
+      <input
+        id="entry"
+        class="entry"
+        type="text"
+        autocomplete="off"
+        autocapitalize="off"
+        autocorrect="off"
+        spellcheck="false"
+        placeholder="type here…"
+        disabled
+      />
+      <p class="message" id="message" role="status">Press Start to begin.</p>
+    </section>
+
+    <div class="controls">
+      <button id="startBtn" class="btn primary">Start Practice</button>
+      <button id="stopBtn" class="btn" disabled>Stop Practice</button>
+      <label class="sound-toggle">
+        <input type="checkbox" id="soundToggle" checked /> sound
+      </label>
+    </div>
+
+    <section class="lifetime" aria-label="lifetime stats">
+      <h2>Lifetime</h2>
+      <p id="lifetime">No sessions yet.</p>
+    </section>
+
+    <footer>
+      <p>
+        Idea from
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Typing-Practice-App.md" target="_blank" rel="noopener">app-ideas / Typing Practice</a>.
+        Built by an automated Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="typing-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
