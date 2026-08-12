@@ -83,10 +83,33 @@ list, one project per day.
 - [x] Timezone Slackbot — 2026-08-09
 - [x] To-Do App — 2026-08-10
 - [x] Typing Practice — 2026-08-11
-- [ ] Voting App
+- [x] Voting App — 2026-08-12
+
+**Tier 2 complete — all 33 Intermediate projects built. Tier 3 is now unlocked.**
 
 ## Tier 3 — Advanced
 
-_Locked until every Tier 2 project is checked. Populate from the
-[app-ideas Tier 3 list](https://github.com/florinpop17/app-ideas#tier-3-projects)
-when the first Tier 3 build starts._
+Unlocked 2026-08-12 after Tier 2 was finished. The routine now works down this
+list, one project per day. Populated from the
+[app-ideas Tier 3 list](https://github.com/florinpop17/app-ideas#tier-3-projects).
+
+- [ ] Battleship Bot
+- [ ] Battleship Game Engine
+- [ ] Boole Bots Game
+- [ ] Calendar
+- [ ] Calorie Counter
+- [ ] Chat App
+- [ ] Contribution Tracker App
+- [ ] Elevator
+- [ ] Fast Food Simulator
+- [ ] Instagram Clone
+- [ ] GitHub Timeline
+- [ ] Kudos Slackbot
+- [ ] Movie App
+- [ ] MyPodcast Library
+- [ ] NASA Exoplanet Query
+- [ ] Shell Game
+- [ ] Shuffle Deck
+- [ ] Slack Archiver
+- [ ] Spell-It App
+- [ ] Survey App

@@ -27,12 +27,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
-| 2 | Intermediate | 🚧 In progress — **32 / 33** |
-| 3 | Advanced | 🔒 Locked |
+| 2 | Intermediate | ✅ Complete — **33 / 33** |
+| 3 | Advanced | 🚧 In progress — **0 / 20** |
 
-> 🎉 **Tier 1 (Beginner) is finished.** Every one of the 35 Beginner projects
-> has been built. As of 2026-07-09 the routine has unlocked **Tier 2
-> (Intermediate)** and now works down that list, one project per day.
+> 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
+> Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
+> **Tier 3 (Advanced)** and now works down that list, one project per day.
 
 ## Projects built so far
 
@@ -105,6 +105,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 65 | [Timezone Slackbot](./projects/2-intermediate/timezone-slackbot/) | Intermediate | 2026-08-09 |
 | 66 | [To-Do App](./projects/2-intermediate/todo-app/) | Intermediate | 2026-08-10 |
 | 67 | [Typing Practice](./projects/2-intermediate/typing-practice/) | Intermediate | 2026-08-11 |
+| 68 | [Voting App](./projects/2-intermediate/voting-app/) | Intermediate | 2026-08-12 |
 
 ## Repository layout
 
@@ -223,6 +224,20 @@ so it ships its own dependency-free test suite:
 
 ```bash
 node projects/2-intermediate/todo-app/tests.js   # -> 42 passed, 0 failed.
+```
+
+The **Voting App** — the Tier 2 finale — is a live poll: each option carries a
+**Vote** button, and clicking one instantly re-tallies counts, percentage bars, a
+running total, and a highlighted leader (or a called tie). You can add options
+and reset votes, and the whole poll persists to `localStorage` (the spec's
+"persist items and votes" bonus, client-side). All the rules — slug-based
+de-duplication, voting, totals, percentages, stable most-voted-first ranking with
+insertion-order tie-breaks, leader/tie detection, and recovering a poll from
+corrupted storage — live in a pure, immutable, DOM-free `voting-core.js` with its
+own dependency-free test suite:
+
+```bash
+node projects/2-intermediate/voting-app/tests.js   # -> 44 passed, 0 failed.
 ```
 
 ---
