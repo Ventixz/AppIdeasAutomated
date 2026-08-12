@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voting App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="head">
+      <h1>Voting App</h1>
+      <p class="sub">Pick your favourite. Votes tally live and persist in your browser.</p>
+    </header>
+
+    <section class="panel" aria-label="Options">
+      <ul id="options" class="options"></ul>
+    </section>
+
+    <section class="results" aria-live="polite">
+      <div class="results-head">
+        <h2>Results</h2>
+        <span id="total" class="total">0 votes</span>
+      </div>
+      <p id="leader" class="leader">No votes yet — cast the first one.</p>
+    </section>
+
+    <section class="panel add">
+      <form id="addForm" class="add-form" autocomplete="off">
+        <label for="newItem" class="visually-hidden">Add an option</label>
+        <input id="newItem" type="text" placeholder="Add an option…" maxlength="40" />
+        <button type="submit">Add</button>
+      </form>
+      <button id="resetBtn" type="button" class="reset">Reset votes</button>
+    </section>
+
+    <footer class="foot">
+      <p>
+        Built by an automated Claude routine from
+        <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/2-Intermediate/Voting-App.md"
+           target="_blank" rel="noopener">app-ideas / Voting App</a>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="voting-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
