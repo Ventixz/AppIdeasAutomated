@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battleship Bot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="chat" role="application" aria-label="Battleship Bot chat">
+    <header class="chan">
+      <span class="hash">#</span>
+      <div class="chan-meta">
+        <h1>battleship</h1>
+        <p class="topic">Play Battleship against <strong>Battleship&nbsp;Bot</strong>. Type <code>bb help</code> to begin.</p>
+      </div>
+    </header>
+
+    <section id="log" class="log" aria-live="polite" aria-label="Messages"></section>
+
+    <form id="composer" class="composer" autocomplete="off">
+      <input
+        id="input"
+        class="input"
+        type="text"
+        placeholder="Message #battleship  (try: bb start)"
+        aria-label="Type a command"
+        maxlength="60"
+      />
+      <button type="submit" class="send" aria-label="Send">➤</button>
+    </form>
+  </main>
+
+  <script src="battleship-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

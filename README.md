@@ -28,11 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **0 / 20** |
+| 3 | Advanced | 🚧 In progress — **1 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
-> **Tier 3 (Advanced)** and now works down that list, one project per day.
+> **Tier 3 (Advanced)** and now works down that list, one project per day. First
+> up: **Battleship Bot** (2026-08-13).
 
 ## Projects built so far
 
@@ -106,6 +107,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 66 | [To-Do App](./projects/2-intermediate/todo-app/) | Intermediate | 2026-08-10 |
 | 67 | [Typing Practice](./projects/2-intermediate/typing-practice/) | Intermediate | 2026-08-11 |
 | 68 | [Voting App](./projects/2-intermediate/voting-app/) | Intermediate | 2026-08-12 |
+| 69 | [Battleship Bot](./projects/3-advanced/battleship-bot/) | Advanced | 2026-08-13 |
 
 ## Repository layout
 
@@ -119,6 +121,8 @@ projects/
       README.md
   2-intermediate/     # Tier 2 apps
     bit-masks/
+  3-advanced/         # Tier 3 apps
+    battleship-bot/
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -238,6 +242,21 @@ own dependency-free test suite:
 
 ```bash
 node projects/2-intermediate/voting-app/tests.js   # -> 44 passed, 0 failed.
+```
+
+The **Battleship Bot** opens Tier 3 (Advanced). Its spec calls for a **Discord
+bot** you play Battleship against in chat; with no network here, the app is a
+faithful **Discord-style chat simulator** speaking the same `bb help` / `bb
+start` / `bb shoot r,c` / `bb surrender` grammar. After every shot the bot posts
+the board as a coloured **graphical card** (the spec's bonus) and congratulates
+you when the 17th and last ship-cell falls. The whole game engine *and* the bot's
+command layer are pure and DOM-free in `battleship-core.js` — fleet placement
+takes an injected rng, and `handleCommand` is a pure reducer over
+`(session, text)` — so it ships a deterministic test suite that plays seeded
+games to completion:
+
+```bash
+node projects/3-advanced/battleship-bot/tests.js   # -> All 2397 tests passed.
 ```
 
 ---

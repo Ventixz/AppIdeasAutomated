@@ -93,7 +93,7 @@ Unlocked 2026-08-12 after Tier 2 was finished. The routine now works down this
 list, one project per day. Populated from the
 [app-ideas Tier 3 list](https://github.com/florinpop17/app-ideas#tier-3-projects).
 
-- [ ] Battleship Bot
+- [x] Battleship Bot — 2026-08-13
 - [ ] Battleship Game Engine
 - [ ] Boole Bots Game
 - [ ] Calendar
