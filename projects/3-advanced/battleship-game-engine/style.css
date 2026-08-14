@@ -1,0 +1,95 @@
+/* style.css — a naval radar skin for the Battleship engine's browser layer. */
+
+:root {
+  --bg: #0a1a2b;
+  --bg-2: #0e2338;
+  --panel: #103049;
+  --grid: #14425f;
+  --line: #1d5476;
+  --text: #dce9f2;
+  --muted: #8aa8bf;
+  --accent: #35c6ff;
+  --hit: #ff5a52;
+  --miss: #5b7a92;
+  --sunk: #b0353a;
+  --ship: #2e6f4f;
+  --gold: #f0b232;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "Consolas", "SF Mono", ui-monospace, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: radial-gradient(circle at 50% -10%, #123147 0%, var(--bg) 60%);
+  color: var(--text);
+  font-family: var(--font);
+  padding: 24px 16px 48px;
+}
+
+.app { width: 100%; max-width: 560px; }
+
+.head h1 { margin: 0 0 4px; font-size: 1.7rem; letter-spacing: 0.5px; }
+.head .tag {
+  font-size: 0.9rem; color: var(--accent); border: 1px solid var(--line);
+  padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+}
+.head .sub { margin: 0 0 18px; color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+
+.hud {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 14px;
+}
+.stat {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: 8px 4px; text-align: center; display: flex; flex-direction: column; gap: 2px;
+}
+.stat .k { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+.stat .v { font-size: 1.15rem; font-weight: 700; font-family: var(--mono); }
+
+.message {
+  min-height: 1.4em; margin: 0 0 14px; font-weight: 600; color: var(--accent);
+}
+.message.hit { color: var(--hit); }
+.message.win { color: var(--gold); }
+
+.board {
+  display: grid; gap: 4px; background: var(--bg-2);
+  border: 1px solid var(--line); border-radius: 12px; padding: 10px;
+  aspect-ratio: 1 / 1;
+}
+.cell {
+  border: none; border-radius: 6px; background: var(--grid);
+  cursor: pointer; transition: transform 0.08s ease, background 0.15s ease;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--text); font-family: var(--mono);
+}
+.cell:hover:not(:disabled) { background: var(--line); transform: scale(1.04); }
+.cell:disabled { cursor: default; }
+.cell.miss { background: var(--bg); color: var(--miss); }
+.cell.miss::after { content: "•"; }
+.cell.hit { background: var(--hit); color: #fff; }
+.cell.hit::after { content: "✕"; }
+.cell.sunk { background: var(--sunk); }
+.cell.ship { background: var(--ship); }   /* shown only on Reveal */
+
+.controls { display: flex; gap: 10px; align-items: center; margin: 16px 0 8px; flex-wrap: wrap; }
+.size { color: var(--muted); font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+select {
+  background: var(--panel); color: var(--text); border: 1px solid var(--line);
+  border-radius: 8px; padding: 6px 8px; font-family: var(--font);
+}
+.btn {
+  background: var(--accent); color: #04121d; border: none; border-radius: 8px;
+  padding: 8px 16px; font-weight: 700; cursor: pointer; font-size: 0.9rem;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+
+.foot { margin-top: 20px; color: var(--muted); font-size: 0.78rem; line-height: 1.5; }
+.foot a { color: var(--accent); }
+.foot code { font-family: var(--mono); background: var(--panel); padding: 1px 5px; border-radius: 4px; }
