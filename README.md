@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **1 / 20** |
+| 3 | Advanced | 🚧 In progress — **2 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
-> **Tier 3 (Advanced)** and now works down that list, one project per day. First
-> up: **Battleship Bot** (2026-08-13).
+> **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
+> **Battleship Game Engine** (2026-08-14).
 
 ## Projects built so far
 
@@ -108,6 +108,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 67 | [Typing Practice](./projects/2-intermediate/typing-practice/) | Intermediate | 2026-08-11 |
 | 68 | [Voting App](./projects/2-intermediate/voting-app/) | Intermediate | 2026-08-12 |
 | 69 | [Battleship Bot](./projects/3-advanced/battleship-bot/) | Advanced | 2026-08-13 |
+| 70 | [Battleship Game Engine](./projects/3-advanced/battleship-game-engine/) | Advanced | 2026-08-14 |
 
 ## Repository layout
 
@@ -123,6 +124,7 @@ projects/
     bit-masks/
   3-advanced/         # Tier 3 apps
     battleship-bot/
+    battleship-game-engine/   # a headless engine + CLI *and* browser front ends
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
