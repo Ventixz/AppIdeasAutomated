@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battleship Game Engine</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app" role="application" aria-label="Battleship game engine">
+    <header class="head">
+      <h1>Battleship <span class="tag">Game Engine</span></h1>
+      <p class="sub">
+        A clickable board wired to the same engine the CLI drives.
+        Sink all <strong>three</strong> ships — Battleship (4), Cruiser (3), Destroyer (2).
+      </p>
+    </header>
+
+    <section class="hud">
+      <div class="stat"><span class="k">Turns</span><span id="stat-turns" class="v">0</span></div>
+      <div class="stat"><span class="k">Hits</span><span id="stat-hits" class="v">0</span></div>
+      <div class="stat"><span class="k">Misses</span><span id="stat-misses" class="v">0</span></div>
+      <div class="stat"><span class="k">Ships left</span><span id="stat-ships" class="v">3</span></div>
+      <div class="stat"><span class="k">Accuracy</span><span id="stat-acc" class="v">0%</span></div>
+    </section>
+
+    <p id="message" class="message" aria-live="polite">Click a cell to fire.</p>
+
+    <div id="board" class="board" aria-label="Firing grid"></div>
+
+    <div class="controls">
+      <label class="size">
+        Board size
+        <select id="size">
+          <option value="8" selected>8 × 8</option>
+          <option value="10">10 × 10</option>
+          <option value="12">12 × 12</option>
+        </select>
+      </label>
+      <button id="reset" type="button" class="btn">New game</button>
+      <button id="reveal" type="button" class="btn ghost">Reveal fleet</button>
+    </div>
+
+    <footer class="foot">
+      <p>🤖 Built automatically by a Claude Code routine — idea from
+      <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.
+      Engine logic lives in <code>battleship-engine.js</code>; this page is just one
+      presentation layer, the terminal <code>cli.js</code> is another.</p>
+    </footer>
+  </main>
+
+  <script src="battleship-engine.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

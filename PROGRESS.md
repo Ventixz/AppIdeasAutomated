@@ -94,7 +94,7 @@ list, one project per day. Populated from the
 [app-ideas Tier 3 list](https://github.com/florinpop17/app-ideas#tier-3-projects).
 
 - [x] Battleship Bot — 2026-08-13
-- [ ] Battleship Game Engine
+- [x] Battleship Game Engine — 2026-08-14
 - [ ] Boole Bots Game
 - [ ] Calendar
 - [ ] Calorie Counter
