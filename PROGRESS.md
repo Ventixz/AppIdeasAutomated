@@ -95,7 +95,7 @@ list, one project per day. Populated from the
 
 - [x] Battleship Bot — 2026-08-13
 - [x] Battleship Game Engine — 2026-08-14
-- [ ] Boole Bots Game
+- [x] Boole Bots Game — 2026-08-15
 - [ ] Calendar
 - [ ] Calorie Counter
 - [ ] Chat App
