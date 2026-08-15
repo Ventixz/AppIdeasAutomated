@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boole Bots Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Boole&nbsp;Bots</h1>
+      <p class="tagline">
+        Configure your bots, set them loose in the arena, and let Boolean logic
+        decide who survives. On collision each bot applies its operation to
+        <code>(self, opponent)</code> — resolve to <strong>0</strong> and you
+        vanish; resolve to <strong>1</strong> and you fight on. Matching results
+        tie. Last bot standing wins.
+      </p>
+    </header>
+
+    <main>
+      <!-- Configuration panel: up to four bots -->
+      <section class="panel config" aria-label="Bot configuration">
+        <h2>Bots</h2>
+        <div id="bot-configs" class="bot-configs"></div>
+
+        <div class="arena-options">
+          <label>
+            Arena size
+            <select id="arena-size">
+              <option value="8" selected>8 × 8</option>
+              <option value="10">10 × 10</option>
+              <option value="12">12 × 12</option>
+              <option value="16">16 × 16</option>
+            </select>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" id="diagonals" />
+            8 directions (diagonals)
+          </label>
+        </div>
+      </section>
+
+      <!-- The arena itself -->
+      <section class="panel arena-wrap" aria-label="Arena">
+        <div class="controls">
+          <button id="battle-btn" class="battle">Battle!</button>
+          <span class="clock" id="clock">00:00</span>
+        </div>
+        <canvas id="arena" width="480" height="480"></canvas>
+      </section>
+
+      <!-- Leaderboard + event log -->
+      <section class="panel side" aria-label="Leaderboard and log">
+        <h2>Leaderboard</h2>
+        <table class="leaderboard">
+          <thead>
+            <tr>
+              <th>Bot</th>
+              <th>Logic</th>
+              <th>W</th>
+              <th>L</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+
+        <h2>Battle log</h2>
+        <ul id="log" class="log"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        A Tier&nbsp;3 (Advanced) project built automatically by a
+        <strong>Claude Code routine</strong>. Idea from
+        <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.
+        All Boolean combat and physics live in the presentation-free
+        <code>boole-core.js</code>.
+      </p>
+    </footer>
+
+    <script src="boole-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
