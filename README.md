@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **2 / 20** |
+| 3 | Advanced | 🚧 In progress — **3 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Battleship Game Engine** (2026-08-14).
+> **Boole Bots Game** (2026-08-15).
 
 ## Projects built so far
 
@@ -109,6 +109,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 68 | [Voting App](./projects/2-intermediate/voting-app/) | Intermediate | 2026-08-12 |
 | 69 | [Battleship Bot](./projects/3-advanced/battleship-bot/) | Advanced | 2026-08-13 |
 | 70 | [Battleship Game Engine](./projects/3-advanced/battleship-game-engine/) | Advanced | 2026-08-14 |
+| 71 | [Boole Bots Game](./projects/3-advanced/boole-bots-game/) | Advanced | 2026-08-15 |
 
 ## Repository layout
 
@@ -125,6 +126,7 @@ projects/
   3-advanced/         # Tier 3 apps
     battleship-bot/
     battleship-game-engine/   # a headless engine + CLI *and* browser front ends
+    boole-bots-game/          # Boolean-logic combat: a pure engine + a canvas game
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -259,6 +261,23 @@ games to completion:
 
 ```bash
 node projects/3-advanced/battleship-bot/tests.js   # -> All 2397 tests passed.
+```
+
+The **Boole Bots Game** is a playable lesson in Boolean logic. You configure up
+to four bots — each with a value (`0`/`1`) and an operation (`AND`, `OR`, `XOR`,
+`NOT`) — and set them loose in a canvas arena. When two bots collide, each
+applies its own operation to `(self, opponent)`; resolve to `0` and you vanish,
+`1` and you fight on, matching results tie. It has the full spec game window
+(config panel with duplicate-name errors, leaderboard with highest-win
+highlighting, battle log, per-second clock) and every listed bonus (diagonals,
+custom arena sizes, icon palette). All the combat and physics live in a pure,
+DOM-free `boole-core.js` (rng injected) — which also detects the deadlock where
+two always-`1` bots would tie forever and ends it as a draw — so it ships a
+deterministic test suite that runs the full truth tables, all 64 collision
+combinations, and 200 seeded battles:
+
+```bash
+node projects/3-advanced/boole-bots-game/tests.js   # -> All 128 tests passed.
 ```
 
 ---
