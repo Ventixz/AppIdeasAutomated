@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <h1>📅 Calendar</h1>
+        <p class="tagline">
+          Create, edit, drag and delete events. Set reminders, switch themes,
+          and everything is saved in your browser — close the tab and it's still
+          here.
+        </p>
+      </div>
+      <button id="theme-btn" class="theme-toggle" type="button" aria-label="Toggle theme">
+        🌙 Dark
+      </button>
+    </header>
+
+    <main>
+      <section class="panel calendar" aria-label="Month view">
+        <div class="toolbar">
+          <div class="nav">
+            <button id="prev" class="nav-btn" type="button" aria-label="Previous month">‹</button>
+            <h2 id="month-label">Month YYYY</h2>
+            <button id="next" class="nav-btn" type="button" aria-label="Next month">›</button>
+          </div>
+          <button id="today-btn" class="ghost" type="button">Today</button>
+        </div>
+
+        <div class="weekday-row" id="weekday-row"></div>
+        <div class="grid" id="grid" aria-label="Calendar grid"></div>
+
+        <p class="hint">
+          Tip: click a day to add an event, click an event to edit it, and
+          <strong>drag an event onto another day</strong> to reschedule it.
+        </p>
+      </section>
+
+      <aside class="panel side">
+        <h2 id="selected-label">Selected day</h2>
+        <div id="day-events" class="day-events"></div>
+        <button id="add-btn" class="primary" type="button">+ Add event</button>
+      </aside>
+    </main>
+
+    <!-- Reminder toasts -->
+    <div id="toasts" class="toasts" aria-live="polite"></div>
+
+    <!-- Event editor dialog -->
+    <div id="modal-backdrop" class="modal-backdrop hidden">
+      <div class="modal panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <h2 id="modal-title">New event</h2>
+        <form id="event-form">
+          <label>
+            Title
+            <input id="f-title" type="text" maxlength="120" autocomplete="off" />
+            <span class="field-error" id="err-title"></span>
+          </label>
+          <div class="row">
+            <label>
+              Date
+              <input id="f-date" type="date" />
+              <span class="field-error" id="err-date"></span>
+            </label>
+            <label>
+              Time
+              <input id="f-time" type="time" />
+              <span class="field-error" id="err-time"></span>
+            </label>
+          </div>
+          <label>
+            Description
+            <textarea id="f-desc" rows="2"></textarea>
+          </label>
+          <div class="row">
+            <label>
+              Reminder
+              <select id="f-reminder"></select>
+            </label>
+            <label>
+              Colour
+              <input id="f-color" type="color" value="#4f7cff" />
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="delete-btn" class="danger hidden">Delete</button>
+            <span class="spacer"></span>
+            <button type="button" id="cancel-btn" class="ghost">Cancel</button>
+            <button type="submit" class="primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        A Tier&nbsp;3 project built automatically by a
+        <a href="https://claude.com/claude-code">Claude Code</a> routine. Idea:
+        <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.
+      </p>
+    </footer>
+
+    <script src="calendar-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
