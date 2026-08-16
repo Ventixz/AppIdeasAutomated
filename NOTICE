@@ -1,0 +1,22 @@
+NOTICE
+======
+
+This project's own code and documentation are licensed under the MIT License;
+see LICENSE.
+
+Upstream attribution
+--------------------
+
+The project ideas and specifications implemented here are drawn from:
+
+    florinpop17/app-ideas
+    https://github.com/florinpop17/app-ideas
+    Copyright (c) florinpop17 and contributors
+    Licensed under the MIT License
+
+That upstream project is MIT licensed, which is compatible with the MIT
+License applied to this repository. This notice is provided to satisfy the
+MIT attribution requirement for the portions of this work derived from it.
+
+All implementations in this repository are original work unless a file states
+otherwise.
