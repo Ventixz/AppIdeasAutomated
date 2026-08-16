@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **3 / 20** |
+| 3 | Advanced | 🚧 In progress — **4 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Boole Bots Game** (2026-08-15).
+> **Calendar** (2026-08-16).
 
 ## Projects built so far
 
@@ -110,6 +110,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 69 | [Battleship Bot](./projects/3-advanced/battleship-bot/) | Advanced | 2026-08-13 |
 | 70 | [Battleship Game Engine](./projects/3-advanced/battleship-game-engine/) | Advanced | 2026-08-14 |
 | 71 | [Boole Bots Game](./projects/3-advanced/boole-bots-game/) | Advanced | 2026-08-15 |
+| 72 | [Calendar](./projects/3-advanced/calendar/) | Advanced | 2026-08-16 |
 
 ## Repository layout
 
@@ -127,6 +128,7 @@ projects/
     battleship-bot/
     battleship-game-engine/   # a headless engine + CLI *and* browser front ends
     boole-bots-game/          # Boolean-logic combat: a pure engine + a canvas game
+    calendar/                 # month-view scheduler: pure date/event engine + drag-to-reschedule UI
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -278,6 +280,22 @@ combinations, and 200 seeded battles:
 
 ```bash
 node projects/3-advanced/boole-bots-game/tests.js   # -> All 128 tests passed.
+```
+
+The **Calendar** is a month-view scheduler. Click a day to add an event, click
+an event to edit it, **drag an event chip onto another day** to reschedule it
+(the spec's drag bonus), and give any event a **reminder** that pops a toast when
+it comes due. There's a light/dark theme toggle (remembered) and everything
+persists to `localStorage`, so the calendar survives a reload. All the date maths
+(leap years, month wrapping, the 7-column grid), immutable event
+create/edit/delete/move, and the reminder-due logic live in a pure, DOM-free
+`calendar-core.js` — timezone-independent because timestamps are computed over
+wall-clock components with `Date.UTC` and "now" is injected — so it ships a
+deterministic test suite whose storage tests even recover a corrupted store
+event-by-event instead of wiping it:
+
+```bash
+node projects/3-advanced/calendar/tests.js   # -> All 94 tests passed.
 ```
 
 ---
