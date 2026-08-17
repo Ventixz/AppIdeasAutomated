@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **4 / 20** |
+| 3 | Advanced | 🚧 In progress — **5 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Calendar** (2026-08-16).
+> **Calorie Counter** (2026-08-17).
 
 ## Projects built so far
 
@@ -111,6 +111,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 70 | [Battleship Game Engine](./projects/3-advanced/battleship-game-engine/) | Advanced | 2026-08-14 |
 | 71 | [Boole Bots Game](./projects/3-advanced/boole-bots-game/) | Advanced | 2026-08-15 |
 | 72 | [Calendar](./projects/3-advanced/calendar/) | Advanced | 2026-08-16 |
+| 73 | [Calorie Counter](./projects/3-advanced/calorie-counter/) | Advanced | 2026-08-17 |
 
 ## Repository layout
 
@@ -129,6 +130,7 @@ projects/
     battleship-game-engine/   # a headless engine + CLI *and* browser front ends
     boole-bots-game/          # Boolean-logic combat: a pure engine + a canvas game
     calendar/                 # month-view scheduler: pure date/event engine + drag-to-reschedule UI
+    calorie-counter/          # food-calorie search: pure search/wildcard engine + JSON dataset
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -296,6 +298,22 @@ event-by-event instead of wiping it:
 
 ```bash
 node projects/3-advanced/calendar/tests.js   # -> All 94 tests passed.
+```
+
+The **Calorie Counter** searches a database of 135 common foods for their
+portion size and calories. Type a food, hit **Search**, and browse ranked
+matches in a scrollable panel capped at 25 rows with a **Load more** button for
+the rest (the spec's paging bonus), a live match count, and **wildcards** —
+`app*` matches *apple* but not *pineapple*, `*nut` matches *peanut*, `b?n`
+matches *ban*. **Clear** resets everything, and empty or no-match searches raise
+a warning. The canonical data is a plain `foods.json`; `foods-data.js` is a
+build-time mirror of it so the page also runs from `file://`. All the search,
+wildcard-to-regex, ranking, and paging logic is pure and DOM-free in
+`calorie-core.js`, which also validates the dataset, so it ships a
+dependency-free test suite:
+
+```bash
+node projects/3-advanced/calorie-counter/tests.js   # -> 42 passed, 0 failed.
 ```
 
 ---
