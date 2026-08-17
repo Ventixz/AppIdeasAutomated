@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calorie Counter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <h1>🥗 Calorie Counter</h1>
+        <p class="tagline">
+          Search a database of common foods for their portion size and calories.
+          Type a food, press <strong>Search</strong>, and browse the matches —
+          wildcards like <code>app*</code> and <code>b?n</code> are supported.
+        </p>
+      </div>
+      <button id="theme-btn" class="theme-toggle" type="button" aria-label="Toggle theme">
+        🌙 Dark
+      </button>
+    </header>
+
+    <main>
+      <section class="panel search-panel" aria-label="Food search">
+        <form id="search-form" autocomplete="off">
+          <label class="visually-hidden" for="query">Food description</label>
+          <input
+            id="query"
+            type="text"
+            placeholder="e.g. apple, chicken, app*, b?n"
+            maxlength="60"
+            aria-describedby="warning"
+          />
+          <div class="buttons">
+            <button type="submit" class="primary">Search</button>
+            <button type="button" id="clear-btn" class="ghost">Clear</button>
+          </div>
+        </form>
+
+        <p id="warning" class="warning" role="alert" hidden></p>
+
+        <div id="results-meta" class="results-meta" hidden>
+          <span id="count-label"></span>
+        </div>
+
+        <div id="results" class="results" aria-live="polite">
+          <p class="placeholder">Results will appear here.</p>
+        </div>
+
+        <button type="button" id="more-btn" class="more" hidden>
+          ⬇ Load more results
+        </button>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        A Tier&nbsp;3 project built automatically by a
+        <a href="https://claude.com/claude-code">Claude Code</a> routine. Idea:
+        <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.
+        Calorie figures are approximate, for demonstration only.
+      </p>
+    </footer>
+
+    <script src="calorie-core.js"></script>
+    <script src="foods-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
