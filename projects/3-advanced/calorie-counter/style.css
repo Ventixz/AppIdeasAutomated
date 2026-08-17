@@ -1,0 +1,231 @@
+/* style.css — Calorie Counter. Light and dark themes are driven by [data-theme]
+   on <html>; the whole palette is a set of CSS custom properties so the toggle
+   only swaps a handful of values. */
+
+:root {
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --panel-2: #f0f3fa;
+  --ink: #1c2333;
+  --ink-soft: #5b667e;
+  --line: #dce2ee;
+  --accent: #35a06a;
+  --accent-ink: #ffffff;
+  --warn-bg: #fff4d6;
+  --warn-line: #f2c94c;
+  --warn-ink: #7a5b00;
+  --shadow: 0 6px 24px rgba(28, 35, 51, 0.10);
+  --cal: #35a06a;
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f1420;
+  --panel: #182031;
+  --panel-2: #1f2941;
+  --ink: #e8ecf6;
+  --ink-soft: #9aa6c0;
+  --line: #2a3550;
+  --accent: #46c286;
+  --accent-ink: #0f1420;
+  --warn-bg: #2c2a12;
+  --warn-line: #d0a92e;
+  --warn-ink: #f4dd8f;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  --cal: #46c286;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem) 0.5rem;
+}
+header h1 { margin: 0 0 0.25rem; font-size: 1.6rem; }
+.tagline { margin: 0; color: var(--ink-soft); max-width: 60ch; font-size: 0.95rem; }
+.tagline code {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 0.3em;
+  font-size: 0.85em;
+}
+
+.theme-toggle {
+  flex: none;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+
+main {
+  padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.search-panel {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+/* Search form ------------------------------------------------------------ */
+
+#search-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+#query {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-2);
+  color: var(--ink);
+}
+#query:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.buttons { display: flex; gap: 0.5rem; }
+
+button.primary,
+button.ghost,
+button.more {
+  border-radius: 10px;
+  padding: 0.65rem 1.1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  border: 1px solid var(--line);
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+button.primary:hover { filter: brightness(1.05); }
+button.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+button.ghost:hover { border-color: var(--accent); }
+
+/* Warning ---------------------------------------------------------------- */
+
+.warning {
+  margin: 0.9rem 0 0;
+  padding: 0.65rem 0.85rem;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-line);
+  color: var(--warn-ink);
+  border-radius: 10px;
+  font-size: 0.92rem;
+}
+
+/* Results ---------------------------------------------------------------- */
+
+.results-meta {
+  margin: 1rem 0 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+#count-label strong { color: var(--ink); }
+
+.results {
+  margin-top: 0.5rem;
+  max-height: 26rem;      /* scrollable panel per the spec */
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-2);
+}
+.results .placeholder {
+  margin: 0;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.food-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.food-row:last-child { border-bottom: none; }
+.food-main { flex: 1 1 auto; min-width: 0; }
+.food-desc { font-weight: 600; }
+.food-portion { color: var(--ink-soft); font-size: 0.85rem; }
+.food-cal {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--cal);
+  white-space: nowrap;
+}
+.food-cal .unit {
+  font-weight: 500;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+}
+/* Highlight the part of a description that matched the query. */
+.food-desc mark {
+  background: color-mix(in srgb, var(--warn-line) 55%, transparent);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 0.05em;
+}
+
+.more {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  background: transparent;
+  color: var(--ink);
+}
+.more:hover { border-color: var(--accent); }
+
+footer {
+  padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  text-align: center;
+}
+footer a { color: var(--accent); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
