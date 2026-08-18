@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **5 / 20** |
+| 3 | Advanced | 🚧 In progress — **6 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Calorie Counter** (2026-08-17).
+> **Chat App** (2026-08-18).
 
 ## Projects built so far
 
@@ -112,6 +112,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 71 | [Boole Bots Game](./projects/3-advanced/boole-bots-game/) | Advanced | 2026-08-15 |
 | 72 | [Calendar](./projects/3-advanced/calendar/) | Advanced | 2026-08-16 |
 | 73 | [Calorie Counter](./projects/3-advanced/calorie-counter/) | Advanced | 2026-08-17 |
+| 74 | [Chat App](./projects/3-advanced/chat-app/) | Advanced | 2026-08-18 |
 
 ## Repository layout
 
@@ -314,6 +315,27 @@ dependency-free test suite:
 
 ```bash
 node projects/3-advanced/calorie-counter/tests.js   # -> 42 passed, 0 failed.
+```
+
+The **Chat App** is a multi-user chat interface. Pick a username, send a
+message, and it lands in the chat box as **`Username: Message`** — the spec's
+MVP. Its headline bonus is *real-time visibility across all connected users*,
+which normally means a WebSocket server; with nothing to run one against, the app
+makes **every open browser tab a connected user** and delivers each message
+instantly over `BroadcastChannel`, so you can open two tabs and watch two people
+talk. `localStorage` is the persistent database (a corrupt store recovers to
+empty), a heartbeat drives a live **"N tabs connected"** presence readout, and
+joining posts a **join notification** to everyone else. It also does the rest of
+the bonus list — **channels** (Slack-style rooms), **private messages**
+(`/msg user text`, with `"quoted names"`), inline **links and images**, and an
+**emoji** picker with `:shortcode:` expansion. All the rules — username and
+channel validation, the slash-command parser, and the token parser that splits a
+message into safe text / link / image / mention nodes (so user text is never
+rendered as HTML) — live in a pure, DOM-free `chat-core.js`, so it ships a
+dependency-free test suite:
+
+```bash
+node projects/3-advanced/chat-app/tests.js   # -> 74 passed, 0 failed.
 ```
 
 ---
