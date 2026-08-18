@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Username gate: shown until the visitor picks a name (spec: user story 1). -->
+  <div id="gate" class="gate" hidden>
+    <form id="gate-form" class="gate-card" autocomplete="off">
+      <h1>💬 Chat App</h1>
+      <p class="tagline">Pick a username to join the conversation.</p>
+      <input id="gate-input" class="gate-input" type="text" maxlength="24"
+             placeholder="Your username" aria-label="Username" />
+      <button type="submit" class="primary">Join chat</button>
+      <p id="gate-error" class="gate-error" role="alert"></p>
+      <p class="gate-hint">
+        Open this page in a second tab to chat with yourself in real time —
+        every open tab is a connected user.
+      </p>
+    </form>
+  </div>
+
+  <!-- Main chat UI, revealed once a username is set. -->
+  <div id="app" class="app" hidden>
+    <aside class="sidebar">
+      <div class="brand">💬 Chat App</div>
+
+      <div class="side-section">
+        <div class="side-head">
+          <span>Channels</span>
+          <button id="add-channel" class="icon-btn" title="New channel" aria-label="New channel">＋</button>
+        </div>
+        <ul id="channel-list" class="channel-list"></ul>
+      </div>
+
+      <div class="side-section">
+        <div class="side-head"><span>Direct messages</span></div>
+        <ul id="dm-list" class="channel-list dm-list"></ul>
+        <p class="side-hint">Use <code>/msg user text</code> or click a name.</p>
+      </div>
+
+      <div class="side-foot">
+        <div class="me">Signed in as <strong id="me-name"></strong></div>
+        <div class="side-buttons">
+          <button id="theme-toggle" class="ghost" title="Toggle theme">🌙 Theme</button>
+          <button id="leave" class="ghost" title="Change username">Leave</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="chat">
+      <header class="chat-head">
+        <div>
+          <span id="chat-title" class="chat-title"># general</span>
+          <span id="chat-sub" class="chat-sub"></span>
+        </div>
+        <div id="presence" class="presence" title="Users connected in this browser"></div>
+      </header>
+
+      <ul id="messages" class="messages" aria-live="polite"></ul>
+
+      <form id="composer" class="composer" autocomplete="off">
+        <button type="button" id="emoji-btn" class="icon-btn" title="Insert emoji" aria-label="Insert emoji">😀</button>
+        <div id="emoji-tray" class="emoji-tray" hidden></div>
+        <input id="composer-input" class="composer-input" type="text"
+               placeholder="Message… (try /help)" aria-label="Message" />
+        <button type="submit" class="primary">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="chat-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
