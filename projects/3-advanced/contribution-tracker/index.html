@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contribution Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Navigation bar: app name + hamburger menu (on every "page") -->
+  <header class="nav">
+    <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+    <h1 class="brand">🎗️ Contribution Tracker</h1>
+    <nav id="menu" class="menu" hidden>
+      <a href="#dashboard" data-route="dashboard">Dashboard</a>
+      <a href="#transactions" data-route="transactions">Transactions</a>
+      <a href="#about" data-route="about">About</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">🌗</button>
+  </header>
+
+  <main>
+    <!-- ===================== DASHBOARD ===================== -->
+    <section id="view-dashboard" class="view" hidden>
+      <div class="view-head">
+        <h2>Dashboard</h2>
+        <label class="year-picker">
+          Year
+          <select id="focus-year"></select>
+        </label>
+      </div>
+
+      <div id="dash-empty" class="empty-state" hidden>
+        <p>No contributions yet. Add one on the
+          <a href="#transactions" data-route="transactions">Transactions</a> page to see your dashboard come to life.</p>
+      </div>
+
+      <div id="dash-cards" class="cards" hidden>
+        <div class="card"><div class="card-label">Total this year</div><div id="card-year-total" class="card-value">$0.00</div></div>
+        <div class="card"><div class="card-label">Year over year</div><div id="card-yoy" class="card-value">—</div></div>
+        <div class="card"><div class="card-label">Avg / contribution</div><div id="card-avg-tx" class="card-value">$0.00</div></div>
+        <div class="card"><div class="card-label">Avg / active month</div><div id="card-avg-month" class="card-value">$0.00</div></div>
+      </div>
+
+      <div id="dash-charts" class="charts" hidden>
+        <div class="chart-box">
+          <h3>Contributions by month <span id="chart-month-year" class="muted"></span></h3>
+          <div id="chart-monthly" class="chart"></div>
+        </div>
+        <div class="chart-box">
+          <h3>Total by year <span class="muted">(with year-over-year change)</span></h3>
+          <div id="chart-yearly" class="chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRANSACTIONS ===================== -->
+    <section id="view-transactions" class="view" hidden>
+      <div class="view-head"><h2>Transactions</h2></div>
+
+      <form id="entry-form" class="entry" novalidate>
+        <div class="field">
+          <label for="in-date">Date</label>
+          <input type="date" id="in-date" required />
+        </div>
+        <div class="field">
+          <label for="in-payee">Payee</label>
+          <input type="text" id="in-payee" maxlength="80" placeholder="Charity or organization" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="in-amount">Amount</label>
+          <input type="text" id="in-amount" inputmode="decimal" placeholder="0.00" autocomplete="off" />
+        </div>
+        <div class="field field-wide">
+          <label for="in-memo">Memo</label>
+          <input type="text" id="in-memo" maxlength="200" placeholder="Optional note" autocomplete="off" />
+        </div>
+        <div class="entry-actions">
+          <button type="button" id="btn-clear" class="btn ghost">Clear</button>
+          <button type="submit" id="btn-add" class="btn primary">Add</button>
+        </div>
+      </form>
+
+      <div id="entry-errors" class="errors" role="alert" hidden></div>
+
+      <div class="ledger-tools">
+        <span id="ledger-count" class="muted"></span>
+        <button type="button" id="btn-export-csv" class="btn ghost small">Export CSV</button>
+        <button type="button" id="btn-export-json" class="btn ghost small">Export JSON</button>
+        <label class="btn ghost small file-btn">Import JSON
+          <input type="file" id="import-json" accept="application/json,.json" hidden />
+        </label>
+        <button type="button" id="btn-print" class="btn ghost small">Print / PDF</button>
+      </div>
+
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th class="sortable" data-key="date">Date <span class="arrow"></span></th>
+            <th class="sortable" data-key="payee">Payee <span class="arrow"></span></th>
+            <th class="sortable num" data-key="amount">Amount <span class="arrow"></span></th>
+            <th class="sortable" data-key="memo">Memo <span class="arrow"></span></th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ledger-body"></tbody>
+      </table>
+      <p id="ledger-empty" class="empty-state" hidden>No transactions yet.</p>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="view-about" class="view" hidden>
+      <div class="view-head"><h2>About</h2></div>
+      <div class="about">
+        <p><strong>Contribution Tracker</strong> records your charitable giving and rolls it up
+          into monthly and yearly analytics.</p>
+        <p>This project was built automatically by a scheduled
+          <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+          routine, one app per day, from the
+          <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/Contribution-Tracker-App.md" target="_blank" rel="noopener">app-ideas Contribution Tracker spec</a>.</p>
+        <p class="dev-links">
+          <a href="https://github.com/florinpop17/app-ideas" target="_blank" rel="noopener">🐙 app-ideas on GitHub</a>
+          <a href="https://claude.com/claude-code" target="_blank" rel="noopener">🤖 Claude Code</a>
+        </p>
+        <p class="muted">
+          Per the spec, transactions are <strong>not</strong> kept in <code>localStorage</code>. They live
+          in an IndexedDB database in your browser, and you can export them to a JSON or CSV file at any time.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer bar (on every page) -->
+  <footer class="footer">
+    <a href="#about" data-route="about">About</a>
+    <span class="muted">Built by an automated Claude Code routine · data stays in your browser</span>
+  </footer>
+
+  <!-- Delete confirmation dialog -->
+  <div id="confirm-backdrop" class="backdrop" hidden>
+    <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h3 id="confirm-title">Delete transaction?</h3>
+      <p id="confirm-body" class="muted"></p>
+      <div class="dialog-actions">
+        <button type="button" id="confirm-cancel" class="btn ghost">Cancel</button>
+        <button type="button" id="confirm-ok" class="btn danger">Okay</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="contrib-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
