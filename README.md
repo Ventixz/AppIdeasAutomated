@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **6 / 20** |
+| 3 | Advanced | 🚧 In progress — **7 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Chat App** (2026-08-18).
+> **Contribution Tracker** (2026-08-19).
 
 ## Projects built so far
 
@@ -113,6 +113,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 72 | [Calendar](./projects/3-advanced/calendar/) | Advanced | 2026-08-16 |
 | 73 | [Calorie Counter](./projects/3-advanced/calorie-counter/) | Advanced | 2026-08-17 |
 | 74 | [Chat App](./projects/3-advanced/chat-app/) | Advanced | 2026-08-18 |
+| 75 | [Contribution Tracker](./projects/3-advanced/contribution-tracker/) | Advanced | 2026-08-19 |
 
 ## Repository layout
 
@@ -132,6 +133,8 @@ projects/
     boole-bots-game/          # Boolean-logic combat: a pure engine + a canvas game
     calendar/                 # month-view scheduler: pure date/event engine + drag-to-reschedule UI
     calorie-counter/          # food-calorie search: pure search/wildcard engine + JSON dataset
+    chat-app/                 # multi-user chat over BroadcastChannel: pure parser engine + live tabs
+    contribution-tracker/     # charitable-giving ledger + SVG dashboard, integer-cents money engine
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -336,6 +339,28 @@ dependency-free test suite:
 
 ```bash
 node projects/3-advanced/chat-app/tests.js   # -> 74 passed, 0 failed.
+```
+
+The **Contribution Tracker** records charitable giving and rolls it up into a
+dashboard. A nav-bar **hamburger menu** switches between a **Transactions**
+ledger, a **Dashboard**, and an **About** page (with a footer on every one). On
+the Transactions page an input panel (date, payee, amount, memo) with **Clear**
+and **Add** validates into a single **consolidated error box**; every ledger row
+has **Modify** (which loads the row back and relabels Add → Modify) and
+**Delete** (which pops a **Cancel / Okay** confirmation). The bonus list is all
+there too — a **date picker**, **alternating row colors**, **sortable columns**,
+and **CSV / JSON / Print-to-PDF** export. The Dashboard draws hand-rolled **SVG**
+charts: contributions by month, total by year colored by direction, and cards
+for year-over-year change and averages. The spec has two hard rules and the
+build follows both: **money maths are done by hand in integer cents** (so
+`0.1 + 0.2` drift is impossible — there's a test pinning it), and because
+*"transactions must not be maintained in local storage"* the ledger lives in an
+**IndexedDB** database with file export, never `localStorage`. All the money
+parsing, validation, immutable ledger ops and analytics live in a pure, DOM-free
+`contrib-core.js`, so it ships a dependency-free test suite:
+
+```bash
+node projects/3-advanced/contribution-tracker/tests.js   # -> 82 passed, 0 failed.
 ```
 
 ---
