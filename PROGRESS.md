@@ -100,7 +100,7 @@ list, one project per day. Populated from the
 - [x] Calorie Counter — 2026-08-17
 - [x] Chat App — 2026-08-18
 - [x] Contribution Tracker App — 2026-08-19
-- [ ] Elevator
+- [x] Elevator — 2026-08-20
 - [ ] Fast Food Simulator
 - [ ] Instagram Clone
 - [ ] GitHub Timeline
