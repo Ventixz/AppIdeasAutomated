@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **7 / 20** |
+| 3 | Advanced | 🚧 In progress — **8 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Contribution Tracker** (2026-08-19).
+> **Elevator** (2026-08-20).
 
 ## Projects built so far
 
@@ -114,6 +114,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 73 | [Calorie Counter](./projects/3-advanced/calorie-counter/) | Advanced | 2026-08-17 |
 | 74 | [Chat App](./projects/3-advanced/chat-app/) | Advanced | 2026-08-18 |
 | 75 | [Contribution Tracker](./projects/3-advanced/contribution-tracker/) | Advanced | 2026-08-19 |
+| 76 | [Elevator](./projects/3-advanced/elevator/) | Advanced | 2026-08-20 |
 
 ## Repository layout
 
@@ -135,6 +136,7 @@ projects/
     calorie-counter/          # food-calorie search: pure search/wildcard engine + JSON dataset
     chat-app/                 # multi-user chat over BroadcastChannel: pure parser engine + live tabs
     contribution-tracker/     # charitable-giving ledger + SVG dashboard, integer-cents money engine
+    elevator/                 # four-floor building sim: pure FIFO+dwell state machine + animated shaft UI
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

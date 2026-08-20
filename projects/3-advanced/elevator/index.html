@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elevator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <h1>🛗 Elevator</h1>
+        <p class="tagline">
+          A four-floor building, a FIFO queue of calls, and one elevator that
+          answers them in order. Press the hall buttons on the left, watch the
+          car arrive, then pick a floor on the panel before the 5-second dwell
+          window runs out.
+        </p>
+      </div>
+      <div class="header-controls">
+        <button
+          id="occupants-btn"
+          class="ghost"
+          type="button"
+          aria-pressed="false"
+          title="Toggle random occupants"
+        >
+          👤 Occupants: off
+        </button>
+        <button
+          id="sound-btn"
+          class="ghost"
+          type="button"
+          aria-pressed="true"
+          title="Toggle sound effects"
+        >
+          🔊 Sound
+        </button>
+        <button id="theme-btn" class="theme-toggle" type="button" aria-label="Toggle theme">
+          🌙 Dark
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- The building cross-section: shaft on the left, hall calls beside each floor. -->
+      <section class="panel building" aria-label="Building cross-section">
+        <div class="building-inner">
+          <div class="shaft" id="shaft" aria-hidden="true">
+            <div class="car" id="car">
+              <div class="car-label" id="car-label">1</div>
+            </div>
+          </div>
+          <ol class="floors" id="floors" aria-label="Floors"></ol>
+        </div>
+        <p class="status" id="status" aria-live="polite">Idle on floor 1.</p>
+      </section>
+
+      <!-- The control column: elevator panel, request queue, event log. -->
+      <aside class="panel controls" aria-label="Controls">
+        <section class="control-panel">
+          <h2>Elevator panel</h2>
+          <p class="hint">
+            Inside the car. You have 5 seconds at each floor to pick your
+            destination before the elevator moves on.
+          </p>
+          <div class="panel-buttons" id="panel-buttons" role="group" aria-label="Floor selection">
+            <!-- Populated by script.js -->
+          </div>
+          <div class="dwell-row">
+            <span>Dwell window:</span>
+            <div class="dwell-bar"><div id="dwell-fill" class="dwell-fill"></div></div>
+            <span id="dwell-label">—</span>
+          </div>
+        </section>
+
+        <section class="queue-panel">
+          <h2>Request queue <span class="tag" id="queue-count">0</span></h2>
+          <p class="hint">
+            Calls are served <strong>first-in, first-out</strong> — the order
+            people pressed, not the nearest floor.
+          </p>
+          <ol class="queue" id="queue"></ol>
+          <p class="hint queue-full" id="queue-full-hint" hidden>
+            🚨 Queue at capacity — no more calls until we work some off.
+          </p>
+        </section>
+
+        <section class="log-panel">
+          <h2>Event log</h2>
+          <ol class="log" id="log" aria-live="polite"></ol>
+        </section>
+
+        <details class="settings">
+          <summary>Settings</summary>
+          <label>
+            Occupant frequency (seconds)
+            <input id="occupant-interval" type="number" min="2" max="60" step="1" value="12" />
+          </label>
+          <label>
+            Queue capacity (alarm)
+            <input id="capacity-input" type="number" min="2" max="16" step="1" value="8" />
+          </label>
+        </details>
+      </aside>
+    </main>
+
+    <script src="elevator-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
