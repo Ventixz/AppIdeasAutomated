@@ -1,0 +1,320 @@
+/* style.css — Fast Food Simulator. Setup panel on top, a row of workflow
+   stations, and an event log. Light and dark themes are driven by [data-theme]
+   on <html>; the whole palette is CSS custom properties so the toggle only
+   swaps values. */
+
+:root {
+  --bg: #f2f5fb;
+  --panel: #ffffff;
+  --panel-2: #eef2fa;
+  --ink: #1a2233;
+  --ink-soft: #5b667e;
+  --line: #dce2ee;
+  --accent: #f2803c;
+  --accent-ink: #ffffff;
+  --good: #35c37b;
+  --warn: #f2b23c;
+  --danger: #e05353;
+  --station: #eef2fa;
+  --station-line: #cfd7ea;
+  --shadow: 0 6px 24px rgba(26, 34, 51, 0.1);
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f1420;
+  --panel: #182031;
+  --panel-2: #1f2941;
+  --ink: #e8ecf6;
+  --ink-soft: #9aa6c0;
+  --line: #2a3550;
+  --accent: #ff9a5c;
+  --accent-ink: #0f1420;
+  --good: #52d491;
+  --warn: #ffcc66;
+  --danger: #ff6b6b;
+  --station: #1a2338;
+  --station-line: #2c375a;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto 20px;
+}
+
+header .title h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.theme-toggle,
+.ghost {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.theme-toggle:hover,
+.ghost:hover {
+  border-color: var(--accent);
+}
+.ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+.panel h2 {
+  margin: 0 0 14px;
+  font-size: 17px;
+}
+
+/* --- setup ------------------------------------------------------------ */
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.fields input,
+.fields select {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel-2);
+  color: var(--ink);
+  font-size: 15px;
+}
+.fields input:focus,
+.fields select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.fields input.invalid {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, var(--panel-2));
+}
+
+.bonus {
+  display: inline-block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0 6px;
+  vertical-align: middle;
+}
+
+.warn {
+  min-height: 14px;
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.primary {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary:hover {
+  filter: brightness(1.05);
+}
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.clock {
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+.clock strong {
+  color: var(--ink);
+}
+
+/* --- workflow stations ------------------------------------------------ */
+
+.stations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.station {
+  background: var(--station);
+  border: 1px solid var(--station-line);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.station.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: translateY(-2px);
+}
+
+.station h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.station .big {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.station .sub {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.station .sub strong {
+  color: var(--ink);
+}
+
+.people {
+  min-height: 22px;
+  margin-top: 8px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  word-break: break-all;
+}
+
+.cook-bar {
+  margin-top: 10px;
+  height: 6px;
+  background: var(--panel-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cook-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.12s linear;
+}
+
+/* --- event log -------------------------------------------------------- */
+
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+.log li {
+  display: flex;
+  gap: 10px;
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.log li:first-child {
+  animation: flash 0.6s ease;
+}
+.log-time {
+  flex: 0 0 46px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.log-served span:last-child {
+  color: var(--good);
+}
+.log-stopped span:last-child {
+  color: var(--danger);
+}
+
+@keyframes flash {
+  from {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+  to {
+    background: transparent;
+  }
+}
+
+@media (max-width: 760px) {
+  .stations {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  header {
+    flex-direction: column;
+  }
+}
