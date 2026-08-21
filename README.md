@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **8 / 20** |
+| 3 | Advanced | 🚧 In progress — **9 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Elevator** (2026-08-20).
+> **Fast Food Simulator** (2026-08-21).
 
 ## Projects built so far
 
@@ -115,6 +115,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 74 | [Chat App](./projects/3-advanced/chat-app/) | Advanced | 2026-08-18 |
 | 75 | [Contribution Tracker](./projects/3-advanced/contribution-tracker/) | Advanced | 2026-08-19 |
 | 76 | [Elevator](./projects/3-advanced/elevator/) | Advanced | 2026-08-20 |
+| 77 | [Fast Food Simulator](./projects/3-advanced/fast-food-simulator/) | Advanced | 2026-08-21 |
 
 ## Repository layout
 

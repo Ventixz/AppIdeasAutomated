@@ -101,7 +101,7 @@ list, one project per day. Populated from the
 - [x] Chat App — 2026-08-18
 - [x] Contribution Tracker App — 2026-08-19
 - [x] Elevator — 2026-08-20
-- [ ] Fast Food Simulator
+- [x] Fast Food Simulator — 2026-08-21
 - [ ] Instagram Clone
 - [ ] GitHub Timeline
 - [ ] Kudos Slackbot
