@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Food Simulator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        <h1>🍔 Fast Food Simulator</h1>
+        <p class="tagline">
+          A take-away shop modelled end to end: customers arrive, an order taker
+          writes tickets, the cook works through the kitchen queue, and the
+          server calls finished orders at the pickup counter. Every ticket is a
+          pair of native Promises — one the server waits on, one the customer
+          waits on.
+        </p>
+      </div>
+      <div class="header-controls">
+        <button id="theme-btn" class="theme-toggle" type="button" aria-label="Toggle theme">
+          🌙 Dark
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Controls: the interval inputs, warnings, and start/stop. -->
+      <section class="panel setup" aria-label="Simulation setup">
+        <h2>Setup</h2>
+        <form id="setup-form" novalidate>
+          <div class="fields">
+            <label>
+              Customer arrival interval (s)
+              <input id="arrival-interval" type="number" step="0.1" min="0.1" value="3" />
+              <span class="warn" id="arrival-warn" role="alert"></span>
+            </label>
+            <label>
+              Order fulfilment interval (s)
+              <input id="fulfill-interval" type="number" step="0.1" min="0.1" value="4" />
+              <span class="warn" id="fulfill-warn" role="alert"></span>
+            </label>
+            <label>
+              Order-taker time (s) <span class="bonus">bonus</span>
+              <input id="taker-time" type="number" step="0.1" min="0.1" value="1" />
+              <span class="warn" id="taker-warn" role="alert"></span>
+            </label>
+            <label>
+              Server delivery time (s) <span class="bonus">bonus</span>
+              <input id="server-time" type="number" step="0.1" min="0.1" value="1" />
+              <span class="warn" id="server-warn" role="alert"></span>
+            </label>
+            <label>
+              Total duration (s, 0 = until stopped) <span class="bonus">bonus</span>
+              <input id="duration" type="number" step="1" min="0" value="0" />
+              <span class="warn" id="duration-warn" role="alert"></span>
+            </label>
+            <label>
+              Speed
+              <select id="speed">
+                <option value="1">1× real time</option>
+                <option value="2" selected>2×</option>
+                <option value="4">4×</option>
+                <option value="8">8×</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions">
+            <button id="start-btn" class="primary" type="submit">▶ Start</button>
+            <button id="stop-btn" class="ghost" type="button" disabled>■ Stop</button>
+          </div>
+        </form>
+        <p class="clock">
+          Elapsed: <strong id="clock">0.0s</strong> ·
+          Served: <strong id="served-total">0</strong> ·
+          In shop: <strong id="pending-total">0</strong>
+        </p>
+      </section>
+
+      <!-- The workflow: five stations the customer/order pass through. -->
+      <section class="panel workflow" aria-label="Restaurant workflow">
+        <ol class="stations">
+          <li class="station" id="station-line">
+            <h3>🚶 Order line</h3>
+            <p class="big" id="line-count">0</p>
+            <p class="sub">waiting to order</p>
+            <div class="people" id="line-people" aria-hidden="true"></div>
+          </li>
+
+          <li class="station" id="station-taker">
+            <h3>🧾 Order taker</h3>
+            <p class="big" id="taker-order">—</p>
+            <p class="sub" id="taker-sub">idle</p>
+          </li>
+
+          <li class="station" id="station-kitchen">
+            <h3>👨‍🍳 Kitchen</h3>
+            <p class="big" id="kitchen-order">—</p>
+            <p class="sub">
+              cooking · queue <strong id="kitchen-queue">0</strong>
+            </p>
+            <div class="cook-bar"><div id="cook-fill" class="cook-fill"></div></div>
+          </li>
+
+          <li class="station" id="station-pickup">
+            <h3>🛎️ Pickup</h3>
+            <p class="big" id="pickup-order">—</p>
+            <p class="sub">
+              now serving · line <strong id="serving-line">0</strong>
+            </p>
+          </li>
+
+          <li class="station" id="station-done">
+            <h3>✅ Served</h3>
+            <p class="big" id="done-count">0</p>
+            <p class="sub">orders delivered</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- The running event log. -->
+      <aside class="panel log-panel" aria-label="Event log">
+        <h2>Event log</h2>
+        <ol class="log" id="log" aria-live="polite"></ol>
+      </aside>
+    </main>
+
+    <script src="fastfood-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
