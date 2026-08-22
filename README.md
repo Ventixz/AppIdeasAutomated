@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **9 / 20** |
+| 3 | Advanced | 🚧 In progress — **10 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Fast Food Simulator** (2026-08-21).
+> **Instagram Clone** (2026-08-22).
 
 ## Projects built so far
 
@@ -116,6 +116,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 75 | [Contribution Tracker](./projects/3-advanced/contribution-tracker/) | Advanced | 2026-08-19 |
 | 76 | [Elevator](./projects/3-advanced/elevator/) | Advanced | 2026-08-20 |
 | 77 | [Fast Food Simulator](./projects/3-advanced/fast-food-simulator/) | Advanced | 2026-08-21 |
+| 78 | [Instagram Clone](./projects/3-advanced/instagram-clone/) | Advanced | 2026-08-22 |
 
 ## Repository layout
 
@@ -364,6 +365,24 @@ parsing, validation, immutable ledger ops and analytics live in a pure, DOM-free
 
 ```bash
 node projects/3-advanced/contribution-tracker/tests.js   # -> 82 passed, 0 failed.
+```
+
+The **Instagram Clone** ("Instagage") is a full-stack MVP collapsed into one
+serverless page. You **register or log in** (accounts store a *salted password
+digest*, never plaintext; you can log in by username or email), **upload photos**
+with captions by picking or dragging a file, get a **profile grid** of your
+uploads with post/follower/following counts, **follow other users**, and see a
+**Home feed** of the accounts you follow (newest first) plus a bonus global
+**Explore** feed, a **People** directory, and **likes**. The spec asks for a
+MERN/MEAN server that stores images in a database; with no build step allowed,
+the routine keeps that *shape* — `createApp(store)` stands in for the Express API,
+an injectable **store** (`localStorage`) stands in for MongoDB, and images are
+held as **data URLs**. All of it — validation, salted hashing, the follow graph,
+and the derived feeds — lives in a DOM-free `instagram-core.js` with a
+dependency-free suite:
+
+```bash
+node projects/3-advanced/instagram-clone/tests.js   # -> 56 passed, 0 failed.
 ```
 
 ---
