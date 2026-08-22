@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagage — an Instagram clone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ====================== Auth screen ====================== -->
+  <main id="auth" class="auth">
+    <div class="auth-card">
+      <h1 class="wordmark">Instagage</h1>
+      <p class="tagline">A tiny Instagram clone. Built by a Claude routine.</p>
+
+      <div class="tabs" role="tablist">
+        <button id="tab-login" class="tab is-active" role="tab" type="button">Log in</button>
+        <button id="tab-register" class="tab" role="tab" type="button">Sign up</button>
+      </div>
+
+      <!-- Login -->
+      <form id="login-form" class="auth-form" novalidate>
+        <label>Username or email
+          <input id="login-id" type="text" autocomplete="username" placeholder="ada" />
+        </label>
+        <label>Password
+          <input id="login-pw" type="password" autocomplete="current-password" placeholder="••••••" />
+        </label>
+        <p class="form-error" id="login-error" role="alert"></p>
+        <button class="primary" type="submit">Log in</button>
+      </form>
+
+      <!-- Register -->
+      <form id="register-form" class="auth-form is-hidden" novalidate>
+        <label>Name
+          <input id="reg-name" type="text" autocomplete="name" placeholder="Ada Lovelace" />
+          <span class="field-error" data-for="reg-name"></span>
+        </label>
+        <label>Email
+          <input id="reg-email" type="email" autocomplete="email" placeholder="ada@example.com" />
+          <span class="field-error" data-for="reg-email"></span>
+        </label>
+        <label>Username
+          <input id="reg-username" type="text" autocomplete="username" placeholder="ada" />
+          <span class="field-error" data-for="reg-username"></span>
+        </label>
+        <label>Password
+          <input id="reg-pw" type="password" autocomplete="new-password" placeholder="at least 6 characters" />
+          <span class="field-error" data-for="reg-pw"></span>
+        </label>
+        <p class="form-error" id="register-error" role="alert"></p>
+        <button class="primary" type="submit">Create account</button>
+      </form>
+
+      <button id="seed-demo" class="link-btn" type="button">Load a demo world to explore</button>
+    </div>
+  </main>
+
+  <!-- ====================== App shell ====================== -->
+  <div id="app" class="app is-hidden">
+    <header class="topbar">
+      <button class="wordmark small" id="go-home" type="button">Instagage</button>
+      <nav class="nav">
+        <button class="nav-btn" data-view="home" type="button">Home</button>
+        <button class="nav-btn" data-view="explore" type="button">Explore</button>
+        <button class="nav-btn" data-view="people" type="button">People</button>
+        <button class="nav-btn primary-ghost" id="open-composer" type="button">+ New post</button>
+        <button class="nav-btn" data-view="profile" type="button" id="nav-profile">Profile</button>
+        <button class="nav-btn" id="theme-toggle" type="button" title="Toggle theme">🌙</button>
+        <button class="nav-btn" id="logout" type="button">Log out</button>
+      </nav>
+    </header>
+
+    <section id="view" class="view"><!-- rendered by script.js --></section>
+
+    <!-- Composer modal -->
+    <div id="composer" class="modal is-hidden" role="dialog" aria-modal="true" aria-label="Create a new post">
+      <div class="modal-card">
+        <h2>New post</h2>
+        <label class="drop" id="drop">
+          <input id="post-image" type="file" accept="image/*" hidden />
+          <span id="drop-text">Click to choose an image (or drag one here)</span>
+          <img id="post-preview" class="is-hidden" alt="Selected preview" />
+        </label>
+        <textarea id="post-caption" maxlength="300" placeholder="Write a caption…"></textarea>
+        <p class="form-error" id="composer-error" role="alert"></p>
+        <div class="modal-actions">
+          <button class="ghost" id="composer-cancel" type="button">Cancel</button>
+          <button class="primary" id="composer-share" type="button">Share</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast is-hidden"></div>
+  </div>
+
+  <script src="instagram-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
