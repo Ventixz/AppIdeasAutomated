@@ -102,7 +102,7 @@ list, one project per day. Populated from the
 - [x] Contribution Tracker App — 2026-08-19
 - [x] Elevator — 2026-08-20
 - [x] Fast Food Simulator — 2026-08-21
-- [ ] Instagram Clone
+- [x] Instagram Clone — 2026-08-22
 - [ ] GitHub Timeline
 - [ ] Kudos Slackbot
 - [ ] Movie App
