@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **10 / 20** |
+| 3 | Advanced | 🚧 In progress — **11 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Instagram Clone** (2026-08-22).
+> **GitHub Timeline** (2026-08-23).
 
 ## Projects built so far
 
@@ -117,6 +117,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 76 | [Elevator](./projects/3-advanced/elevator/) | Advanced | 2026-08-20 |
 | 77 | [Fast Food Simulator](./projects/3-advanced/fast-food-simulator/) | Advanced | 2026-08-21 |
 | 78 | [Instagram Clone](./projects/3-advanced/instagram-clone/) | Advanced | 2026-08-22 |
+| 79 | [GitHub Timeline](./projects/3-advanced/github-timeline/) | Advanced | 2026-08-23 |
 
 ## Repository layout
 
@@ -383,6 +384,26 @@ dependency-free suite:
 
 ```bash
 node projects/3-advanced/instagram-clone/tests.js   # -> 56 passed, 0 failed.
+```
+
+The **GitHub Timeline** turns any GitHub username into a shareable, year-by-year
+**timeline of that user's public repositories**, each annotated with its name,
+creation date, and description on a real vertical timeline (spine + nodes) — the
+kind of thing you could send a prospective employer. You **type a username** and
+hit **Generate**; the page calls the public GitHub REST API with `fetch`, keeps
+**only public repos** (per the spec), sorts them by creation date, and groups
+them by year. Bad input and API errors surface as a **warning** — validation runs
+*before* the network (GitHub's own username rules), a `404` becomes *"No GitHub
+user by that name."*, and a `403` becomes a rate-limit notice. The bonus feature
+is there too: a **per-year bar chart** tallying how many repos were created each
+year, plus optional **Include forks** and **Newest/Oldest** controls. Every value
+from GitHub is written with `textContent`, never `innerHTML`. All the rules —
+validation, `normalizeRepo`, ordering, the year tally, and the HTTP-status-to-
+warning mapping — live in a DOM-free `timeline-core.js` with a dependency-free
+suite:
+
+```bash
+node projects/3-advanced/github-timeline/tests.js   # -> 61 passed, 0 failed.
 ```
 
 ---

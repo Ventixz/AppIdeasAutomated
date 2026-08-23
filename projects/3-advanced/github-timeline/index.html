@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Timeline</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="masthead">
+    <h1>GitHub Timeline</h1>
+    <p class="subtitle">
+      Turn any GitHub username into a shareable, year-by-year timeline of their
+      public repositories.
+    </p>
+
+    <form id="search" class="search" novalidate>
+      <label class="visually-hidden" for="username">GitHub username</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        inputmode="text"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="e.g. octocat"
+        aria-describedby="warning"
+      />
+      <button id="generate" class="primary" type="submit">Generate</button>
+    </form>
+
+    <div class="options">
+      <label><input type="checkbox" id="opt-forks" checked /> Include forks</label>
+      <label>
+        Order
+        <select id="opt-order">
+          <option value="desc">Newest first</option>
+          <option value="asc">Oldest first</option>
+        </select>
+      </label>
+    </div>
+
+    <p id="warning" class="warning is-hidden" role="alert"></p>
+  </header>
+
+  <main id="result" class="result" aria-live="polite">
+    <p class="hint" id="hint">
+      Enter a username above and press <strong>Generate</strong>. Try
+      <button class="link-btn" data-example="octocat" type="button">octocat</button>,
+      <button class="link-btn" data-example="torvalds" type="button">torvalds</button>, or
+      <button class="link-btn" data-example="florinpop17" type="button">florinpop17</button>.
+    </p>
+  </main>
+
+  <footer class="page-footer">
+    <p>
+      Built automatically by <a href="https://claude.com/claude-code">Claude Code</a>
+      from the
+      <a href="https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/GitHub-Timeline-App.md">app-ideas GitHub&nbsp;Timeline spec</a>.
+      Data from the public GitHub REST API.
+    </p>
+  </footer>
+
+  <script src="timeline-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
