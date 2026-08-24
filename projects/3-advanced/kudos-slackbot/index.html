@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kudos Slackbot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="workspace">
+        <span class="ws-badge">K</span>
+        <span class="ws-name">Kudos HQ</span>
+      </div>
+      <nav class="channels">
+        <p class="channels-head">Channels</p>
+        <ul>
+          <li class="active"># kudos</li>
+          <li># general</li>
+          <li># random</li>
+        </ul>
+        <p class="channels-head">You are</p>
+        <div class="whoami">
+          <label for="me">Posting as</label>
+          <select id="me" aria-label="Current user">
+            <option value="alice">@alice</option>
+            <option value="bob">@bob</option>
+            <option value="carol">@carol</option>
+            <option value="dan">@dan</option>
+          </select>
+        </div>
+      </nav>
+      <p class="sidebar-foot">A mock Slack — no account, no network.</p>
+    </aside>
+
+    <main class="channel">
+      <header class="channel-head">
+        <h1># kudos</h1>
+        <p>Recognize your teammates. Kudos live here so they don't scroll away.</p>
+      </header>
+
+      <section id="transcript" class="transcript" aria-live="polite"></section>
+
+      <div class="quick" id="quick" aria-label="Quick commands">
+        <button data-cmd="/kudo help">/kudo help</button>
+        <button data-cmd="/kudo list">/kudo list</button>
+        <button data-cmd="/kudo top">/kudo top</button>
+        <button data-cmd="/kudo user @grace">/kudo user @grace</button>
+      </div>
+
+      <form id="composer" class="composer" autocomplete="off">
+        <span class="slash">/</span>
+        <input
+          id="input"
+          type="text"
+          placeholder="kudo add @grace shipped the release"
+          aria-label="Slash command"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="kudos-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
