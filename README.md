@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **11 / 20** |
+| 3 | Advanced | 🚧 In progress — **12 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **GitHub Timeline** (2026-08-23).
+> **Kudos Slackbot** (2026-08-24).
 
 ## Projects built so far
 
@@ -118,6 +118,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 77 | [Fast Food Simulator](./projects/3-advanced/fast-food-simulator/) | Advanced | 2026-08-21 |
 | 78 | [Instagram Clone](./projects/3-advanced/instagram-clone/) | Advanced | 2026-08-22 |
 | 79 | [GitHub Timeline](./projects/3-advanced/github-timeline/) | Advanced | 2026-08-23 |
+| 80 | [Kudos Slackbot](./projects/3-advanced/kudos-slackbot/) | Advanced | 2026-08-24 |
 
 ## Repository layout
 
@@ -404,6 +405,24 @@ suite:
 
 ```bash
 node projects/3-advanced/github-timeline/tests.js   # -> 61 passed, 0 failed.
+```
+
+The **Kudos Slackbot** lets a team recognize each other's effort with a
+`/kudo` slash command — and, unlike a nice message in a busy channel, the
+recognition doesn't scroll away. It's a **self-contained mock of a Slack
+channel**, so you can drive the whole command surface right on the page: `add`
+a kudo for a teammate, `list` the latest (or `*` for all), filter to one person
+with `user @grace`, `replace`/`delete` your own (those two are **author-scoped**
+— only the giver can change a kudo, which you can see by switching who you're
+*"posting as"* in the sidebar), and rank everyone with the bonus `top`
+leaderboard. All the behaviour — user-id normalization (including Slack's
+`<@U…|label>` mention encoding), command parsing, the author-only rules, and the
+leaderboard sort — lives in a DOM-free `kudos-core.js` with an **injected clock
+and id counter**, so a real Slack app would just be a thin adapter over the same
+tested engine. Dependency-free suite:
+
+```bash
+node projects/3-advanced/kudos-slackbot/tests.js   # -> 88 passed, 0 failed.
 ```
 
 ---
