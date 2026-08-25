@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **12 / 20** |
+| 3 | Advanced | 🚧 In progress — **13 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Kudos Slackbot** (2026-08-24).
+> **Movie App** (2026-08-25).
 
 ## Projects built so far
 
@@ -119,6 +119,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 78 | [Instagram Clone](./projects/3-advanced/instagram-clone/) | Advanced | 2026-08-22 |
 | 79 | [GitHub Timeline](./projects/3-advanced/github-timeline/) | Advanced | 2026-08-23 |
 | 80 | [Kudos Slackbot](./projects/3-advanced/kudos-slackbot/) | Advanced | 2026-08-24 |
+| 81 | [Movie App](./projects/3-advanced/movie-app/) | Advanced | 2026-08-25 |
 
 ## Repository layout
 
@@ -423,6 +424,23 @@ tested engine. Dependency-free suite:
 
 ```bash
 node projects/3-advanced/kudos-slackbot/tests.js   # -> 88 passed, 0 failed.
+```
+
+The **Movie App** is a poster-wall movie browser: the homepage shows the latest
+releases newest-first, you **scroll to load more** (an `IntersectionObserver`
+sentinel pages in the next batch and de-dupes by id), and any poster opens a
+**detail page** with the rating, vote count, runtime, genres, synopsis, and cast.
+The bonus **watchlist** and per-movie **reviews** persist in the browser
+(localStorage) — no login needed. It runs with **zero setup** on a bundled
+sample catalog and switches to **live [TheMovieDB](https://www.themoviedb.org/)**
+the moment you paste an API key (kept in your browser only). As always, the rules
+— API URL building, record normalization (including the `id: 0` edge case),
+newest-first sorting, page de-duplication, rating/runtime formatting, and the
+immutable watchlist logic — live in a DOM-free `movie-core.js`. Dependency-free
+suite:
+
+```bash
+node projects/3-advanced/movie-app/tests.js   # -> 90 passed, 0 failed.
 ```
 
 ---
