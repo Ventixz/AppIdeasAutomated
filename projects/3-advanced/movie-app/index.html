@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <h1 class="logo" id="home-link" role="button" tabindex="0">🎬 Movie App</h1>
+      <form id="search-form" class="search" role="search">
+        <input id="search-input" type="search" placeholder="Search movies…"
+               aria-label="Search movies" autocomplete="off" />
+        <button type="submit">Search</button>
+      </form>
+      <nav class="tabs">
+        <button id="tab-browse" class="tab is-active" type="button">Browse</button>
+        <button id="tab-watchlist" class="tab" type="button">
+          Watchlist <span id="watchlist-count" class="badge">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Optional: paste a TheMovieDB API key to go live. Without one, the app -->
+  <!-- runs on a small bundled sample catalog so it works with zero setup.   -->
+  <div class="wrap keybar">
+    <details id="key-details">
+      <summary>Data source: <span id="source-label">bundled sample catalog</span></summary>
+      <div class="keybar-body">
+        <p>
+          Paste a free <a href="https://www.themoviedb.org/settings/api" target="_blank"
+          rel="noopener">TheMovieDB API key</a> to browse live movies. It is kept in
+          this browser only (localStorage) and never leaves the page.
+        </p>
+        <form id="key-form" class="key-form">
+          <input id="key-input" type="text" placeholder="TheMovieDB API key" autocomplete="off" />
+          <button type="submit">Use live data</button>
+          <button id="key-clear" type="button" class="ghost">Clear</button>
+        </form>
+      </div>
+    </details>
+  </div>
+
+  <main class="wrap">
+    <div id="message" class="message" hidden></div>
+
+    <!-- Browse / search grid -->
+    <section id="grid-view">
+      <h2 id="grid-title" class="section-title">Latest movies</h2>
+      <div id="grid" class="grid" aria-live="polite"></div>
+      <div id="sentinel" class="sentinel" aria-hidden="true"></div>
+      <p id="grid-status" class="grid-status"></p>
+    </section>
+
+    <!-- Single movie detail -->
+    <section id="detail-view" hidden></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Built automatically by
+      <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+      · part of the AppIdeasAutomated daily routine ·
+      movie data from <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TheMovieDB</a>
+    </div>
+  </footer>
+
+  <script src="movie-core.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
