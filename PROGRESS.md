@@ -105,7 +105,7 @@ list, one project per day. Populated from the
 - [x] Instagram Clone — 2026-08-22
 - [x] GitHub Timeline — 2026-08-23
 - [x] Kudos Slackbot — 2026-08-24
-- [ ] Movie App
+- [x] Movie App — 2026-08-25
 - [ ] MyPodcast Library
 - [ ] NASA Exoplanet Query
 - [ ] Shell Game
