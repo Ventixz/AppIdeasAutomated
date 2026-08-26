@@ -106,7 +106,7 @@ list, one project per day. Populated from the
 - [x] GitHub Timeline — 2026-08-23
 - [x] Kudos Slackbot — 2026-08-24
 - [x] Movie App — 2026-08-25
-- [ ] MyPodcast Library
+- [x] MyPodcast Library — 2026-08-26
 - [ ] NASA Exoplanet Query
 - [ ] Shell Game
 - [ ] Shuffle Deck
