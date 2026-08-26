@@ -1,0 +1,260 @@
+/* style.css — MyPodcast Library. A dark theme, no external assets. */
+
+:root {
+  --bg: #0f1117;
+  --surface: #191c26;
+  --surface-2: #222634;
+  --border: #2c3143;
+  --text: #e8eaf0;
+  --muted: #9aa1b4;
+  --accent: #a855f7;      /* podcast purple */
+  --accent-2: #5b8def;
+  --star: #f5c518;
+  --heart: #f0506e;
+  --danger: #e05a5a;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a { color: var(--accent-2); }
+
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+
+/* --- header --------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(15, 17, 23, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 0;
+}
+.logo {
+  margin: 0;
+  font-size: 1.25rem;
+  cursor: pointer;
+  user-select: none;
+}
+.search { display: flex; gap: 0.4rem; margin-left: auto; flex-wrap: wrap; }
+.search input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  min-width: 12rem;
+}
+
+/* --- buttons -------------------------------------------------------------- */
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+}
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--border);
+}
+button:hover { filter: brightness(1.08); }
+
+/* --- toolbar + add flow --------------------------------------------------- */
+main { padding: 1.5rem 0 3rem; min-height: 60vh; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.section-title { margin: 0; font-size: 1.3rem; }
+.add-btn { font-weight: 600; }
+.add-btn span { font-size: 1.1em; }
+
+.add-panel {
+  margin: 1rem 0;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.add-panel label { font-weight: 600; font-size: 0.9rem; }
+.add-panel input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+}
+.hint { margin: 0; color: var(--muted); font-size: 0.82rem; }
+.hint code {
+  background: var(--surface-2);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.add-actions { display: flex; gap: 0.5rem; }
+.add-error {
+  color: var(--danger);
+  font-size: 0.88rem;
+  background: rgba(224, 90, 90, 0.1);
+  border: 1px solid rgba(224, 90, 90, 0.35);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+}
+
+/* --- podcast table -------------------------------------------------------- */
+.podcast-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.podcast-table th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+.podcast-table th.num, .podcast-table td.num { text-align: right; }
+.podcast-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.podcast-row { cursor: pointer; }
+.podcast-row:hover { background: var(--surface); }
+.pod-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  background: var(--surface-2);
+}
+.pod-name { font-weight: 600; }
+.pill {
+  display: inline-block;
+  min-width: 1.6rem;
+  text-align: center;
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-variant-numeric: tabular-nums;
+}
+.row-remove {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--muted);
+  padding: 0.3rem 0.6rem;
+}
+.row-remove:hover { border-color: var(--danger); color: var(--danger); filter: none; }
+
+.watermark {
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.4rem;
+  padding: 3rem 1rem;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 1rem;
+}
+
+/* --- episodes view -------------------------------------------------------- */
+.back-link {
+  background: none; border: none; color: var(--accent-2);
+  padding: 0; margin-bottom: 0.5rem; font-size: 0.9rem;
+}
+.episodes-head { display: flex; align-items: center; gap: 0.9rem; margin: 0.4rem 0 1rem; }
+.episodes-head img { width: 56px; height: 56px; border-radius: 12px; }
+.episodes-head h2 { margin: 0; font-size: 1.4rem; }
+.sort-controls { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.sort-controls button {
+  background: var(--surface); color: var(--muted); border-color: var(--border);
+  font-size: 0.85rem; padding: 0.3rem 0.8rem;
+}
+.sort-controls button.is-active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.episode-table { width: 100%; border-collapse: collapse; }
+.episode-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.ep-icon { width: 40px; height: 40px; border-radius: 8px; }
+.ep-title { font-weight: 600; }
+.ep-title a { color: var(--text); text-decoration: none; }
+.ep-title a:hover { color: var(--accent-2); text-decoration: underline; }
+.ep-date { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+.ep-tags { margin-top: 0.25rem; }
+.tag {
+  display: inline-block;
+  background: var(--surface-2);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 0.02rem 0.5rem;
+  font-size: 0.75rem;
+  margin: 0.1rem 0.2rem 0 0;
+}
+.tag-input {
+  margin-top: 0.35rem;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); border-radius: 6px; padding: 0.25rem 0.5rem;
+  font-size: 0.8rem; width: 100%; max-width: 22rem;
+}
+
+/* heart + stars */
+.heart {
+  background: none; border: none; padding: 0;
+  font-size: 1.35rem; line-height: 1; filter: grayscale(1) opacity(0.5);
+}
+.heart.is-on { filter: none; }
+.stars { white-space: nowrap; }
+.star {
+  background: none; border: none; padding: 0 0.02rem;
+  font-size: 1.15rem; line-height: 1; color: var(--muted);
+}
+.star.is-on { color: var(--star); }
+
+/* --- misc ----------------------------------------------------------------- */
+.message {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1rem;
+}
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.82rem;
+  padding: 1.2rem 0;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .search { width: 100%; margin-left: 0; }
+  .search input { flex: 1; min-width: 0; }
+  .podcast-table th.hide-sm, .podcast-table td.hide-sm { display: none; }
+}

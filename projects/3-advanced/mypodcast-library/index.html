@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyPodcast Library</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <h1 class="logo" id="home-link" role="button" tabindex="0">🎧 MyPodcast Library</h1>
+      <form id="search-form" class="search" role="search">
+        <input id="search-input" type="search" placeholder="Search #hashtags…"
+               aria-label="Search episodes by hashtag" autocomplete="off" />
+        <button type="submit">Search</button>
+        <button id="search-cancel" type="button" class="ghost" hidden>Cancel</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="message" class="message" hidden></div>
+
+    <!-- Library view: the table of favourite podcasts + the add flow. -->
+    <section id="library-view">
+      <div class="toolbar">
+        <h2 class="section-title" id="library-title">Your podcasts</h2>
+        <button id="add-toggle" class="add-btn" type="button" aria-expanded="false">
+          <span aria-hidden="true">+</span> Add a new podcast
+        </button>
+      </div>
+
+      <!-- Add panel (hidden until '+' is clicked). -->
+      <form id="add-panel" class="add-panel" hidden>
+        <label for="add-url">Podbean podcast URL</label>
+        <input id="add-url" type="url" autocomplete="off"
+               placeholder="https://www.podbean.com/podcast-detail/…" />
+        <p class="hint">
+          Try one of the bundled shows —
+          <code>https://www.podbean.com/podcast-detail/signals-noise</code>,
+          <code>https://slowkitchen.podbean.com/</code>,
+          <code>https://www.podbean.com/podcast-detail/low-orbit</code>, or
+          <code>https://smallledger.podbean.com/</code>.
+        </p>
+        <div id="add-error" class="add-error" hidden></div>
+        <div class="add-actions">
+          <button type="submit">Save</button>
+          <button id="add-cancel" type="button" class="ghost">Cancel</button>
+        </div>
+      </form>
+
+      <table class="podcast-table" id="podcast-table">
+        <thead>
+          <tr><th></th><th>Podcast</th><th class="num">Recent episodes</th><th></th></tr>
+        </thead>
+        <tbody id="podcast-rows"></tbody>
+      </table>
+      <p id="library-empty" class="watermark">No podcasts added yet</p>
+    </section>
+
+    <!-- Episodes view: one podcast's most recent episodes. -->
+    <section id="episodes-view" hidden></section>
+
+    <!-- Search results view. -->
+    <section id="search-view" hidden></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      Built automatically by
+      <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+      · part of the AppIdeasAutomated daily routine · sample data emulates
+      <a href="https://www.podbean.com/" target="_blank" rel="noopener">Podbean</a>
+    </div>
+  </footer>
+
+  <script src="podcast-core.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
