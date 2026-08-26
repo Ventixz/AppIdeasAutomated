@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **13 / 20** |
+| 3 | Advanced | 🚧 In progress — **14 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Movie App** (2026-08-25).
+> **MyPodcast Library** (2026-08-26).
 
 ## Projects built so far
 
@@ -120,6 +120,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 79 | [GitHub Timeline](./projects/3-advanced/github-timeline/) | Advanced | 2026-08-23 |
 | 80 | [Kudos Slackbot](./projects/3-advanced/kudos-slackbot/) | Advanced | 2026-08-24 |
 | 81 | [Movie App](./projects/3-advanced/movie-app/) | Advanced | 2026-08-25 |
+| 82 | [MyPodcast Library](./projects/3-advanced/mypodcast-library/) | Advanced | 2026-08-26 |
 
 ## Repository layout
 
@@ -441,6 +442,26 @@ suite:
 
 ```bash
 node projects/3-advanced/movie-app/tests.js   # -> 90 passed, 0 failed.
+```
+
+The **MyPodcast Library** keeps a personal collection of Podbean podcasts. The
+**"+ Add a new podcast"** panel **validates** that a URL is a real Podbean
+podcast page (the `podcast-detail/…` path or a `*.podbean.com` show subdomain)
+and surfaces a **404** for a dead link before saving. Each saved show lists its
+**recent episodes** in a sortable table where you **heart** favourites (which
+float to the top), give a **five-star rating** (click to fill left-to-right,
+click the top star to deselect), and attach freeform **hashtags** you can
+**search across the whole library**. Everything persists in the browser
+(localStorage). The spec builds this by scraping Podbean with Puppeteer; since
+this repo is all static serverless apps, the "fetch a podcast by URL" step is
+emulated by a bundled sample set shaped exactly like a scrape's output — so
+swapping in a real scraper never touches the engine. As always the rules — URL
+validation, record normalization, favourite/rating/hashtag logic, ordering, and
+cross-library search — live in a DOM-free `podcast-core.js`. Dependency-free
+suite:
+
+```bash
+node projects/3-advanced/mypodcast-library/tests.js   # -> 109 passed, 0 failed.
 ```
 
 ---
