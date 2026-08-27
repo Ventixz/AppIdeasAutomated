@@ -107,7 +107,7 @@ list, one project per day. Populated from the
 - [x] Kudos Slackbot — 2026-08-24
 - [x] Movie App — 2026-08-25
 - [x] MyPodcast Library — 2026-08-26
-- [ ] NASA Exoplanet Query
+- [x] NASA Exoplanet Query — 2026-08-27
 - [ ] Shell Game
 - [ ] Shuffle Deck
 - [ ] Slack Archiver
