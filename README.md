@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **14 / 20** |
+| 3 | Advanced | 🚧 In progress — **15 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **MyPodcast Library** (2026-08-26).
+> **NASA Exoplanet Query** (2026-08-27).
 
 ## Projects built so far
 
@@ -121,6 +121,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 80 | [Kudos Slackbot](./projects/3-advanced/kudos-slackbot/) | Advanced | 2026-08-24 |
 | 81 | [Movie App](./projects/3-advanced/movie-app/) | Advanced | 2026-08-25 |
 | 82 | [MyPodcast Library](./projects/3-advanced/mypodcast-library/) | Advanced | 2026-08-26 |
+| 83 | [NASA Exoplanet Query](./projects/3-advanced/nasa-exoplanet-query/) | Advanced | 2026-08-27 |
 
 ## Repository layout
 
@@ -462,6 +463,23 @@ suite:
 
 ```bash
 node projects/3-advanced/mypodcast-library/tests.js   # -> 109 passed, 0 failed.
+```
+
+The **NASA Exoplanet Query** app searches a snapshot of NASA's archive of
+confirmed exoplanets. Pick one or many values across four dropdowns — **year of
+discovery, discovery method, host name, discovery facility** — and it returns a
+**sortable table** of matching planets, with each **host name linking out** to
+NASA's Confirmed Planet Overview page (the spec's bonuses). Matching is **OR
+within a box, AND across boxes**, and searching with nothing selected raises an
+error instead of dumping the archive. The spec loads the live ~4,000-row CSV;
+with no network here the data is a bundled snapshot of real exoplanets written as
+the same archive CSV text, so the engine's RFC-4180-ish CSV reader runs on
+genuine formatting. All the rules — CSV parsing, option lists, the query
+semantics, stable sorting, and the overview-URL builder — live in a pure,
+DOM-free `exoplanet-core.js`. Dependency-free suite:
+
+```bash
+node projects/3-advanced/nasa-exoplanet-query/tests.js   # -> 386 passed, 0 failed.
 ```
 
 ---

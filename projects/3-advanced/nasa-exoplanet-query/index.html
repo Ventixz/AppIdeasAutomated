@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NASA Exoplanet Query</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="starfield" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <h1>🪐 Exoplanet Query</h1>
+    <p class="tagline">
+      Search a snapshot of NASA's archive of confirmed exoplanets — worlds
+      discovered around other stars since 1992.
+    </p>
+  </header>
+
+  <main>
+    <section class="query-panel" aria-labelledby="query-heading">
+      <h2 id="query-heading">Build a query</h2>
+      <p class="hint">
+        Pick one or more values in any box (⌘/Ctrl-click or drag to multi-select).
+        A planet matches when it satisfies <em>every</em> box you've used.
+      </p>
+
+      <div class="dropdowns" id="dropdowns"><!-- built by script.js --></div>
+
+      <div class="actions">
+        <button type="button" id="search-btn" class="primary">Search</button>
+        <button type="button" id="clear-btn" class="ghost">Clear</button>
+        <span class="count" id="selection-count" aria-live="polite"></span>
+      </div>
+
+      <p class="error" id="error" role="alert" hidden></p>
+    </section>
+
+    <section class="results" aria-labelledby="results-heading">
+      <div class="results-head">
+        <h2 id="results-heading">Results</h2>
+        <span class="count" id="result-count" aria-live="polite"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="results-table">
+          <thead id="results-head-row"><!-- built by script.js --></thead>
+          <tbody id="results-body"></tbody>
+        </table>
+        <p class="empty" id="empty-state">
+          Choose some query values above and press <strong>Search</strong> to
+          see matching exoplanets here.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Data: a bundled snapshot shaped like a
+      <a href="https://exoplanetarchive.ipac.caltech.edu/" target="_blank" rel="noopener noreferrer">NASA Exoplanet Archive</a>
+      CSV export. Built automatically by
+      <a href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">Claude Code</a>.
+    </p>
+  </footer>
+
+  <!-- Engine first (pure, DOM-free), then data, then the client. -->
+  <script src="exoplanet-core.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
