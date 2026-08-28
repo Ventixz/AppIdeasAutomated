@@ -1,0 +1,215 @@
+:root {
+  --bg: #14110f;
+  --panel: #211c18;
+  --panel-line: #372f28;
+  --felt: #2f5d3a;
+  --felt-edge: #244a2e;
+  --ink: #f3ece2;
+  --muted: #b3a795;
+  --accent: #e0a34e;
+  --accent-dark: #b97f2e;
+  --win: #6fcf74;
+  --miss: #d96a5a;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #2a231d 0%, var(--bg) 60%);
+  line-height: 1.5;
+}
+
+header,
+footer {
+  text-align: center;
+  padding: 1.6rem 1rem 0.4rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.tagline {
+  margin: 0.4rem auto 0;
+  max-width: 46ch;
+  color: var(--muted);
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.4rem 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.table-wrap {
+  padding: 1rem;
+  max-width: 100%;
+}
+
+canvas#table {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border-radius: 10px;
+  background:
+    radial-gradient(120% 100% at 50% 0%, var(--felt) 0%, var(--felt-edge) 100%);
+  border: 6px solid #3a2f22;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.status {
+  margin: 0.9rem 0 0.6rem;
+  min-height: 1.5em;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.status.win {
+  color: var(--win);
+}
+
+.status.miss {
+  color: var(--miss);
+}
+
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.06s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  color: #2a1c07;
+}
+
+button.primary:not(:disabled):hover {
+  background: var(--accent-dark);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--panel-line);
+}
+
+button.ghost:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.scoreboard {
+  padding: 1.1rem 1.3rem;
+  min-width: 220px;
+  flex: 0 1 260px;
+}
+
+.scoreboard h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.scores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+}
+
+.scores div {
+  background: #17130f;
+  border: 1px solid var(--panel-line);
+  border-radius: 10px;
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+}
+
+.scores dt {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.scores dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.fineprint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+footer {
+  padding: 0.6rem 1rem 2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+footer a {
+  color: var(--accent);
+}
+
+footer code,
+.fineprint code {
+  background: #17130f;
+  padding: 0.05em 0.35em;
+  border-radius: 5px;
+}
+
+@media (max-width: 560px) {
+  .scoreboard {
+    flex-basis: 100%;
+  }
+}
