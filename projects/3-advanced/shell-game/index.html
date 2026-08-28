@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shell Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Shell&nbsp;Game</h1>
+      <p class="tagline">
+        The honest version of the street con. Pick a shell to hide the pea,
+        watch the shuffle, then find it. Get it in <strong>one</strong> guess
+        and it counts as a win.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel table-wrap" aria-label="Game table">
+        <canvas
+          id="table"
+          width="640"
+          height="360"
+          role="img"
+          aria-label="Three shells and a pea on a table"
+        ></canvas>
+
+        <p id="status" class="status" role="status" aria-live="polite">
+          Click a shell to hide the pea under it.
+        </p>
+
+        <div class="controls">
+          <button id="shuffle-btn" class="primary" disabled>Shuffle</button>
+          <button id="new-btn" class="ghost">New game</button>
+        </div>
+      </section>
+
+      <aside class="panel scoreboard" aria-label="Scoreboard">
+        <h2>Score</h2>
+        <dl class="scores">
+          <div>
+            <dt>Wins</dt>
+            <dd id="score-wins">0</dd>
+          </div>
+          <div>
+            <dt>Games</dt>
+            <dd id="score-games">0</dd>
+          </div>
+          <div>
+            <dt>Win rate</dt>
+            <dd id="score-rate">—</dd>
+          </div>
+        </dl>
+        <p class="fineprint">
+          A <em>game</em> is counted the moment you hide the pea. A <em>win</em>
+          is counted only when your <strong>first</strong> guess after the
+          shuffle is right.
+        </p>
+      </aside>
+    </main>
+
+    <footer>
+      <p>
+        A Tier&nbsp;3 (Advanced) project built automatically by a
+        <strong>Claude Code routine</strong>. Idea from
+        <a href="https://github.com/florinpop17/app-ideas">florinpop17/app-ideas</a>.
+        All of the game's rules and scoring live in the presentation-free
+        <code>shell-core.js</code>; this page only draws them.
+      </p>
+    </footer>
+
+    <script src="shell-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

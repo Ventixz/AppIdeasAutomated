@@ -108,7 +108,7 @@ list, one project per day. Populated from the
 - [x] Movie App — 2026-08-25
 - [x] MyPodcast Library — 2026-08-26
 - [x] NASA Exoplanet Query — 2026-08-27
-- [ ] Shell Game
+- [x] Shell Game — 2026-08-28
 - [ ] Shuffle Deck
 - [ ] Slack Archiver
 - [ ] Spell-It App
