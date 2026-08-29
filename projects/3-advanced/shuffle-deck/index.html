@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shuffle Deck Benchmark</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Shuffle&nbsp;Deck&nbsp;Benchmark</h1>
+      <p class="tagline">
+        A shuffle is a tight loop of random draws, so timing one is a fair way
+        to race random number generators. Pick a round count, run each
+        algorithm, and watch which generator shuffles a 52-card deck fastest.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel input-panel" aria-label="Benchmark controls">
+        <div class="rounds-row">
+          <label for="rounds">Rounds</label>
+          <input
+            id="rounds"
+            type="number"
+            min="1"
+            max="10000"
+            step="1"
+            value="1000"
+            inputmode="numeric"
+            aria-describedby="rounds-hint"
+          />
+          <span id="rounds-hint" class="hint">1 – 10,000 shuffles per run</span>
+        </div>
+
+        <div class="clock-row">
+          <div class="clock-box">
+            <span class="clock-label">Start time</span>
+            <output id="start-time" class="clock-value">—</output>
+          </div>
+          <div class="clock-box">
+            <span class="clock-label">End time</span>
+            <output id="end-time" class="clock-value">—</output>
+          </div>
+          <div class="clock-box">
+            <span class="clock-label">Total time</span>
+            <output id="total-time" class="clock-value">—</output>
+          </div>
+        </div>
+
+        <div class="algo-row" role="group" aria-label="Run an algorithm">
+          <button type="button" class="algo-btn" data-algo="js">
+            JS&nbsp;Random
+          </button>
+          <button type="button" class="algo-btn" data-algo="xorshift">
+            Xorshift
+          </button>
+          <button type="button" class="algo-btn" data-algo="well512a">
+            WELL512a
+            <span class="bonus-tag">bonus</span>
+          </button>
+        </div>
+
+        <p id="warning" class="warning" role="alert" hidden></p>
+      </section>
+
+      <section class="panel results-panel" aria-label="Results">
+        <div class="results-head">
+          <h2>Results</h2>
+          <button type="button" id="clear-btn" class="ghost-btn">Clear</button>
+        </div>
+        <div class="table-wrap">
+          <table id="results-table">
+            <thead>
+              <tr>
+                <th scope="col">Algorithm</th>
+                <th scope="col">Start (ms)</th>
+                <th scope="col">End (ms)</th>
+                <th scope="col">Elapsed</th>
+              </tr>
+            </thead>
+            <tbody id="results-body">
+              <tr class="empty-row">
+                <td colspan="4">No runs yet — pick an algorithm above.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="analysis" class="analysis" hidden></p>
+      </section>
+    </main>
+
+    <!-- Confirmation dialog shown when rounds change mid-benchmark. -->
+    <div
+      id="dialog-backdrop"
+      class="dialog-backdrop"
+      hidden
+      role="presentation"
+    >
+      <div
+        class="dialog"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-body"
+      >
+        <h2 id="dialog-title">Change the round count?</h2>
+        <p id="dialog-body">
+          You haven't finished running JS&nbsp;Random and Xorshift at the
+          current round count. Changing rounds now will clear the results so
+          every algorithm is compared over the same number of shuffles.
+        </p>
+        <div class="dialog-actions">
+          <button type="button" id="dialog-cancel" class="ghost-btn">
+            Cancel
+          </button>
+          <button type="button" id="dialog-ok" class="primary-btn">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        A <strong>Tier&nbsp;3 (Advanced)</strong> project, built automatically
+        by a <a href="https://claude.com/claude-code">Claude Code</a> routine
+        from the
+        <a
+          href="https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/Shuffle-Deck-App.md"
+          >app-ideas Shuffle Deck spec</a
+        >.
+      </p>
+    </footer>
+
+    <script src="shuffle-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
