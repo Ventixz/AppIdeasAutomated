@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **16 / 20** |
+| 3 | Advanced | 🚧 In progress — **17 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Shell Game** (2026-08-28).
+> **Shuffle Deck** (2026-08-29).
 
 ## Projects built so far
 
@@ -123,6 +123,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 82 | [MyPodcast Library](./projects/3-advanced/mypodcast-library/) | Advanced | 2026-08-26 |
 | 83 | [NASA Exoplanet Query](./projects/3-advanced/nasa-exoplanet-query/) | Advanced | 2026-08-27 |
 | 84 | [Shell Game](./projects/3-advanced/shell-game/) | Advanced | 2026-08-28 |
+| 85 | [Shuffle Deck](./projects/3-advanced/shuffle-deck/) | Advanced | 2026-08-29 |
 
 ## Repository layout
 
