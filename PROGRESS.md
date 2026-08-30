@@ -110,6 +110,6 @@ list, one project per day. Populated from the
 - [x] NASA Exoplanet Query — 2026-08-27
 - [x] Shell Game — 2026-08-28
 - [x] Shuffle Deck — 2026-08-29
-- [ ] Slack Archiver
+- [x] Slack Archiver — 2026-08-30
 - [ ] Spell-It App
 - [ ] Survey App
