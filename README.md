@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **17 / 20** |
+| 3 | Advanced | 🚧 In progress — **18 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Shuffle Deck** (2026-08-29).
+> **Slack Archiver** (2026-08-30).
 
 ## Projects built so far
 
@@ -124,6 +124,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 83 | [NASA Exoplanet Query](./projects/3-advanced/nasa-exoplanet-query/) | Advanced | 2026-08-27 |
 | 84 | [Shell Game](./projects/3-advanced/shell-game/) | Advanced | 2026-08-28 |
 | 85 | [Shuffle Deck](./projects/3-advanced/shuffle-deck/) | Advanced | 2026-08-29 |
+| 86 | [Slack Archiver](./projects/3-advanced/slack-archiver/) | Advanced | 2026-08-30 |
 
 ## Repository layout
 
@@ -482,6 +483,24 @@ DOM-free `exoplanet-core.js`. Dependency-free suite:
 
 ```bash
 node projects/3-advanced/nasa-exoplanet-query/tests.js   # -> 386 passed, 0 failed.
+```
+
+The **Slack Archiver** rescues a team's "institutional knowledge" before Slack's
+free tier purges it past 10,000 messages. It extracts channel history the way
+the spec's `channels.history` API does — **paginated, oldest-first, and
+hard-capped at ~50 messages per call** — resuming from the last message it saw
+so history is never re-pulled, and only **Team owners** may drive it (sign in as
+a member and every control locks). With no Slack workspace or network here, a
+**seeded mock workspace** stands in for the API and the browser's storage is the
+database; the de-duplicating archive persists across reloads, exports to JSON or
+text, and exposes the bonus **retrieval API** (`queryArchive` — filter by text,
+author, and time), which the viewer's search box is itself a client of. As
+always the rules — the rate-limited resumable `history()`, the cursor-tracking
+archive, owner access control, the extraction tick, export, and the query —
+live in a DOM-free `archiver-core.js`. Dependency-free suite:
+
+```bash
+node projects/3-advanced/slack-archiver/tests.js   # -> 54 passed, 0 failed.
 ```
 
 ---

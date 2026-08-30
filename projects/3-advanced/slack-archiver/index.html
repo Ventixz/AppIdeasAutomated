@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slack Archiver</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Slack&nbsp;Archiver</h1>
+      <p class="tagline">
+        Slack's free tier purges messages past 10,000, taking a team's
+        institutional knowledge with them. This archiver extracts channel
+        history a rate-limited page at a time — resuming from the last message
+        it saw — into a local database you can search and export. Only a
+        <strong>Team owner</strong> can drive it.
+      </p>
+    </header>
+
+    <main>
+      <!-- Who am I? Owner vs member decides what's allowed. -->
+      <section class="panel identity-panel" aria-label="Acting user">
+        <div class="identity-row">
+          <label for="user-select">Signed in as</label>
+          <select id="user-select" aria-describedby="role-note"></select>
+          <span id="role-note" class="role-note"></span>
+        </div>
+        <p class="hint">
+          Switch to a non-owner to see the owner-only controls lock — the spec
+          requires that only Team owners may archive.
+        </p>
+      </section>
+
+      <div class="columns">
+        <!-- Channel management (owner-only). -->
+        <section class="panel channels-panel" aria-label="Channels">
+          <h2>Channels</h2>
+          <p class="hint">
+            Add channels to the archive set. The archiver pulls each one on
+            every tick.
+          </p>
+          <ul id="channel-list" class="channel-list"></ul>
+        </section>
+
+        <!-- The archiver engine controls (owner-only). -->
+        <section class="panel engine-panel" aria-label="Archiver">
+          <h2>Extraction</h2>
+          <div class="engine-controls">
+            <button type="button" id="start-btn" class="primary-btn">
+              Start auto-archiving
+            </button>
+            <button type="button" id="tick-btn" class="ghost-btn">
+              Run one pass
+            </button>
+          </div>
+          <p class="engine-note">
+            One pass = one <code>channels.history</code> call per subscribed
+            channel, capped at <strong id="rate-limit">50</strong> messages
+            (the API's rate limit). Auto mode fires a pass every second.
+          </p>
+          <p id="engine-status" class="engine-status" role="status">
+            Idle — not archiving.
+          </p>
+          <p id="warning" class="warning" role="alert" hidden></p>
+        </section>
+      </div>
+
+      <!-- Archive viewer + retrieval API + export. -->
+      <section class="panel archive-panel" aria-label="Archive">
+        <div class="archive-head">
+          <h2>Archive</h2>
+          <div class="archive-actions">
+            <label for="view-channel" class="sr-only">Channel</label>
+            <select id="view-channel"></select>
+            <button type="button" id="export-json" class="ghost-btn">
+              Export JSON
+            </button>
+            <button type="button" id="export-text" class="ghost-btn">
+              Export text
+            </button>
+          </div>
+        </div>
+
+        <div class="search-row">
+          <input
+            id="search"
+            type="search"
+            placeholder="Search archived messages (bonus retrieval API)…"
+            aria-label="Search archived messages"
+          />
+          <span id="search-count" class="search-count"></span>
+        </div>
+
+        <div class="messages-wrap">
+          <ul id="messages" class="messages">
+            <li class="empty">Nothing archived yet.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        A <strong>Tier&nbsp;3 (Advanced)</strong> project, built automatically
+        by a <a href="https://claude.com/claude-code">Claude Code</a> routine
+        from the
+        <a
+          href="https://github.com/florinpop17/app-ideas/blob/master/Projects/3-Advanced/Slack-Archiver.md"
+          >app-ideas Slack Archiver spec</a
+        >. No real Slack workspace is contacted — a seeded mock stands in for the
+        <code>channels.history</code> API and the browser's storage is the
+        database.
+      </p>
+    </footer>
+
+    <script src="archiver-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
