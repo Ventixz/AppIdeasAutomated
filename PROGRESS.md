@@ -111,5 +111,5 @@ list, one project per day. Populated from the
 - [x] Shell Game — 2026-08-28
 - [x] Shuffle Deck — 2026-08-29
 - [x] Slack Archiver — 2026-08-30
-- [ ] Spell-It App
+- [x] Spell-It App — 2026-08-31
 - [ ] Survey App
