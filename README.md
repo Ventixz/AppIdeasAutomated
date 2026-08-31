@@ -28,12 +28,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **18 / 20** |
+| 3 | Advanced | 🚧 In progress — **19 / 20** |
 
 > 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
 > Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
 > **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Slack Archiver** (2026-08-30).
+> **Spell-It** (2026-08-31). Only **Survey App** remains before Tier 3 is complete.
 
 ## Projects built so far
 
@@ -125,6 +125,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 84 | [Shell Game](./projects/3-advanced/shell-game/) | Advanced | 2026-08-28 |
 | 85 | [Shuffle Deck](./projects/3-advanced/shuffle-deck/) | Advanced | 2026-08-29 |
 | 86 | [Slack Archiver](./projects/3-advanced/slack-archiver/) | Advanced | 2026-08-30 |
+| 87 | [Spell-It](./projects/3-advanced/spell-it/) | Advanced | 2026-08-31 |
 
 ## Repository layout
 
@@ -501,6 +502,23 @@ live in a DOM-free `archiver-core.js`. Dependency-free suite:
 
 ```bash
 node projects/3-advanced/slack-archiver/tests.js   # -> 54 passed, 0 failed.
+```
+
+**Spell-It** is a spelling trainer in the spirit of the TI *Speak & Spell*: it
+**plays a word aloud** (Web Speech API), you **type what you hear**, and it tells
+you whether you were right while a dashboard tracks correct count, attempts, and
+success percentage. The word being practised is **only ever spoken, never
+rendered** until you submit — a spelling test you can read isn't a test. Correct
+answers get a rising chime and wrong ones a low buzz, **both synthesised with the
+Web Audio API** (no sound files), and a **Hint** button paints each letter green
+/ red / dashed / amber for right / wrong / missing / extra — without spending an
+attempt. Enter submits from both the keyboard and the button. The engine is
+DOM-, audio-, and timer-free: `spellDiff()` backs *both* correctness and the hint
+highlighting off one comparison, so they can never disagree. Dependency-free
+suite:
+
+```bash
+node projects/3-advanced/spell-it/tests.js   # -> 56 passed, 0 failed.
 ```
 
 ---
