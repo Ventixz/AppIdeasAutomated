@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spell-It</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <header class="app__head">
+        <h1>Spell&#8209;It</h1>
+        <p class="tagline">Listen. Type what you hear. Press Enter.</p>
+      </header>
+
+      <section class="card" aria-label="Spelling practice">
+        <div class="controls">
+          <button id="play" class="btn btn--play" type="button">
+            <span class="btn__icon" aria-hidden="true">&#9654;</span>
+            <span id="play-label">Play word</span>
+          </button>
+          <button id="replay" class="btn btn--ghost" type="button" title="Say it more slowly">
+            Slower
+          </button>
+          <span id="counter" class="counter" aria-hidden="true"></span>
+        </div>
+
+        <form id="spell-form" autocomplete="off">
+          <div id="attempt" class="attempt" aria-hidden="true"></div>
+          <input
+            id="spelling"
+            class="spelling-input"
+            type="text"
+            inputmode="text"
+            autocapitalize="none"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Type the word you heard"
+            placeholder="type here…"
+          />
+          <div class="form-actions">
+            <button id="submit" class="btn btn--primary" type="submit">Enter</button>
+            <button id="hint" class="btn btn--ghost" type="button">Hint</button>
+            <button id="clue" class="btn btn--ghost" type="button">Meaning</button>
+            <button id="skip" class="btn btn--ghost" type="button">Skip</button>
+          </div>
+        </form>
+
+        <p id="feedback" class="feedback" role="status"></p>
+        <p id="clue-text" class="clue-text" hidden></p>
+      </section>
+
+      <section class="stats" aria-label="Statistics">
+        <div class="stat">
+          <span id="stat-correct" class="stat__num">0</span>
+          <span class="stat__label">Correct</span>
+        </div>
+        <div class="stat">
+          <span id="stat-attempts" class="stat__num">0</span>
+          <span class="stat__label">Attempts</span>
+        </div>
+        <div class="stat">
+          <span id="stat-percent" class="stat__num">0%</span>
+          <span class="stat__label">Success</span>
+        </div>
+        <button id="reset" class="btn btn--ghost stat__reset" type="button">Reset</button>
+      </section>
+
+      <p id="unsupported" class="unsupported" hidden>
+        Your browser can&#8217;t speak the words (no Web Speech API). The rest of
+        the app still works — but you&#8217;ll have to rely on the
+        <em>Meaning</em> clue instead of the audio.
+      </p>
+
+      <footer class="app__foot">
+        <p>
+          🤖 Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+          routine from the
+          <a href="https://github.com/florinpop17/app-ideas">app&#8209;ideas</a> Spell&#8209;It spec.
+        </p>
+      </footer>
+    </main>
+
+    <script src="spell-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
