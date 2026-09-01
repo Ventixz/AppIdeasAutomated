@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Survey App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__head">
+        <h1>Survey&nbsp;App</h1>
+        <p class="tagline">Create surveys, collect responses, read the results.</p>
+        <nav class="roles" aria-label="Role">
+          <button id="tab-respondent" class="role-tab is-active" type="button">Respondent</button>
+          <button id="tab-coordinator" class="role-tab" type="button">Coordinator</button>
+        </nav>
+      </header>
+
+      <!-- ================= RESPONDENT VIEW ================= -->
+      <section id="view-respondent" class="view">
+        <div id="respondent-picker" class="card">
+          <h2>Open surveys</h2>
+          <ul id="open-list" class="survey-list"></ul>
+          <p id="no-open" class="muted" hidden>No surveys are open right now.</p>
+          <h2>Closed surveys — see the results</h2>
+          <ul id="closed-list" class="survey-list"></ul>
+          <p id="no-closed" class="muted" hidden>Nothing closed yet.</p>
+        </div>
+
+        <div id="respondent-answer" class="card" hidden>
+          <button id="back-to-list" class="btn btn--ghost" type="button">&#8592; Back</button>
+          <h2 id="answer-title"></h2>
+          <form id="answer-form"></form>
+          <p id="answer-error" class="error" role="alert" hidden></p>
+        </div>
+
+        <div id="respondent-results" class="card" hidden>
+          <button id="results-back" class="btn btn--ghost" type="button">&#8592; Back</button>
+          <h2 id="results-title"></h2>
+          <div id="results-body"></div>
+        </div>
+      </section>
+
+      <!-- ================= COORDINATOR VIEW ================= -->
+      <section id="view-coordinator" class="view" hidden>
+        <div id="login" class="card">
+          <h2>Coordinator sign-in</h2>
+          <p class="muted">Demo password: <code>admin</code></p>
+          <form id="login-form">
+            <input id="password" type="password" placeholder="Password" autocomplete="off" />
+            <button class="btn" type="submit">Sign in</button>
+          </form>
+          <p id="login-error" class="error" role="alert" hidden>Wrong password.</p>
+        </div>
+
+        <div id="admin" class="card" hidden>
+          <div class="admin__head">
+            <h2>Your surveys</h2>
+            <button id="new-survey" class="btn" type="button">+ New survey</button>
+          </div>
+          <ul id="admin-list" class="survey-list"></ul>
+          <p id="no-surveys" class="muted" hidden>No surveys yet — create one.</p>
+        </div>
+
+        <div id="builder" class="card" hidden>
+          <h2>New survey</h2>
+          <label class="field">
+            <span>Title</span>
+            <input id="survey-title" type="text" placeholder="e.g. Lunch Poll" />
+          </label>
+          <div id="questions"></div>
+          <button id="add-question" class="btn btn--ghost" type="button">+ Add question</button>
+          <p id="builder-error" class="error" role="alert" hidden></p>
+          <div class="builder__actions">
+            <button id="save-survey" class="btn" type="button">Save</button>
+            <button id="cancel-survey" class="btn btn--ghost" type="button">Cancel</button>
+          </div>
+        </div>
+
+        <div id="admin-results" class="card" hidden>
+          <button id="admin-results-back" class="btn btn--ghost" type="button">&#8592; Back</button>
+          <h2 id="admin-results-title"></h2>
+          <div id="admin-results-body"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="survey-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
