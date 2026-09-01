@@ -112,4 +112,51 @@ list, one project per day. Populated from the
 - [x] Shuffle Deck — 2026-08-29
 - [x] Slack Archiver — 2026-08-30
 - [x] Spell-It App — 2026-08-31
-- [ ] Survey App
+- [x] Survey App — 2026-09-01
+
+**Tier 3 complete — all 20 Advanced projects built. Every tier of
+[app-ideas](https://github.com/florinpop17/app-ideas) is now finished: 35
+Beginner + 33 Intermediate + 20 Advanced = 88 projects.**
+
+---
+
+## What happens now — the source is exhausted
+
+The routine has built every project in florinpop17/app-ideas, across all three
+tiers. There is nothing left to check off here. Per the routine's standing
+instruction ("once you run out, find another project repo that gives you tasks
+or projects to do"), the routine now continues against a **new source list**,
+tracked below. It keeps the same one-project-per-day, work-from-the-top rule.
+
+## Phase 2 — new source: karan/Projects (the "Mega Project List")
+
+Unlocked 2026-09-01 after app-ideas was finished. Source:
+[karan/Projects](https://github.com/karan/Projects) — a large, curated list of
+practical projects grouped by category. The routine works down the
+**Numbers** category first (the list's own opening section), one project per
+day, then moves to the next category once it's complete.
+
+### Numbers
+
+- [ ] Find PI to the Nth Digit
+- [ ] Find e to the Nth Digit
+- [ ] Fibonacci Sequence
+- [ ] Prime Factorization
+- [ ] Next Prime Number
+- [ ] Find Cost of Tile to Cover W x H Floor
+- [ ] Mortgage Calculator
+- [ ] Change Return Program
+- [ ] Binary to Decimal and Back Converter
+- [ ] Calculator
+- [ ] Unit Converter (temp, currency, volume, mass and more)
+- [ ] Alarm Clock
+- [ ] Distance Between Two Cities
+- [ ] Credit Card Validator
+- [ ] Tax Calculator
+- [ ] Factorial Finder
+- [ ] Complex Number Algebra
+- [ ] Happy Numbers
+- [ ] Number Names
+- [ ] Coin Flip Simulation
+- [ ] Limit Calculator
+- [ ] Fast Exponentiation

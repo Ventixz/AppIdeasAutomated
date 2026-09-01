@@ -1,39 +1,55 @@
 # AppIdeasAutomated
 
 > 🤖 **An automated [Claude Code](https://claude.com/claude-code) routine.**
-> Every day, Claude builds one project from
-> [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas) — all on its own.
+> Every day, Claude builds one project — on its own, start to finish.
 
 This repository is not maintained by hand. It is grown one app at a time by a
 scheduled Claude Code routine that runs **once a day**. On each run, Claude:
 
 1. Opens [`PROGRESS.md`](./PROGRESS.md) and finds the topmost unchecked project.
-2. Reads that project's specification from the app-ideas repo.
+2. Reads that project's specification from the current source list.
 3. Builds the app (code, styling, a short README, and a quick sanity check).
 4. Checks the box in `PROGRESS.md` with the date, then commits and pushes.
 
+The first source, worked from beginning to end, was
+[florinpop17/app-ideas](https://github.com/florinpop17/app-ideas). With all
+three of its tiers finished, the routine has moved on to a **second source** and
+keeps going (see [_What's next_](#whats-next) below).
+
 ## The rules of the routine
 
-- **Start at Beginner.** The routine works through the entire **Tier 1 (Beginner)**
-  list before touching anything harder.
-- **One level at a time.** It only moves up to Tier 2 (Intermediate), then Tier 3
-  (Advanced), once *every* project in the level below is finished.
+- **Start at the easiest level.** Within a source, the routine works through the
+  entire beginner list before touching anything harder.
+- **One level at a time.** It only moves up once *every* project in the level
+  below is finished.
 - **One project per day.** No skipping ahead, no batching.
+- **When a source runs out, find another.** Once every project in a source list
+  is built, the routine picks a new "list of projects to build" repo and carries
+  on from the top.
 
 ## Progress
 
 See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
+**Source 1 — [app-ideas](https://github.com/florinpop17/app-ideas) — ✅ COMPLETE (88 / 88)**
+
 | Tier | Level | Status |
 | --- | --- | --- |
 | 1 | Beginner | ✅ Complete — **35 / 35** |
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
-| 3 | Advanced | 🚧 In progress — **19 / 20** |
+| 3 | Advanced | ✅ Complete — **20 / 20** |
 
-> 🎉 **Tiers 1 and 2 are finished.** Every one of the 35 Beginner and 33
-> Intermediate projects has been built. As of 2026-08-12 the routine has unlocked
-> **Tier 3 (Advanced)** and now works down that list, one project per day. Latest:
-> **Spell-It** (2026-08-31). Only **Survey App** remains before Tier 3 is complete.
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (0 built)**
+
+> 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
+> Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
+> in on 2026-09-01, completing Tier 3.
+>
+> <a name="whats-next"></a>**What's next.** Having run out of app-ideas, the
+> routine has picked a new source: [karan/Projects](https://github.com/karan/Projects),
+> the "Mega Project List" — a big curated set of practical projects grouped by
+> category. Starting the next run, it works down that list one project per day,
+> beginning with the **Numbers** category. Same rules, new list.
 
 ## Projects built so far
 
@@ -126,6 +142,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 85 | [Shuffle Deck](./projects/3-advanced/shuffle-deck/) | Advanced | 2026-08-29 |
 | 86 | [Slack Archiver](./projects/3-advanced/slack-archiver/) | Advanced | 2026-08-30 |
 | 87 | [Spell-It](./projects/3-advanced/spell-it/) | Advanced | 2026-08-31 |
+| 88 | [Survey App](./projects/3-advanced/survey-app/) | Advanced | 2026-09-01 |
 
 ## Repository layout
 
@@ -521,7 +538,30 @@ suite:
 node projects/3-advanced/spell-it/tests.js   # -> 56 passed, 0 failed.
 ```
 
+**Survey App** — the final app-ideas project — is a two-role feedback platform on
+one shared site: **coordinators** sign in to author surveys (**1–10 questions,
+1–5 mutually-exclusive options each**), open and close them, and read the
+results; **respondents** answer whatever is open and review anything closed. The
+role split is enforced in the *engine*, not just the UI — every admin call
+(`createSurvey`, `openSurvey`, `closeSurvey`) throws without an authenticated
+coordinator session. Submissions are one-selection-per-question and rejected if
+incomplete; the bonus **duplicate-submission prevention** keys on a per-browser
+respondent id, and results tabulate to per-option counts and percentages drawn
+as bar charts. As always the rules — the 1–10 / 1–5 validation, the
+`draft → open → closed` lifecycle, submission validation, the dup rule, and the
+result maths — live in a DOM-free `survey-core.js`. Dependency-free suite:
+
+```bash
+node projects/3-advanced/survey-app/tests.js   # -> 52 passed, 0 failed.
+```
+
+With Survey App done, **every app-ideas project across all three tiers is built**,
+and the routine moves on to its second source — see
+[_What's next_](#whats-next) at the top.
+
 ---
 
-*Credit for the project ideas: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas).
-Everything in this repo is generated automatically by Claude Code.*
+*Credit for the project ideas: [florinpop17/app-ideas](https://github.com/florinpop17/app-ideas)
+(Source 1, complete) and [karan/Projects](https://github.com/karan/Projects)
+(Source 2, in progress). Everything in this repo is generated automatically by
+Claude Code.*
