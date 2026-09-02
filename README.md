@@ -39,17 +39,23 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (0 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (1 built)**
+
+| Category | Status |
+| --- | --- |
+| Numbers | 🚧 In progress — **1 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
 > in on 2026-09-01, completing Tier 3.
 >
-> <a name="whats-next"></a>**What's next.** Having run out of app-ideas, the
-> routine has picked a new source: [karan/Projects](https://github.com/karan/Projects),
-> the "Mega Project List" — a big curated set of practical projects grouped by
-> category. Starting the next run, it works down that list one project per day,
-> beginning with the **Numbers** category. Same rules, new list.
+> <a name="whats-next"></a>**What's next — and now underway.** Having run out of
+> app-ideas, the routine picked a new source:
+> [karan/Projects](https://github.com/karan/Projects), the "Mega Project List" —
+> a big curated set of practical projects grouped by category. It is now working
+> down that list one project per day, beginning with the **Numbers** category.
+> The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02. Same
+> rules, new list.
 
 ## Projects built so far
 
@@ -143,6 +149,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 86 | [Slack Archiver](./projects/3-advanced/slack-archiver/) | Advanced | 2026-08-30 |
 | 87 | [Spell-It](./projects/3-advanced/spell-it/) | Advanced | 2026-08-31 |
 | 88 | [Survey App](./projects/3-advanced/survey-app/) | Advanced | 2026-09-01 |
+| 89 | [Find PI to the Nth Digit](./projects/phase2-numbers/find-pi-nth-digit/) | Numbers · Source 2 | 2026-09-02 |
 
 ## Repository layout
 
@@ -165,6 +172,8 @@ projects/
     chat-app/                 # multi-user chat over BroadcastChannel: pure parser engine + live tabs
     contribution-tracker/     # charitable-giving ledger + SVG dashboard, integer-cents money engine
     elevator/                 # four-floor building sim: pure FIFO+dwell state machine + animated shaft UI
+  phase2-numbers/     # Source 2 (karan/Projects) — Numbers category
+    find-pi-nth-digit/        # arbitrary-precision π via Machin's formula, in BigInt
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -556,8 +565,24 @@ node projects/3-advanced/survey-app/tests.js   # -> 52 passed, 0 failed.
 ```
 
 With Survey App done, **every app-ideas project across all three tiers is built**,
-and the routine moves on to its second source — see
+and the routine has moved on to its second source — see
 [_What's next_](#whats-next) at the top.
+
+**Find PI to the Nth Digit** — the first project of Source 2
+([karan/Projects](https://github.com/karan/Projects), Numbers) — computes π to
+any requested precision. The catch the spec hints at is that `Math.PI` dies past
+~15 digits (it's a 64-bit float), so this is really an **arbitrary-precision**
+task: every step runs in exact `BigInt` integers using **Machin's formula**
+(`π = 16·arctan(1/5) − 4·arctan(1/239)`), each `arctan` summed as a scaled-integer
+Taylor series with guard digits so the last reported digit is **truncated, not
+rounded**. The DOM-free `pi-core.js` exposes `piString(n)`, `piScaledInteger(n)`,
+and a 1-indexed `nthDigit(n)`; the page expands π to N places or plucks a single
+digit, capped at 20000 as the spec asks. 1000 digits compute in a couple of
+milliseconds. Dependency-free suite:
+
+```bash
+node projects/phase2-numbers/find-pi-nth-digit/tests.js   # -> 43 passed, 0 failed.
+```
 
 ---
 
