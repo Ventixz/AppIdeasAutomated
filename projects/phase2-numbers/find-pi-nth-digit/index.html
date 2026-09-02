@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Find π to the Nth Digit</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Find <span class="pi">π</span> to the N<sup>th</sup> digit</h1>
+      <p class="sub">
+        Arbitrary precision, computed in the browser with exact integer
+        (BigInt) arithmetic — no <code>Math.PI</code>, no rounding of the last
+        place. Machin's formula, 1706.
+      </p>
+    </header>
+
+    <section class="panel">
+      <div class="modes" role="tablist" aria-label="Mode">
+        <button id="tab-expand" class="tab active" role="tab" aria-selected="true">
+          Expand to N digits
+        </button>
+        <button id="tab-single" class="tab" role="tab" aria-selected="false">
+          The single Nth digit
+        </button>
+      </div>
+
+      <form id="form">
+        <label id="label" for="n">Digits after the decimal point</label>
+        <div class="row">
+          <input id="n" type="number" min="0" max="20000" step="1" value="100"
+                 inputmode="numeric" autocomplete="off" />
+          <button id="go" type="submit">Compute</button>
+        </div>
+        <p id="hint" class="hint">0 – 20000. Big values take a moment.</p>
+      </form>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="result-head">
+        <span id="resultLabel" class="result-label"></span>
+        <div class="result-actions">
+          <span id="meta" class="meta"></span>
+          <button id="copy" type="button" class="copy">Copy</button>
+        </div>
+      </div>
+      <output id="out" class="out" aria-live="polite"></output>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Find PI to the Nth Digit</strong> — the first project of
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="pi-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
