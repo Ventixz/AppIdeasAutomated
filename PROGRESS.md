@@ -138,7 +138,7 @@ day, then moves to the next category once it's complete.
 
 ### Numbers
 
-- [ ] Find PI to the Nth Digit
+- [x] Find PI to the Nth Digit — 2026-09-02
 - [ ] Find e to the Nth Digit
 - [ ] Fibonacci Sequence
 - [ ] Prime Factorization
