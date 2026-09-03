@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (1 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (2 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **1 / 21** |
+| Numbers | 🚧 In progress — **2 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -54,8 +54,9 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > [karan/Projects](https://github.com/karan/Projects), the "Mega Project List" —
 > a big curated set of practical projects grouped by category. It is now working
 > down that list one project per day, beginning with the **Numbers** category.
-> The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02. Same
-> rules, new list.
+> The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02, and its
+> companion **Find e to the Nth Digit** followed on 2026-09-03. Same rules, new
+> list.
 
 ## Projects built so far
 
@@ -150,6 +151,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 87 | [Spell-It](./projects/3-advanced/spell-it/) | Advanced | 2026-08-31 |
 | 88 | [Survey App](./projects/3-advanced/survey-app/) | Advanced | 2026-09-01 |
 | 89 | [Find PI to the Nth Digit](./projects/phase2-numbers/find-pi-nth-digit/) | Numbers · Source 2 | 2026-09-02 |
+| 90 | [Find e to the Nth Digit](./projects/phase2-numbers/find-e-nth-digit/) | Numbers · Source 2 | 2026-09-03 |
 
 ## Repository layout
 
@@ -174,6 +176,7 @@ projects/
     elevator/                 # four-floor building sim: pure FIFO+dwell state machine + animated shaft UI
   phase2-numbers/     # Source 2 (karan/Projects) — Numbers category
     find-pi-nth-digit/        # arbitrary-precision π via Machin's formula, in BigInt
+    find-e-nth-digit/         # arbitrary-precision e via the Taylor series Σ 1/k!, in BigInt
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -582,6 +585,21 @@ milliseconds. Dependency-free suite:
 
 ```bash
 node projects/phase2-numbers/find-pi-nth-digit/tests.js   # -> 43 passed, 0 failed.
+```
+
+**Find e to the Nth Digit** — the second Numbers project, and π's natural
+companion. Same arbitrary-precision problem (`Math.E` dies past ~15 digits), same
+approach: exact `BigInt` integers, guard digits, and a **truncated** last place.
+Here the engine is the defining Taylor series **`e = Σ 1/k!`** (Euler, 1748),
+summed in scaled integers by keeping a running term and dividing it by `k` each
+step. Because factorials outgrow any exponential, it converges far faster than the
+`arctan` series — **20 000 digits land in under 40 ms**, only a few thousand terms.
+The DOM-free `e-core.js` exposes `eString(n)`, `eScaledInteger(n)`, and a 1-indexed
+`nthDigit(n)`; the page expands _e_ to N places or plucks a single digit, capped at
+20000. Dependency-free suite, checked against 100- and 250-digit references:
+
+```bash
+node projects/phase2-numbers/find-e-nth-digit/tests.js   # -> 45 passed, 0 failed.
 ```
 
 ---
