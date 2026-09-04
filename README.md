@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (2 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (3 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **2 / 21** |
+| Numbers | 🚧 In progress — **3 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -54,9 +54,10 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > [karan/Projects](https://github.com/karan/Projects), the "Mega Project List" —
 > a big curated set of practical projects grouped by category. It is now working
 > down that list one project per day, beginning with the **Numbers** category.
-> The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02, and its
-> companion **Find e to the Nth Digit** followed on 2026-09-03. Same rules, new
-> list.
+> The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02, its
+> companion **Find e to the Nth Digit** followed on 2026-09-03, and the
+> **Fibonacci Sequence** — three generators over exact `BigInt`, with fast
+> doubling for distant terms — landed on 2026-09-04. Same rules, new list.
 
 ## Projects built so far
 
@@ -152,6 +153,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 88 | [Survey App](./projects/3-advanced/survey-app/) | Advanced | 2026-09-01 |
 | 89 | [Find PI to the Nth Digit](./projects/phase2-numbers/find-pi-nth-digit/) | Numbers · Source 2 | 2026-09-02 |
 | 90 | [Find e to the Nth Digit](./projects/phase2-numbers/find-e-nth-digit/) | Numbers · Source 2 | 2026-09-03 |
+| 91 | [Fibonacci Sequence](./projects/phase2-numbers/fibonacci-sequence/) | Numbers · Source 2 | 2026-09-04 |
 
 ## Repository layout
 
@@ -600,6 +602,21 @@ The DOM-free `e-core.js` exposes `eString(n)`, `eScaledInteger(n)`, and a 1-inde
 
 ```bash
 node projects/phase2-numbers/find-e-nth-digit/tests.js   # -> 45 passed, 0 failed.
+```
+
+**Fibonacci Sequence** — the third Numbers project. Fibonacci numbers grow ~1.6×
+per term and cross `Number.MAX_SAFE_INTEGER` at **F(79)**, so this is another
+arbitrary-precision task done entirely in exact `BigInt`. The DOM-free
+`fib-core.js` covers both of the spec's asks and then some: `fibSequence(n)` (the
+first N terms, built iteratively), `fibUpTo(max)` (every term ≤ a `BigInt` bound),
+and `fibAt(n)` — a single distant term via **fast doubling**, climbing the binary
+expansion of `n` with `F(2k)=F(k)·(2F(k+1)−F(k))`, `F(2k+1)=F(k+1)²+F(k)²` so it
+needs ~`log₂(n)` multiplies instead of `n` additions. The page offers all three
+modes; the suite cross-checks fast doubling against the iterative generator over
+the first 500 terms and against known F(100)/F(200) references:
+
+```bash
+node projects/phase2-numbers/fibonacci-sequence/tests.js   # -> 46 passed, 0 failed.
 ```
 
 ---

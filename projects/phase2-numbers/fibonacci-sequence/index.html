@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fibonacci Sequence</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>The <span class="pi">Fibonacci</span> sequence</h1>
+      <p class="sub">
+        Generated in the browser with exact integer (BigInt) arithmetic, so the
+        numbers stay correct long past <code>F(78)</code>, where a 64-bit float
+        starts rounding. <code>F(n) = F(n-1) + F(n-2)</code>, from
+        <code>F(0) = 0</code>.
+      </p>
+    </header>
+
+    <section class="panel">
+      <div class="modes" role="tablist" aria-label="Mode">
+        <button id="tab-count" class="tab active" role="tab" aria-selected="true">
+          First N terms
+        </button>
+        <button id="tab-upto" class="tab" role="tab" aria-selected="false">
+          Terms up to a value
+        </button>
+        <button id="tab-single" class="tab" role="tab" aria-selected="false">
+          The single Nth term
+        </button>
+      </div>
+
+      <form id="form">
+        <label id="label" for="n">How many terms?</label>
+        <div class="row">
+          <input id="n" type="number" min="1" max="20000" step="1" value="20"
+                 inputmode="numeric" autocomplete="off" />
+          <button id="go" type="submit">Generate</button>
+        </div>
+        <p id="hint" class="hint">1 – 20000 terms. Big values take a moment.</p>
+      </form>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="result-head">
+        <span id="resultLabel" class="result-label"></span>
+        <div class="result-actions">
+          <span id="meta" class="meta"></span>
+          <button id="copy" type="button" class="copy">Copy</button>
+        </div>
+      </div>
+      <output id="out" class="out" aria-live="polite"></output>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Fibonacci Sequence</strong> — from
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="fib-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
