@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prime Factorization</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="pi">Prime</span> factorization</h1>
+      <p class="sub">
+        Enter a whole number and see it broken into its prime factors. Done in
+        the browser with exact integer (BigInt) arithmetic, so the answer stays
+        correct past <code>2⁵³</code>, and with <strong>Pollard's rho</strong> +
+        <strong>Miller–Rabin</strong> so even 18–20 digit numbers factor in a
+        blink instead of hanging the tab.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="form">
+        <label id="label" for="n">A whole number ≥ 1</label>
+        <div class="row">
+          <input id="n" type="text" inputmode="numeric" autocomplete="off"
+                 spellcheck="false" value="600851475143" />
+          <button id="go" type="submit">Factor</button>
+        </div>
+        <p id="hint" class="hint">
+          Any integer ≥ 1. Big semiprimes are the slow case — 20-ish digits is
+          comfortable; much larger may take a moment.
+        </p>
+      </form>
+
+      <div class="examples">
+        <span class="examples-label">Try:</span>
+        <button type="button" class="chip" data-n="360">360</button>
+        <button type="button" class="chip" data-n="1024">1024</button>
+        <button type="button" class="chip" data-n="720720">720720</button>
+        <button type="button" class="chip" data-n="600851475143">600851475143</button>
+        <button type="button" class="chip" data-n="1050809297549059047257">a 22-digit semiprime</button>
+      </div>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="result-head">
+        <span id="resultLabel" class="result-label"></span>
+        <div class="result-actions">
+          <span id="meta" class="meta"></span>
+          <button id="copy" type="button" class="copy">Copy</button>
+        </div>
+      </div>
+      <output id="out" class="out" aria-live="polite"></output>
+      <p id="expanded" class="expanded"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Prime Factorization</strong> — from
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="factor-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
