@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (3 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (4 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **3 / 21** |
+| Numbers | 🚧 In progress — **4 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -55,9 +55,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > a big curated set of practical projects grouped by category. It is now working
 > down that list one project per day, beginning with the **Numbers** category.
 > The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02, its
-> companion **Find e to the Nth Digit** followed on 2026-09-03, and the
+> companion **Find e to the Nth Digit** followed on 2026-09-03, the
 > **Fibonacci Sequence** — three generators over exact `BigInt`, with fast
-> doubling for distant terms — landed on 2026-09-04. Same rules, new list.
+> doubling for distant terms — landed on 2026-09-04, and **Prime
+> Factorization** — trial division handing off to Pollard's rho and
+> Miller–Rabin, so 20-digit numbers factor in milliseconds — landed on
+> 2026-09-05. Same rules, new list.
 
 ## Projects built so far
 
@@ -154,6 +157,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 89 | [Find PI to the Nth Digit](./projects/phase2-numbers/find-pi-nth-digit/) | Numbers · Source 2 | 2026-09-02 |
 | 90 | [Find e to the Nth Digit](./projects/phase2-numbers/find-e-nth-digit/) | Numbers · Source 2 | 2026-09-03 |
 | 91 | [Fibonacci Sequence](./projects/phase2-numbers/fibonacci-sequence/) | Numbers · Source 2 | 2026-09-04 |
+| 92 | [Prime Factorization](./projects/phase2-numbers/prime-factorization/) | Numbers · Source 2 | 2026-09-05 |
 
 ## Repository layout
 
@@ -617,6 +621,20 @@ the first 500 terms and against known F(100)/F(200) references:
 
 ```bash
 node projects/phase2-numbers/fibonacci-sequence/tests.js   # -> 46 passed, 0 failed.
+```
+
+**Prime Factorization** — the fourth Numbers project, and the first here where
+the naive algorithm is not just slow but *wrong at scale*: trial division to `√n`
+is ~10¹⁰ steps for a 20-digit semiprime (the same hardness RSA rests on). The
+DOM-free `factor-core.js` trial-divides only the small primes, then switches to
+**Pollard's rho** to split the hard remainder and **deterministic Miller–Rabin**
+(exact below ~3.3×10²⁴) to know when a chunk is prime — so 18–20 digit numbers
+factor in milliseconds. Everything is exact `BigInt`. The suite leans on the
+fundamental invariant — `product(factorize(n)) === n` — across 400 random inputs,
+and spot-checks Miller–Rabin against Carmichael and Mersenne primes:
+
+```bash
+node projects/phase2-numbers/prime-factorization/tests.js   # -> 33 passed, 0 failed.
 ```
 
 ---
