@@ -142,7 +142,7 @@ day, then moves to the next category once it's complete.
 - [x] Find e to the Nth Digit — 2026-09-03
 - [x] Fibonacci Sequence — 2026-09-04
 - [x] Prime Factorization — 2026-09-05
-- [ ] Next Prime Number
+- [x] Next Prime Number — 2026-09-06
 - [ ] Find Cost of Tile to Cover W x H Floor
 - [ ] Mortgage Calculator
 - [ ] Change Return Program
