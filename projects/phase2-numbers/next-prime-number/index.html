@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Next Prime Number</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="pi">Next</span> prime number</h1>
+      <p class="sub">
+        Enter a whole number and get the smallest prime greater than it — done in
+        the browser with exact integer (BigInt) arithmetic, so it stays correct
+        past <code>2⁵³</code>, and with a deterministic <strong>Miller–Rabin</strong>
+        test on a <strong>2·3·5 wheel</strong> so even 40-digit inputs answer in a
+        blink.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="form">
+        <label id="label" for="n">A whole number</label>
+        <div class="row">
+          <input id="n" type="text" inputmode="numeric" autocomplete="off"
+                 spellcheck="false" value="600851475143" />
+          <button id="go" type="submit">Next prime</button>
+        </div>
+        <p id="hint" class="hint">
+          Any integer. The answer is the smallest prime strictly greater than
+          what you type; 40-ish digits is comfortable.
+        </p>
+      </form>
+
+      <div class="examples">
+        <span class="examples-label">Try:</span>
+        <button type="button" class="chip" data-n="0">0</button>
+        <button type="button" class="chip" data-n="89">89</button>
+        <button type="button" class="chip" data-n="370261">370261</button>
+        <button type="button" class="chip" data-n="600851475143">600851475143</button>
+        <button type="button" class="chip" data-n="1000000000000000000">10¹⁸</button>
+        <button type="button" class="chip" data-n="100000000000000000000000000000000000000">10³⁸</button>
+      </div>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="result-head">
+        <span id="resultLabel" class="result-label"></span>
+        <div class="result-actions">
+          <span id="meta" class="meta"></span>
+          <button id="copy" type="button" class="copy">Copy</button>
+        </div>
+      </div>
+      <output id="out" class="out" aria-live="polite"></output>
+      <p id="context" class="context"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Next Prime Number</strong> — from
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="nextprime-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
