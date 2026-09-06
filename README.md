@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (4 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (5 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **4 / 21** |
+| Numbers | 🚧 In progress — **5 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -57,10 +57,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > The first entry, **Find PI to the Nth Digit**, went in on 2026-09-02, its
 > companion **Find e to the Nth Digit** followed on 2026-09-03, the
 > **Fibonacci Sequence** — three generators over exact `BigInt`, with fast
-> doubling for distant terms — landed on 2026-09-04, and **Prime
+> doubling for distant terms — landed on 2026-09-04, **Prime
 > Factorization** — trial division handing off to Pollard's rho and
 > Miller–Rabin, so 20-digit numbers factor in milliseconds — landed on
-> 2026-09-05. Same rules, new list.
+> 2026-09-05, and **Next Prime Number** — deterministic Miller–Rabin walked
+> along a 2·3·5 wheel, so the next prime after a 40-digit number comes back in
+> single-digit milliseconds — landed on 2026-09-06. Same rules, new list.
 
 ## Projects built so far
 
@@ -158,6 +160,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 90 | [Find e to the Nth Digit](./projects/phase2-numbers/find-e-nth-digit/) | Numbers · Source 2 | 2026-09-03 |
 | 91 | [Fibonacci Sequence](./projects/phase2-numbers/fibonacci-sequence/) | Numbers · Source 2 | 2026-09-04 |
 | 92 | [Prime Factorization](./projects/phase2-numbers/prime-factorization/) | Numbers · Source 2 | 2026-09-05 |
+| 93 | [Next Prime Number](./projects/phase2-numbers/next-prime-number/) | Numbers · Source 2 | 2026-09-06 |
 
 ## Repository layout
 
@@ -183,6 +186,9 @@ projects/
   phase2-numbers/     # Source 2 (karan/Projects) — Numbers category
     find-pi-nth-digit/        # arbitrary-precision π via Machin's formula, in BigInt
     find-e-nth-digit/         # arbitrary-precision e via the Taylor series Σ 1/k!, in BigInt
+    fibonacci-sequence/       # three BigInt generators, with fast doubling for distant terms
+    prime-factorization/      # trial division → Pollard's rho + Miller–Rabin, all BigInt
+    next-prime-number/        # deterministic Miller–Rabin on a 2·3·5 wheel, all BigInt
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -635,6 +641,22 @@ and spot-checks Miller–Rabin against Carmichael and Mersenne primes:
 
 ```bash
 node projects/phase2-numbers/prime-factorization/tests.js   # -> 33 passed, 0 failed.
+```
+
+**Next Prime Number** — the fifth Numbers project, and the natural sequel to
+factorization: reuse the same **deterministic Miller–Rabin** test (exact below
+~3.3×10²⁴) to answer "what's the smallest prime after this?". The naive
+"increment and trial-divide each candidate to `√candidate`" is both imprecise
+(a float stops being exact past 16 digits) and quadratically slow, so the
+DOM-free `nextprime-core.js` steps candidates along a **2·3·5 wheel** — never
+testing the 73% of integers divisible by 2, 3 or 5 — and tests each with
+Miller–Rabin. Everything is exact `BigInt`, and the next prime after a 40-digit
+number returns in single-digit milliseconds. The suite leans on the defining
+invariant — the result is prime, greater than `n`, and *minimal* (every integer
+in between is verified composite) — across 300 random inputs:
+
+```bash
+node projects/phase2-numbers/next-prime-number/tests.js   # -> 53 passed, 0 failed.
 ```
 
 ---
