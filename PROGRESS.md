@@ -143,7 +143,7 @@ day, then moves to the next category once it's complete.
 - [x] Fibonacci Sequence — 2026-09-04
 - [x] Prime Factorization — 2026-09-05
 - [x] Next Prime Number — 2026-09-06
-- [ ] Find Cost of Tile to Cover W x H Floor
+- [x] Find Cost of Tile to Cover W x H Floor — 2026-09-07
 - [ ] Mortgage Calculator
 - [ ] Change Return Program
 - [ ] Binary to Decimal and Back Converter
