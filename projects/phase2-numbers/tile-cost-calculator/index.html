@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tile Cost Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="pi">Tile</span> cost calculator</h1>
+      <p class="sub">
+        Enter a floor and a tile and get the number of tiles to buy and the total
+        cost — worked with exact rational arithmetic (BigInt), so decimal
+        dimensions, prices, waste and tax stay <strong>to the cent</strong> and
+        never drift the way <code>0.1 + 0.2</code> does in floating point.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="form">
+        <div class="grid">
+          <fieldset>
+            <legend>Floor</legend>
+            <div class="pair">
+              <label>Width <input id="roomW" type="text" inputmode="decimal" value="12.5" /></label>
+              <label>Height <input id="roomH" type="text" inputmode="decimal" value="10" /></label>
+              <label class="unit">Unit
+                <select id="roomUnit">
+                  <option value="ft" selected>feet</option>
+                  <option value="in">inches</option>
+                  <option value="yd">yards</option>
+                  <option value="m">metres</option>
+                  <option value="cm">cm</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Tile</legend>
+            <div class="pair">
+              <label>Width <input id="tileW" type="text" inputmode="decimal" value="12" /></label>
+              <label>Height <input id="tileH" type="text" inputmode="decimal" value="12" /></label>
+              <label class="unit">Unit
+                <select id="tileUnit">
+                  <option value="in" selected>inches</option>
+                  <option value="ft">feet</option>
+                  <option value="cm">cm</option>
+                  <option value="mm">mm</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="grid">
+          <label>Price per tile ($)
+            <input id="pricePerTile" type="text" inputmode="decimal" value="2.49" />
+          </label>
+          <label>Tiles per box <span class="opt">(optional)</span>
+            <input id="tilesPerBox" type="text" inputmode="numeric" placeholder="e.g. 10" />
+          </label>
+          <label>Waste / overage %
+            <input id="wastePercent" type="text" inputmode="decimal" value="10" />
+          </label>
+          <label>Sales tax %
+            <input id="taxPercent" type="text" inputmode="decimal" value="0" />
+          </label>
+        </div>
+
+        <p class="note" id="boxNote">
+          With a “tiles per box”, price is read as <em>per box</em> and the order
+          is rounded up to whole boxes.
+        </p>
+
+        <div class="actions">
+          <button id="go" type="submit">Calculate</button>
+          <span id="hint" class="hint"></span>
+        </div>
+      </form>
+
+      <div class="examples">
+        <span class="examples-label">Try:</span>
+        <button type="button" class="chip" data-ex="kitchen">Kitchen — 12.5×10 ft, 12″ tile</button>
+        <button type="button" class="chip" data-ex="bathroom">Bathroom — 8×6 ft, 6″ tile, boxes of 10</button>
+        <button type="button" class="chip" data-ex="metric">Metric — 3×4 m, 30 cm tile</button>
+      </div>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="headline">
+        <div>
+          <span class="result-label">Total cost</span>
+          <output id="total" class="out" aria-live="polite"></output>
+        </div>
+        <div class="buy">
+          <span class="result-label">You buy</span>
+          <span id="buyCount" class="buy-count"></span>
+        </div>
+      </div>
+
+      <table class="breakdown">
+        <tbody id="rows"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Find Cost of Tile to Cover a W×H Floor</strong> — from
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="tilecost-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

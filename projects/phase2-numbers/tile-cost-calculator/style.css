@@ -1,0 +1,136 @@
+:root {
+  --bg: #0f1220;
+  --panel: #191d2e;
+  --panel-2: #12162400;
+  --ink: #e8ebf5;
+  --muted: #9aa3c0;
+  --accent: #6ea8fe;
+  --accent-2: #8ee6c8;
+  --line: #2a3050;
+  --danger: #ff8a8a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 50% -10%, #1b2138 0%, var(--bg) 60%);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { width: min(760px, 92vw); margin: 48px auto 24px; flex: 1; }
+
+header h1 { font-size: 2rem; margin: 0 0 .3em; font-weight: 700; letter-spacing: -.5px; }
+.pi { color: var(--accent-2); }
+.sub { color: var(--muted); margin: 0 0 24px; max-width: 64ch; }
+code { background: #ffffff10; padding: .1em .35em; border-radius: 5px; font-size: .9em; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+@media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+fieldset { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 14px; margin: 0; }
+legend { color: var(--accent-2); font-size: .8rem; font-weight: 700; padding: 0 6px; letter-spacing: .3px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pair .unit { grid-column: 1 / -1; }
+
+label { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 0; }
+label.opt, .opt { color: var(--muted); font-size: .72rem; }
+
+input[type=text], select {
+  width: 100%;
+  margin-top: 5px;
+  background: #0d1020;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+}
+select { appearance: none; cursor: pointer; }
+input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.note { color: var(--muted); font-size: .78rem; margin: 4px 2px 14px; }
+.note em { color: var(--accent); font-style: normal; }
+
+.actions { display: flex; align-items: center; gap: 14px; }
+button#go {
+  background: var(--accent-2);
+  color: #08221a;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: .95rem;
+}
+button#go:active { transform: translateY(1px); }
+.hint { color: var(--muted); font-size: .8rem; }
+.hint.error { color: var(--danger); }
+
+.examples { display: flex; align-items: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+.examples-label { color: var(--muted); font-size: .8rem; }
+.chip {
+  background: var(--panel-2);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  font-size: .8rem;
+}
+.chip:hover { border-color: var(--accent); }
+
+.result-wrap { margin-top: 20px; }
+.headline {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 16px; flex-wrap: wrap;
+  background: #0b0e1c; border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px 20px; margin-bottom: 14px;
+}
+.result-label { display: block; color: var(--muted); font-size: .8rem; margin-bottom: 4px; }
+.out {
+  display: block;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 2.2rem; font-weight: 700; color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+.buy { text-align: right; }
+.buy-count {
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 1.15rem; color: var(--accent);
+}
+
+.breakdown { width: 100%; border-collapse: collapse; }
+.breakdown td {
+  padding: 9px 4px; border-bottom: 1px solid var(--line);
+  color: var(--muted); font-size: .9rem;
+}
+.breakdown td.num {
+  text-align: right; color: var(--ink);
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.breakdown tr.strong td { color: var(--ink); font-weight: 700; border-bottom: 0; font-size: 1rem; }
+.breakdown tr.strong td.num { color: var(--accent-2); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .82rem;
+}
+footer a { color: var(--accent); }
