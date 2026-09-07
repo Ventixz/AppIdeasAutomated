@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (5 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (6 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **5 / 21** |
+| Numbers | 🚧 In progress — **6 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -60,9 +60,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > doubling for distant terms — landed on 2026-09-04, **Prime
 > Factorization** — trial division handing off to Pollard's rho and
 > Miller–Rabin, so 20-digit numbers factor in milliseconds — landed on
-> 2026-09-05, and **Next Prime Number** — deterministic Miller–Rabin walked
+> 2026-09-05, **Next Prime Number** — deterministic Miller–Rabin walked
 > along a 2·3·5 wheel, so the next prime after a 40-digit number comes back in
-> single-digit milliseconds — landed on 2026-09-06. Same rules, new list.
+> single-digit milliseconds — landed on 2026-09-06, and the **Tile Cost
+> Calculator** (*Find Cost of Tile to Cover a W×H Floor*) — counting whole tiles
+> two honest ways over exact `BigInt` rationals, so decimal rooms, prices, waste
+> and tax stay correct to the cent — landed on 2026-09-07. Same rules, new list.
 
 ## Projects built so far
 
@@ -161,6 +164,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 91 | [Fibonacci Sequence](./projects/phase2-numbers/fibonacci-sequence/) | Numbers · Source 2 | 2026-09-04 |
 | 92 | [Prime Factorization](./projects/phase2-numbers/prime-factorization/) | Numbers · Source 2 | 2026-09-05 |
 | 93 | [Next Prime Number](./projects/phase2-numbers/next-prime-number/) | Numbers · Source 2 | 2026-09-06 |
+| 94 | [Tile Cost Calculator](./projects/phase2-numbers/tile-cost-calculator/) | Numbers · Source 2 | 2026-09-07 |
 
 ## Repository layout
 
@@ -189,6 +193,7 @@ projects/
     fibonacci-sequence/       # three BigInt generators, with fast doubling for distant terms
     prime-factorization/      # trial division → Pollard's rho + Miller–Rabin, all BigInt
     next-prime-number/        # deterministic Miller–Rabin on a 2·3·5 wheel, all BigInt
+    tile-cost-calculator/     # whole-tile counting two ways + money, exact BigInt rationals
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -657,6 +662,24 @@ in between is verified composite) — across 300 random inputs:
 
 ```bash
 node projects/phase2-numbers/next-prime-number/tests.js   # -> 53 passed, 0 failed.
+```
+
+**Tile Cost Calculator** (*Find Cost of Tile to Cover a W×H Floor*) — the sixth
+Numbers project. The textbook `W * H * pricePerSqFt` is wrong twice as a real
+ordering tool: you can't buy part of a tile and a cut tile's offcut isn't reused,
+so you must round **each direction up** independently (a bigger, different number
+than rounding the area); and rooms, tiles, prices and tax are decimals, where
+floating point drifts (`0.1 + 0.2 ≠ 0.3`). The DOM-free `tilecost-core.js` holds
+every value as an **exact `BigInt` rational**, converts units exactly
+(`2.54 cm ≡ 1 in`), and reports **two honest counts** — *by layout*
+(`ceil(W/tw)·ceil(H/th)`, what you buy) and *by area* (offcuts reused, the
+theoretical floor) — then applies waste %, whole-box rounding and tax to the
+cent. The suite checks the exactness traps and both models, then sweeps 400
+random layouts to prove the tile grid physically spans the room and the area
+count never exceeds it:
+
+```bash
+node projects/phase2-numbers/tile-cost-calculator/tests.js   # -> 46 passed, 0 failed.
 ```
 
 ---
