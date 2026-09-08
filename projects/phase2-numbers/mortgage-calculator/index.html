@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mortgage Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="pi">Mortgage</span> calculator</h1>
+      <p class="sub">
+        Enter a loan and get the monthly payment, total interest, and a full
+        amortization schedule — worked with exact rational arithmetic (BigInt)
+        and per-month cent rounding, so the balance lands on <strong>exactly
+        $0.00</strong> and the numbers match what a lender would actually bill.
+        Not the textbook <code>P·i·(1+i)ⁿ/((1+i)ⁿ−1)</code> alone.
+      </p>
+    </header>
+
+    <section class="panel">
+      <form id="form">
+        <div class="grid">
+          <label>Loan amount ($)
+            <input id="principal" type="text" inputmode="decimal" value="300000" />
+          </label>
+          <label>Annual interest rate (%)
+            <input id="annualRate" type="text" inputmode="decimal" value="6.5" />
+          </label>
+          <label>Term (years)
+            <input id="years" type="text" inputmode="decimal" value="30" />
+          </label>
+          <label>Payments per year
+            <select id="paymentsPerYear">
+              <option value="12" selected>12 — monthly</option>
+              <option value="26">26 — biweekly</option>
+              <option value="4">4 — quarterly</option>
+              <option value="1">1 — annually</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid">
+          <label>Extra principal each payment ($) <span class="opt">(optional)</span>
+            <input id="extraPayment" type="text" inputmode="decimal" placeholder="e.g. 200" />
+          </label>
+        </div>
+
+        <p class="note">
+          Interest each period is charged on the outstanding balance and
+          <em>rounded to the cent</em>, so the final payment differs slightly
+          from the level one — that drift is why a mortgage isn't a one-liner.
+        </p>
+
+        <div class="actions">
+          <button id="go" type="submit">Calculate</button>
+          <span id="hint" class="hint"></span>
+        </div>
+      </form>
+
+      <div class="examples">
+        <span class="examples-label">Try:</span>
+        <button type="button" class="chip" data-ex="classic">Classic — $100k, 6%, 30 yr</button>
+        <button type="button" class="chip" data-ex="starter">Starter home — $300k, 6.5%, 30 yr</button>
+        <button type="button" class="chip" data-ex="extra">With extra — $300k, 6.5%, 30 yr, +$300/mo</button>
+        <button type="button" class="chip" data-ex="zero">0% — $12k, 0%, 1 yr</button>
+      </div>
+    </section>
+
+    <section id="resultWrap" class="result-wrap" hidden>
+      <div class="headline">
+        <div>
+          <span class="result-label">Monthly payment</span>
+          <output id="payment" class="out" aria-live="polite"></output>
+        </div>
+        <div class="buy">
+          <span class="result-label">Payoff</span>
+          <span id="payoff" class="buy-count"></span>
+        </div>
+      </div>
+
+      <table class="breakdown">
+        <tbody id="rows"></tbody>
+      </table>
+
+      <details id="scheduleWrap" class="schedule">
+        <summary>Amortization schedule <span id="schedSummary" class="opt"></span></summary>
+        <div class="table-scroll">
+          <table class="amort">
+            <thead>
+              <tr><th>#</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Balance</th></tr>
+            </thead>
+            <tbody id="schedRows"></tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Project: <strong>Mortgage Calculator</strong> — from
+      <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers),
+      built automatically by a Claude Code routine.
+    </p>
+  </footer>
+
+  <script src="mortgage-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

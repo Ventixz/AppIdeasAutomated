@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (6 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (7 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **6 / 21** |
+| Numbers | 🚧 In progress — **7 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -65,7 +65,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > single-digit milliseconds — landed on 2026-09-06, and the **Tile Cost
 > Calculator** (*Find Cost of Tile to Cover a W×H Floor*) — counting whole tiles
 > two honest ways over exact `BigInt` rationals, so decimal rooms, prices, waste
-> and tax stay correct to the cent — landed on 2026-09-07. Same rules, new list.
+> and tax stay correct to the cent — landed on 2026-09-07, and the **Mortgage
+> Calculator** — not the textbook payment formula but the real amortization run
+> month by month with per-cent interest rounding, so the balance lands on exactly
+> `$0.00` and extra payments visibly cut the term — landed on 2026-09-08. Same
+> rules, new list.
 
 ## Projects built so far
 
@@ -165,6 +169,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 92 | [Prime Factorization](./projects/phase2-numbers/prime-factorization/) | Numbers · Source 2 | 2026-09-05 |
 | 93 | [Next Prime Number](./projects/phase2-numbers/next-prime-number/) | Numbers · Source 2 | 2026-09-06 |
 | 94 | [Tile Cost Calculator](./projects/phase2-numbers/tile-cost-calculator/) | Numbers · Source 2 | 2026-09-07 |
+| 95 | [Mortgage Calculator](./projects/phase2-numbers/mortgage-calculator/) | Numbers · Source 2 | 2026-09-08 |
 
 ## Repository layout
 
@@ -680,6 +685,27 @@ count never exceeds it:
 
 ```bash
 node projects/phase2-numbers/tile-cost-calculator/tests.js   # -> 46 passed, 0 failed.
+```
+
+**Mortgage Calculator** — the seventh Numbers project. Every calculator prints
+the level-payment formula `M = P·i·(1+i)ⁿ / ((1+i)ⁿ − 1)`, but a mortgage isn't
+that number: a lender bills **whole cents** and charges interest on the rounded
+balance, so once the payment is rounded those level payments no longer amortize
+exactly — the final one drifts by a few cents and the disclosed "total interest"
+is the **sum of 360 individually cent-rounded charges**. The DOM-free
+`mortgage-core.js` computes the payment as an **exact `BigInt` rational**
+(including `(1+i)ⁿ` via exponentiation-by-squaring), then *runs* the schedule
+month by month — `interest = roundCents(balance·i)`, `principal = payment −
+interest` — trimming the last payment so the balance lands on **exactly $0.00**.
+It handles the `0%` case (`P/n`), any payment frequency, and extra principal
+(for `$300k / 6.5% / 30 yr`, an extra `$300/mo` cuts the term from **360 to 250**
+payments). The suite checks the classic `$100k / 6% / 30 yr → $599.55` example
+and the properties that make it *not* the formula, then sweeps 300 random loans
+to verify each schedule against its own definition (every charge, every row
+balancing, a zero landing):
+
+```bash
+node projects/phase2-numbers/mortgage-calculator/tests.js   # -> 35 passed, 0 failed.
 ```
 
 ---

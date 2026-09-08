@@ -144,7 +144,7 @@ day, then moves to the next category once it's complete.
 - [x] Prime Factorization — 2026-09-05
 - [x] Next Prime Number — 2026-09-06
 - [x] Find Cost of Tile to Cover W x H Floor — 2026-09-07
-- [ ] Mortgage Calculator
+- [x] Mortgage Calculator — 2026-09-08
 - [ ] Change Return Program
 - [ ] Binary to Decimal and Back Converter
 - [ ] Calculator
