@@ -43,7 +43,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **7 / 21** |
+| Numbers | 🚧 In progress — **8 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -68,7 +68,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > and tax stay correct to the cent — landed on 2026-09-07, and the **Mortgage
 > Calculator** — not the textbook payment formula but the real amortization run
 > month by month with per-cent interest rounding, so the balance lands on exactly
-> `$0.00` and extra payments visibly cut the term — landed on 2026-09-08. Same
+> `$0.00` and extra payments visibly cut the term — landed on 2026-09-08, and the
+> **Change Return Program** — change worked in exact integer cents (never a
+> float) and broken into the fewest bills and coins, with the greedy answer
+> checked against a minimum-coin search because "biggest coin first" is optimal
+> only for _canonical_ systems like U.S. money — landed on 2026-09-09. Same
 > rules, new list.
 
 ## Projects built so far
@@ -170,6 +174,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 93 | [Next Prime Number](./projects/phase2-numbers/next-prime-number/) | Numbers · Source 2 | 2026-09-06 |
 | 94 | [Tile Cost Calculator](./projects/phase2-numbers/tile-cost-calculator/) | Numbers · Source 2 | 2026-09-07 |
 | 95 | [Mortgage Calculator](./projects/phase2-numbers/mortgage-calculator/) | Numbers · Source 2 | 2026-09-08 |
+| 96 | [Change Return Program](./projects/phase2-numbers/change-return/) | Numbers · Source 2 | 2026-09-09 |
 
 ## Repository layout
 
@@ -199,6 +204,8 @@ projects/
     prime-factorization/      # trial division → Pollard's rho + Miller–Rabin, all BigInt
     next-prime-number/        # deterministic Miller–Rabin on a 2·3·5 wheel, all BigInt
     tile-cost-calculator/     # whole-tile counting two ways + money, exact BigInt rationals
+    mortgage-calculator/      # real amortization run to $0.00 with per-cent rounding, exact rationals
+    change-return/            # change in exact integer cents, greedy vs. provably minimal coins
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
