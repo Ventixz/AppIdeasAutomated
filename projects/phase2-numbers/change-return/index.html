@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Change Return Program</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Change</span> return program</h1>
+      <p class="sub">
+        Enter what something costs and how much was handed over. This works out
+        the change and breaks it into the fewest bills and coins — all in exact
+        integer cents, so it never drifts the way <code>0.10 + 0.20</code> does
+        in floating point.
+      </p>
+    </header>
+
+    <form id="form" autocomplete="off">
+      <div class="grid">
+        <label>
+          Cost
+          <div class="money"><span>$</span><input id="cost" inputmode="decimal" placeholder="7.03" /></div>
+        </label>
+        <label>
+          Amount given
+          <div class="money"><span>$</span><input id="tendered" inputmode="decimal" placeholder="20.00" /></div>
+        </label>
+      </div>
+
+      <fieldset class="denoms">
+        <legend>Give change in</legend>
+        <label class="radio"><input type="radio" name="set" value="full" checked /> Bills &amp; coins</label>
+        <label class="radio"><input type="radio" name="set" value="coins" /> Coins only</label>
+      </fieldset>
+
+      <button type="submit">Make change</button>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+
+    <section id="result" hidden>
+      <p class="headline">
+        Change due: <strong id="change-amount"></strong>
+      </p>
+      <table id="breakdown">
+        <thead><tr><th>Denomination</th><th>Count</th><th>Value</th></tr></thead>
+        <tbody></tbody>
+        <tfoot><tr><th>Total pieces</th><td id="total-count"></td><td id="total-value"></td></tr></tfoot>
+      </table>
+      <p id="note" class="note"></p>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="change-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
