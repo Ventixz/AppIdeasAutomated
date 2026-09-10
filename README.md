@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (7 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (9 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **8 / 21** |
+| Numbers | 🚧 In progress — **9 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -72,8 +72,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > **Change Return Program** — change worked in exact integer cents (never a
 > float) and broken into the fewest bills and coins, with the greedy answer
 > checked against a minimum-coin search because "biggest coin first" is optimal
-> only for _canonical_ systems like U.S. money — landed on 2026-09-09. Same
-> rules, new list.
+> only for _canonical_ systems like U.S. money — landed on 2026-09-09, and the
+> **Binary to Decimal and Back Converter** — both directions over `BigInt` so a
+> 200-bit number converts exactly where `parseInt(s, 2)` silently rounds past
+> bit 53, with binary fractions always exact and decimal fractions honestly
+> flagged as _rounded_ when (like `0.1`) they have no finite binary form —
+> landed on 2026-09-10. Same rules, new list.
 
 ## Projects built so far
 
@@ -175,6 +179,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 94 | [Tile Cost Calculator](./projects/phase2-numbers/tile-cost-calculator/) | Numbers · Source 2 | 2026-09-07 |
 | 95 | [Mortgage Calculator](./projects/phase2-numbers/mortgage-calculator/) | Numbers · Source 2 | 2026-09-08 |
 | 96 | [Change Return Program](./projects/phase2-numbers/change-return/) | Numbers · Source 2 | 2026-09-09 |
+| 97 | [Binary to Decimal and Back Converter](./projects/phase2-numbers/binary-decimal-converter/) | Numbers · Source 2 | 2026-09-10 |
 
 ## Repository layout
 
@@ -206,6 +211,7 @@ projects/
     tile-cost-calculator/     # whole-tile counting two ways + money, exact BigInt rationals
     mortgage-calculator/      # real amortization run to $0.00 with per-cent rounding, exact rationals
     change-return/            # change in exact integer cents, greedy vs. provably minimal coins
+    binary-decimal-converter/ # both directions over BigInt; fractions exact one way, flagged the other
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
