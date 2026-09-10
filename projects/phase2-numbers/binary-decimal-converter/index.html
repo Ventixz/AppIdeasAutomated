@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Binary ⇄ Decimal Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Binary</span> ⇄ decimal converter</h1>
+      <p class="sub">
+        Convert a number between binary and decimal, in either direction. Every
+        integer runs on <code>BigInt</code>, so a 200-bit number converts
+        exactly — where <code>parseInt(s, 2)</code> would quietly go wrong past
+        the 53rd bit. Fractions work too: binary&nbsp;→&nbsp;decimal is always
+        exact, and decimal&nbsp;→&nbsp;binary tells you when it had to round.
+      </p>
+    </header>
+
+    <form id="form" autocomplete="off">
+      <fieldset class="direction">
+        <legend>Direction</legend>
+        <label class="radio"><input type="radio" name="dir" value="d2b" checked /> Decimal → Binary</label>
+        <label class="radio"><input type="radio" name="dir" value="b2d" /> Binary → Decimal</label>
+      </fieldset>
+
+      <label class="field">
+        <span id="input-label">Decimal number</span>
+        <input id="value" inputmode="decimal" placeholder="13.25" />
+      </label>
+
+      <label class="field" id="precision-field">
+        <span>Fraction bits (decimal → binary only)</span>
+        <input id="fracbits" type="number" min="0" max="4096" step="1" value="52" />
+      </label>
+
+      <button type="submit">Convert</button>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+
+    <section id="result" hidden>
+      <p class="headline">
+        <span id="from-label"></span>
+        <code id="from-value"></code>
+        <span class="arrow">→</span>
+        <code id="to-value"></code>
+      </p>
+      <p id="note" class="note"></p>
+      <p id="roundtrip" class="roundtrip"></p>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="converter-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
