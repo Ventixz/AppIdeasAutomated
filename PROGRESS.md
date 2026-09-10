@@ -146,7 +146,7 @@ day, then moves to the next category once it's complete.
 - [x] Find Cost of Tile to Cover W x H Floor — 2026-09-07
 - [x] Mortgage Calculator — 2026-09-08
 - [x] Change Return Program — 2026-09-09
-- [ ] Binary to Decimal and Back Converter
+- [x] Binary to Decimal and Back Converter — 2026-09-10
 - [ ] Calculator
 - [ ] Unit Converter (temp, currency, volume, mass and more)
 - [ ] Alarm Clock
