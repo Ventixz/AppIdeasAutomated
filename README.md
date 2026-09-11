@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (9 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (10 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **9 / 21** |
+| Numbers | 🚧 In progress — **10 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -77,7 +77,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > 200-bit number converts exactly where `parseInt(s, 2)` silently rounds past
 > bit 53, with binary fractions always exact and decimal fractions honestly
 > flagged as _rounded_ when (like `0.1`) they have no finite binary form —
-> landed on 2026-09-10. Same rules, new list.
+> landed on 2026-09-10, and the **Calculator** — a hand-written expression
+> parser (not `eval`, which both runs arbitrary code and does lying float math)
+> that evaluates `+ - * / % ^` on exact `BigInt` fractions, so `0.1 + 0.2` is
+> exactly `0.3` and `2^100` is a 31-digit integer, with `sqrt`/`sin`/`ln`/`pi`
+> and friends falling back to floats and honestly flagged _approximate_ — landed
+> on 2026-09-11. Same rules, new list.
 
 ## Projects built so far
 
@@ -180,6 +185,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 95 | [Mortgage Calculator](./projects/phase2-numbers/mortgage-calculator/) | Numbers · Source 2 | 2026-09-08 |
 | 96 | [Change Return Program](./projects/phase2-numbers/change-return/) | Numbers · Source 2 | 2026-09-09 |
 | 97 | [Binary to Decimal and Back Converter](./projects/phase2-numbers/binary-decimal-converter/) | Numbers · Source 2 | 2026-09-10 |
+| 98 | [Calculator](./projects/phase2-numbers/calculator/) | Numbers · Source 2 | 2026-09-11 |
 
 ## Repository layout
 
