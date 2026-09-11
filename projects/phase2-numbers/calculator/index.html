@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exact Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Exact</span> calculator</h1>
+      <p class="sub">
+        Type an expression — <code>0.1 + 0.2</code>, <code>1/3 * 3</code>,
+        <code>2^100</code>, <code>sqrt(2)</code>. The four basic operators run on
+        exact <code>BigInt</code> fractions, so <code>0.1 + 0.2</code> is exactly
+        <code>0.3</code> and <code>1/3</code> is exactly one third — where
+        <code>eval()</code> would hand back <code>0.30000000000000004</code>.
+        Scientific functions fall back to floating point and say so.
+      </p>
+    </header>
+
+    <form id="form" autocomplete="off">
+      <label class="field">
+        <span>Expression</span>
+        <input id="expr" inputmode="text" placeholder="0.1 + 0.2" autofocus />
+      </label>
+      <button type="submit">Evaluate</button>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+
+    <section id="result" hidden>
+      <p class="headline">
+        <code id="value"></code>
+        <span id="tag" class="tag"></span>
+      </p>
+      <p id="note" class="note"></p>
+    </section>
+
+    <section class="pad" aria-label="quick keys">
+      <div class="keys" id="keys"></div>
+    </section>
+
+    <section class="examples">
+      <h2>Try these</h2>
+      <ul id="examples"></ul>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="calculator-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
