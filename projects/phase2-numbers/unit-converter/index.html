@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exact Unit Converter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Exact</span> unit converter</h1>
+      <p class="sub">
+        Temperature, length, mass, volume, area, speed, time, digital storage
+        and currency. Every conversion factor is a defined exact ratio
+        (<code>1&nbsp;in = 2.54&nbsp;cm</code>, <code>1&nbsp;mi = 1609.344&nbsp;m</code>),
+        so it runs on <code>BigInt</code> fractions: <code>100&nbsp;mi → km → mi</code>
+        lands back on exactly <code>100</code>, where a float engine would drift.
+        Results that terminate are shown in full; the rest are rounded and say so.
+        Currency uses an editable offline snapshot and is always flagged
+        approximate.
+      </p>
+    </header>
+
+    <section class="panel">
+      <div class="row cat-row">
+        <label class="field">
+          <span>Category</span>
+          <select id="category"></select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label class="field">
+          <span>From</span>
+          <input id="value" inputmode="decimal" value="1" autofocus />
+        </label>
+        <label class="field">
+          <span>&nbsp;</span>
+          <select id="from"></select>
+        </label>
+      </div>
+
+      <div class="swap-wrap">
+        <button id="swap" type="button" title="Swap units" aria-label="Swap units">⇅ swap</button>
+      </div>
+
+      <div class="row">
+        <label class="field">
+          <span>To</span>
+          <output id="result" class="result">—</output>
+        </label>
+        <label class="field">
+          <span>&nbsp;</span>
+          <select id="to"></select>
+        </label>
+      </div>
+
+      <p id="tagline" class="tagline">
+        <span id="tag" class="tag" hidden></span>
+        <span id="note" class="note"></span>
+      </p>
+      <p id="error" class="error" hidden></p>
+    </section>
+
+    <section id="rates" class="rates" hidden>
+      <h2>Offline exchange rates <span class="muted-inline">(USD per unit — editable)</span></h2>
+      <p class="rates-note" id="rates-note"></p>
+      <div class="rate-grid" id="rate-grid"></div>
+    </section>
+
+    <section class="examples">
+      <h2>Try these</h2>
+      <ul id="examples"></ul>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="converter-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

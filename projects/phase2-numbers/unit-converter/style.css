@@ -1,0 +1,127 @@
+:root {
+  --bg: #0f1220;
+  --panel: #191d2e;
+  --ink: #e8ebf5;
+  --muted: #9aa3c0;
+  --accent: #6ea8fe;
+  --accent-2: #8ee6c8;
+  --line: #2a3050;
+  --danger: #ff8a8a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 50% -10%, #1b2138 0%, var(--bg) 60%);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { width: min(720px, 92vw); margin: 48px auto 24px; flex: 1; }
+
+header h1 { font-size: 2rem; margin: 0 0 .3em; font-weight: 700; letter-spacing: -.5px; }
+.accent { color: var(--accent-2); }
+.sub { color: var(--muted); margin: 0 0 24px; max-width: 68ch; }
+code {
+  background: #ffffff10; padding: .1em .35em; border-radius: 5px; font-size: .9em;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
+.cat-row { margin-bottom: 16px; }
+
+.field { display: block; font-size: .8rem; color: var(--muted); flex: 1; min-width: 160px; }
+.field span { display: block; margin-bottom: 5px; }
+
+.field input, .field select {
+  width: 100%;
+  background: #0d1020; border: 1px solid var(--line);
+  color: var(--ink); border-radius: 10px;
+  padding: 11px 13px; font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+}
+.field select { cursor: pointer; }
+.field input:focus, .field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.result {
+  display: block;
+  width: 100%;
+  background: #0b0e1c; border: 1px solid var(--line);
+  color: var(--accent-2); border-radius: 10px;
+  padding: 11px 13px; font-size: 1.25rem; min-height: 46px;
+  word-break: break-all;
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+}
+
+.swap-wrap { text-align: center; margin: 2px 0 12px; }
+#swap {
+  background: #212b20; color: var(--accent-2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 16px; font-size: .82rem; cursor: pointer;
+  letter-spacing: .04em;
+}
+#swap:hover { border-color: var(--accent); }
+#swap:active { transform: translateY(1px); }
+
+.tagline { margin: 8px 2px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-height: 1.2em; }
+.tag {
+  font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
+  color: var(--muted); white-space: nowrap;
+}
+.tag.exact { color: var(--accent-2); border-color: #2f5a4a; background: #10241d; }
+.tag.rounded { color: #ffd591; border-color: #5a4a2f; background: #241f10; }
+.tag.approx { color: #ffb3b3; border-color: #5a2f2f; background: #241010; }
+.note { color: var(--muted); font-size: .82rem; }
+
+.error { color: var(--danger); font-size: .9rem; margin: 12px 2px 0; }
+
+.rates { margin-top: 22px; }
+.rates h2, .examples h2 {
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); margin: 0 0 10px;
+}
+.muted-inline { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 400; }
+.rates-note { color: var(--muted); font-size: .82rem; margin: 0 0 12px; }
+.rate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.rate-cell { display: flex; flex-direction: column; gap: 4px; }
+.rate-cell label { font-size: .72rem; color: var(--muted); }
+.rate-cell input {
+  background: #0d1020; border: 1px solid var(--line); color: var(--ink);
+  border-radius: 8px; padding: 7px 9px; font-size: .9rem;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.rate-cell input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.examples { margin-top: 26px; }
+.examples ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.examples li {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 11px; cursor: pointer; font-size: .85rem;
+  font-family: "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  color: var(--muted);
+}
+.examples li:hover { border-color: var(--accent); color: var(--ink); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .82rem;
+  margin-top: 28px;
+}
+footer a { color: var(--accent); }
