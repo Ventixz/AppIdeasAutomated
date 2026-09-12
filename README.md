@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (10 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (11 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **10 / 21** |
+| Numbers | 🚧 In progress — **11 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -82,7 +82,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > that evaluates `+ - * / % ^` on exact `BigInt` fractions, so `0.1 + 0.2` is
 > exactly `0.3` and `2^100` is a 31-digit integer, with `sqrt`/`sin`/`ln`/`pi`
 > and friends falling back to floats and honestly flagged _approximate_ — landed
-> on 2026-09-11. Same rules, new list.
+> on 2026-09-11, and the **Unit Converter** — temperature, length, mass, volume,
+> area, speed, time, digital storage and currency, every factor held as an exact
+> `BigInt` ratio (`1 in = 2.54 cm`, `1 gal = 3.785411784 L`) so `100 mi → km →
+> mi` returns exactly `100` where floats drift, with temperature handled as a
+> proper affine scale-and-offset (so `-40 °C` is `-40 °F` and there's an
+> absolute-zero guard) and currency on an editable offline snapshot flagged
+> _approximate_ — landed on 2026-09-12. Same rules, new list.
 
 ## Projects built so far
 
@@ -186,6 +192,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 96 | [Change Return Program](./projects/phase2-numbers/change-return/) | Numbers · Source 2 | 2026-09-09 |
 | 97 | [Binary to Decimal and Back Converter](./projects/phase2-numbers/binary-decimal-converter/) | Numbers · Source 2 | 2026-09-10 |
 | 98 | [Calculator](./projects/phase2-numbers/calculator/) | Numbers · Source 2 | 2026-09-11 |
+| 99 | [Unit Converter](./projects/phase2-numbers/unit-converter/) | Numbers · Source 2 | 2026-09-12 |
 
 ## Repository layout
 
