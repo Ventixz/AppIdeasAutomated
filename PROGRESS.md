@@ -149,7 +149,7 @@ day, then moves to the next category once it's complete.
 - [x] Binary to Decimal and Back Converter — 2026-09-10
 - [x] Calculator — 2026-09-11
 - [x] Unit Converter (temp, currency, volume, mass and more) — 2026-09-12
-- [ ] Alarm Clock
+- [x] Alarm Clock — 2026-09-13
 - [ ] Distance Between Two Cities
 - [ ] Credit Card Validator
 - [ ] Tax Calculator
