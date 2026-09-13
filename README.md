@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (11 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (12 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **11 / 21** |
+| Numbers | 🚧 In progress — **12 / 21** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -88,7 +88,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > mi` returns exactly `100` where floats drift, with temperature handled as a
 > proper affine scale-and-offset (so `-40 °C` is `-40 °F` and there's an
 > absolute-zero guard) and currency on an editable offline snapshot flagged
-> _approximate_ — landed on 2026-09-12. Same rules, new list.
+> _approximate_ — landed on 2026-09-12, and the **Alarm Clock** — clock-time
+> alarms (once, daily, weekdays, weekends or custom days) plus countdown timers,
+> whose scheduling brain is a DOM-free core that takes every "now" as an argument
+> so the tests fast-forward through days and weeks in milliseconds; the ring
+> detector reports each alarm exactly once over a half-open `(lastTick, now]`
+> window and still catches every missed ring after a sleeping tab — landed on
+> 2026-09-13. Same rules, new list.
 
 ## Projects built so far
 
@@ -193,6 +199,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 97 | [Binary to Decimal and Back Converter](./projects/phase2-numbers/binary-decimal-converter/) | Numbers · Source 2 | 2026-09-10 |
 | 98 | [Calculator](./projects/phase2-numbers/calculator/) | Numbers · Source 2 | 2026-09-11 |
 | 99 | [Unit Converter](./projects/phase2-numbers/unit-converter/) | Numbers · Source 2 | 2026-09-12 |
+| 100 | [Alarm Clock](./projects/phase2-numbers/alarm-clock/) | Numbers · Source 2 | 2026-09-13 |
 
 ## Repository layout
 
