@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alarm Clock</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Alarm</span> clock</h1>
+      <p class="sub">
+        Set alarms for a clock time — once, every day, weekdays, weekends or a
+        custom set of days — or start a countdown timer. When one rings, the
+        page beeps (Web&nbsp;Audio, no files) and you can snooze or dismiss.
+        The whole schedule is driven by a DOM-free core in
+        <code>alarm-core.js</code>, the same file the tests run under Node.
+        Alarms live in this browser only (<code>localStorage</code>).
+      </p>
+    </header>
+
+    <div class="clock" id="clock" aria-live="off">00:00:00</div>
+    <p class="clock-date" id="clock-date"></p>
+
+    <section class="panel" aria-label="Create an alarm or timer">
+      <div class="tabs" role="tablist">
+        <button id="tab-alarm" class="tab active" role="tab" aria-selected="true">Alarm</button>
+        <button id="tab-timer" class="tab" role="tab" aria-selected="false">Timer</button>
+      </div>
+
+      <!-- Alarm form -->
+      <div id="form-alarm" class="form">
+        <div class="row">
+          <label class="field time-field">
+            <span>Time</span>
+            <input id="alarm-time" type="text" inputmode="numeric" placeholder="07:30" value="07:30" />
+          </label>
+          <label class="field">
+            <span>Label (optional)</span>
+            <input id="alarm-label" type="text" placeholder="Wake up" />
+          </label>
+        </div>
+        <div class="days" id="days" role="group" aria-label="Repeat on days"></div>
+        <div class="quick">
+          <button type="button" data-days="" class="chip">Once</button>
+          <button type="button" data-days="0,1,2,3,4,5,6" class="chip">Every day</button>
+          <button type="button" data-days="1,2,3,4,5" class="chip">Weekdays</button>
+          <button type="button" data-days="0,6" class="chip">Weekends</button>
+        </div>
+        <button id="add-alarm" class="primary" type="button">Add alarm</button>
+      </div>
+
+      <!-- Timer form -->
+      <div id="form-timer" class="form" hidden>
+        <div class="row">
+          <label class="field time-field">
+            <span>Duration</span>
+            <input id="timer-dur" type="text" placeholder="5m" value="5m" />
+          </label>
+          <label class="field">
+            <span>Label (optional)</span>
+            <input id="timer-label" type="text" placeholder="Tea" />
+          </label>
+        </div>
+        <div class="quick">
+          <button type="button" data-dur="60" class="chip">1m</button>
+          <button type="button" data-dur="300" class="chip">5m</button>
+          <button type="button" data-dur="600" class="chip">10m</button>
+          <button type="button" data-dur="1500" class="chip">25m</button>
+        </div>
+        <button id="add-timer" class="primary" type="button">Start timer</button>
+      </div>
+
+      <p id="error" class="error" hidden></p>
+    </section>
+
+    <section class="list-section">
+      <h2>Scheduled <span class="muted-inline" id="count"></span></h2>
+      <ul id="list" class="list"></ul>
+      <p id="empty" class="empty">Nothing scheduled yet. Add an alarm or a timer above.</p>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <!-- Ringing overlay -->
+  <div id="ring" class="ring-overlay" hidden>
+    <div class="ring-card">
+      <div class="ring-emoji">⏰</div>
+      <div class="ring-title" id="ring-title">Alarm</div>
+      <div class="ring-sub" id="ring-sub"></div>
+      <div class="ring-actions">
+        <button id="ring-snooze" class="secondary" type="button">Snooze 9 min</button>
+        <button id="ring-dismiss" class="primary" type="button">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="alarm-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
