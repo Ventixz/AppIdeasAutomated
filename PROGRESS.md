@@ -150,7 +150,7 @@ day, then moves to the next category once it's complete.
 - [x] Calculator — 2026-09-11
 - [x] Unit Converter (temp, currency, volume, mass and more) — 2026-09-12
 - [x] Alarm Clock — 2026-09-13
-- [ ] Distance Between Two Cities
+- [x] Distance Between Two Cities — 2026-09-14
 - [ ] Credit Card Validator
 - [ ] Tax Calculator
 - [ ] Factorial Finder

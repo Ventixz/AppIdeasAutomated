@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Distance Between Two Cities</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Distance</span> between two cities</h1>
+      <p class="sub">
+        The shortest path between two places on Earth is a <em>great-circle</em>
+        arc, not the straight line you'd draw on a flat map. This computes it
+        with the <code>haversine</code> formula (a sphere) and
+        <a href="https://en.wikipedia.org/wiki/Vincenty%27s_formulae">Vincenty's
+        formula</a> (the WGS-84 ellipsoid — Earth is not a sphere), reports the
+        initial compass bearing, and converts into the unit you pick. Cities come
+        from a small <strong>offline</strong> gazetteer, so there's no API key
+        and nothing to install. You can also type raw coordinates.
+      </p>
+    </header>
+
+    <section class="panel">
+      <div class="row">
+        <label class="field">
+          <span>From — city or "lat, lon"</span>
+          <input id="from" list="cities" value="New York" autocomplete="off" autofocus />
+        </label>
+        <label class="field">
+          <span>To — city or "lat, lon"</span>
+          <input id="to" list="cities" value="London" autocomplete="off" />
+        </label>
+      </div>
+      <datalist id="cities"></datalist>
+
+      <div class="swap-wrap">
+        <button id="swap" type="button" title="Swap" aria-label="Swap from and to">⇅ swap</button>
+      </div>
+
+      <div class="row opts">
+        <label class="field">
+          <span>Unit</span>
+          <select id="unit">
+            <option value="km">kilometres (km)</option>
+            <option value="mi">miles (mi)</option>
+            <option value="nmi">nautical miles (nmi)</option>
+            <option value="m">metres (m)</option>
+            <option value="ft">feet (ft)</option>
+            <option value="yd">yards (yd)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <select id="method">
+            <option value="auto">Auto (ellipsoid, sphere fallback)</option>
+            <option value="haversine">Haversine (sphere)</option>
+            <option value="vincenty">Vincenty (ellipsoid)</option>
+          </select>
+        </label>
+      </div>
+
+      <output id="result" class="result">—</output>
+      <p id="detail" class="detail"></p>
+      <p id="error" class="error" hidden></p>
+    </section>
+
+    <section class="mapwrap panel">
+      <svg id="map" viewBox="0 0 720 360" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="Equirectangular map with the two points and the great-circle path"></svg>
+      <p class="mapnote">
+        Equirectangular projection (a lat/lon grid — no map tiles). The curved
+        line is the great-circle path; on this projection the shortest route
+        looks bent, which is exactly the point.
+      </p>
+    </section>
+
+    <section class="examples">
+      <h2>Try these</h2>
+      <ul id="examples"></ul>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="distance-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
