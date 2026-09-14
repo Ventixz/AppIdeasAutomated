@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (12 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (13 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **12 / 21** |
+| Numbers | 🚧 In progress — **13 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -94,7 +94,15 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > so the tests fast-forward through days and weeks in milliseconds; the ring
 > detector reports each alarm exactly once over a half-open `(lastTick, now]`
 > window and still catches every missed ring after a sleeping tab — landed on
-> 2026-09-13. Same rules, new list.
+> 2026-09-13, and **Distance Between Two Cities** — the shortest path over a
+> globe is a great-circle arc, not a straight line on a flat map, so it measures
+> the distance both on a sphere (haversine) and on the WGS-84 ellipsoid
+> (Vincenty, the model GPS uses, which disagrees by a real 15 km on New
+> York→London and honestly returns `null` for the near-antipodal points where
+> its iteration won't converge, falling back to the sphere); an offline
+> gazetteer of 40 cities means no API key, and the initial bearing, midpoint and
+> a projected great-circle arc round it out — landed on 2026-09-14. Same rules,
+> new list.
 
 ## Projects built so far
 
@@ -200,6 +208,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 98 | [Calculator](./projects/phase2-numbers/calculator/) | Numbers · Source 2 | 2026-09-11 |
 | 99 | [Unit Converter](./projects/phase2-numbers/unit-converter/) | Numbers · Source 2 | 2026-09-12 |
 | 100 | [Alarm Clock](./projects/phase2-numbers/alarm-clock/) | Numbers · Source 2 | 2026-09-13 |
+| 101 | [Distance Between Two Cities](./projects/phase2-numbers/distance-between-cities/) | Numbers · Source 2 | 2026-09-14 |
 
 ## Repository layout
 
@@ -232,6 +241,10 @@ projects/
     mortgage-calculator/      # real amortization run to $0.00 with per-cent rounding, exact rationals
     change-return/            # change in exact integer cents, greedy vs. provably minimal coins
     binary-decimal-converter/ # both directions over BigInt; fractions exact one way, flagged the other
+    calculator/               # hand-written expression parser over exact BigInt fractions (not eval)
+    unit-converter/           # temp/length/mass/… on exact BigInt ratios; affine temperature scales
+    alarm-clock/              # DOM-free scheduling core; half-open tick window, catches missed rings
+    distance-between-cities/  # great-circle distance: haversine sphere + Vincenty ellipsoid, offline gazetteer
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -739,6 +752,25 @@ balancing, a zero landing):
 
 ```bash
 node projects/phase2-numbers/mortgage-calculator/tests.js   # -> 35 passed, 0 failed.
+```
+
+**Distance Between Two Cities** — the thirteenth Numbers project. The naive
+"distance between two lat/lon points" is Pythagoras on the coordinates, and it is
+wrong almost everywhere: longitude degrees shrink toward the poles and the
+shortest path over a globe is a **great-circle arc**. The DOM-free
+`distance-core.js` measures it two ways — the numerically stable **haversine**
+(sphere) and **Vincenty's inverse formula** (the WGS-84 **ellipsoid** GPS uses,
+sub-millimetre-accurate but non-convergent for near-antipodal points, where it
+honestly returns `null` and `auto` falls back to the sphere). It adds initial
+bearing + 16-point compass, midpoint, and `destinationPoint` (the exact inverse
+of haversine-plus-bearing), converts through **exact** unit factors, parses
+decimal/hemisphere/DMS coordinates, and ships a 40-city **offline** gazetteer so
+there's no API key. The suite checks known distances, the two models against each
+other, and sweeps random points for symmetry, the triangle inequality and the
+`destinationPoint ↔ distance/bearing` round-trip:
+
+```bash
+node projects/phase2-numbers/distance-between-cities/tests.js   # -> 80 passed, 0 failed.
 ```
 
 ---
