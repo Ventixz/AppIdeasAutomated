@@ -151,7 +151,7 @@ day, then moves to the next category once it's complete.
 - [x] Unit Converter (temp, currency, volume, mass and more) — 2026-09-12
 - [x] Alarm Clock — 2026-09-13
 - [x] Distance Between Two Cities — 2026-09-14
-- [ ] Credit Card Validator
+- [x] Credit Card Validator — 2026-09-15
 - [ ] Tax Calculator
 - [ ] Factorial Finder
 - [ ] Complex Number Algebra
