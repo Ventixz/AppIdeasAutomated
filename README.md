@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (13 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (14 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **13 / 22** |
+| Numbers | 🚧 In progress — **14 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -101,8 +101,15 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > York→London and honestly returns `null` for the near-antipodal points where
 > its iteration won't converge, falling back to the sphere); an offline
 > gazetteer of 40 cities means no API key, and the initial bearing, midpoint and
-> a projected great-circle arc round it out — landed on 2026-09-14. Same rules,
-> new list.
+> a projected great-circle arc round it out — landed on 2026-09-14, and the
+> **Credit Card Validator** — the Luhn checksum every card number carries,
+> patented at IBM in 1960 to catch the typos a *human* makes copying a number
+> off a card; it names the network from the leading digits (Visa, Mastercard,
+> Amex, Discover, Diners, JCB, UnionPay, Maestro), checks the length, and its
+> property tests prove the two facts that made the algorithm worth standardising
+> — every single-digit typo is caught, and every adjacent transposition except
+> the pair `0↔9` — while a generator emits Luhn-valid *fakes* so nothing here
+> ever touches a real card — landed on 2026-09-15. Same rules, new list.
 
 ## Projects built so far
 
@@ -209,6 +216,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 99 | [Unit Converter](./projects/phase2-numbers/unit-converter/) | Numbers · Source 2 | 2026-09-12 |
 | 100 | [Alarm Clock](./projects/phase2-numbers/alarm-clock/) | Numbers · Source 2 | 2026-09-13 |
 | 101 | [Distance Between Two Cities](./projects/phase2-numbers/distance-between-cities/) | Numbers · Source 2 | 2026-09-14 |
+| 102 | [Credit Card Validator](./projects/phase2-numbers/credit-card-validator/) | Numbers · Source 2 | 2026-09-15 |
 
 ## Repository layout
 
@@ -771,6 +779,26 @@ other, and sweeps random points for symmetry, the triangle inequality and the
 
 ```bash
 node projects/phase2-numbers/distance-between-cities/tests.js   # -> 80 passed, 0 failed.
+```
+
+**Credit Card Validator** — the fourteenth Numbers project. "Given a credit card
+number, determine if it is valid" is, at heart, one small piece of arithmetic:
+the **Luhn algorithm**, patented at IBM in 1960 as a **check digit** whose whole
+job is to catch the mistakes a *human* makes copying a number off a card. The
+DOM-free `card-core.js` computes the checksum (with a lookup table for the
+doubling, so the one place a hand-written Luhn tends to go wrong can't), inverts
+it into `luhnCheckDigit`, names the network from its published **IIN ranges**
+(Visa, Mastercard incl. the new 2-series, Amex, Discover, Diners, JCB, UnionPay,
+Maestro), checks the length, formats to each card's real grouping (`4-6-5` for
+Amex), masks to the last four, and **generates** Luhn-valid *fakes* so nothing
+ever touches a real card. Two property sweeps prove why the algorithm was worth
+standardising: **every single-digit typo breaks the checksum**, and **every
+adjacent transposition except the pair `0↔9`** is caught (that exception is
+Luhn's one documented blind spot, asserted precisely). It validates *structure*,
+not an account — a well-formed number is not a real card:
+
+```bash
+node projects/phase2-numbers/credit-card-validator/tests.js   # -> 128 passed, 0 failed.
 ```
 
 ---

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Credit Card Validator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Credit card</span> validator</h1>
+      <p class="sub">
+        Type a card number and this checks it with the
+        <a href="https://en.wikipedia.org/wiki/Luhn_algorithm">Luhn algorithm</a>
+        — the checksum every card number carries — names the
+        <strong>network</strong> from its leading digits, and verifies the length.
+        It all runs <strong>offline</strong>: no network request, no data leaves
+        the page. It validates <em>structure</em>, not a real account — a
+        Luhn-valid number can still be a card that was never issued.
+      </p>
+    </header>
+
+    <section class="panel">
+      <label class="field">
+        <span>Card number</span>
+        <input id="number" inputmode="numeric" autocomplete="off" autofocus
+               placeholder="e.g. 4111 1111 1111 1111" />
+      </label>
+
+      <div class="verdict" id="verdict">
+        <span class="badge" id="badge">—</span>
+        <span class="network" id="network"></span>
+      </div>
+
+      <ul class="checks" id="checks"></ul>
+      <p class="masked" id="masked"></p>
+      <p class="note">
+        The number never leaves your browser. These are checks on the digits,
+        not a lookup of a real account.
+      </p>
+    </section>
+
+    <section class="examples panel">
+      <h2>Try a sample number</h2>
+      <p class="exnote">
+        Standard <strong>test</strong> numbers — all Luhn-valid, none real.
+        Click to load one, or generate a fresh fake:
+      </p>
+      <ul id="examples"></ul>
+      <div class="genrow">
+        <label class="field inline">
+          <span>Generate a fake</span>
+          <select id="genNetwork"></select>
+        </label>
+        <button id="generate" type="button">Generate valid number</button>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="card-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
