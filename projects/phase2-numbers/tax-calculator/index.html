@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tax Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Tax</span> calculator</h1>
+      <p class="sub">
+        Add sales tax to a price, split a tax-inclusive total back apart, or run
+        an income through a <strong>progressive bracket</strong> schedule to see
+        the difference between a <em>marginal</em> and an <em>effective</em> rate.
+        Every figure is computed in exact integer <strong>cents</strong> — no
+        floating-point drift — and it all runs <strong>offline</strong>: nothing
+        you type ever leaves the page.
+      </p>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-mode="sales" type="button">Sales tax</button>
+      <button class="tab" data-mode="income" type="button">Income tax (brackets)</button>
+    </nav>
+
+    <!-- ---- SALES TAX ---- -->
+    <section class="panel mode" id="mode-sales">
+      <div class="toggle" id="direction">
+        <button class="dir active" data-dir="add" type="button">Add tax to a price</button>
+        <button class="dir" data-dir="remove" type="button">Extract tax from a total</button>
+      </div>
+
+      <div class="grid">
+        <label class="field">
+          <span id="amountLabel">Price (before tax)</span>
+          <input id="amount" inputmode="decimal" autocomplete="off" autofocus placeholder="e.g. 19.99" />
+        </label>
+        <label class="field">
+          <span>Tax rate (%)</span>
+          <input id="rate" inputmode="decimal" autocomplete="off" placeholder="e.g. 8.25" />
+        </label>
+      </div>
+
+      <p class="presets-label">Example rates (illustrative — not current advice):</p>
+      <ul id="ratePresets" class="chips"></ul>
+
+      <div class="results" id="salesResults"></div>
+      <p class="err" id="salesErr"></p>
+    </section>
+
+    <!-- ---- INCOME TAX ---- -->
+    <section class="panel mode hidden" id="mode-income">
+      <div class="grid">
+        <label class="field">
+          <span>Taxable income</span>
+          <input id="income" inputmode="decimal" autocomplete="off" placeholder="e.g. 60000" />
+        </label>
+        <label class="field">
+          <span>Schedule</span>
+          <select id="schedule"></select>
+        </label>
+      </div>
+
+      <p class="presets-label">Illustrative schedules — simplified, not any real filing:</p>
+
+      <div class="results" id="incomeResults"></div>
+      <table class="brackets hidden" id="bracketTable">
+        <thead>
+          <tr><th>Band</th><th>Rate</th><th>Taxed in band</th><th>Tax</th></tr>
+        </thead>
+        <tbody id="bracketBody"></tbody>
+      </table>
+      <p class="err" id="incomeErr"></p>
+    </section>
+
+    <p class="note">
+      ⚠️ <strong>Not tax advice.</strong> The arithmetic here is exact to the
+      cent, but the rates and schedules are <em>illustrative examples</em>. Real
+      tax involves deductions, credits, filing status, phase-outs and local
+      surtaxes this page does not model. Do not file from it.
+    </p>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="tax-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

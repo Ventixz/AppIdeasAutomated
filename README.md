@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (14 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (15 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **14 / 22** |
+| Numbers | 🚧 In progress — **15 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -109,7 +109,16 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > property tests prove the two facts that made the algorithm worth standardising
 > — every single-digit typo is caught, and every adjacent transposition except
 > the pair `0↔9` — while a generator emits Luhn-valid *fakes* so nothing here
-> ever touches a real card — landed on 2026-09-15. Same rules, new list.
+> ever touches a real card — landed on 2026-09-15, and the **Tax Calculator** —
+> which does the plain thing the brief asks (a cost plus a rate gives a total)
+> and then two things it doesn't: it runs the sum *backwards* out of a
+> tax-inclusive receipt (where you can't just multiply the total by the rate, so
+> the base is `total × 10000 / (10000+bps)` and the tax is the remainder, keeping
+> `base + tax` exact to the cent), and it runs an income through a **progressive
+> bracket** schedule, taxing each slice at its own rate to show how a *20%
+> marginal* rate can be an *11.67% effective* one — all of it in integer cents
+> and basis points, never a float, because `19.99 × 8.25%` in floating point is
+> already wrong before you round it — landed on 2026-09-16. Same rules, new list.
 
 ## Projects built so far
 
@@ -217,6 +226,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 100 | [Alarm Clock](./projects/phase2-numbers/alarm-clock/) | Numbers · Source 2 | 2026-09-13 |
 | 101 | [Distance Between Two Cities](./projects/phase2-numbers/distance-between-cities/) | Numbers · Source 2 | 2026-09-14 |
 | 102 | [Credit Card Validator](./projects/phase2-numbers/credit-card-validator/) | Numbers · Source 2 | 2026-09-15 |
+| 103 | [Tax Calculator](./projects/phase2-numbers/tax-calculator/) | Numbers · Source 2 | 2026-09-16 |
 
 ## Repository layout
 
@@ -253,6 +263,8 @@ projects/
     unit-converter/           # temp/length/mass/… on exact BigInt ratios; affine temperature scales
     alarm-clock/              # DOM-free scheduling core; half-open tick window, catches missed rings
     distance-between-cities/  # great-circle distance: haversine sphere + Vincenty ellipsoid, offline gazetteer
+    credit-card-validator/    # Luhn checksum + network/length detection over digit strings, generates fakes
+    tax-calculator/           # sales tax forward/reverse + progressive brackets, exact integer cents & basis points
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -799,6 +811,28 @@ not an account — a well-formed number is not a real card:
 
 ```bash
 node projects/phase2-numbers/credit-card-validator/tests.js   # -> 128 passed, 0 failed.
+```
+
+**Tax Calculator** — the fifteenth Numbers project. The brief is small ("a cost
+plus a tax gives a total"), but a tax calculator is precisely where the obvious
+implementation — JavaScript floats — is wrong: `19.99 * 0.0825` is
+`1.6491749999999998`, and rounding *that* only hides an error that already
+happened. So the DOM-free `tax-core.js` never touches a float — money is an
+integer number of **cents** (`BigInt`) and every rate an integer number of
+**basis points** (`8.25%` → `825`), with a single `roundHalfUp` producing whole
+cents. On top of that it does the two things the brief doesn't: it **extracts**
+tax back out of a tax-inclusive total (which is *not* the total times the rate —
+the base is `total × 10000 / (10000+bps)` and the tax is the remainder, so
+`base + tax` stays exact), and it runs an income through a **progressive bracket**
+schedule, taxing each slice at its own rate to expose the gap between a
+*marginal* and an *effective* rate (20% marginal, 11.67% effective on the sample
+$60k). The suite proves the arithmetic holds: `base + tax` always equals the
+total, progressive tax is monotonic in income and never exceeds the top-rate cap,
+and a one-band flat schedule matches the plain sales-tax path exactly. It is
+exact to the cent, but the rates are **illustrative examples, not tax advice**:
+
+```bash
+node projects/phase2-numbers/tax-calculator/tests.js   # -> 64 passed, 0 failed.
 ```
 
 ---
