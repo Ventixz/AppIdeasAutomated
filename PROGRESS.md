@@ -152,7 +152,7 @@ day, then moves to the next category once it's complete.
 - [x] Alarm Clock — 2026-09-13
 - [x] Distance Between Two Cities — 2026-09-14
 - [x] Credit Card Validator — 2026-09-15
-- [ ] Tax Calculator
+- [x] Tax Calculator — 2026-09-16
 - [ ] Factorial Finder
 - [ ] Complex Number Algebra
 - [ ] Happy Numbers
