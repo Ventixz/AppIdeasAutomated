@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Factorial Finder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Factorial</span> finder</h1>
+      <p class="sub">
+        <code>n!</code> is the product <code>n · (n-1) · … · 1</code>, and
+        <code>0!</code> is <code>1</code>. Computed with a <strong>loop</strong>,
+        with <strong>recursion</strong>, and with a fast <strong>product
+        tree</strong> — all in exact <strong>BigInt</strong> arithmetic, because
+        <code>21!</code> already overflows a JavaScript number. It also tells you
+        the <em>trailing zeros</em> and the <em>digit count</em> without ever
+        building the number, and runs the sum <em>backwards</em>. All
+        <strong>offline</strong>: nothing you type leaves the page.
+      </p>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-mode="compute" type="button">Compute n!</button>
+      <button class="tab" data-mode="inverse" type="button">Inverse (is it a factorial?)</button>
+    </nav>
+
+    <!-- ---- COMPUTE ---- -->
+    <section class="panel mode" id="mode-compute">
+      <label class="field">
+        <span>Non-negative whole number <em>n</em></span>
+        <input id="n" inputmode="numeric" autocomplete="off" autofocus placeholder="e.g. 100" />
+      </label>
+
+      <p class="presets-label">Try one:</p>
+      <ul id="presets" class="chips"></ul>
+
+      <div class="rates" id="facts"></div>
+      <div class="valueWrap hidden" id="valueWrap">
+        <div class="valueHead">
+          <span class="k">n! =</span>
+          <button class="copy" id="copyBtn" type="button">copy</button>
+        </div>
+        <output class="value" id="value"></output>
+      </div>
+
+      <p class="methods hidden" id="methods"></p>
+      <p class="err" id="computeErr"></p>
+    </section>
+
+    <!-- ---- INVERSE ---- -->
+    <section class="panel mode hidden" id="mode-inverse">
+      <label class="field">
+        <span>A value — is it some <em>n!</em>?</span>
+        <input id="inv" inputmode="numeric" autocomplete="off" placeholder="e.g. 3628800" />
+      </label>
+      <p class="presets-label">Divides out 1, 2, 3, … — a factorial peels cleanly to 1.</p>
+      <div class="results" id="inverseResults"></div>
+      <p class="err" id="inverseErr"></p>
+    </section>
+
+    <p class="note">
+      Factorials grow ferociously: <code>13!</code> is past a 32-bit int,
+      <code>21!</code> is past <code>Number.MAX_SAFE_INTEGER</code>, and
+      <code>100!</code> has <strong>158 digits</strong> a float can only show as
+      <code>9.33e157</code>. That is why the value here is an exact
+      <em>BigInt</em>, never a floating-point number.
+    </p>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a> · idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> · built
+        automatically by a Claude Code routine.
+      </p>
+    </footer>
+  </main>
+
+  <script src="factorial-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
