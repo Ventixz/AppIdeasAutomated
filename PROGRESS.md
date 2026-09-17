@@ -153,7 +153,7 @@ day, then moves to the next category once it's complete.
 - [x] Distance Between Two Cities — 2026-09-14
 - [x] Credit Card Validator — 2026-09-15
 - [x] Tax Calculator — 2026-09-16
-- [ ] Factorial Finder
+- [x] Factorial Finder — 2026-09-17
 - [ ] Complex Number Algebra
 - [ ] Happy Numbers
 - [ ] Number Names

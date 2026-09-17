@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (15 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (16 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **15 / 22** |
+| Numbers | 🚧 In progress — **16 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -118,7 +118,16 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > bracket** schedule, taxing each slice at its own rate to show how a *20%
 > marginal* rate can be an *11.67% effective* one — all of it in integer cents
 > and basis points, never a float, because `19.99 × 8.25%` in floating point is
-> already wrong before you round it — landed on 2026-09-16. Same rules, new list.
+> already wrong before you round it — landed on 2026-09-16, and the **Factorial
+> Finder** — `n!` computed the two ways the brief asks
+> (a loop and recursion) plus a fast **product tree** that balances every bignum
+> multiply, so `50000!` comes back in ~20 ms where the linear loop takes ~410 ms,
+> all in exact `BigInt` because `21!` already overflows a JavaScript number and
+> `100!` is a 158-digit wall a float can only show as `9.33e157`; it also reports
+> the **trailing zeros** (Legendre's formula) and **digit count** (a sum of logs)
+> of `n!` *without ever building the number* — so it states `1,000,000!` has
+> `5,565,709` digits in milliseconds — and runs the sum backwards to say whether a
+> value is some `n!` — landed on 2026-09-17. Same rules, new list.
 
 ## Projects built so far
 
@@ -227,6 +236,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 101 | [Distance Between Two Cities](./projects/phase2-numbers/distance-between-cities/) | Numbers · Source 2 | 2026-09-14 |
 | 102 | [Credit Card Validator](./projects/phase2-numbers/credit-card-validator/) | Numbers · Source 2 | 2026-09-15 |
 | 103 | [Tax Calculator](./projects/phase2-numbers/tax-calculator/) | Numbers · Source 2 | 2026-09-16 |
+| 104 | [Factorial Finder](./projects/phase2-numbers/factorial-finder/) | Numbers · Source 2 | 2026-09-17 |
 
 ## Repository layout
 
@@ -265,6 +275,7 @@ projects/
     distance-between-cities/  # great-circle distance: haversine sphere + Vincenty ellipsoid, offline gazetteer
     credit-card-validator/    # Luhn checksum + network/length detection over digit strings, generates fakes
     tax-calculator/           # sales tax forward/reverse + progressive brackets, exact integer cents & basis points
+    factorial-finder/         # n! by loop, recursion & fast product tree, exact BigInt; zeros & digits without the number
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
@@ -833,6 +844,29 @@ exact to the cent, but the rates are **illustrative examples, not tax advice**:
 
 ```bash
 node projects/phase2-numbers/tax-calculator/tests.js   # -> 64 passed, 0 failed.
+```
+
+**Factorial Finder** — the sixteenth Numbers project. The brief wants `n!`
+computed "using **both loops and recursion**", and both are in the DOM-free
+`factorial-core.js` — plus a third, fast method. The reason all of it uses exact
+`BigInt` and never a float: `13!` already passes a 32-bit int, `21!` passes
+`Number.MAX_SAFE_INTEGER` (so a float `21!` is wrong in its low digits), and
+`100!` is a 158-digit number a `double` can only render as `9.33e157`. The **loop**
+is the workhorse; the **recursion** is the textbook `n! = n·(n-1)!` — correct, but
+capped at a safe depth so a big `n` throws a clear error instead of overflowing
+the call stack; and the **product tree** splits `2..n` in half and multiplies
+balanced halves, which for large `n` is far quicker than the linear method's
+`(giant)×(tiny)` multiplies (~20 ms vs ~410 ms at `50000!`). On top of that it
+learns two things about `n!` **without building it**: the **trailing zeros** by
+Legendre's formula (`⌊n/5⌋ + ⌊n/25⌋ + …`, so `1000!` ends in 249 zeros with no
+multiply) and the **digit count** by a sum of logs (so `1,000,000!` has
+`5,565,709` digits, computed in milliseconds). An inverse runs the definition
+backwards to recognise whether a value is some `n!`. The suite checks all three
+methods agree, the recurrence `(n+1)! = (n+1)·n!` holds, Legendre matches the real
+trailing zeros and the log-sum matches the real digit length:
+
+```bash
+node projects/phase2-numbers/factorial-finder/tests.js   # -> 54 passed, 0 failed.
 ```
 
 ---
