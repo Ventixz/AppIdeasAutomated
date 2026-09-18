@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Complex Number Algebra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Complex</span> number algebra</h1>
+      <p class="sub">
+        Type complex numbers the way you'd write them — <code>3 + 4i</code>,
+        <code>-i</code>, <code>2.5e-3 - 1.5i</code> — pick an operation, and see
+        the <strong>result</strong> both as algebra and as
+        <strong>co-ordinates on the complex plane</strong>. Division uses
+        <em>Smith's algorithm</em> and the modulus uses <code>hypot</code>, so
+        inputs like <code>1e200 + 1e200i</code> divide correctly where the
+        schoolbook formula overflows. All <strong>offline</strong>: nothing you
+        type leaves the page.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label class="field">
+          <span>Operand&nbsp;A</span>
+          <input id="a" type="text" value="3 + 4i" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>Operation</span>
+          <select id="op">
+            <optgroup label="Binary (A, B)">
+              <option value="add">A + B &nbsp; (add)</option>
+              <option value="subtract">A − B &nbsp; (subtract)</option>
+              <option value="multiply" selected>A × B &nbsp; (multiply)</option>
+              <option value="divide">A ÷ B &nbsp; (divide)</option>
+            </optgroup>
+            <optgroup label="Unary (A only)">
+              <option value="conjugate">conj(A)</option>
+              <option value="negate">−A</option>
+              <option value="reciprocal">1 / A</option>
+              <option value="square">A²</option>
+              <option value="sqrt">√A (principal)</option>
+              <option value="roots">nth roots of A</option>
+            </optgroup>
+          </select>
+        </label>
+        <label class="field" id="b-field">
+          <span>Operand&nbsp;B</span>
+          <input id="b" type="text" value="1 - 2i" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field hidden" id="n-field">
+          <span>n (roots)</span>
+          <input id="n" type="number" min="1" max="24" step="1" value="3" />
+        </label>
+      </div>
+
+      <p class="err" id="err" role="alert"></p>
+
+      <div class="result" id="result" aria-live="polite">
+        <div class="result-main">
+          <span class="result-label">Result</span>
+          <span class="result-value" id="result-value">—</span>
+        </div>
+        <div class="polar" id="polar"></div>
+      </div>
+
+      <p class="presets">
+        Try:
+        <button type="button" class="preset" data-a="3 + 4i" data-op="multiply" data-b="1 - 2i">(3+4i)(1−2i)</button>
+        <button type="button" class="preset" data-a="1" data-op="roots" data-n="5">5th roots of 1</button>
+        <button type="button" class="preset" data-a="-1" data-op="sqrt">√(−1)</button>
+        <button type="button" class="preset" data-a="0 + 2i" data-op="sqrt">√(2i)</button>
+        <button type="button" class="preset" data-a="5 + 0i" data-op="divide" data-b="1 + 2i">5 ÷ (1+2i)</button>
+        <button type="button" class="preset" data-a="1 + 1i" data-op="roots" data-n="8">8th roots of 1+i</button>
+      </p>
+    </section>
+
+    <section class="card plane-card">
+      <h2>The complex plane <span class="muted-inline">(Argand diagram)</span></h2>
+      <canvas id="plane" width="760" height="560" role="img"
+              aria-label="Argand diagram plotting the operands and the result"></canvas>
+      <ul class="legend">
+        <li><span class="dot dot-a"></span> A</li>
+        <li id="legend-b"><span class="dot dot-b"></span> B</li>
+        <li><span class="dot dot-r"></span> result</li>
+      </ul>
+      <p class="note">
+        Each number is a point <code>(re, im)</code> and a vector from the origin.
+        For <strong>nth roots</strong> every root is plotted — they sit evenly
+        spaced on a circle of radius <code>|A|<sup>1/n</sup></code>, which is the
+        whole point of the exercise.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Part of <a href="../../../README.md">AppIdeasAutomated</a>. Idea from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> (Numbers →
+        <em>Complex Number Algebra</em>); built automatically by a Claude Code
+        routine. The math lives in <code>complex-core.js</code> and is covered by
+        <code>tests.js</code>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="complex-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
