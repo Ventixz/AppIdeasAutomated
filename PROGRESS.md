@@ -154,7 +154,7 @@ day, then moves to the next category once it's complete.
 - [x] Credit Card Validator — 2026-09-15
 - [x] Tax Calculator — 2026-09-16
 - [x] Factorial Finder — 2026-09-17
-- [ ] Complex Number Algebra
+- [x] Complex Number Algebra — 2026-09-18
 - [ ] Happy Numbers
 - [ ] Number Names
 - [ ] Coin Flip Simulation
