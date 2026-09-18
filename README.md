@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (16 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (17 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **16 / 22** |
+| Numbers | 🚧 In progress — **17 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -127,7 +127,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 > the **trailing zeros** (Legendre's formula) and **digit count** (a sum of logs)
 > of `n!` *without ever building the number* — so it states `1,000,000!` has
 > `5,565,709` digits in milliseconds — and runs the sum backwards to say whether a
-> value is some `n!` — landed on 2026-09-17. Same rules, new list.
+> value is some `n!` — landed on 2026-09-17, and **Complex Number Algebra** — the
+brief's "show co-ordinates on a coordinate plane" grown into a full algebra
+(add, subtract, multiply, divide, conjugate, powers, √, and the `n` nth-roots)
+that plots operands and result as vectors on an **Argand diagram**, with
+division done by **Smith's algorithm** and the modulus by `hypot` so that
+`1e200 + 1e200i` divides correctly where the schoolbook `c²+d²` formula
+overflows to `NaN` — landed on 2026-09-18. Same rules, new list.
 
 ## Projects built so far
 
@@ -237,6 +243,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 102 | [Credit Card Validator](./projects/phase2-numbers/credit-card-validator/) | Numbers · Source 2 | 2026-09-15 |
 | 103 | [Tax Calculator](./projects/phase2-numbers/tax-calculator/) | Numbers · Source 2 | 2026-09-16 |
 | 104 | [Factorial Finder](./projects/phase2-numbers/factorial-finder/) | Numbers · Source 2 | 2026-09-17 |
+| 105 | [Complex Number Algebra](./projects/phase2-numbers/complex-number-algebra/) | Numbers · Source 2 | 2026-09-18 |
 
 ## Repository layout
 
@@ -867,6 +874,29 @@ trailing zeros and the log-sum matches the real digit length:
 
 ```bash
 node projects/phase2-numbers/factorial-finder/tests.js   # -> 54 passed, 0 failed.
+```
+
+**Complex Number Algebra** — the seventeenth Numbers project. The brief is just
+"show co-ordinates on a coordinate plane based on user input", so the app parses
+complex numbers the way people write them (`3 + 4i`, `-i`, `2.5e-3 - 1.5i`, and
+the engineer's `-2 - 3j`) and plots them as points and vectors on an **Argand
+diagram** — and around that grows a full algebra: add, subtract, multiply,
+divide, conjugate, negate, reciprocal, square, principal √, and the `n` distinct
+**nth roots**, which it draws evenly spaced on their circle of radius
+`|z|^(1/n)`. Where factorial needed exact `BigInt`, complex algebra is a genuine
+floating-point problem, so the care in `complex-core.js` is numeric: **division**
+uses **Smith's algorithm** (divide through by the larger denominator component)
+and the **modulus** uses `hypot`, so `1e200 + 1e200i` divides to exactly `1`
+where the schoolbook `(ac+bd)/(c²+d²)` overflows to `NaN`; **√** uses the stable
+closed-form branch rather than the polar route so it holds precision near the
+negative real axis. The suite checks parsing round-trips, the field axioms
+(commutativity, associativity, distributivity, `(a·b)/b = a`), the identities
+`z·conj(z) = |z|²`, De Moivre and Euler's `e^{iπ} = -1`, the extreme-scale
+division cases, and that every nth root powers back to `z`, shares one modulus,
+and sums to zero:
+
+```bash
+node projects/phase2-numbers/complex-number-algebra/tests.js   # -> 86 passed, 0 failed.
 ```
 
 ---
