@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Numbers</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Happy</span> numbers</h1>
+      <p class="sub">
+        Take a number, replace it with the <strong>sum of the squares of its
+        digits</strong>, and repeat. Land on <code>1</code> and the number is
+        <em>happy</em>; fall into a loop that never reaches 1 and it is
+        <em>unhappy</em>. This traces the whole path, plots it, and — because the
+        process shrinks any number to something tiny in one step — classifies
+        inputs with <strong>thousands of digits</strong>. All
+        <strong>offline</strong>: nothing you type leaves the page.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label class="field">
+          <span>Number</span>
+          <input id="n" type="text" value="7" autocomplete="off" spellcheck="false" inputmode="numeric" />
+        </label>
+        <label class="field">
+          <span>Base</span>
+          <select id="base">
+            <option value="10" selected>10 (decimal)</option>
+            <option value="2">2 (binary)</option>
+            <option value="4">4</option>
+            <option value="8">8 (octal)</option>
+            <option value="16">16 (hex)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Digit power</span>
+          <select id="power">
+            <option value="2" selected>2 (squares)</option>
+            <option value="1">1</option>
+            <option value="3">3 (cubes)</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="err" class="err"></div>
+
+      <div id="verdict" class="verdict" hidden></div>
+
+      <div id="chainWrap" hidden>
+        <div class="chain-label">Trajectory — each term is the sum of the powered digits of the last</div>
+        <div id="chain" class="chain"></div>
+        <p id="cycleNote" class="cycle-note" hidden></p>
+        <canvas id="plot" width="760" height="260" aria-label="Plot of the sequence value at each step"></canvas>
+        <p class="cap">The value at every step. Happy paths dive to <code>1</code>; unhappy paths flatten into a repeating cycle.</p>
+      </div>
+
+      <div class="presets">
+        Try:
+        <button class="preset" data-n="7">7</button>
+        <button class="preset" data-n="4">4</button>
+        <button class="preset" data-n="19">19</button>
+        <button class="preset" data-n="100">100</button>
+        <button class="preset" data-n="1234567">1234567</button>
+        <button class="preset" data-n="99999999">8 nines</button>
+        <button class="preset" data-big="1000">a 302-digit number (2^1000)</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Explorer <span class="muted-inline">— every number from 1 to a limit, coloured by fate</span></h2>
+      <div class="row" style="grid-template-columns: 1fr auto; margin-top: 14px;">
+        <label class="field">
+          <span>Show 1 to…</span>
+          <input id="limit" type="number" value="200" min="10" max="5000" step="10" />
+        </label>
+        <label class="field">
+          <span>k-th happy number</span>
+          <input id="nth" type="number" value="20" min="1" max="100000" step="1" />
+        </label>
+      </div>
+      <p id="nthOut" class="stat"></p>
+      <div id="grid" class="grid" aria-label="Numbers coloured by whether they are happy"></div>
+      <ul class="explorer-legend">
+        <li><span class="swatch h"></span> happy</li>
+        <li><span class="swatch hp"></span> happy <em>and</em> prime</li>
+        <li><span class="swatch u"></span> unhappy</li>
+      </ul>
+      <p id="explorerStat" class="stat"></p>
+    </section>
+
+    <section class="card">
+      <h2>Why it always terminates</h2>
+      <p class="note">
+        A d-digit number's digit-square-sum is at most <code>81·d</code>. So a
+        4-digit number maps to at most <code>324</code>, and after one step
+        <em>every</em> number — however huge — is already below 1000. From there
+        the sequence wanders a finite set, so it must eventually repeat: either it
+        hits the fixed point <code>1</code> (happy), or it enters a cycle
+        (unhappy). In base 10 with squares there is exactly
+        <strong>one</strong> unhappy cycle —
+        <code>4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4</code> — so being happy is
+        the same as <em>not</em> reaching that loop. This page detects the cycle
+        directly rather than assuming it, which is why it also works for other
+        bases and powers.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Day 106 of the automated Claude routine — Source 2
+        (<a href="https://github.com/karan/Projects">karan/Projects</a>, Numbers).
+        Dependency-free; logic lives in <code>happy-core.js</code>, proved by
+        <code>tests.js</code>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="happy-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
