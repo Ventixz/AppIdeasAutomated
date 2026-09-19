@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (17 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (18 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **17 / 22** |
+| Numbers | 🚧 In progress — **18 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -133,7 +133,13 @@ brief's "show co-ordinates on a coordinate plane" grown into a full algebra
 that plots operands and result as vectors on an **Argand diagram**, with
 division done by **Smith's algorithm** and the modulus by `hypot` so that
 `1e200 + 1e200i` divides correctly where the schoolbook `c²+d²` formula
-overflows to `NaN` — landed on 2026-09-18. Same rules, new list.
+overflows to `NaN` — landed on 2026-09-18, and **Happy Numbers** — replace a
+number by the sum of the squares of its digits and repeat: reach `1` and it's
+_happy_, fall into a loop and it's _unhappy_; the app traces the whole path,
+plots it, flags happy primes, and classifies even a 302-digit input instantly
+because a `d`-digit number maps to at most `81·d`, so the first step (taken
+straight from the digit string, never a float) collapses any number below 1000 —
+landed on 2026-09-19. Same rules, new list.
 
 ## Projects built so far
 
@@ -244,6 +250,7 @@ overflows to `NaN` — landed on 2026-09-18. Same rules, new list.
 | 103 | [Tax Calculator](./projects/phase2-numbers/tax-calculator/) | Numbers · Source 2 | 2026-09-16 |
 | 104 | [Factorial Finder](./projects/phase2-numbers/factorial-finder/) | Numbers · Source 2 | 2026-09-17 |
 | 105 | [Complex Number Algebra](./projects/phase2-numbers/complex-number-algebra/) | Numbers · Source 2 | 2026-09-18 |
+| 106 | [Happy Numbers](./projects/phase2-numbers/happy-numbers/) | Numbers · Source 2 | 2026-09-19 |
 
 ## Repository layout
 
@@ -897,6 +904,29 @@ and sums to zero:
 
 ```bash
 node projects/phase2-numbers/complex-number-algebra/tests.js   # -> 86 passed, 0 failed.
+```
+
+**Happy Numbers** — the eighteenth Numbers project. The brief is a definition:
+replace a number by the sum of the squares of its digits and repeat; land on `1`
+and it's *happy*, fall into a loop and it's *unhappy* (`7 → 49 → 97 → 130 → 10 →
+1` versus `4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4`). The app classifies a
+number, draws the whole trajectory as a chain and plots the value at each step,
+flags **happy primes**, and includes an explorer that colours every number to a
+limit by its fate and looks up the *k*-th happy number. The interesting part is
+*why the process terminates* and how that makes huge inputs cheap: a `d`-digit
+number's digit-square-sum is at most `81·d`, so after one step **every** number —
+however enormous — is below 1000, from where a finite set forces a repeat.
+`happy-core.js` leans on this to classify a 302-digit input (`2^1000`) instantly,
+taking the first step straight from the **digit string** so it never holds the
+value as a float; and it *detects* the terminating cycle with Floyd-style
+bookkeeping rather than hard-coding the famous 8-cycle, so the same core is
+correct in other bases (in base 4, every number is happy) and powers (under
+cubes, `153` is a fixed point that never reaches 1). The suite pins the canonical
+happy list (OEIS A007770), the happy primes (A035497), the uniqueness of the
+base-10 unhappy cycle, the big-string path, and the generalisations:
+
+```bash
+node projects/phase2-numbers/happy-numbers/tests.js   # -> 56 passed, 0 failed.
 ```
 
 ---
