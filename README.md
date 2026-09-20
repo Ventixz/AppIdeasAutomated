@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (18 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (19 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **18 / 22** |
+| Numbers | 🚧 In progress — **19 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -139,7 +139,14 @@ _happy_, fall into a loop and it's _unhappy_; the app traces the whole path,
 plots it, flags happy primes, and classifies even a 302-digit input instantly
 because a `d`-digit number maps to at most `81·d`, so the first step (taken
 straight from the digit string, never a float) collapses any number below 1000 —
-landed on 2026-09-19. Same rules, new list.
+landed on 2026-09-19, and **Number Names** — spelling a number out in words
+(`1234` → _one thousand two hundred thirty-four_) over exact `BigInt`, whose
+scale words never run out: past the everyday million/billion the Latin _-illion_
+names are _generated_ by the Conway–Wechsler system (so index 100 is a
+`centillion` at 10³⁰³ and index 23 a `tresvigintillion`), with negatives,
+decimals, ordinals and money on top, and a reverse parser that reads the words
+back to an integer — which is how the suite proves the naming, by round-tripping
+every value through both halves — landed on 2026-09-20. Same rules, new list.
 
 ## Projects built so far
 
@@ -251,6 +258,7 @@ landed on 2026-09-19. Same rules, new list.
 | 104 | [Factorial Finder](./projects/phase2-numbers/factorial-finder/) | Numbers · Source 2 | 2026-09-17 |
 | 105 | [Complex Number Algebra](./projects/phase2-numbers/complex-number-algebra/) | Numbers · Source 2 | 2026-09-18 |
 | 106 | [Happy Numbers](./projects/phase2-numbers/happy-numbers/) | Numbers · Source 2 | 2026-09-19 |
+| 107 | [Number Names](./projects/phase2-numbers/number-names/) | Numbers · Source 2 | 2026-09-20 |
 
 ## Repository layout
 
@@ -927,6 +935,31 @@ base-10 unhappy cycle, the big-string path, and the generalisations:
 
 ```bash
 node projects/phase2-numbers/happy-numbers/tests.js   # -> 56 passed, 0 failed.
+```
+
+**Number Names** — the nineteenth Numbers project. The brief is a one-liner
+("given a number, spell it out in words"), and the whole difficulty is in the
+word *number*: how big, and does it have a sign, a decimal point, or a place in a
+sentence? The app answers all of them — a plain **cardinal** (`1234` → *one
+thousand two hundred thirty-four*), an **ordinal** (*twenty-third*, *one
+hundredth*), a **decimal** read digit-by-digit the way people say it (*twelve
+point zero five*), and **money** (*one thousand dollars and fifty cents*) — all
+over exact `BigInt`, so a 200-digit integer is named to the last digit. The
+interesting part is that the scale words never run out: a number is chopped into
+groups of three digits, and past the everyday thousand/million/billion the Latin
+*-illion* name for group *z* is **generated** by the **Conway–Wechsler system**
+— Latin roots for the units, tens and hundreds of *z*, glued with the system's
+*combining letters* (so `tre + centi` becomes `trescenti`, making index 103 a
+`trescentillion` and index 100 a `centillion` at 10³⁰³) — rather than read from a
+finite list. And because naming is exact, `names-core.js` also *parses* the words
+back to a `BigInt`, which is how the suite proves the naming: it round-trips
+`cardinal → parse` over every value in `0..5000` and a spread of enormous
+`BigInt`s straddling every group boundary. The suite also pins the small
+irregulars, the interior-zero cases (`1,000,123`), the `-illion` landmarks,
+negatives, decimals, ordinals and money:
+
+```bash
+node projects/phase2-numbers/number-names/tests.js   # -> 102 passed, 0 failed.
 ```
 
 ---
