@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Number Names</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Number</span> names</h1>
+      <p class="sub">
+        Type a number and read it back <strong>in words</strong> —
+        <code>1234</code> becomes <em>one thousand two hundred thirty-four</em>.
+        Everything runs on <strong>BigInt</strong>, so a 200-digit integer is
+        named to the last digit, and the scale words don't run out: past the
+        everyday ones the <strong>Conway–Wechsler</strong> system generates the
+        Latin <em>-illion</em> names all the way to a <code>centillion</code>
+        (10<sup>303</sup>). All <strong>offline</strong>: nothing you type leaves
+        the page.
+      </p>
+    </header>
+
+    <section class="card">
+      <label class="field big">
+        <span>Number</span>
+        <input id="n" type="text" value="1234" autocomplete="off" spellcheck="false" inputmode="decimal" />
+      </label>
+      <div id="err" class="err"></div>
+      <div id="out" class="out"></div>
+      <div id="extra" class="extra"></div>
+
+      <div class="presets">
+        Try:
+        <button class="preset" data-n="7">7</button>
+        <button class="preset" data-n="42">42</button>
+        <button class="preset" data-n="1234">1234</button>
+        <button class="preset" data-n="1000000">1000000</button>
+        <button class="preset" data-n="-12.05">-12.05</button>
+        <button class="preset" data-n="1234567890">1234567890</button>
+        <button class="preset" data-big="100">a googol (10^100)</button>
+        <button class="preset" data-big="303">a centillion (10^303)</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Read it four ways <span class="muted-inline">— the same number, in every register</span></h2>
+      <ul class="modes" id="modes">
+        <li><span class="mode-tag">Cardinal</span><span class="mode-val" id="mCardinal"></span></li>
+        <li><span class="mode-tag">Ordinal</span><span class="mode-val" id="mOrdinal"></span></li>
+        <li><span class="mode-tag">With decimals</span><span class="mode-val" id="mPhrase"></span></li>
+        <li><span class="mode-tag">As money</span><span class="mode-val" id="mMoney"></span></li>
+      </ul>
+      <p class="note muted-note" id="modeNote"></p>
+    </section>
+
+    <section class="card">
+      <h2>The other direction <span class="muted-inline">— words back to a number</span></h2>
+      <p class="note">
+        Naming a number is only half the job. Type the words and it parses them
+        back to an exact integer — which is how the test suite proves the naming
+        is right, by round-tripping every value through both halves.
+      </p>
+      <label class="field big" style="margin-top:14px;">
+        <span>Number in words</span>
+        <input id="words" type="text" value="two million three thousand and one"
+               autocomplete="off" spellcheck="false" />
+      </label>
+      <div id="wordsErr" class="err"></div>
+      <div id="wordsOut" class="out num"></div>
+    </section>
+
+    <section class="card">
+      <h2>How the big names are built</h2>
+      <p class="note">
+        A number is chopped into <strong>groups of three digits</strong>. Group 0
+        (the last three) has no scale word; group 1 is <code>thousand</code>;
+        group 2 is <code>million</code>, and so on. Past the familiar list, the
+        name for the <em>z</em>-th <em>-illion</em> is assembled from Latin roots
+        for the units, tens and hundreds of <em>z</em> — with the
+        Conway–Wechsler <em>combining letters</em> that turn, say,
+        <code>tre&nbsp;+&nbsp;centi</code> into <code>tres&#8203;centi</code> — a
+        trailing vowel is dropped, and <code>illion</code> is added. That is why
+        index 100 is a <code>centillion</code> and index 23 is a
+        <code>tresvigintillion</code>, without any of them being stored in a list.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Day 107 of the automated Claude routine — Source 2
+        (<a href="https://github.com/karan/Projects">karan/Projects</a>, Numbers).
+        Dependency-free; logic lives in <code>names-core.js</code>, proved by
+        <code>tests.js</code>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="names-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

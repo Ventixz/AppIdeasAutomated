@@ -156,7 +156,7 @@ day, then moves to the next category once it's complete.
 - [x] Factorial Finder — 2026-09-17
 - [x] Complex Number Algebra — 2026-09-18
 - [x] Happy Numbers — 2026-09-19
-- [ ] Number Names
+- [x] Number Names — 2026-09-20
 - [ ] Coin Flip Simulation
 - [ ] Limit Calculator
 - [ ] Fast Exponentiation
