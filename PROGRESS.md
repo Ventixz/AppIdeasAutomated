@@ -157,6 +157,6 @@ day, then moves to the next category once it's complete.
 - [x] Complex Number Algebra — 2026-09-18
 - [x] Happy Numbers — 2026-09-19
 - [x] Number Names — 2026-09-20
-- [ ] Coin Flip Simulation
+- [x] Coin Flip Simulation — 2026-09-21
 - [ ] Limit Calculator
 - [ ] Fast Exponentiation
