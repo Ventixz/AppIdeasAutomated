@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coin Flip Simulation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Coin flip</span> simulation</h1>
+      <p class="sub">
+        Flip a coin <strong>as many times as you like</strong> and read back how
+        many <em>heads</em> and <em>tails</em> came up — plus the things a real run
+        actually does: the <strong>longest streaks</strong>, and the proportion of
+        heads creeping toward the coin's true bias as the flips pile up (the
+        <strong>Law of Large Numbers</strong>). Every run is <strong>seeded</strong>,
+        so the same seed replays the exact same coins. All <strong>offline</strong>:
+        nothing you do leaves the page.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="controls">
+        <label class="field">
+          <span>Number of flips</span>
+          <input id="n" type="text" value="1000" autocomplete="off" spellcheck="false" inputmode="numeric" />
+        </label>
+        <label class="field">
+          <span>Seed</span>
+          <input id="seed" type="text" value="42" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>P(heads)</span>
+          <input id="p" type="text" value="0.5" autocomplete="off" spellcheck="false" inputmode="decimal" />
+        </label>
+      </div>
+      <div class="btnrow">
+        <button id="run" class="go">Flip</button>
+        <button id="reseed" class="ghost">New random seed</button>
+      </div>
+      <div id="err" class="err"></div>
+
+      <div class="presets">
+        Try:
+        <button class="preset" data-n="10" data-seed="42" data-p="0.5">10 flips</button>
+        <button class="preset" data-n="1000" data-seed="42" data-p="0.5">1,000</button>
+        <button class="preset" data-n="1000000" data-seed="7" data-p="0.5">a million</button>
+        <button class="preset" data-n="10000" data-seed="3" data-p="0.8">biased 80% heads</button>
+        <button class="preset" data-n="10000" data-seed="3" data-p="0.1">biased 10% heads</button>
+      </div>
+    </section>
+
+    <section class="card" id="resultCard" hidden>
+      <div class="tally">
+        <div class="pile heads">
+          <div class="face">H</div>
+          <div class="count" id="heads">—</div>
+          <div class="pct" id="headsPct"></div>
+          <div class="lbl">heads</div>
+        </div>
+        <div class="pile tails">
+          <div class="face">T</div>
+          <div class="count" id="tails">—</div>
+          <div class="pct" id="tailsPct"></div>
+          <div class="lbl">tails</div>
+        </div>
+      </div>
+      <div class="bar" aria-hidden="true"><div class="bar-heads" id="bar"></div></div>
+      <p class="note" id="summary"></p>
+    </section>
+
+    <section class="card" id="statsCard" hidden>
+      <h2>What the run did <span class="muted-inline">— streaks, runs, and how it compares to theory</span></h2>
+      <ul class="modes">
+        <li><span class="mode-tag">Longest heads streak</span><span class="mode-val" id="lHead"></span></li>
+        <li><span class="mode-tag">Longest tails streak</span><span class="mode-val" id="lTail"></span></li>
+        <li><span class="mode-tag">Number of runs</span><span class="mode-val" id="runs"></span></li>
+        <li><span class="mode-tag">Expected heads</span><span class="mode-val" id="expHeads"></span></li>
+        <li><span class="mode-tag">This run's z-score</span><span class="mode-val" id="z"></span></li>
+      </ul>
+      <p class="note muted-note" id="statNote"></p>
+    </section>
+
+    <section class="card" id="lolnCard" hidden>
+      <h2>The Law of Large Numbers <span class="muted-inline">— heads proportion at 1, 10, 100, … flips</span></h2>
+      <p class="note">
+        Early on the proportion of heads swings wildly; as the flips pile up it is
+        pulled toward the coin's true probability. Watch it settle.
+      </p>
+      <ul class="conv" id="conv"></ul>
+    </section>
+
+    <section class="card">
+      <h2>How it works</h2>
+      <p class="note">
+        Randomness comes from a <strong>seeded generator</strong>
+        (<code>mulberry32</code>, with word-seeds hashed by <code>xmur3</code>),
+        never <code>Math.random()</code> — so a seed is a promise: the same seed
+        and count always produce the identical coins. That is what lets the test
+        suite assert <em>exact</em> head and tail counts. One pass over the flips
+        collects the totals, the longest streak of each face, and the running
+        proportion at powers of ten, in <code>O(1)</code> memory — a million flips
+        cost no more RAM than ten. The theory it is compared against is the
+        binomial: expected heads <code>n·p</code>, standard deviation
+        <code>√(n·p·(1−p))</code>, and an expected longest run of about
+        <code>log₂ n</code> for a fair coin.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Day 108 of the automated Claude routine — Source 2
+        (<a href="https://github.com/karan/Projects">karan/Projects</a>, Numbers).
+        Dependency-free; logic lives in <code>coin-core.js</code>, proved by
+        <code>tests.js</code>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="coin-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

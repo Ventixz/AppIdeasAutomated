@@ -43,7 +43,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **19 / 22** |
+| Numbers | 🚧 In progress — **20 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -146,7 +146,18 @@ names are _generated_ by the Conway–Wechsler system (so index 100 is a
 `centillion` at 10³⁰³ and index 23 a `tresvigintillion`), with negatives,
 decimals, ordinals and money on top, and a reverse parser that reads the words
 back to an integer — which is how the suite proves the naming, by round-tripping
-every value through both halves — landed on 2026-09-20. Same rules, new list.
+every value through both halves — landed on 2026-09-20, and **Coin Flip
+Simulation** — flip a coin _n_ times and count heads and tails, but driven by a
+_seeded_ generator (mulberry32, word-seeds hashed by xmur3) rather than
+`Math.random()`, so a seed is a promise: seed 42 over 1000 fair flips is
+_always_ 480 heads and 520 tails with a longest streak of 9, which is what lets
+the suite assert exact counts instead of hand-waving about "roughly half"; one
+`O(1)`-memory pass also tracks the longest run of each face, the number of runs,
+and the heads-proportion at 1, 10, 100, … flips so the **Law of Large Numbers**
+is visible pulling it toward the coin's true bias, all measured against the
+binomial theory (expected `n·p`, SD `√(n·p·(1−p))`, a z-score, and an expected
+longest run of ~`log₂ n`) — a ten-million-flip run finishes in under 200 ms —
+landed on 2026-09-21. Same rules, new list.
 
 ## Projects built so far
 
@@ -259,6 +270,7 @@ every value through both halves — landed on 2026-09-20. Same rules, new list.
 | 105 | [Complex Number Algebra](./projects/phase2-numbers/complex-number-algebra/) | Numbers · Source 2 | 2026-09-18 |
 | 106 | [Happy Numbers](./projects/phase2-numbers/happy-numbers/) | Numbers · Source 2 | 2026-09-19 |
 | 107 | [Number Names](./projects/phase2-numbers/number-names/) | Numbers · Source 2 | 2026-09-20 |
+| 108 | [Coin Flip Simulation](./projects/phase2-numbers/coin-flip/) | Numbers · Source 2 | 2026-09-21 |
 
 ## Repository layout
 
@@ -960,6 +972,27 @@ negatives, decimals, ordinals and money:
 
 ```bash
 node projects/phase2-numbers/number-names/tests.js   # -> 102 passed, 0 failed.
+```
+
+**Coin Flip Simulation** — the twentieth Numbers project. The brief just asks to
+flip a coin and print how many heads and tails came up; the honest work is making
+that simulation *trustworthy*. It refuses `Math.random()` and draws every flip
+from a **seeded** generator — mulberry32, with word-seeds hashed to 32 bits by
+xmur3 — so a seed is a promise: seed 42 over 1000 fair flips is *always* 480
+heads, 520 tails, longest heads streak 9, longest tails streak 11. That
+reproducibility is the random-process analogue of a round-trip, and it lets
+`tests.js` assert those *exact* numbers rather than tolerances. A single
+`O(1)`-memory pass collects far more than two totals: the longest run of each
+face, the number of runs, and the running heads-proportion sampled at 1, 10,
+100, … flips, which makes the **Law of Large Numbers** something you can watch
+pull the proportion toward the coin's true bias. Every run is scored against the
+binomial theory — expected heads `n·p`, standard deviation `√(n·p·(1−p))`, a
+z-score, and an expected longest run of ~`log₂ n` (which is why a fair
+thousand-flip run routinely shows a streak of ~9). Biased coins are first-class,
+and a ten-million-flip run finishes in under 200 ms:
+
+```bash
+node projects/phase2-numbers/coin-flip/tests.js   # -> 284 passed, 0 failed.
 ```
 
 ---
