@@ -39,11 +39,11 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (19 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (21 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **20 / 22** |
+| Numbers | 🚧 In progress — **21 / 22** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -157,7 +157,16 @@ and the heads-proportion at 1, 10, 100, … flips so the **Law of Large Numbers*
 is visible pulling it toward the coin's true bias, all measured against the
 binomial theory (expected `n·p`, SD `√(n·p·(1−p))`, a z-score, and an expected
 longest run of ~`log₂ n`) — a ten-million-flip run finishes in under 200 ms —
-landed on 2026-09-21. Same rules, new list.
+landed on 2026-09-21, and the **Limit Calculator** — type a function of `x` and
+a point to approach and it estimates the limit _numerically_, creeping in from
+both sides over a shrinking ladder of offsets and accelerating the guess with
+**Richardson/Neville extrapolation** (so `sin(x)/x → 1` and `(1−cos x)/x² → ½`
+come out to eight-plus digits without ever sampling in the floating-point danger
+zone), then comparing the two sides to report a finite value, **±∞**, or an
+honest **does-not-exist** (`1/x`, `|x|/x`, the oscillating `sin(1/x)`); limits at
+`∞` fall out of the same machinery via `x = 1/t`, so `(1+1/x)ˣ → e`, and a small
+recogniser names answers like `½`, `π/2` or `ln 2` — landed on 2026-09-22. Same
+rules, new list.
 
 ## Projects built so far
 
@@ -271,6 +280,7 @@ landed on 2026-09-21. Same rules, new list.
 | 106 | [Happy Numbers](./projects/phase2-numbers/happy-numbers/) | Numbers · Source 2 | 2026-09-19 |
 | 107 | [Number Names](./projects/phase2-numbers/number-names/) | Numbers · Source 2 | 2026-09-20 |
 | 108 | [Coin Flip Simulation](./projects/phase2-numbers/coin-flip/) | Numbers · Source 2 | 2026-09-21 |
+| 109 | [Limit Calculator](./projects/phase2-numbers/limit-calculator/) | Numbers · Source 2 | 2026-09-22 |
 
 ## Repository layout
 
@@ -993,6 +1003,23 @@ and a ten-million-flip run finishes in under 200 ms:
 
 ```bash
 node projects/phase2-numbers/coin-flip/tests.js   # -> 284 passed, 0 failed.
+```
+
+### Limit Calculator — Numbers #21 (Source 2), 2026-09-22
+
+Type a function of `x` and a point, and it estimates the **limit** — but never by
+evaluating at the point (that's often `0/0`). It samples `f` on a shrinking ladder
+of offsets from each side and **extrapolates to `h = 0`** with Neville's
+algorithm, so smooth cases like `sin(x)/x → 1` and `(1−cos x)/x² → ½` land at
+eight-plus digits without sampling in the floating-point danger zone. The two
+sides are then compared: agree → a finite limit; both blow up alike → **±∞**;
+disagree or oscillate → an honest **does-not-exist** (`1/x`, `|x|/x`, `sin(1/x)`).
+Limits at `∞` reuse the same machinery via `x = 1/t` (so `(1+1/x)ˣ → e`), a
+recursive-descent parser handles real syntax including implicit multiplication,
+and a recogniser names answers like `½`, `π/2` and `ln 2`:
+
+```bash
+node projects/phase2-numbers/limit-calculator/tests.js   # -> 68 passed, 0 failed.
 ```
 
 ---
