@@ -158,5 +158,5 @@ day, then moves to the next category once it's complete.
 - [x] Happy Numbers — 2026-09-19
 - [x] Number Names — 2026-09-20
 - [x] Coin Flip Simulation — 2026-09-21
-- [ ] Limit Calculator
+- [x] Limit Calculator — 2026-09-22
 - [ ] Fast Exponentiation
