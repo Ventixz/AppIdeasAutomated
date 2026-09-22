@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Limit Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Limit</span> calculator</h1>
+      <p class="sub">
+        Type a function of <code>x</code> and a point to approach, and read back
+        the <strong>limit</strong> — evaluated <em>numerically</em> by creeping in
+        from <strong>both sides</strong> and accelerating the guess with
+        <strong>Richardson extrapolation</strong>. It tells you not just the value
+        but <em>why</em>: whether the two sides agree, whether it runs off to
+        <strong>±∞</strong>, or whether it simply <strong>doesn't exist</strong>.
+        All <strong>offline</strong>: nothing you type leaves the page.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="controls">
+        <label class="field wide">
+          <span>f(x) =</span>
+          <input id="expr" type="text" value="sin(x)/x" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>x approaches</span>
+          <input id="target" type="text" value="0" autocomplete="off" spellcheck="false" />
+        </label>
+      </div>
+      <div class="btnrow">
+        <button id="run" class="go">Compute limit</button>
+      </div>
+      <div id="err" class="err"></div>
+
+      <div class="presets">
+        Try:
+        <button class="preset" data-expr="sin(x)/x" data-target="0">sin(x)/x → 0</button>
+        <button class="preset" data-expr="(1-cos(x))/x^2" data-target="0">(1−cos x)/x²</button>
+        <button class="preset" data-expr="(x^2-4)/(x-2)" data-target="2">(x²−4)/(x−2) → 2</button>
+        <button class="preset" data-expr="(1+1/x)^x" data-target="inf">(1+1/x)ˣ → ∞</button>
+        <button class="preset" data-expr="(3x^2+2)/(x^2-1)" data-target="inf">rational → ∞</button>
+        <button class="preset" data-expr="1/x" data-target="0">1/x → 0</button>
+        <button class="preset" data-expr="abs(x)/x" data-target="0">|x|/x → 0</button>
+        <button class="preset" data-expr="sin(1/x)" data-target="0">sin(1/x) → 0</button>
+      </div>
+    </section>
+
+    <section id="result" class="card" hidden>
+      <div class="verdict">
+        <div class="verdict-tag" id="vtag">Limit</div>
+        <div class="verdict-val" id="vval">—</div>
+        <div class="verdict-form" id="vform"></div>
+      </div>
+      <p class="statement" id="statement"></p>
+
+      <ul class="modes" id="sides">
+        <li>
+          <span class="mode-tag">From the left (x → a⁻)</span>
+          <span class="mode-val" id="leftVal">—</span>
+        </li>
+        <li>
+          <span class="mode-tag">From the right (x → a⁺)</span>
+          <span class="mode-val" id="rightVal">—</span>
+        </li>
+        <li id="fatRow">
+          <span class="mode-tag">Value at the point f(a)</span>
+          <span class="mode-val" id="fatVal">—</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="convCard" class="card" hidden>
+      <h2>How it closes in <span class="muted-inline">— samples approaching the point</span></h2>
+      <p class="note" id="convNote"></p>
+      <ul class="conv-head">
+        <li><span>x</span><span>f(x)</span></li>
+      </ul>
+      <ul class="conv" id="convList"></ul>
+    </section>
+
+    <section class="card note-card">
+      <h2>How it works</h2>
+      <p class="note">
+        A limit asks what <code>f(x)</code> <em>heads toward</em> as <code>x</code>
+        nears a point — not what it equals there, which may be undefined
+        (<code>sin(x)/x</code> at 0 is 0/0). So the calculator never evaluates at
+        the point. It samples <code>f</code> at a shrinking geometric ladder of
+        offsets <code>h = 0.125, 0.0625, …</code> on each side, then feeds those
+        samples to <strong>Neville/Richardson extrapolation</strong>, which fits a
+        polynomial in <code>h</code> and reads off its value at <code>h = 0</code>.
+        That turns a slow crawl into a sharp estimate.
+      </p>
+      <p class="note">
+        The two sides are then compared. Agree → the limit exists. Both blow up
+        with the same sign → <strong>±∞</strong>. Disagree, or oscillate without
+        settling (<code>sin(1/x)</code>) → the limit <strong>does not exist</strong>.
+        Limits at <strong>∞</strong> are handled by substituting <code>x = 1/t</code>
+        and taking <code>t → 0⁺</code>. Type <code>inf</code> or <code>-inf</code>
+        as the point to try them.
+      </p>
+      <p class="note">
+        <strong>Syntax:</strong> <code>+ - * / ^</code>, parentheses, and implicit
+        multiplication (<code>2x</code>, <code>3(x+1)</code>). Functions:
+        <code>sin cos tan</code>, <code>asin</code>…, <code>sinh</code>…,
+        <code>exp</code>, <code>ln</code>/<code>log</code> (natural),
+        <code>log10</code>, <code>log2</code>, <code>sqrt</code>, <code>cbrt</code>,
+        <code>abs</code>. Constants: <code>pi</code>, <code>e</code>, <code>tau</code>,
+        <code>phi</code>.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Source 2, entry #21 of the <strong>Numbers</strong> category from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> — built by
+        the automated Claude routine. Everything runs client-side; there is no
+        network and no build step.
+      </p>
+    </footer>
+  </main>
+
+  <script src="limit-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
