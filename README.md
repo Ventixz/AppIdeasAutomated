@@ -39,11 +39,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (21 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (22 built)**
 
 | Category | Status |
 | --- | --- |
-| Numbers | 🚧 In progress — **21 / 22** |
+| Numbers | ✅ Complete — **22 / 22** |
+| Classic Algorithms | 🚧 In progress — **0 / 4** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -165,8 +166,19 @@ come out to eight-plus digits without ever sampling in the floating-point danger
 zone), then comparing the two sides to report a finite value, **±∞**, or an
 honest **does-not-exist** (`1/x`, `|x|/x`, the oscillating `sin(1/x)`); limits at
 `∞` fall out of the same machinery via `x = 1/t`, so `(1+1/x)ˣ → e`, and a small
-recogniser names answers like `½`, `π/2` or `ln 2` — landed on 2026-09-22. Same
-rules, new list.
+recogniser names answers like `½`, `π/2` or `ln 2` — landed on 2026-09-22, and
+the **Fast Exponentiation** demo — raising a number to a power by
+**squaring and multiplying** along the exponent's binary digits (about
+`2·log₂(e)` operations, so `2¹⁰⁰⁰` takes **14** multiplications instead of
+**999**), all over exact `BigInt`, with the whole square-and-multiply ladder
+shown step by step; the same core does **modular exponentiation** (reducing
+`mod m` after every step, so `7¹⁰⁰⁰⁰⁰⁰ mod 13` is instant though the true power
+has 800,000+ digits — the operation behind RSA and Diffie–Hellman) and, as a
+second payoff of the identical trick over a 2×2 matrix, computes `F(1,000,000)`
+in under 60 matrix multiplies — landed on 2026-09-23. That was the **22nd and
+final Numbers project**, so the routine has now unlocked the source's next
+section, **Classic Algorithms** (beginning with the Collatz Conjecture). Same
+rules, new category.
 
 ## Projects built so far
 
@@ -281,6 +293,7 @@ rules, new list.
 | 107 | [Number Names](./projects/phase2-numbers/number-names/) | Numbers · Source 2 | 2026-09-20 |
 | 108 | [Coin Flip Simulation](./projects/phase2-numbers/coin-flip/) | Numbers · Source 2 | 2026-09-21 |
 | 109 | [Limit Calculator](./projects/phase2-numbers/limit-calculator/) | Numbers · Source 2 | 2026-09-22 |
+| 110 | [Fast Exponentiation](./projects/phase2-numbers/fast-exponentiation/) | Numbers · Source 2 | 2026-09-23 |
 
 ## Repository layout
 

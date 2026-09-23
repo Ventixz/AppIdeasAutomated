@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fast Exponentiation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="accent">Fast</span> exponentiation</h1>
+      <p class="sub">
+        Raise a number to a power the way computers actually do it — by
+        <strong>squaring and multiplying</strong> along the exponent's
+        <em>binary digits</em>, not by multiplying the base a million times over.
+        Watch the ladder run, count the multiplications it <strong>saves</strong>,
+        and take a huge power <strong>modulo m</strong> (the operation behind
+        RSA and Diffie–Hellman). All <strong>offline</strong>, all
+        <strong>arbitrary precision</strong> via BigInt.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="controls">
+        <label class="field">
+          <span>base</span>
+          <input id="base" type="text" value="3" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>exponent</span>
+          <input id="exp" type="text" value="13" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>mod (optional)</span>
+          <input id="mod" type="text" value="" placeholder="none" autocomplete="off" spellcheck="false" />
+        </label>
+      </div>
+      <div class="btnrow">
+        <button id="run" class="go">Compute</button>
+      </div>
+      <div id="err" class="err"></div>
+
+      <div class="presets">
+        Try:
+        <button class="preset" data-base="3" data-exp="13" data-mod="">3¹³</button>
+        <button class="preset" data-base="2" data-exp="1000" data-mod="">2¹⁰⁰⁰</button>
+        <button class="preset" data-base="7" data-exp="1000000" data-mod="13">7¹⁰⁰⁰⁰⁰⁰ mod 13</button>
+        <button class="preset" data-base="4" data-exp="13" data-mod="497">4¹³ mod 497</button>
+        <button class="preset" data-base="5" data-exp="16" data-mod="">5¹⁶ (all squares)</button>
+        <button class="preset" data-base="2" data-exp="255" data-mod="">2²⁵⁵</button>
+      </div>
+    </section>
+
+    <section id="result" class="card" hidden>
+      <div class="verdict">
+        <div class="verdict-tag" id="vtag">Result</div>
+        <div class="verdict-val" id="vval">—</div>
+      </div>
+      <p class="statement" id="statement"></p>
+
+      <ul class="modes">
+        <li>
+          <span class="mode-tag">Exponent in binary</span>
+          <span class="mode-val" id="binVal">—</span>
+        </li>
+        <li>
+          <span class="mode-tag">Fast method — multiplications</span>
+          <span class="mode-val" id="fastVal">—</span>
+        </li>
+        <li>
+          <span class="mode-tag">Naïve method — multiplications</span>
+          <span class="mode-val" id="naiveVal">—</span>
+        </li>
+        <li>
+          <span class="mode-tag">Multiplications saved</span>
+          <span class="mode-val" id="savedVal">—</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="traceCard" class="card" hidden>
+      <h2>The square-and-multiply ladder
+        <span class="muted-inline">— reading the exponent's bits from the top down</span></h2>
+      <p class="note" id="traceNote"></p>
+      <ul class="trace-head">
+        <li><span>bit</span><span>step</span><span>running value</span></li>
+      </ul>
+      <ul class="trace" id="traceList"></ul>
+    </section>
+
+    <section id="fibCard" class="card" hidden>
+      <h2>Bonus: the same trick computes Fibonacci in O(log n)</h2>
+      <p class="note">
+        Because <code>[[1,1],[1,0]]ⁿ = [[F(n+1), F(n)], [F(n), F(n−1)]]</code>,
+        raising a 2×2 matrix by fast exponentiation gives the nth Fibonacci
+        number in a handful of matrix multiplies rather than <em>n</em> additions.
+      </p>
+      <div class="controls fib-controls">
+        <label class="field">
+          <span>Fibonacci index n</span>
+          <input id="fibN" type="text" value="100" autocomplete="off" spellcheck="false" />
+        </label>
+        <div class="fib-btn"><button id="fibRun" class="go ghost">F(n)</button></div>
+      </div>
+      <p class="statement" id="fibStatement"></p>
+      <div class="fib-out" id="fibOut" hidden>
+        <span class="mode-val" id="fibVal">—</span>
+      </div>
+    </section>
+
+    <section class="card note-card">
+      <h2>How it works</h2>
+      <p class="note">
+        To compute <code>b^e</code> you don't need <code>e−1</code>
+        multiplications. Write <code>e</code> in <strong>binary</strong> and scan
+        its digits from the most significant down. Keep a running result: at
+        <em>every</em> digit, <strong>square</strong> it; and whenever the digit
+        is a <strong>1</strong>, also <strong>multiply</strong> by the base. When
+        the digits run out, the result is <code>b^e</code>. That's about
+        <code>log₂(e)</code> squarings plus one multiply per 1-bit — roughly
+        <code>2·log₂(e)</code> operations, versus <code>e−1</code>.
+      </p>
+      <p class="note">
+        For <strong>2¹⁰⁰⁰</strong> that's <strong>14</strong> multiplications
+        instead of <strong>999</strong>. The gap only widens: the naïve cost grows
+        with the exponent itself, the fast cost with its number of digits.
+      </p>
+      <p class="note">
+        <strong>Modular exponentiation</strong> is the same ladder with one extra
+        move: reduce <code>mod m</code> after every square and every multiply. The
+        numbers never grow past <code>m²</code>, so <code>7^1000000 mod 13</code>
+        is instant even though <code>7^1000000</code> has over 800,000 digits.
+        This is exactly how public-key cryptography raises numbers to enormous
+        secret exponents without ever forming the enormous number.
+      </p>
+      <p class="note">
+        <strong>Inputs:</strong> whole numbers of any size (BigInt). The base may
+        be negative; the exponent must be zero or positive; the modulus, if given,
+        must be greater than 1.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Source 2, entry #22 of the <strong>Numbers</strong> category from
+        <a href="https://github.com/karan/Projects">karan/Projects</a> — built by
+        the automated Claude routine. Everything runs client-side; there is no
+        network and no build step.
+      </p>
+    </footer>
+  </main>
+
+  <script src="fastexp-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

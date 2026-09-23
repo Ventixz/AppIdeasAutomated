@@ -159,4 +159,17 @@ day, then moves to the next category once it's complete.
 - [x] Number Names — 2026-09-20
 - [x] Coin Flip Simulation — 2026-09-21
 - [x] Limit Calculator — 2026-09-22
-- [ ] Fast Exponentiation
+- [x] Fast Exponentiation — 2026-09-23
+
+**Numbers complete — all 22 projects built. The next category, Classic
+Algorithms, is now unlocked.**
+
+### Classic Algorithms
+
+Unlocked 2026-09-23 after the Numbers category was finished. The routine works
+down this section next, one project per day.
+
+- [ ] Collatz Conjecture
+- [ ] Sorting
+- [ ] Closest Pair Problem
+- [ ] Sieve of Eratosthenes
