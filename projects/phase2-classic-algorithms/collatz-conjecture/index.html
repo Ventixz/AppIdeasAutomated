@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collatz Conjecture</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Collatz <span class="accent">Conjecture</span></h1>
+    <p class="sub">
+      Pick any whole number. If it's <em>even</em>, halve it; if it's
+      <em>odd</em>, triple it and add one. Repeat. The
+      <strong>conjecture</strong> — open since 1937 and still unproven — is that
+      you <strong>always</strong> crash back down to 1. Type a number and watch
+      the <strong>hailstone sequence</strong> climb and fall.
+    </p>
+  </header>
+
+  <section class="card">
+    <div class="controls two">
+      <label class="field">
+        <span>Starting number</span>
+        <input id="n" inputmode="numeric" autocomplete="off" value="27" aria-label="Starting number">
+      </label>
+      <label class="field">
+        <span>Map</span>
+        <select id="map" aria-label="Which map to use">
+          <option value="standard">Standard — n/2 or 3n+1</option>
+          <option value="shortcut">Shortcut — n/2 or (3n+1)/2</option>
+        </select>
+      </label>
+    </div>
+    <div class="btnrow">
+      <button class="go" id="run">Run it</button>
+      <button class="go ghost" id="rand">Random</button>
+    </div>
+    <p class="presets">
+      Try:
+      <button class="preset" data-n="6">6</button>
+      <button class="preset" data-n="27">27</button>
+      <button class="preset" data-n="97">97</button>
+      <button class="preset" data-n="703">703</button>
+      <button class="preset" data-n="871">871</button>
+      <button class="preset" data-n="6171">6171</button>
+      <button class="preset" data-n="63728127">63728127</button>
+    </p>
+    <p class="err" id="err"></p>
+  </section>
+
+  <section class="card" id="resultCard" hidden>
+    <div class="verdict">
+      <span class="verdict-tag">Reaches 1 in</span>
+      <span class="verdict-val" id="stepsVal">—</span>
+      <span class="verdict-tag">steps</span>
+    </div>
+    <p class="statement" id="statement"></p>
+
+    <ul class="modes" id="statList"></ul>
+
+    <h2>Trajectory <span class="muted-inline">— every value on the way down</span></h2>
+    <div class="chart" id="chart" aria-hidden="true"></div>
+    <p class="chart-cap" id="chartCap"></p>
+
+    <h2>The sequence <span class="muted-inline">— the numbers themselves</span></h2>
+    <p class="seq" id="seq"></p>
+  </section>
+
+  <section class="card" id="recordsCard">
+    <h2>Record hunt <span class="muted-inline">— who flies longest and highest?</span></h2>
+    <p class="note">
+      Sweep every start from 1 up to a ceiling and find the champions: the
+      number whose orbit takes the <strong>most steps</strong>, and the one that
+      climbs to the <strong>highest altitude</strong>. A memoised pass makes the
+      whole range cost about as much as one long walk.
+    </p>
+    <div class="controls two">
+      <label class="field">
+        <span>Search 1 …</span>
+        <input id="limit" inputmode="numeric" autocomplete="off" value="100000" aria-label="Record search ceiling">
+      </label>
+      <div class="field fib-btn">
+        <span>&nbsp;</span>
+        <button class="go" id="hunt">Find records</button>
+      </div>
+    </div>
+    <div id="recordsOut" hidden>
+      <ul class="modes" id="recordsList"></ul>
+      <p class="chart-cap" id="recordsTiming"></p>
+    </div>
+  </section>
+
+  <section class="card note-card">
+    <h2>Why it's fascinating</h2>
+    <p class="note">
+      The rule is small enough to teach a child, yet nobody can prove every
+      number reaches 1 — Paul Erdős said <em>"mathematics may not be ready for
+      such problems."</em> It has been checked by computer for every number up to
+      roughly <strong>2⁶⁸</strong>, and all of them fall. The
+      <strong>parity of a number is just its last binary bit</strong>, so the
+      whole map is secretly a statement about binary digits: even numbers shed a
+      trailing zero, odd numbers get shuffled upward. The plot above shows the
+      trademark <em>hailstone</em> motion — repeated climbs and plunges — before
+      the inevitable collapse to the 4 → 2 → 1 loop.
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      Project 111 of the <strong>automated Claude routine</strong> — the first of
+      the <strong>Classic Algorithms</strong> category from Source 2,
+      <a href="https://github.com/karan/Projects">karan/Projects</a>. No build,
+      no server, no dependencies. See <a href="README.md">README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="collatz-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

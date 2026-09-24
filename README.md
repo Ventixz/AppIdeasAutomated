@@ -39,12 +39,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (22 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (23 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
-| Classic Algorithms | 🚧 In progress — **0 / 4** |
+| Classic Algorithms | 🚧 In progress — **1 / 4** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -176,9 +176,18 @@ shown step by step; the same core does **modular exponentiation** (reducing
 has 800,000+ digits — the operation behind RSA and Diffie–Hellman) and, as a
 second payoff of the identical trick over a 2×2 matrix, computes `F(1,000,000)`
 in under 60 matrix multiplies — landed on 2026-09-23. That was the **22nd and
-final Numbers project**, so the routine has now unlocked the source's next
-section, **Classic Algorithms** (beginning with the Collatz Conjecture). Same
-rules, new category.
+final Numbers project**, so the routine unlocked the source's next section,
+**Classic Algorithms**. Its first entry, the **Collatz Conjecture** — pick a
+number, halve it if even or `3n+1` it if odd, and (the famous unproven claim)
+you always crash to 1 — went in on 2026-09-24: it plays out the whole
+**hailstone sequence** over exact `BigInt` (so `27`'s climb to `9,232` and
+`63,728,127`'s soar to `966,616,035,460` are precise, not rounded), plots the
+climbs and plunges on a **log scale** because a single orbit spans a dozen orders
+of magnitude, offers the accelerated shortcut map `(3n+1)/2` that number
+theorists actually study, and hunts a whole range for the record-holders — the
+longest orbit and the highest altitude — with a **memoised** sweep that exploits
+the way orbits merge, so scanning 100,000 starts costs about as much as one long
+walk. Same rules, new category.
 
 ## Projects built so far
 
@@ -294,6 +303,7 @@ rules, new category.
 | 108 | [Coin Flip Simulation](./projects/phase2-numbers/coin-flip/) | Numbers · Source 2 | 2026-09-21 |
 | 109 | [Limit Calculator](./projects/phase2-numbers/limit-calculator/) | Numbers · Source 2 | 2026-09-22 |
 | 110 | [Fast Exponentiation](./projects/phase2-numbers/fast-exponentiation/) | Numbers · Source 2 | 2026-09-23 |
+| 111 | [Collatz Conjecture](./projects/phase2-classic-algorithms/collatz-conjecture/) | Classic Algorithms · Source 2 | 2026-09-24 |
 
 ## Repository layout
 
@@ -333,6 +343,8 @@ projects/
     credit-card-validator/    # Luhn checksum + network/length detection over digit strings, generates fakes
     tax-calculator/           # sales tax forward/reverse + progressive brackets, exact integer cents & basis points
     factorial-finder/         # n! by loop, recursion & fast product tree, exact BigInt; zeros & digits without the number
+  phase2-classic-algorithms/  # Source 2 (karan/Projects) — Classic Algorithms category
+    collatz-conjecture/       # hailstone orbits over BigInt, log-scaled chart, memoised record hunt
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
