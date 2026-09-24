@@ -169,7 +169,7 @@ Algorithms, is now unlocked.**
 Unlocked 2026-09-23 after the Numbers category was finished. The routine works
 down this section next, one project per day.
 
-- [ ] Collatz Conjecture
+- [x] Collatz Conjecture — 2026-09-24
 - [ ] Sorting
 - [ ] Closest Pair Problem
 - [ ] Sieve of Eratosthenes
