@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sorting Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Sorting <span class="accent">Studio</span></h1>
+    <p class="sub">
+      Six classic sorts — <em>bubble</em>, <em>insertion</em>, <em>selection</em>,
+      <em>merge</em>, <em>quick</em> and <em>heap</em> — over one array. Watch a
+      single one <strong>animate</strong> comparison by comparison, or
+      <strong>race</strong> all six and see the O(n²) versus O(n&nbsp;log&nbsp;n)
+      gap as real, countable work.
+    </p>
+  </header>
+
+  <section class="card">
+    <div class="controls three">
+      <label class="field">
+        <span>Algorithm</span>
+        <select id="algo" aria-label="Which algorithm to animate"></select>
+      </label>
+      <label class="field">
+        <span>Array shape</span>
+        <select id="shape" aria-label="Starting arrangement">
+          <option value="random">Random</option>
+          <option value="nearly">Nearly sorted</option>
+          <option value="reversed">Reversed</option>
+          <option value="sorted">Already sorted</option>
+          <option value="fewunique">Few unique values</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Size — <b id="sizeVal">40</b></span>
+        <input id="size" type="range" min="5" max="120" value="40" aria-label="Array size">
+      </label>
+    </div>
+    <div class="controls three speed-row">
+      <label class="field">
+        <span>Speed — <b id="speedVal">1×</b></span>
+        <input id="speed" type="range" min="1" max="60" value="20" aria-label="Animation speed">
+      </label>
+      <div class="field spanx">
+        <span>&nbsp;</span>
+        <div class="btnrow">
+          <button class="go" id="play">▶ Play</button>
+          <button class="go ghost" id="step">Step</button>
+          <button class="go ghost" id="shuffle">Shuffle</button>
+        </div>
+      </div>
+    </div>
+    <p class="err" id="err"></p>
+  </section>
+
+  <section class="card">
+    <div class="bars-head">
+      <span id="algoName" class="bars-title">Bubble sort</span>
+      <span class="bars-stats">
+        <span class="stat"><b id="cmpCount">0</b> comparisons</span>
+        <span class="stat"><b id="wrtCount">0</b> writes</span>
+        <span class="stat progress" id="progress"></span>
+      </span>
+    </div>
+    <div class="bars" id="bars" aria-hidden="true"></div>
+    <p class="legend">
+      <span class="key"><i class="sw sw-base"></i> unsorted</span>
+      <span class="key"><i class="sw sw-cmp"></i> comparing</span>
+      <span class="key"><i class="sw sw-wrt"></i> just written</span>
+      <span class="key"><i class="sw sw-pivot"></i> pivot</span>
+      <span class="key"><i class="sw sw-done"></i> settled</span>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Race all six <span class="muted-inline">— same array, counted fairly</span></h2>
+    <p class="note">
+      Every algorithm is run through the <strong>same instrumented primitives</strong>,
+      so its comparison and write counts are directly comparable. Sorted by
+      comparisons — fewest first.
+    </p>
+    <div class="btnrow race-btns">
+      <button class="go" id="race">Race on the current array</button>
+      <button class="go ghost" id="raceBig">Race on 2,000 random</button>
+    </div>
+    <div id="raceOut" hidden>
+      <table class="board" id="board">
+        <thead>
+          <tr><th>#</th><th>Algorithm</th><th class="num">Comparisons</th><th class="num">Writes</th><th class="num">Time</th><th>Bounds (best · avg · worst)</th></tr>
+        </thead>
+        <tbody id="boardBody"></tbody>
+      </table>
+      <p class="chart-cap" id="raceCap"></p>
+    </div>
+  </section>
+
+  <section class="card note-card">
+    <h2>Why some are faster</h2>
+    <p class="note">
+      The three simple sorts — <strong>bubble</strong>, <strong>insertion</strong>,
+      <strong>selection</strong> — compare roughly <em>n²/2</em> pairs, so doubling
+      the array quadruples the work. The three fast ones —
+      <strong>merge</strong>, <strong>quick</strong> and <strong>heap</strong> —
+      do about <em>n&nbsp;log&nbsp;n</em> comparisons by never re-examining pairs
+      they've already resolved. On 2,000 items that's the difference between ~2
+      million comparisons and ~22,000. But the simple sorts aren't useless:
+      <strong>insertion sort is linear</strong> on nearly-sorted data (try the
+      "nearly sorted" shape), which is why real-world hybrid sorts fall back to it
+      for small or almost-ordered runs.
+    </p>
+    <p class="note">
+      Watch which sorts are <strong>stable</strong>: bubble, insertion and merge
+      never reorder equal keys; selection, quick and heap can. And notice
+      quicksort's <em>median-of-three</em> pivot — it keeps the "already sorted"
+      and "reversed" shapes from triggering its O(n²) worst case.
+    </p>
+  </section>
+
+  <footer>
+    <p>
+      Project 112 of the <strong>automated Claude routine</strong> — the second of
+      the <strong>Classic Algorithms</strong> category from Source 2,
+      <a href="https://github.com/karan/Projects">karan/Projects</a>. No build,
+      no server, no dependencies. See <a href="README.md">README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="sort-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
