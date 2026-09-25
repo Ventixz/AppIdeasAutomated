@@ -39,12 +39,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (23 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (24 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
-| Classic Algorithms | 🚧 In progress — **1 / 4** |
+| Classic Algorithms | 🚧 In progress — **2 / 4** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -187,7 +187,15 @@ of magnitude, offers the accelerated shortcut map `(3n+1)/2` that number
 theorists actually study, and hunts a whole range for the record-holders — the
 longest orbit and the highest altitude — with a **memoised** sweep that exploits
 the way orbits merge, so scanning 100,000 starts costs about as much as one long
-walk. Same rules, new category.
+walk. Its companion **Sorting** — six classic sorts (bubble, insertion,
+selection, merge, quick and heap) run through one shared instrumented primitive
+so their comparison and write counts are directly comparable, then either
+animated bar-by-bar or raced side by side — landed on 2026-09-25: it turns the
+textbook "O(n²) vs. O(n log n)" claim into something you can *count* (on 2,000
+random values, ~22,000 comparisons for the fast sorts against ~2 million for the
+slow ones), shows insertion sort going linear on nearly-sorted data, and uses a
+median-of-three pivot so quicksort doesn't blow up on sorted or reversed input.
+Same rules, same category.
 
 ## Projects built so far
 
@@ -304,6 +312,7 @@ walk. Same rules, new category.
 | 109 | [Limit Calculator](./projects/phase2-numbers/limit-calculator/) | Numbers · Source 2 | 2026-09-22 |
 | 110 | [Fast Exponentiation](./projects/phase2-numbers/fast-exponentiation/) | Numbers · Source 2 | 2026-09-23 |
 | 111 | [Collatz Conjecture](./projects/phase2-classic-algorithms/collatz-conjecture/) | Classic Algorithms · Source 2 | 2026-09-24 |
+| 112 | [Sorting](./projects/phase2-classic-algorithms/sorting/) | Classic Algorithms · Source 2 | 2026-09-25 |
 
 ## Repository layout
 
@@ -345,6 +354,7 @@ projects/
     factorial-finder/         # n! by loop, recursion & fast product tree, exact BigInt; zeros & digits without the number
   phase2-classic-algorithms/  # Source 2 (karan/Projects) — Classic Algorithms category
     collatz-conjecture/       # hailstone orbits over BigInt, log-scaled chart, memoised record hunt
+    sorting/                  # six classic sorts, one instrumented primitive: animate one or race all six
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
