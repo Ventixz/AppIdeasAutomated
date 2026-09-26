@@ -171,5 +171,5 @@ down this section next, one project per day.
 
 - [x] Collatz Conjecture — 2026-09-24
 - [x] Sorting — 2026-09-25
-- [ ] Closest Pair Problem
+- [x] Closest Pair Problem — 2026-09-26
 - [ ] Sieve of Eratosthenes

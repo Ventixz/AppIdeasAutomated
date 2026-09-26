@@ -1,0 +1,147 @@
+/* Closest Pair of Points — dark theme, matching the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --pt: #6b7a99;
+  --cmp: #f5b942;   /* amber — being compared */
+  --best: #46d17f;  /* green — best pair so far */
+  --divide: #b58cff;/* purple — split line */
+  --strip: rgba(110, 168, 254, 0.14); /* translucent blue — the strip */
+  --strip-line: #6ea8fe;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+}
+.tagline { margin: 0 0 20px; color: var(--muted); max-width: 68ch; }
+.tagline em { color: var(--ink); font-style: italic; }
+
+/* --- controls ---------------------------------------------------------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  align-items: end;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+.control { display: flex; flex-direction: column; gap: 6px; }
+.control label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.control output { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; }
+input[type="range"] { width: 150px; accent-color: var(--accent); }
+select {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font: inherit;
+}
+.buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+button {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .05s;
+}
+button:hover { border-color: var(--accent); }
+button:active { transform: translateY(1px); }
+button.primary { background: var(--accent); color: #0b1220; border-color: var(--accent); font-weight: 600; }
+button:disabled { opacity: .45; cursor: default; }
+
+/* --- stage ------------------------------------------------------------- */
+.stage {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #0b0f1a;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  margin: 12px 2px 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.legend li { display: flex; align-items: center; gap: 7px; }
+.legend em { font-style: italic; color: var(--ink); }
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot.pt { background: var(--pt); }
+.dot.cmp { background: var(--cmp); }
+.dot.best { background: var(--best); }
+.swatch { width: 14px; height: 12px; border-radius: 3px; display: inline-block; }
+.swatch.divide { background: var(--divide); }
+.swatch.strip { background: var(--strip); border: 1px solid var(--strip-line); }
+
+/* --- race table -------------------------------------------------------- */
+.race {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.race h2 { margin: 0 0 12px; font-size: 1.05rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td.num, th:nth-child(n+3) { text-align: right; font-variant-numeric: tabular-nums; }
+tr[data-row="divide"] td { color: var(--best); }
+tr[data-row="divide"] td:first-child, tr[data-row="divide"] td:nth-child(2) { color: var(--ink); }
+.speedup { margin: 12px 2px 0; color: var(--muted); }
+.speedup strong { color: var(--accent); }
+
+/* --- footer ------------------------------------------------------------ */
+footer { margin-top: 26px; color: var(--muted); font-size: 0.85rem; }
+footer a { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .buttons { margin-left: 0; width: 100%; }
+  input[type="range"] { width: 130px; }
+}
