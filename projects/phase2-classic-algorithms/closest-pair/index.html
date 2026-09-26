@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Closest Pair of Points</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Closest Pair of Points</h1>
+      <p class="tagline">
+        Given <em>n</em> points, find the two closest together — the brute-force
+        way (check every pair, O(n²)) and the divide-and-conquer way
+        (O(n&nbsp;log&nbsp;n)) — and <strong>count the work</strong> each one does.
+      </p>
+    </header>
+
+    <section class="controls" aria-label="Controls">
+      <div class="control">
+        <label for="count">Points</label>
+        <input id="count" type="range" min="3" max="400" value="60" />
+        <output id="count-out">60</output>
+      </div>
+
+      <div class="control">
+        <label for="shape">Distribution</label>
+        <select id="shape">
+          <option value="uniform">Uniform</option>
+          <option value="clustered">Clustered</option>
+          <option value="grid">Grid</option>
+          <option value="circle">Circle</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="algo">Animate</label>
+        <select id="algo">
+          <option value="divide">Divide &amp; conquer</option>
+          <option value="brute">Brute force</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="speed">Speed</label>
+        <input id="speed" type="range" min="1" max="100" value="55" />
+      </div>
+
+      <div class="buttons">
+        <button id="regen" type="button">New points</button>
+        <button id="play" type="button" class="primary">▶ Play</button>
+        <button id="step" type="button">Step</button>
+        <button id="reset" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="stage">
+      <canvas id="canvas" width="900" height="560" aria-label="Point plot"></canvas>
+      <ul class="legend" aria-label="Legend">
+        <li><span class="dot pt"></span> point</li>
+        <li><span class="dot cmp"></span> being compared</li>
+        <li><span class="dot best"></span> closest pair so far</li>
+        <li><span class="swatch divide"></span> split line</li>
+        <li><span class="swatch strip"></span> strip (within <em>d</em>)</li>
+      </ul>
+    </section>
+
+    <section class="race" aria-label="Comparison of the two algorithms">
+      <h2>Both algorithms, same points</h2>
+      <table id="race-table">
+        <thead>
+          <tr><th>Algorithm</th><th>Complexity</th><th>Distance evals</th><th>Closest distance</th><th>Time</th></tr>
+        </thead>
+        <tbody>
+          <tr data-row="brute">
+            <td>Brute force</td><td>O(n²)</td>
+            <td class="num" data-cell="evals">—</td>
+            <td class="num" data-cell="dist">—</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+          <tr data-row="divide">
+            <td>Divide &amp; conquer</td><td>O(n&nbsp;log&nbsp;n)</td>
+            <td class="num" data-cell="evals">—</td>
+            <td class="num" data-cell="dist">—</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <p id="speedup" class="speedup"></p>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithm details.
+      </p>
+    </footer>
+  </main>
+
+  <script src="closest-pair-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
