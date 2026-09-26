@@ -39,12 +39,12 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (24 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (25 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
-| Classic Algorithms | 🚧 In progress — **2 / 4** |
+| Classic Algorithms | 🚧 In progress — **3 / 4** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -195,7 +195,17 @@ textbook "O(n²) vs. O(n log n)" claim into something you can *count* (on 2,000
 random values, ~22,000 comparisons for the fast sorts against ~2 million for the
 slow ones), shows insertion sort going linear on nearly-sorted data, and uses a
 median-of-three pivot so quicksort doesn't blow up on sorted or reversed input.
-Same rules, same category.
+And the category's third entry, the **Closest Pair of Points** — given _n_
+points, find the two nearest — landed on 2026-09-26: it puts brute force (check
+all `n(n−1)/2` pairs, O(n²)) beside the classic **divide-and-conquer** algorithm
+(O(n log n)), which presorts the points, splits at the median, and — the clever
+part — only has to scan a thin **strip** around the split line where a packing
+argument caps each point to at most ~7 neighbours. Both route every distance
+through one shared counter, so on 400 points brute force's 79,800 evaluations
+against divide-and-conquer's few hundred is a number on the table, not a claim;
+comparisons stay on exact integer squared distances (no float decides a tie),
+and the recursion's split line and strip animate live on a point canvas. Same
+rules, same category.
 
 ## Projects built so far
 
@@ -313,6 +323,7 @@ Same rules, same category.
 | 110 | [Fast Exponentiation](./projects/phase2-numbers/fast-exponentiation/) | Numbers · Source 2 | 2026-09-23 |
 | 111 | [Collatz Conjecture](./projects/phase2-classic-algorithms/collatz-conjecture/) | Classic Algorithms · Source 2 | 2026-09-24 |
 | 112 | [Sorting](./projects/phase2-classic-algorithms/sorting/) | Classic Algorithms · Source 2 | 2026-09-25 |
+| 113 | [Closest Pair of Points](./projects/phase2-classic-algorithms/closest-pair/) | Classic Algorithms · Source 2 | 2026-09-26 |
 
 ## Repository layout
 
@@ -355,6 +366,7 @@ projects/
   phase2-classic-algorithms/  # Source 2 (karan/Projects) — Classic Algorithms category
     collatz-conjecture/       # hailstone orbits over BigInt, log-scaled chart, memoised record hunt
     sorting/                  # six classic sorts, one instrumented primitive: animate one or race all six
+    closest-pair/             # brute force vs. divide-and-conquer, strip scan animated; exact integer distances
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
