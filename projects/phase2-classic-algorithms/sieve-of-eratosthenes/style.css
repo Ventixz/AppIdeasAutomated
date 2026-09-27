@@ -1,0 +1,186 @@
+/* Sieve of Eratosthenes — dark theme, matching the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --unknown: #2a3350;   /* slate — not yet marked */
+  --prime: #46d17f;     /* green — a confirmed prime */
+  --striking: #b58cff;  /* purple — the prime doing the crossing */
+  --cross: #f5b942;     /* amber — a cell just crossed out this step */
+  --composite: #3a2130; /* dim red-brown — settled composite */
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+}
+.tagline { margin: 0 0 20px; color: var(--muted); max-width: 70ch; }
+.tagline em { color: var(--ink); font-style: italic; }
+
+/* --- controls ---------------------------------------------------------- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 22px;
+  align-items: end;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+.control { display: flex; flex-direction: column; gap: 6px; }
+.control label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.control output { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; }
+input[type="range"] { width: 160px; accent-color: var(--accent); }
+.buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+button {
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .05s;
+}
+button:hover { border-color: var(--accent); }
+button:active { transform: translateY(1px); }
+button.primary { background: var(--accent); color: #0b1220; border-color: var(--accent); font-weight: 600; }
+button:disabled { opacity: .45; cursor: default; }
+
+/* --- stage / grid ------------------------------------------------------ */
+.stage {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+.status {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 2px 2px 12px;
+  min-height: 1.4em;
+}
+.status strong { color: var(--ink); }
+.status .p { color: var(--striking); font-weight: 600; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 10), 1fr);
+  gap: 4px;
+}
+.cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--unknown);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(0.5rem, 2.2vw, 0.85rem);
+  transition: background .12s ease, color .12s ease, transform .08s ease;
+  user-select: none;
+}
+.cell.one { background: transparent; color: var(--muted); opacity: .5; } /* 1 is neither */
+.cell.prime { background: var(--prime); color: #08240f; font-weight: 700; }
+.cell.striking { background: var(--striking); color: #150a2b; font-weight: 700; transform: scale(1.08); }
+.cell.cross { background: var(--cross); color: #2a1c00; font-weight: 700; }
+.cell.composite { background: var(--composite); color: #b98a97; text-decoration: line-through; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  margin: 14px 2px 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.legend li { display: flex; align-items: center; gap: 7px; }
+.dot { width: 13px; height: 13px; border-radius: 4px; display: inline-block; }
+.dot.unknown { background: var(--unknown); }
+.dot.prime { background: var(--prime); }
+.dot.striking { background: var(--striking); }
+.dot.cross { background: var(--cross); }
+.dot.composite { background: var(--composite); }
+
+/* --- race table -------------------------------------------------------- */
+.race, .factor {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+.race h2, .factor h2 { margin: 0 0 12px; font-size: 1.05rem; }
+.race h2 em, .factor h2 em { font-style: italic; color: var(--accent); }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td.num, th:nth-child(3), th:nth-child(5) { text-align: right; font-variant-numeric: tabular-nums; }
+tr.highlight td { color: var(--prime); }
+tr.highlight td:first-child, tr.highlight td:nth-child(2), tr.highlight td:nth-child(4) { color: var(--ink); }
+.summary { margin: 12px 2px 0; color: var(--muted); }
+.summary strong { color: var(--accent); }
+
+/* --- prime tools ------------------------------------------------------- */
+.tools { display: flex; flex-wrap: wrap; gap: 20px 32px; }
+.tool { display: flex; flex-direction: column; gap: 8px; min-width: 240px; flex: 1; }
+.tool label {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+}
+.tool-row { display: flex; gap: 8px; }
+.tool-row input {
+  flex: 1;
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font: inherit;
+}
+.tool-out {
+  font-variant-numeric: tabular-nums;
+  color: var(--prime);
+  font-size: 1.05rem;
+  min-height: 1.4em;
+}
+
+/* --- footer ------------------------------------------------------------ */
+footer { margin-top: 6px; color: var(--muted); font-size: 0.85rem; }
+footer a { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .buttons { margin-left: 0; width: 100%; }
+  input[type="range"] { width: 140px; }
+}

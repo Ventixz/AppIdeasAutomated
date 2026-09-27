@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sieve of Eratosthenes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Sieve of Eratosthenes</h1>
+      <p class="tagline">
+        Find every prime up to <em>n</em>. Watch the ancient sieve cross out the
+        composites — each prime striking out its own multiples starting at
+        <em>p²</em> — then <strong>count the work</strong> against trial division,
+        a linear sieve, and a segmented one.
+      </p>
+    </header>
+
+    <section class="controls" aria-label="Controls">
+      <div class="control">
+        <label for="limit">Limit n</label>
+        <input id="limit" type="range" min="10" max="600" value="120" step="1" />
+        <output id="limit-out">120</output>
+      </div>
+
+      <div class="control">
+        <label for="speed">Speed</label>
+        <input id="speed" type="range" min="1" max="100" value="60" />
+      </div>
+
+      <div class="buttons">
+        <button id="play" type="button" class="primary">▶ Play</button>
+        <button id="step" type="button">Step</button>
+        <button id="finish" type="button">Finish</button>
+        <button id="reset" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="stage" aria-label="The sieve grid">
+      <div id="status" class="status" aria-live="polite">Press <strong>Play</strong> to run the sieve.</div>
+      <div id="grid" class="grid" role="img" aria-label="Number grid being sieved"></div>
+      <ul class="legend" aria-label="Legend">
+        <li><span class="dot unknown"></span> unmarked</li>
+        <li><span class="dot prime"></span> prime</li>
+        <li><span class="dot striking"></span> current prime striking</li>
+        <li><span class="dot cross"></span> just crossed out</li>
+        <li><span class="dot composite"></span> composite</li>
+      </ul>
+    </section>
+
+    <section class="race" aria-label="Comparison of the four algorithms">
+      <h2>Four ways to the same primes, same <em>n</em></h2>
+      <table id="race-table">
+        <thead>
+          <tr><th>Algorithm</th><th>Complexity</th><th>Work</th><th>Unit</th><th>Time</th></tr>
+        </thead>
+        <tbody>
+          <tr data-row="trial">
+            <td>Trial division</td><td>O(n·√n / ln n)</td>
+            <td class="num" data-cell="ops">—</td><td>division tests</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+          <tr data-row="sieve" class="highlight">
+            <td>Sieve of Eratosthenes</td><td>O(n log log n)</td>
+            <td class="num" data-cell="ops">—</td><td>cross-outs</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+          <tr data-row="linear">
+            <td>Linear (Euler) sieve</td><td>O(n)</td>
+            <td class="num" data-cell="ops">—</td><td>cross-outs</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+          <tr data-row="segmented">
+            <td>Segmented sieve</td><td>O(n log log n), O(√n) memory</td>
+            <td class="num" data-cell="ops">—</td><td>cross-outs</td>
+            <td class="num" data-cell="ms">—</td>
+          </tr>
+        </tbody>
+      </table>
+      <p id="summary" class="summary"></p>
+    </section>
+
+    <section class="factor" aria-label="Prime tools">
+      <h2>Prime tools</h2>
+      <div class="tools">
+        <div class="tool">
+          <label for="factor-in">Factorise a number</label>
+          <div class="tool-row">
+            <input id="factor-in" type="number" min="2" step="1" value="360" />
+            <button id="factor-btn" type="button">Factor</button>
+          </div>
+          <output id="factor-out" class="tool-out">360 = 2³ · 3² · 5</output>
+        </div>
+        <div class="tool">
+          <label for="count-in">Count primes π(n)</label>
+          <div class="tool-row">
+            <input id="count-in" type="number" min="1" step="1" value="1000" />
+            <button id="count-btn" type="button">Count</button>
+          </div>
+          <output id="count-out2" class="tool-out">π(1000) = 168</output>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithm details.
+      </p>
+    </footer>
+  </main>
+
+  <script src="sieve-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

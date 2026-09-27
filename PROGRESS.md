@@ -172,4 +172,19 @@ down this section next, one project per day.
 - [x] Collatz Conjecture — 2026-09-24
 - [x] Sorting — 2026-09-25
 - [x] Closest Pair Problem — 2026-09-26
-- [ ] Sieve of Eratosthenes
+- [x] Sieve of Eratosthenes — 2026-09-27
+
+**Classic Algorithms complete — all 4 projects built. The next category,
+Graph, is now unlocked.**
+
+### Graph
+
+Unlocked 2026-09-27 after the Classic Algorithms category was finished. The
+routine works down this section next, one project per day. Populated from the
+[karan/Projects Graph section](https://github.com/karan/Projects).
+
+- [ ] Graph from links
+- [ ] Eulerian Path
+- [ ] Connected Graph
+- [ ] Dijkstra's Algorithm
+- [ ] Minimum Spanning Tree
