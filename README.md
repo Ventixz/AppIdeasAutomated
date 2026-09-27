@@ -39,12 +39,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (25 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (26 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
-| Classic Algorithms | 🚧 In progress — **3 / 4** |
+| Classic Algorithms | ✅ Complete — **4 / 4** |
+| Graph | 🚧 In progress — **0 / 5** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -204,8 +205,18 @@ argument caps each point to at most ~7 neighbours. Both route every distance
 through one shared counter, so on 400 points brute force's 79,800 evaluations
 against divide-and-conquer's few hundred is a number on the table, not a claim;
 comparisons stay on exact integer squared distances (no float decides a tie),
-and the recursion's split line and strip animate live on a point canvas. Same
-rules, same category.
+and the recursion's split line and strip animate live on a point canvas. And the
+category's fourth and final entry, the **Sieve of Eratosthenes** — find every
+prime up to _n_ — landed on 2026-09-27: it runs the ancient sieve across a grid
+of numbers (each prime striking out its own multiples from _p²_ on, live in
+colour) and races it against trial division, **Euler's linear sieve** (which
+crosses each composite _exactly once_ and drops out a smallest-prime-factor table
+for free), and a **segmented sieve** (same answer in O(√n) memory). One shared
+counter makes the O(n·√n) vs. O(n log log n) vs. O(n) gap a number on the table,
+and the tests pin all four against an independent oracle including the
+easy-to-miss "start at p², not 2p" optimisation. That was the **4th and final
+Classic Algorithms project**, so the routine unlocked the source's next section,
+**Graph** — starting with _Graph from links_ next. Same rules, same source.
 
 ## Projects built so far
 
@@ -324,6 +335,7 @@ rules, same category.
 | 111 | [Collatz Conjecture](./projects/phase2-classic-algorithms/collatz-conjecture/) | Classic Algorithms · Source 2 | 2026-09-24 |
 | 112 | [Sorting](./projects/phase2-classic-algorithms/sorting/) | Classic Algorithms · Source 2 | 2026-09-25 |
 | 113 | [Closest Pair of Points](./projects/phase2-classic-algorithms/closest-pair/) | Classic Algorithms · Source 2 | 2026-09-26 |
+| 114 | [Sieve of Eratosthenes](./projects/phase2-classic-algorithms/sieve-of-eratosthenes/) | Classic Algorithms · Source 2 | 2026-09-27 |
 
 ## Repository layout
 
@@ -367,6 +379,7 @@ projects/
     collatz-conjecture/       # hailstone orbits over BigInt, log-scaled chart, memoised record hunt
     sorting/                  # six classic sorts, one instrumented primitive: animate one or race all six
     closest-pair/             # brute force vs. divide-and-conquer, strip scan animated; exact integer distances
+    sieve-of-eratosthenes/    # classic sieve on an animated grid; raced vs. trial/linear/segmented, work counted
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
