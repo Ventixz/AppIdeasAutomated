@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graph from Links</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Graph from Links</h1>
+      <p class="tagline">
+        Type a list of <em>links</em> — one connection per line — and watch a
+        network appear. The page parses your links into a real graph, lays it out
+        with a <strong>from-scratch force-directed layout</strong>, and reads off
+        its shape: components, degrees, cycles, and what's reachable from where.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel input-col">
+        <h2>Your <em>links</em></h2>
+        <textarea id="links" spellcheck="false" aria-label="Links, one per line"></textarea>
+
+        <div class="row between">
+          <label class="toggle">
+            <input type="checkbox" id="directed" />
+            Directed (arrows)
+          </label>
+          <button id="build" class="primary" type="button">Build graph ↵</button>
+        </div>
+
+        <p id="warnings" class="warnings" aria-live="polite"></p>
+
+        <div>
+          <label class="small">Load an example</label>
+          <div class="examples" id="examples"></div>
+        </div>
+
+        <p class="hint">
+          One link per line. Separators: <code>-&gt;</code> <code>--</code>
+          <code>-</code> <code>,</code> <code>:</code> or a space. A line with a
+          single word is an isolated node. <code>#</code> starts a comment.
+        </p>
+      </div>
+
+      <!-- ---------------- picture + read-out ---------------- -->
+      <div class="stage-col">
+        <div class="viz">
+          <svg id="canvas" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The graph drawn as a network"></svg>
+        </div>
+
+        <div class="viz-controls panel">
+          <div class="grp">
+            <label class="small" for="focus">Reachable from</label>
+            <select id="focus"><option value="">— none —</option></select>
+          </div>
+          <div class="grp">
+            <label class="small" for="seed">Layout</label>
+            <button id="relayout" type="button">Shuffle</button>
+          </div>
+          <div class="grp">
+            <label class="small" for="iters">Settle</label>
+            <input type="range" id="iters" min="40" max="500" value="300" step="20" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>What the network <em>is</em></h2>
+          <div class="stats-grid" id="stats"></div>
+          <p class="findings" id="findings"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithm details.
+      </p>
+    </footer>
+  </main>
+
+  <script src="graph-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
