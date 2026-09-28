@@ -39,13 +39,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (26 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (27 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
-| Graph | 🚧 In progress — **0 / 5** |
+| Graph | 🚧 In progress — **1 / 5** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -216,7 +216,18 @@ counter makes the O(n·√n) vs. O(n log log n) vs. O(n) gap a number on the tab
 and the tests pin all four against an independent oracle including the
 easy-to-miss "start at p², not 2p" optimisation. That was the **4th and final
 Classic Algorithms project**, so the routine unlocked the source's next section,
-**Graph** — starting with _Graph from links_ next. Same rules, same source.
+**Graph**. Its first entry, **Graph from links** — turn a series of links into a
+network — landed on 2026-09-28: type one connection per line (`home -> about`,
+`paris -- london`, or a lone word for an isolated node) and it parses them into a
+real graph, draws it with a **from-scratch, seeded force-directed layout** (so
+the same links always land in the same place, a property the tests actually
+assert), and reads off its shape — connected components via union–find,
+reachability as a live breadth-first walk, cycle detection, and a topological
+order when the directed graph is a DAG. Every measurement is checked against an
+independent brute-force oracle (a flood fill for components, a transitive closure
+for reachability), and keeping the stored graph *simple* is what makes the
+handshake lemma hold exactly. That opened the **Graph** category (1 / 5); the
+next entry, _Eulerian Path_, is up next. Same rules, same source.
 
 ## Projects built so far
 
@@ -336,6 +347,7 @@ Classic Algorithms project**, so the routine unlocked the source's next section,
 | 112 | [Sorting](./projects/phase2-classic-algorithms/sorting/) | Classic Algorithms · Source 2 | 2026-09-25 |
 | 113 | [Closest Pair of Points](./projects/phase2-classic-algorithms/closest-pair/) | Classic Algorithms · Source 2 | 2026-09-26 |
 | 114 | [Sieve of Eratosthenes](./projects/phase2-classic-algorithms/sieve-of-eratosthenes/) | Classic Algorithms · Source 2 | 2026-09-27 |
+| 115 | [Graph from Links](./projects/phase2-graph/graph-from-links/) | Graph · Source 2 | 2026-09-28 |
 
 ## Repository layout
 
@@ -380,6 +392,8 @@ projects/
     sorting/                  # six classic sorts, one instrumented primitive: animate one or race all six
     closest-pair/             # brute force vs. divide-and-conquer, strip scan animated; exact integer distances
     sieve-of-eratosthenes/    # classic sieve on an animated grid; raced vs. trial/linear/segmented, work counted
+  phase2-graph/               # Source 2 (karan/Projects) — Graph category
+    graph-from-links/         # parse links into a network; seeded force layout, components/reachability/cycles
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
