@@ -183,7 +183,7 @@ Unlocked 2026-09-27 after the Classic Algorithms category was finished. The
 routine works down this section next, one project per day. Populated from the
 [karan/Projects Graph section](https://github.com/karan/Projects).
 
-- [ ] Graph from links
+- [x] Graph from links — 2026-09-28
 - [ ] Eulerian Path
 - [ ] Connected Graph
 - [ ] Dijkstra's Algorithm
