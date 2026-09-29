@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eulerian Path</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Eulerian Path</h1>
+      <p class="tagline">
+        Type a list of <em>links</em> — one edge per line — and the page decides
+        whether the graph can be drawn in <strong>one unbroken stroke</strong>
+        that crosses every edge exactly once. If it can, it walks one out with
+        <strong>Hierholzer's algorithm</strong> and <strong>animates the
+        route</strong>, numbering each edge in the order it is crossed. This is
+        Euler's 1736 answer to the Seven Bridges of Königsberg — the first
+        theorem of graph theory.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel input-col">
+        <h2>Your <em>links</em></h2>
+        <textarea id="links" spellcheck="false" aria-label="Links, one per line"></textarea>
+
+        <div class="row between">
+          <label class="toggle">
+            <input type="checkbox" id="directed" />
+            Directed (arrows)
+          </label>
+          <button id="build" class="primary" type="button">Find trail ↵</button>
+        </div>
+
+        <p id="warnings" class="warnings" aria-live="polite"></p>
+
+        <div>
+          <label class="small">Load an example</label>
+          <div class="examples" id="examples"></div>
+        </div>
+
+        <p class="hint">
+          One edge per line. Separators: <code>-&gt;</code> <code>--</code>
+          <code>-</code> <code>,</code> <code>:</code> or a space. Parallel links
+          and self-loops are <strong>kept</strong> — this is a multigraph, so
+          each must be crossed. A lone word is an isolated node. <code>#</code>
+          starts a comment.
+        </p>
+      </div>
+
+      <!-- ---------------- picture + read-out ---------------- -->
+      <div class="stage-col">
+        <div class="viz">
+          <svg id="canvas" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The graph drawn as a network, with the Eulerian trail numbered"></svg>
+        </div>
+
+        <div class="viz-controls panel">
+          <div class="grp">
+            <button id="animate" type="button">▶ Trace the trail</button>
+          </div>
+          <div class="grp">
+            <label class="small" for="speed">Speed</label>
+            <input type="range" id="speed" min="120" max="1200" value="500" step="60" />
+          </div>
+          <div class="grp">
+            <button id="relayout" type="button">Shuffle layout</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>The <em>verdict</em></h2>
+          <div class="stats-grid" id="stats"></div>
+          <p class="findings" id="findings"></p>
+          <p class="trail-line" id="trail" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithm details.
+      </p>
+    </footer>
+  </main>
+
+  <script src="graph-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
