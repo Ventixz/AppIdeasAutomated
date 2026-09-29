@@ -45,7 +45,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
-| Graph | 🚧 In progress — **1 / 5** |
+| Graph | 🚧 In progress — **2 / 5** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -226,8 +226,20 @@ reachability as a live breadth-first walk, cycle detection, and a topological
 order when the directed graph is a DAG. Every measurement is checked against an
 independent brute-force oracle (a flood fill for components, a transitive closure
 for reachability), and keeping the stored graph *simple* is what makes the
-handshake lemma hold exactly. That opened the **Graph** category (1 / 5); the
-next entry, _Eulerian Path_, is up next. Same rules, same source.
+handshake lemma hold exactly. That opened the **Graph** category (1 / 5). Its
+second entry, **Eulerian Path** — find a route that crosses every edge exactly
+once — landed on 2026-09-29: type a list of links and it answers Euler's 1736
+Königsberg question *before drawing anything*, by counting degrees — a **circuit**
+(all even / all balanced), a **path** (exactly two odd vertices, or one `+1`
+source and one `−1` sink), or **none** — then, when a trail exists, walks one out
+with **Hierholzer's algorithm** in O(V + E) and **animates it**, numbering each
+edge in crossing order. The one design choice everything rests on: this is a
+**multigraph** — Königsberg's twin bridges, and every self-loop, are kept as
+distinct edges that must each be crossed, the opposite of the sibling project's
+*simple* graph. Every trail is re-walked by an **independent verifier**, and the
+tests pit the solver against a **brute-force backtracking oracle** over 400
+random multigraphs. That took the **Graph** category to 2 / 5; the next entry,
+_Connected Graph_, is up next. Same rules, same source.
 
 ## Projects built so far
 
@@ -348,6 +360,7 @@ next entry, _Eulerian Path_, is up next. Same rules, same source.
 | 113 | [Closest Pair of Points](./projects/phase2-classic-algorithms/closest-pair/) | Classic Algorithms · Source 2 | 2026-09-26 |
 | 114 | [Sieve of Eratosthenes](./projects/phase2-classic-algorithms/sieve-of-eratosthenes/) | Classic Algorithms · Source 2 | 2026-09-27 |
 | 115 | [Graph from Links](./projects/phase2-graph/graph-from-links/) | Graph · Source 2 | 2026-09-28 |
+| 116 | [Eulerian Path](./projects/phase2-graph/eulerian-path/) | Graph · Source 2 | 2026-09-29 |
 
 ## Repository layout
 
@@ -394,6 +407,7 @@ projects/
     sieve-of-eratosthenes/    # classic sieve on an animated grid; raced vs. trial/linear/segmented, work counted
   phase2-graph/               # Source 2 (karan/Projects) — Graph category
     graph-from-links/         # parse links into a network; seeded force layout, components/reachability/cycles
+    eulerian-path/            # Euler's theorem: circuit/path/none by degree; Hierholzer's trail, animated & verified
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
