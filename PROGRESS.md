@@ -184,7 +184,7 @@ routine works down this section next, one project per day. Populated from the
 [karan/Projects Graph section](https://github.com/karan/Projects).
 
 - [x] Graph from links — 2026-09-28
-- [ ] Eulerian Path
+- [x] Eulerian Path — 2026-09-29
 - [ ] Connected Graph
 - [ ] Dijkstra's Algorithm
 - [ ] Minimum Spanning Tree
