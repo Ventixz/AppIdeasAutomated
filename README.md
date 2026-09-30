@@ -39,13 +39,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (27 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (28 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
-| Graph | 🚧 In progress — **2 / 5** |
+| Graph | 🚧 In progress — **3 / 5** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -238,8 +238,24 @@ edge in crossing order. The one design choice everything rests on: this is a
 distinct edges that must each be crossed, the opposite of the sibling project's
 *simple* graph. Every trail is re-walked by an **independent verifier**, and the
 tests pit the solver against a **brute-force backtracking oracle** over 400
-random multigraphs. That took the **Graph** category to 2 / 5; the next entry,
-_Connected Graph_, is up next. Same rules, same source.
+random multigraphs. That took the **Graph** category to 2 / 5. Its third entry,
+**Connected Graph** — take a graph and answer whether every node is connected —
+landed on 2026-09-30: it gives the headline yes/no, but then shows *why*. For an
+undirected graph it finds the **single points of failure** with **Tarjan's
+low-link DFS** — the **cut vertices** (remove one and the graph splits) and
+**bridges** (cut edges), the difference between merely connected and
+*2-connected* / *2-edge-connected*. For a directed graph it separates **weak**
+from **strong** connectivity and colours the **strongly-connected components**
+(Tarjan's SCC, linear time). Click any node to watch an animated **flood fill**
+prove reachability one hop at a time. The one design choice everything rests on:
+the stored graph is *simple*, but `buildGraph` records the true **multiplicity**
+of each pair so the bridge finder never calls a *doubled* edge a bridge — two
+roads between the same towns means neither can be a single point of failure.
+Every claim — connectivity, cut vertices, bridges, SCCs — is confirmed against an
+**independent brute-force oracle** (a second flood fill, remove-and-recount, and
+all-pairs reachability), with a fuzz loop of 600 random graphs. That took the
+**Graph** category to 3 / 5; the next entry, _Dijkstra's Algorithm_, is up next.
+Same rules, same source.
 
 ## Projects built so far
 
@@ -361,6 +377,7 @@ _Connected Graph_, is up next. Same rules, same source.
 | 114 | [Sieve of Eratosthenes](./projects/phase2-classic-algorithms/sieve-of-eratosthenes/) | Classic Algorithms · Source 2 | 2026-09-27 |
 | 115 | [Graph from Links](./projects/phase2-graph/graph-from-links/) | Graph · Source 2 | 2026-09-28 |
 | 116 | [Eulerian Path](./projects/phase2-graph/eulerian-path/) | Graph · Source 2 | 2026-09-29 |
+| 117 | [Connected Graph](./projects/phase2-graph/connected-graph/) | Graph · Source 2 | 2026-09-30 |
 
 ## Repository layout
 
