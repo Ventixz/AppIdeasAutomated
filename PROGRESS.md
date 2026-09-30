@@ -185,6 +185,6 @@ routine works down this section next, one project per day. Populated from the
 
 - [x] Graph from links — 2026-09-28
 - [x] Eulerian Path — 2026-09-29
-- [ ] Connected Graph
+- [x] Connected Graph — 2026-09-30
 - [ ] Dijkstra's Algorithm
 - [ ] Minimum Spanning Tree
