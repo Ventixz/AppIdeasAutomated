@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dijkstra's Algorithm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Dijkstra's Algorithm</h1>
+      <p class="tagline">
+        Give it a <em>weighted</em> graph and a place to start, and it finds the
+        <strong>cheapest path to everywhere</strong> at once — not just the
+        number, but the route. The <span class="sw src"></span> source grows a
+        <span class="sw tree"></span> shortest-path tree one node at a time,
+        always settling the nearest unsettled node next; pick a target and the
+        <span class="sw path"></span> path lighting up is the answer, and it's
+        double-checked against Bellman–Ford.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel input-col">
+        <h2>Your <em>weighted links</em></h2>
+        <textarea id="links" spellcheck="false" aria-label="Weighted links, one per line"></textarea>
+
+        <div class="row between">
+          <label class="toggle">
+            <input type="checkbox" id="directed" />
+            Directed (arrows)
+          </label>
+          <button id="build" class="primary" type="button">Find shortest paths ↵</button>
+        </div>
+
+        <p id="warnings" class="warnings" aria-live="polite"></p>
+
+        <div class="row">
+          <div class="grp">
+            <label class="small" for="source">From</label>
+            <select id="source"></select>
+          </div>
+          <div class="grp">
+            <label class="small" for="target">To</label>
+            <select id="target"></select>
+          </div>
+        </div>
+
+        <div>
+          <label class="small">Load an example</label>
+          <div class="examples" id="examples"></div>
+        </div>
+
+        <p class="hint">
+          One link per line: <code>a -&gt; b : 7</code>. Separators:
+          <code>-&gt;</code> <code>--</code> <code>-</code> or a space. Weight
+          markers: <code>:</code> <code>=</code> <code>@</code> <code>|</code> or
+          <code>(7)</code>; no weight means cost <code>1</code>. A single word is
+          an isolated node. <code>#</code> starts a comment.
+        </p>
+      </div>
+
+      <!-- ---------------- picture + read-out ---------------- -->
+      <div class="stage-col">
+        <div id="verdict" class="verdict" aria-live="polite"></div>
+
+        <div class="viz">
+          <svg id="canvas" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The weighted graph drawn as a network"></svg>
+        </div>
+
+        <div class="viz-controls panel">
+          <div class="grp">
+            <button id="run" type="button">Watch it settle ▸</button>
+          </div>
+          <div class="grp">
+            <label class="small">Layout</label>
+            <button id="relayout" type="button">Shuffle</button>
+          </div>
+          <div class="grp">
+            <label class="small" for="iters">Settle</label>
+            <input type="range" id="iters" min="40" max="500" value="300" step="20" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>The <em>distances</em> from the source</h2>
+          <div class="stats-grid" id="stats"></div>
+          <table class="dist-table" id="distTable"></table>
+          <p class="findings" id="findings"></p>
+          <p class="verify" id="verify"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithm and how
+        every answer is verified.
+      </p>
+    </footer>
+  </main>
+
+  <script src="dijkstra-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

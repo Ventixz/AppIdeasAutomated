@@ -39,13 +39,13 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (28 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (29 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
-| Graph | 🚧 In progress — **3 / 5** |
+| Graph | 🚧 In progress — **4 / 5** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -254,8 +254,23 @@ roads between the same towns means neither can be a single point of failure.
 Every claim — connectivity, cut vertices, bridges, SCCs — is confirmed against an
 **independent brute-force oracle** (a second flood fill, remove-and-recount, and
 all-pairs reachability), with a fuzz loop of 600 random graphs. That took the
-**Graph** category to 3 / 5; the next entry, _Dijkstra's Algorithm_, is up next.
-Same rules, same source.
+**Graph** category to 3 / 5. Its fourth entry, **Dijkstra's Algorithm** — find
+the shortest path between two nodes of a graph — landed on 2026-10-01. Give it a
+**weighted** graph and a source and it computes, in one pass, the cheapest cost
+to *every* reachable node and the route to each: it settles the nearest unsettled
+node, **relaxes** its edges, and repeats, driven by a **binary min-heap** with
+lazy deletion (O((V + E) log V)). The whole **shortest-path tree** is drawn with
+each node's distance labelled; pick a target and its path lights up; and *Watch
+it settle* animates the algorithm finalising nodes in distance order, the
+frontier always one hop ahead — which is the intuition for *why* it is correct,
+and for why it needs **non-negative weights** (a settled node is final only
+because no later path can undercut it). Every distance is checked against
+**Bellman–Ford**, a wholly different algorithm, and against the **relaxation
+invariant** (a labelling is optimal exactly when no edge can still be relaxed);
+small graphs are also checked against brute-force all-paths, and every
+reconstructed path is re-walked edge by edge — all pinned by a 500-graph fuzz
+loop. That took the **Graph** category to 4 / 5; the last entry, _Minimum
+Spanning Tree_, is up next. Same rules, same source.
 
 ## Projects built so far
 
@@ -378,6 +393,7 @@ Same rules, same source.
 | 115 | [Graph from Links](./projects/phase2-graph/graph-from-links/) | Graph · Source 2 | 2026-09-28 |
 | 116 | [Eulerian Path](./projects/phase2-graph/eulerian-path/) | Graph · Source 2 | 2026-09-29 |
 | 117 | [Connected Graph](./projects/phase2-graph/connected-graph/) | Graph · Source 2 | 2026-09-30 |
+| 118 | [Dijkstra's Algorithm](./projects/phase2-graph/dijkstra/) | Graph · Source 2 | 2026-10-01 |
 
 ## Repository layout
 
@@ -425,6 +441,8 @@ projects/
   phase2-graph/               # Source 2 (karan/Projects) — Graph category
     graph-from-links/         # parse links into a network; seeded force layout, components/reachability/cycles
     eulerian-path/            # Euler's theorem: circuit/path/none by degree; Hierholzer's trail, animated & verified
+    connected-graph/          # connected? + cut vertices/bridges (Tarjan) & SCCs; animated flood fill, brute-checked
+    dijkstra/                 # single-source shortest paths via binary-heap Dijkstra; tree drawn, Bellman–Ford verified
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
