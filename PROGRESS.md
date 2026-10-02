@@ -187,4 +187,15 @@ routine works down this section next, one project per day. Populated from the
 - [x] Eulerian Path — 2026-09-29
 - [x] Connected Graph — 2026-09-30
 - [x] Dijkstra's Algorithm — 2026-10-01
-- [ ] Minimum Spanning Tree
+- [x] Minimum Spanning Tree — 2026-10-02
+
+**Graph complete — all 5 projects built. The next category, Data Structures,
+is now unlocked.**
+
+### Data Structures
+
+Unlocked 2026-10-02 after the Graph category was finished. The routine works
+down this section next, one project per day. Populated from the
+[karan/Projects Data Structures section](https://github.com/karan/Projects).
+
+- [ ] Inverted Index
