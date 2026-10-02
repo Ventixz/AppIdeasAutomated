@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimum Spanning Tree</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Minimum Spanning Tree</h1>
+      <p class="tagline">
+        Give it a <em>weighted</em> graph and it finds the
+        <strong>cheapest set of links that keeps everything connected</strong> —
+        no cycles, nothing wasted. The <span class="sw tree"></span> chosen edges
+        are the tree; the <span class="sw drop"></span> faded ones were dropped
+        for being too heavy. Two classic algorithms —
+        <strong>Kruskal's</strong> and <strong>Prim's</strong> — compute it, and
+        the answer is double-checked for minimality.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel input-col">
+        <h2>Your <em>weighted links</em></h2>
+        <textarea id="links" spellcheck="false" aria-label="Weighted links, one per line"></textarea>
+
+        <div class="row between">
+          <div class="grp">
+            <label class="small" for="algo">Algorithm</label>
+            <select id="algo">
+              <option value="kruskal">Kruskal's</option>
+              <option value="prim">Prim's</option>
+            </select>
+          </div>
+          <button id="build" class="primary" type="button">Build the tree ↵</button>
+        </div>
+
+        <p id="warnings" class="warnings" aria-live="polite"></p>
+
+        <div class="row" id="startRow">
+          <div class="grp">
+            <label class="small" for="start">Prim starts at</label>
+            <select id="start"></select>
+          </div>
+        </div>
+
+        <div>
+          <label class="small">Load an example</label>
+          <div class="examples" id="examples"></div>
+        </div>
+
+        <p class="hint">
+          One link per line: <code>a -- b : 7</code>. Separators:
+          <code>--</code> <code>-</code> or a space (arrows are read as plain
+          links — a tree has no direction). Weight markers: <code>:</code>
+          <code>=</code> <code>@</code> <code>|</code> or <code>(7)</code>; no
+          weight means cost <code>1</code>. A single word is an isolated node.
+          <code>#</code> starts a comment.
+        </p>
+      </div>
+
+      <!-- ---------------- picture + read-out ---------------- -->
+      <div class="stage-col">
+        <div id="verdict" class="verdict" aria-live="polite"></div>
+
+        <div class="viz">
+          <svg id="canvas" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The weighted graph drawn as a network, with the minimum spanning tree highlighted"></svg>
+        </div>
+
+        <div class="viz-controls panel">
+          <div class="grp">
+            <button id="run" type="button">Watch it build ▸</button>
+          </div>
+          <div class="grp">
+            <label class="small">Layout</label>
+            <button id="relayout" type="button">Shuffle</button>
+          </div>
+          <div class="grp">
+            <label class="small" for="iters">Settle</label>
+            <input type="range" id="iters" min="40" max="500" value="300" step="20" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>The <em>chosen edges</em></h2>
+          <div class="stats-grid" id="stats"></div>
+          <table class="edge-table" id="edgeTable"></table>
+          <p class="findings" id="findings"></p>
+          <p class="verify" id="verify"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for the algorithms and how
+        every answer is verified.
+      </p>
+    </footer>
+  </main>
+
+  <script src="mst-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

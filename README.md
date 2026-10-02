@@ -39,13 +39,14 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (29 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (31 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
-| Graph | 🚧 In progress — **4 / 5** |
+| Graph | ✅ Complete — **5 / 5** |
+| Data Structures | 🚧 In progress — **0 / 1** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -269,8 +270,27 @@ because no later path can undercut it). Every distance is checked against
 invariant** (a labelling is optimal exactly when no edge can still be relaxed);
 small graphs are also checked against brute-force all-paths, and every
 reconstructed path is re-walked edge by edge — all pinned by a 500-graph fuzz
-loop. That took the **Graph** category to 4 / 5; the last entry, _Minimum
-Spanning Tree_, is up next. Same rules, same source.
+loop. That took the **Graph** category to 4 / 5. Its fifth and final entry,
+**Minimum Spanning Tree** — Prim's and Kruskal's algorithms — landed on
+2026-10-02. Give it a **weighted** graph and it finds the cheapest set of edges
+that keeps every node connected with no redundant loop: **Kruskal's** sorts all
+edges and adds the lightest that doesn't close a cycle (the cycle test run by a
+**union-find** structure), while **Prim's** grows one tree outward, always taking
+the cheapest edge leaving it (via a **binary min-heap**). Two different routes,
+one identical total — and the page checks they agree. The chosen tree is drawn in
+green with the dropped edges faded, an edge table marks each link *kept* or
+*dropped*, and *Watch it build* animates the sweep, rejected edges flashing red as
+they'd close a loop; a disconnected graph honestly yields a minimum spanning
+**forest** instead. Minimality is **proved**, not asserted: the totals are cross-
+checked between the two algorithms and against brute-force enumeration of every
+spanning forest on small graphs, and the **cycle property** (no non-tree edge is
+lighter than the heaviest edge on the tree path it would close) is verified with
+no violation — all pinned by a 600-graph fuzz loop, with a deliberately-wrong
+tree in the tests confirming the check actually fires. That **completed the Graph
+category — 5 / 5 — and with it finished the third karan/Projects category.** Per
+the routine's rule, it moved straight on to the next section, **Data
+Structures**, whose sole project — _Inverted Index_ — is up next. Same rules,
+same source.
 
 ## Projects built so far
 
@@ -394,6 +414,7 @@ Spanning Tree_, is up next. Same rules, same source.
 | 116 | [Eulerian Path](./projects/phase2-graph/eulerian-path/) | Graph · Source 2 | 2026-09-29 |
 | 117 | [Connected Graph](./projects/phase2-graph/connected-graph/) | Graph · Source 2 | 2026-09-30 |
 | 118 | [Dijkstra's Algorithm](./projects/phase2-graph/dijkstra/) | Graph · Source 2 | 2026-10-01 |
+| 119 | [Minimum Spanning Tree](./projects/phase2-graph/minimum-spanning-tree/) | Graph · Source 2 | 2026-10-02 |
 
 ## Repository layout
 
@@ -443,6 +464,7 @@ projects/
     eulerian-path/            # Euler's theorem: circuit/path/none by degree; Hierholzer's trail, animated & verified
     connected-graph/          # connected? + cut vertices/bridges (Tarjan) & SCCs; animated flood fill, brute-checked
     dijkstra/                 # single-source shortest paths via binary-heap Dijkstra; tree drawn, Bellman–Ford verified
+    minimum-spanning-tree/    # cheapest connecting edges via Kruskal (union-find) & Prim (heap); cycle-property proof
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
