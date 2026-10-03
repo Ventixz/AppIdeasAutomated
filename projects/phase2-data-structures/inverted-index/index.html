@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inverted Index</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Inverted Index</h1>
+      <p class="tagline">
+        The data structure behind <strong>full-text search</strong>. Drop in a
+        handful of <em>text files</em> and this builds, in memory, a map from
+        every word to the <strong>sorted list of files that contain it</strong>
+        — its <em>postings list</em>. A query is then answered by merging a few
+        short lists instead of re-reading every file. Supports
+        <code>AND</code>, <code>OR</code>, <code>-not</code> and
+        <code>"exact phrases"</code>, ranks hits by <strong>TF-IDF</strong>, and
+        checks every result against a brute-force scan.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- corpus column ---------------- -->
+      <div class="panel corpus-col">
+        <div class="row between tight">
+          <h2>The <em>corpus</em> — your text files</h2>
+          <span class="count-pill" id="docCount">0 files</span>
+        </div>
+
+        <div id="docs" class="docs"></div>
+
+        <div class="row">
+          <button id="addDoc" type="button">+ Add a file</button>
+          <button id="reset" type="button">Reset to samples</button>
+        </div>
+
+        <div class="options">
+          <label class="opt"><input type="checkbox" id="optStop" checked /> Remove stop words <span class="small">(the, and, of…)</span></label>
+          <label class="opt"><input type="checkbox" id="optStem" checked /> Fold word endings <span class="small">(cats→cat, running→run)</span></label>
+        </div>
+
+        <p class="hint">
+          Each box is one “file”. The index rebuilds automatically as you type.
+          Analysis lower-cases text, splits on punctuation, and — with the boxes
+          above ticked — drops common stop words and folds a few word endings so
+          <code>Cats</code> and <code>cat</code> count as the same term.
+        </p>
+      </div>
+
+      <!-- ---------------- search + results ---------------- -->
+      <div class="stage-col">
+        <div class="panel search-panel">
+          <label class="small" for="query">Search the index</label>
+          <input type="text" id="query" autocomplete="off" spellcheck="false"
+                 placeholder='try:  fox  ·  quick brown  ·  cat OR dog  ·  fox -lazy  ·  "quick brown fox"' />
+          <div class="row wrap examples" id="examples"></div>
+          <div id="verdict" class="verdict" aria-live="polite"></div>
+          <p class="verify" id="verify" aria-live="polite"></p>
+        </div>
+
+        <div class="panel">
+          <h2>Results <span class="small">ranked by relevance (TF-IDF)</span></h2>
+          <div id="results" class="results"></div>
+        </div>
+
+        <div class="panel">
+          <div class="row between tight">
+            <h2>The inverted index <span class="small">term → files</span></h2>
+            <input type="text" id="filter" class="filter" autocomplete="off"
+                   placeholder="filter terms…" aria-label="Filter index terms" />
+          </div>
+          <div class="index-meta" id="indexMeta"></div>
+          <div class="index-wrap">
+            <table class="index-table" id="indexTable"></table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for how the index is built
+        and how every result is verified.
+      </p>
+    </footer>
+  </main>
+
+  <script src="inverted-index-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

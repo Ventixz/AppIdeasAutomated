@@ -39,14 +39,15 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (31 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (32 built)**
 
 | Category | Status |
 | --- | --- |
 | Numbers | ✅ Complete — **22 / 22** |
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
-| Data Structures | 🚧 In progress — **0 / 1** |
+| Data Structures | ✅ Complete — **1 / 1** |
+| Text | 🚧 In progress — **0 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -289,8 +290,22 @@ no violation — all pinned by a 600-graph fuzz loop, with a deliberately-wrong
 tree in the tests confirming the check actually fires. That **completed the Graph
 category — 5 / 5 — and with it finished the third karan/Projects category.** Per
 the routine's rule, it moved straight on to the next section, **Data
-Structures**, whose sole project — _Inverted Index_ — is up next. Same rules,
-same source.
+Structures**, whose sole entry, **Inverted Index** — the data structure behind
+full-text search — landed on 2026-10-03. Drop in a set of text files and it
+builds, in memory, the map from every word to the sorted list of files that
+contain it (that word's **postings list**), with per-file term frequencies and
+positions. A query is then answered by merging a few short sorted lists —
+**AND** is a linear intersection, **OR** a union, **NOT** a difference against
+all files, and a `"quoted phrase"` an intersection refined by a positional check
+that the words land adjacent and in order — never by re-reading the corpus.
+Matches are ranked by **TF-IDF**, shown with keyword-in-context snippets, and the
+`term → files` table is drawn live with the query's terms lit up. Correctness is
+**proved**, not asserted: answering through the index must return exactly the
+files a brute-force per-document scan would, and a **4,000-trial fuzz loop** over
+random corpora and random boolean/phrase queries fails to drive the two apart.
+That **completed the Data Structures category — 1 / 1 — the fourth
+karan/Projects category finished.** Next up, per the same rule, is the **Text**
+category, beginning with _Fizz Buzz_. Same rules, same source.
 
 ## Projects built so far
 
@@ -415,6 +430,7 @@ same source.
 | 117 | [Connected Graph](./projects/phase2-graph/connected-graph/) | Graph · Source 2 | 2026-09-30 |
 | 118 | [Dijkstra's Algorithm](./projects/phase2-graph/dijkstra/) | Graph · Source 2 | 2026-10-01 |
 | 119 | [Minimum Spanning Tree](./projects/phase2-graph/minimum-spanning-tree/) | Graph · Source 2 | 2026-10-02 |
+| 120 | [Inverted Index](./projects/phase2-data-structures/inverted-index/) | Data Structures · Source 2 | 2026-10-03 |
 
 ## Repository layout
 
@@ -465,6 +481,8 @@ projects/
     connected-graph/          # connected? + cut vertices/bridges (Tarjan) & SCCs; animated flood fill, brute-checked
     dijkstra/                 # single-source shortest paths via binary-heap Dijkstra; tree drawn, Bellman–Ford verified
     minimum-spanning-tree/    # cheapest connecting edges via Kruskal (union-find) & Prim (heap); cycle-property proof
+  phase2-data-structures/     # Source 2 (karan/Projects) — Data Structures category
+    inverted-index/           # full-text search: postings lists, boolean/phrase queries, TF-IDF; index merge vs. brute-force scan
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
