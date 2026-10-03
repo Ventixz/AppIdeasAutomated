@@ -198,4 +198,15 @@ Unlocked 2026-10-02 after the Graph category was finished. The routine works
 down this section next, one project per day. Populated from the
 [karan/Projects Data Structures section](https://github.com/karan/Projects).
 
-- [ ] Inverted Index
+- [x] Inverted Index — 2026-10-03
+
+**Data Structures complete — its 1 project built. The next category, Text,
+is now unlocked.**
+
+### Text
+
+Unlocked 2026-10-03 after the Data Structures category was finished. The routine
+works down this section next, one project per day. Populated from the
+[karan/Projects Text section](https://github.com/karan/Projects).
+
+- [ ] Fizz Buzz
