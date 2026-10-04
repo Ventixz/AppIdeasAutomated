@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (32 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (33 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **0 / 12** |
+| Text | 🚧 In progress — **1 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -304,8 +304,24 @@ Matches are ranked by **TF-IDF**, shown with keyword-in-context snippets, and th
 files a brute-force per-document scan would, and a **4,000-trial fuzz loop** over
 random corpora and random boolean/phrase queries fails to drive the two apart.
 That **completed the Data Structures category — 1 / 1 — the fourth
-karan/Projects category finished.** Next up, per the same rule, is the **Text**
-category, beginning with _Fizz Buzz_. Same rules, same source.
+karan/Projects category finished.** Per the same rule, the routine moved on to
+the **Text** category, and its first entry, **Fizz Buzz** — the classic
+interview warm-up — landed on 2026-10-04. Rather than hard-code "3 → Fizz,
+5 → Buzz", it makes the rules **data**: a rule is a `{ divisor, word }` pair,
+and a number becomes the words of every rule that divides it (joined in order)
+or stays itself when none match — so classic Fizz Buzz is just the two rules
+`3 → Fizz` and `5 → Buzz`, and `15` prints `FizzBuzz` because both concatenate.
+The playground lets you edit the rules live, add a third or fourth, and run any
+range — ascending, descending, or across zero — with each word colour-coded in
+the output grid and a tally of what the range did. The conventions a one-liner
+never has to decide are pinned by tests: `0` is a multiple of everything,
+divisibility ignores sign, rule order is output order, and a zero or non-integer
+divisor is rejected rather than guessed. Correctness is **verified**, not
+asserted: the engine's output must match an **independent re-statement** of the
+rules — on the canonical 1→100 game and across a randomised fuzz loop over
+hundreds of rule sets and ranges — and the same check runs live in the browser as
+a ✓ Verified line. Next up, per the same rule, is **Reverse a String**. Same
+rules, same source.
 
 ## Projects built so far
 
@@ -431,6 +447,7 @@ category, beginning with _Fizz Buzz_. Same rules, same source.
 | 118 | [Dijkstra's Algorithm](./projects/phase2-graph/dijkstra/) | Graph · Source 2 | 2026-10-01 |
 | 119 | [Minimum Spanning Tree](./projects/phase2-graph/minimum-spanning-tree/) | Graph · Source 2 | 2026-10-02 |
 | 120 | [Inverted Index](./projects/phase2-data-structures/inverted-index/) | Data Structures · Source 2 | 2026-10-03 |
+| 121 | [Fizz Buzz](./projects/phase2-text/fizz-buzz/) | Text · Source 2 | 2026-10-04 |
 
 ## Repository layout
 
@@ -483,6 +500,8 @@ projects/
     minimum-spanning-tree/    # cheapest connecting edges via Kruskal (union-find) & Prim (heap); cycle-property proof
   phase2-data-structures/     # Source 2 (karan/Projects) — Data Structures category
     inverted-index/           # full-text search: postings lists, boolean/phrase queries, TF-IDF; index merge vs. brute-force scan
+  phase2-text/                # Source 2 (karan/Projects) — Text category
+    fizz-buzz/                # rules-as-data Fizz Buzz: editable divisor→word rules, any range; engine vs. independent oracle
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
