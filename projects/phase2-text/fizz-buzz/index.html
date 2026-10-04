@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fizz Buzz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Fizz Buzz</h1>
+      <p class="tagline">
+        The classic interview warm-up — print <code>1</code> to <code>100</code>,
+        but say <em>Fizz</em> on multiples of 3, <em>Buzz</em> on multiples of 5,
+        and <strong>FizzBuzz</strong> on multiples of both. Here it's turned into
+        a playground: the rules are <strong>data</strong>, so you can change the
+        divisors and words, pick any range, and watch the sequence rebuild live —
+        with every line <strong>verified</strong> against an independent check.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- controls column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>The <em>rules</em></h2>
+          <span class="count-pill" id="ruleCount">0 rules</span>
+        </div>
+
+        <p class="hint tight-top">
+          Each rule is a <strong>divisor</strong> and a <strong>word</strong>.
+          A number is replaced by the words of every rule that divides it, joined
+          in order — or kept as-is when none match. Classic Fizz&nbsp;Buzz is just
+          <code>3 → Fizz</code> and <code>5 → Buzz</code>.
+        </p>
+
+        <div id="rules" class="rules"></div>
+
+        <div class="row">
+          <button id="addRule" type="button">+ Add a rule</button>
+          <button id="reset" type="button">Reset to classic</button>
+        </div>
+
+        <h2 class="section-gap">The <em>range</em></h2>
+        <div class="range-row">
+          <label class="field">
+            <span class="small">From</span>
+            <input type="number" id="start" value="1" />
+          </label>
+          <label class="field">
+            <span class="small">To</span>
+            <input type="number" id="end" value="100" />
+          </label>
+        </div>
+        <div class="row wrap presets" id="presets"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- output + stats ---------------- -->
+      <div class="stage-col">
+        <div class="panel">
+          <div class="row between tight">
+            <h2>The output <span class="small" id="outMeta"></span></h2>
+            <button id="copyOut" type="button" class="ghost">Copy</button>
+          </div>
+          <div id="grid" class="grid"></div>
+        </div>
+
+        <div class="panel">
+          <h2>What this range did <span class="small">a tally of the run</span></h2>
+          <div id="stats" class="stats"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for how the generalised
+        engine works and how every line is verified.
+      </p>
+    </footer>
+  </main>
+
+  <script src="fizzbuzz-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

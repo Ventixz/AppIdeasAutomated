@@ -209,4 +209,15 @@ Unlocked 2026-10-03 after the Data Structures category was finished. The routine
 works down this section next, one project per day. Populated from the
 [karan/Projects Text section](https://github.com/karan/Projects).
 
-- [ ] Fizz Buzz
+- [x] Fizz Buzz — 2026-10-04
+- [ ] Reverse a String
+- [ ] Pig Latin
+- [ ] Count Vowels
+- [ ] Check if Palindrome
+- [ ] Count Words in a String
+- [ ] Text Editor
+- [ ] RSS Feed Creator
+- [ ] Quote Tracker
+- [ ] Guestbook / Journal
+- [ ] Vigenere / Vernam / Caesar Ciphers
+- [ ] Regex Query Tool
