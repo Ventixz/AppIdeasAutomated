@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (33 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (34 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **1 / 12** |
+| Text | 🚧 In progress — **2 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -320,8 +320,26 @@ divisor is rejected rather than guessed. Correctness is **verified**, not
 asserted: the engine's output must match an **independent re-statement** of the
 rules — on the canonical 1→100 game and across a randomised fuzz loop over
 hundreds of rule sets and ranges — and the same check runs live in the browser as
-a ✓ Verified line. Next up, per the same rule, is **Reverse a String**. Same
-rules, same source.
+a ✓ Verified line. The Text category's second entry, **Reverse a String**,
+landed on 2026-10-05 — and it takes the genre's most famous one-liner,
+`s.split("").reverse().join("")`, and shows it *failing*. A JavaScript string is
+a sequence of UTF-16 **code units**, not of the characters a reader sees, so
+that line tears emoji in half and floats accents onto the wrong letter. The
+playground reverses your text at three honestly-labelled granularities — code
+units (fast, and wrong for anything astral: a torn surrogate pair shows as �),
+code points (`[...s]`: keeps emoji whole but still mangles a `e`+◌́ accent, a 🇺🇸
+flag or a 👨‍👩‍👧 family), and **grapheme clusters** (the characters you mean) —
+badging each ✓ safe or ✗ corrupting for *your* input, beside the three counts
+and a per-cluster breakdown. The correct level needs real Unicode text
+segmentation, implemented here from the [UAX #29](https://unicode.org/reports/tr29/)
+grapheme rules **by hand** (combining marks, ZWJ emoji sequences,
+regional-indicator flag pairs, skin-tone modifiers, CRLF) with **no dependency
+on `Intl.Segmenter`** — which frees the test suite to use `Intl.Segmenter` as a
+fully **independent oracle**: the two must agree on segmentation *and* reversal
+across a curated corpus and ~1,500 fuzzed strings, every level is proven an
+**involution** (`reverse(reverse(s)) === s`) over ~2,000 more, and the same
+oracle runs live in the browser as the ✓ Verified line. Next up, per the same
+rule, is **Pig Latin**. Same rules, same source.
 
 ## Projects built so far
 
@@ -448,6 +466,7 @@ rules, same source.
 | 119 | [Minimum Spanning Tree](./projects/phase2-graph/minimum-spanning-tree/) | Graph · Source 2 | 2026-10-02 |
 | 120 | [Inverted Index](./projects/phase2-data-structures/inverted-index/) | Data Structures · Source 2 | 2026-10-03 |
 | 121 | [Fizz Buzz](./projects/phase2-text/fizz-buzz/) | Text · Source 2 | 2026-10-04 |
+| 122 | [Reverse a String](./projects/phase2-text/reverse-a-string/) | Text · Source 2 | 2026-10-05 |
 
 ## Repository layout
 
@@ -502,6 +521,7 @@ projects/
     inverted-index/           # full-text search: postings lists, boolean/phrase queries, TF-IDF; index merge vs. brute-force scan
   phase2-text/                # Source 2 (karan/Projects) — Text category
     fizz-buzz/                # rules-as-data Fizz Buzz: editable divisor→word rules, any range; engine vs. independent oracle
+    reverse-a-string/         # Unicode-correct reversal: code units vs. code points vs. graphemes; hand-written UAX #29 segmenter vs. Intl.Segmenter oracle
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

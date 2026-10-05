@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reverse a String</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Reverse a String</h1>
+      <p class="tagline">
+        The one-liner everyone knows is
+        <code>s.split("").reverse().join("")</code> — and for plain text it's
+        perfect. But a JavaScript string is a sequence of UTF-16
+        <em>code units</em>, not of the characters you see, so that one line
+        tears emoji in half and floats accents onto the wrong letter. Type
+        something below and watch reversal at <strong>three honest
+        granularities</strong>, every line <strong>verified</strong> live
+        against the platform's own Unicode segmenter.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>Your <em>text</em></h2>
+          <span class="count-pill" id="lenPill">0 chars</span>
+        </div>
+
+        <textarea id="input" rows="4" spellcheck="false"
+          aria-label="text to reverse"></textarea>
+
+        <p class="hint">Try one of these — each exposes a different trap:</p>
+        <div class="row wrap presets" id="presets"></div>
+
+        <h2 class="section-gap">What's actually <em>in here</em></h2>
+        <div class="counts" id="counts"></div>
+
+        <h2 class="section-gap">The <em>grapheme</em> breakdown</h2>
+        <p class="hint tight-top">
+          The user-perceived characters the correct reversal flips, in order.
+        </p>
+        <div class="chips" id="chips"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- reversals ---------------- -->
+      <div class="stage-col" id="levels"></div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why reversing a string
+        is harder than it looks and how every line is verified.
+      </p>
+    </footer>
+  </main>
+
+  <script src="reverse-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
