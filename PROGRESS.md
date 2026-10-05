@@ -210,7 +210,7 @@ works down this section next, one project per day. Populated from the
 [karan/Projects Text section](https://github.com/karan/Projects).
 
 - [x] Fizz Buzz — 2026-10-04
-- [ ] Reverse a String
+- [x] Reverse a String — 2026-10-05
 - [ ] Pig Latin
 - [ ] Count Vowels
 - [ ] Check if Palindrome
