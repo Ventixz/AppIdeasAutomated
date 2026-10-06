@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pig Latin</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Pig Latin</h1>
+      <p class="tagline">
+        "Move the first letter to the end and add <code>ay</code>" is the
+        version everyone remembers — and it's wrong. What actually moves is the
+        <strong>onset</strong>, the run of consonants before the first vowel
+        (<code>smile → ilesmay</code>), and "vowel" is slippery: <strong>y</strong>
+        is a consonant at the start of a word but a vowel inside it, and
+        <strong>qu</strong> travels as a unit. Type below and watch each word's
+        onset split off, with the result <em>verified</em> live — and see why Pig
+        Latin <em>can't be undone</em>.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>Your <em>text</em></h2>
+          <span class="count-pill" id="wordPill">0 words</span>
+        </div>
+
+        <textarea id="input" rows="4" spellcheck="false"
+          aria-label="text to translate"></textarea>
+
+        <p class="hint">Try one — each shows a different rule at work:</p>
+        <div class="row wrap presets" id="presets"></div>
+
+        <h2 class="section-gap">Vowel-word <em>suffix</em></h2>
+        <p class="hint tight-top">
+          Consonant words always take <code>ay</code>; only a word that already
+          starts with a vowel is a matter of taste.
+        </p>
+        <div class="row wrap styles" id="styles"></div>
+
+        <h2 class="section-gap">What's actually <em>in here</em></h2>
+        <div class="counts" id="counts"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- stage ---------------- -->
+      <div class="stage-col">
+        <div class="card">
+          <div class="head">
+            <span class="name">Pig Latin</span>
+            <button type="button" class="copy" id="copyBtn">copy</button>
+          </div>
+          <p class="desc">Only letter-runs are translated; spaces, punctuation
+            and digits are left exactly where they were.</p>
+          <div class="out" id="output"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">Word by word</span>
+          <p class="desc">The <span class="onset">onset</span> (what moves) ·
+            the <span class="rest">rest</span> · the <span class="suffix">suffix</span>.</p>
+          <div id="breakdown"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">Undo it — if you can</span>
+          <p class="desc">The consonant rule rotates a word's letters and adds a
+            suffix, recording nothing about <em>how far</em> it rotated. So
+            decoding means guessing: every rotation whose onset re-encodes to the
+            input is a valid original. Type a Pig Latin word.</p>
+          <input type="text" class="decode-in" id="decodeIn" spellcheck="false"
+            aria-label="a Pig Latin word to decode" />
+          <div class="cands" id="cands"></div>
+          <p class="cands-note" id="candsNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why a schoolyard game
+        hides a syllable-onset rule and a non-invertible transform.
+      </p>
+    </footer>
+  </main>
+
+  <script src="piglatin-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
