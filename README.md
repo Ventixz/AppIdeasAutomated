@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (34 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (35 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **2 / 12** |
+| Text | 🚧 In progress — **3 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -338,8 +338,30 @@ on `Intl.Segmenter`** — which frees the test suite to use `Intl.Segmenter` as 
 fully **independent oracle**: the two must agree on segmentation *and* reversal
 across a curated corpus and ~1,500 fuzzed strings, every level is proven an
 **involution** (`reverse(reverse(s)) === s`) over ~2,000 more, and the same
-oracle runs live in the browser as the ✓ Verified line. Next up, per the same
-rule, is **Pig Latin**. Same rules, same source.
+oracle runs live in the browser as the ✓ Verified line. The Text category's
+third entry, **Pig Latin**, landed on 2026-10-06 — and like Reverse a String it
+starts from the one-liner everyone remembers, *"move the first letter to the end
+and add `ay`"*, and shows the rule is bigger than that. What actually moves is
+the **onset** — the run of consonants before the first vowel — so
+`smile → ilesmay` and `string → ingstray`; and "vowel" is slippery: **y** is a
+consonant at the *start* of a word (`yellow → ellowyay`) but a vowel inside it
+(`rhythm → ythmrhay`), while the **qu** digraph travels as one unit
+(`quiet → ietquay`). Vowel-initial words take a different suffix
+(`apple → appleway`), capitalisation is carried onto the result
+(`Pig → Igpay`), and punctuation, spaces and digits are left exactly where they
+sat (`Hello, world! → Ellohay, orldway!`). The playground shows the work for
+every word — onset, rest and suffix colour-coded — with a census of the tricky
+cases. Its sharpest idea is the mirror image of Reverse a String's involution:
+Pig Latin **loses information**. The consonant rule rotates a word's letters and
+appends a fixed suffix, recording nothing about *how far* it rotated, so undoing
+it means guessing — `appleway` decodes to both `apple` and `wapple`, `antpay` to
+`pant`, `tpan` and `ntpa`. The page exhibits that **non-invertibility** live, and
+with no platform oracle to borrow, the suite grows its own: the onset rule is
+written **twice, two different ways** (a forward scan and a first-vowel search
+with a qu fix-up) that must agree across a 20,000-word fuzz, alongside a text
+round-trip, an anagram invariant, decoder-soundness, and a concrete collision —
+the same cross-check running live as the ✓ Verified line. Next up, per the same
+rule, is **Count Vowels**. Same rules, same source.
 
 ## Projects built so far
 
@@ -467,6 +489,7 @@ rule, is **Pig Latin**. Same rules, same source.
 | 120 | [Inverted Index](./projects/phase2-data-structures/inverted-index/) | Data Structures · Source 2 | 2026-10-03 |
 | 121 | [Fizz Buzz](./projects/phase2-text/fizz-buzz/) | Text · Source 2 | 2026-10-04 |
 | 122 | [Reverse a String](./projects/phase2-text/reverse-a-string/) | Text · Source 2 | 2026-10-05 |
+| 123 | [Pig Latin](./projects/phase2-text/pig-latin/) | Text · Source 2 | 2026-10-06 |
 
 ## Repository layout
 
@@ -522,6 +545,7 @@ projects/
   phase2-text/                # Source 2 (karan/Projects) — Text category
     fizz-buzz/                # rules-as-data Fizz Buzz: editable divisor→word rules, any range; engine vs. independent oracle
     reverse-a-string/         # Unicode-correct reversal: code units vs. code points vs. graphemes; hand-written UAX #29 segmenter vs. Intl.Segmenter oracle
+    pig-latin/                # onset-based Pig Latin: y/qu rules, case & punctuation preserved; non-invertible (decode shows collisions); onset rule verified two ways
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
