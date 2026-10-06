@@ -211,7 +211,7 @@ works down this section next, one project per day. Populated from the
 
 - [x] Fizz Buzz — 2026-10-04
 - [x] Reverse a String — 2026-10-05
-- [ ] Pig Latin
+- [x] Pig Latin — 2026-10-06
 - [ ] Count Vowels
 - [ ] Check if Palindrome
 - [ ] Count Words in a String
