@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (35 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (36 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **3 / 12** |
+| Text | 🚧 In progress — **4 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -360,8 +360,30 @@ with no platform oracle to borrow, the suite grows its own: the onset rule is
 written **twice, two different ways** (a forward scan and a first-vowel search
 with a qu fix-up) that must agree across a 20,000-word fuzz, alongside a text
 round-trip, an anagram invariant, decoder-soundness, and a concrete collision —
-the same cross-check running live as the ✓ Verified line. Next up, per the same
-rule, is **Count Vowels**. Same rules, same source.
+the same cross-check running live as the ✓ Verified line. The Text category's
+fourth entry, **Count Vowels**, landed on 2026-10-07 — and it takes the genre's
+most innocent-looking one-liner, `str.match(/[aeiou]/gi).length`, and shows it
+is quietly wrong the moment text looks like text people actually write. It
+scores `café` as **one** vowel, missing the `é` entirely; the honest fix is to
+fold every character to its base letter (Unicode **NFD**: `é → e` + a combining
+accent that's then dropped) before judging it, so `café → 2`, `naïve → 3`,
+`résumé → 3`, and `jalapeño → 4` (the `ñ` folds to `n`, correctly *not*
+counted). **y** is the same sometimes-vowel Pig Latin wrestled with, here a
+toggle reported in its own column; counting is done by Unicode **code point**,
+not UTF-16 unit, so an astral maths-bold `𝐚` is one character, not two; and an
+optional **compatibility** fold (NFKD) unpacks ligatures and styled letters
+(`ﬁ → f i`, `𝐚 → a`) so the vowels hiding inside them count too. The page shows
+the total, a per-vowel histogram, the text with every counted vowel highlighted,
+and — the point of the whole thing — the naive one-liner's answer right beside
+the correct one, so the gap is visible, not asserted. The count rule is written
+**twice** (a per-code-point scan that builds the histogram, and a whole-string
+normalise-and-regex pass) that must agree across a 40,000-string Unicode fuzz;
+both are grounded against the naive oracle on the ASCII subset where it's
+genuinely right, and the suite proves a small law — the count is
+**normalisation-invariant**, identical whether `é` arrives pre-composed or
+decomposed — with the scan-vs-regex and invariance checks running live as the
+✓ Verified line. Next up, per the same rule, is **Check if Palindrome**. Same
+rules, same source.
 
 ## Projects built so far
 
@@ -490,6 +512,7 @@ rule, is **Count Vowels**. Same rules, same source.
 | 121 | [Fizz Buzz](./projects/phase2-text/fizz-buzz/) | Text · Source 2 | 2026-10-04 |
 | 122 | [Reverse a String](./projects/phase2-text/reverse-a-string/) | Text · Source 2 | 2026-10-05 |
 | 123 | [Pig Latin](./projects/phase2-text/pig-latin/) | Text · Source 2 | 2026-10-06 |
+| 124 | [Count Vowels](./projects/phase2-text/count-vowels/) | Text · Source 2 | 2026-10-07 |
 
 ## Repository layout
 
@@ -546,6 +569,7 @@ projects/
     fizz-buzz/                # rules-as-data Fizz Buzz: editable divisor→word rules, any range; engine vs. independent oracle
     reverse-a-string/         # Unicode-correct reversal: code units vs. code points vs. graphemes; hand-written UAX #29 segmenter vs. Intl.Segmenter oracle
     pig-latin/                # onset-based Pig Latin: y/qu rules, case & punctuation preserved; non-invertible (decode shows collisions); onset rule verified two ways
+    count-vowels/             # vowel counting as a Unicode problem: NFD/NFKD folding of accents & ligatures, code points vs units, y optional; scan vs. regex cross-check, naive one-liner shown failing
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
