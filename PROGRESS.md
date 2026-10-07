@@ -212,7 +212,7 @@ works down this section next, one project per day. Populated from the
 - [x] Fizz Buzz — 2026-10-04
 - [x] Reverse a String — 2026-10-05
 - [x] Pig Latin — 2026-10-06
-- [ ] Count Vowels
+- [x] Count Vowels — 2026-10-07
 - [ ] Check if Palindrome
 - [ ] Count Words in a String
 - [ ] Text Editor
