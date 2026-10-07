@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Count Vowels</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Count Vowels</h1>
+      <p class="tagline">
+        Everyone writes <code>str.match(/[aeiou]/gi).length</code> and calls it
+        done. It scores <strong>café</strong> as <em>one</em> vowel, misses the
+        <code>é</code> entirely, and can't decide what to do with
+        <strong>y</strong>. This page counts the honest way — folding accents
+        onto their base letter, counting by <em>code point</em> not byte — and
+        shows the naive answer right beside it so you can see the gap.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>Your <em>text</em></h2>
+          <span class="count-pill" id="cpPill">0 chars</span>
+        </div>
+
+        <textarea id="input" rows="5" spellcheck="false"
+          aria-label="text to count vowels in"></textarea>
+
+        <p class="hint">Try one — each shows a different rule at work:</p>
+        <div class="row wrap presets" id="presets"></div>
+
+        <h2 class="section-gap">Two <em>choices</em></h2>
+        <label class="opt">
+          <input type="checkbox" id="optY" />
+          <span><b>Count <code>y</code> as a vowel.</b> It is one in
+            <code>rhythm</code> and <code>my</code>, a consonant in
+            <code>yes</code> — there's no single right answer.</span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="optK" />
+          <span><b>Compatibility folding (NFKD).</b> Also unpacks ligatures and
+            styled letters — <code>ﬁ → f i</code>, <code>𝐚 → a</code> — so the
+            vowels hiding inside them count too.</span>
+        </label>
+
+        <h2 class="section-gap">By the <em>numbers</em></h2>
+        <div class="counts" id="stats"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- stage ---------------- -->
+      <div class="stage-col">
+        <div class="card total-card">
+          <span class="name">Vowels</span>
+          <div class="big" id="total">0</div>
+          <p class="desc" id="totalDesc">in <span id="descCount">0</span> code points.</p>
+        </div>
+
+        <div class="card">
+          <span class="name">Which vowels</span>
+          <p class="desc">Every occurrence, bucketed. <code>y</code> only
+            appears when you ask for it.</p>
+          <div class="histo" id="histo"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">Highlighted</span>
+          <p class="desc">Each counted vowel is marked — including the ones
+            hiding under an accent. Hover a mark to see the base letter.</p>
+          <div class="out" id="highlight"></div>
+        </div>
+
+        <div class="card compare-card">
+          <span class="name">The naive one-liner, side by side</span>
+          <p class="desc"><code>str.match(/[aeiou]/gi)</code> — correct only on
+            plain ASCII with <code>y</code> off. Watch it fall behind on real
+            text.</p>
+          <div class="compare" id="compare"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why counting vowels is
+        a Unicode problem in disguise.
+      </p>
+    </footer>
+  </main>
+
+  <script src="vowels-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
