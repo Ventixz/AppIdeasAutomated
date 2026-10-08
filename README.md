@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (36 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (37 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **4 / 12** |
+| Text | 🚧 In progress — **5 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -382,8 +382,30 @@ both are grounded against the naive oracle on the ASCII subset where it's
 genuinely right, and the suite proves a small law — the count is
 **normalisation-invariant**, identical whether `é` arrives pre-composed or
 decomposed — with the scan-vs-regex and invariance checks running live as the
-✓ Verified line. Next up, per the same rule, is **Check if Palindrome**. Same
-rules, same source.
+✓ Verified line. The Text category's fifth entry, **Check if Palindrome**,
+landed on 2026-10-08 — and it takes the genre's most famous one-liner,
+`s === s.split("").reverse().join("")`, and shows it is quietly wrong before the
+reversal even runs. `split("")` cuts between **UTF-16 units**, not characters, so
+it tears an emoji's surrogate pair in half: the single character `"😀"` comes
+back *not* a palindrome — a one-character string that isn't equal to itself
+reversed. The honest unit is the **grapheme cluster** (via `Intl.Segmenter`), so
+`"é"` typed as `e` + a combining accent reverses as one unit and the accent
+stays put. "A palindrome of *what*?" is then a set of explicit choices — ignore
+case (`RaceCar`), ignore spaces and punctuation (the only way
+`A man, a plan, a canal: Panama` works), fold accents to the base letter, or drop
+to the buggy code-point middle ground to *watch* a combining accent float off.
+The page shows a big YES/NO, the string folded to its comparison form with
+dropped characters dimmed, a **mirror** that lines each kept character against
+its partner and reddens the first break, and — the point of the whole thing —
+the naive one-liner's verdict right beside the correct one, so you can watch them
+diverge the moment an emoji or a filter is in play. The check is written
+**twice** (a two-pointer scan in from both ends, and a reverse-the-array compare)
+that must agree on both the verdict and the first-mismatch index — enforced at
+runtime and across a 40,000-string Unicode fuzz; the suite uses a palindrome
+**generator** as an oracle (`s + reverse(s)` is always a palindrome) and proves
+the verdict is **normalisation-invariant** under folding, with the two-impl and
+NFC/NFD checks running live as the ✓ Verified line. Next up, per the same rule,
+is **Count Words in a String**. Same rules, same source.
 
 ## Projects built so far
 
@@ -513,6 +535,7 @@ rules, same source.
 | 122 | [Reverse a String](./projects/phase2-text/reverse-a-string/) | Text · Source 2 | 2026-10-05 |
 | 123 | [Pig Latin](./projects/phase2-text/pig-latin/) | Text · Source 2 | 2026-10-06 |
 | 124 | [Count Vowels](./projects/phase2-text/count-vowels/) | Text · Source 2 | 2026-10-07 |
+| 125 | [Check if Palindrome](./projects/phase2-text/check-if-palindrome/) | Text · Source 2 | 2026-10-08 |
 
 ## Repository layout
 
@@ -570,6 +593,7 @@ projects/
     reverse-a-string/         # Unicode-correct reversal: code units vs. code points vs. graphemes; hand-written UAX #29 segmenter vs. Intl.Segmenter oracle
     pig-latin/                # onset-based Pig Latin: y/qu rules, case & punctuation preserved; non-invertible (decode shows collisions); onset rule verified two ways
     count-vowels/             # vowel counting as a Unicode problem: NFD/NFKD folding of accents & ligatures, code points vs units, y optional; scan vs. regex cross-check, naive one-liner shown failing
+    check-if-palindrome/      # palindrome by grapheme not byte: surrogate-pair & combining-mark traps, case/accent/punctuation toggles; two-pointer vs. reverse cross-check, naive one-liner shown failing
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

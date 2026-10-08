@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check if Palindrome</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Check if Palindrome</h1>
+      <p class="tagline">
+        Everyone writes <code>s === s.split("").reverse().join("")</code> and
+        calls it done. It reports <strong>😀</strong> — a single character — as
+        <em>not</em> a palindrome, because <code>split("")</code> tears the
+        emoji's surrogate pair in half. This page checks the honest way — by
+        <em>grapheme</em>, not by byte — and lets you decide what "the same
+        backwards" should ignore.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>Your <em>text</em></h2>
+          <span class="count-pill" id="cpPill">0 chars</span>
+        </div>
+
+        <textarea id="input" rows="4" spellcheck="false"
+          aria-label="text to test for being a palindrome"></textarea>
+
+        <p class="hint">Try one — each shows a different rule at work:</p>
+        <div class="row wrap presets" id="presets"></div>
+
+        <h2 class="section-gap">What to <em>ignore</em></h2>
+        <label class="opt">
+          <input type="checkbox" id="optCase" checked />
+          <span><b>Ignore case.</b> So <code>RaceCar</code> counts — a reader
+            calls it a palindrome, <code>===</code> does not.</span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="optAlnum" checked />
+          <span><b>Ignore spaces &amp; punctuation.</b> The only way
+            <code>A man, a plan, a canal: Panama</code> works.</span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="optDia" />
+          <span><b>Fold accents.</b> Treat <code>é</code> as <code>e</code>
+            before comparing, so <code>Déè…</code> can mirror plain
+            <code>e</code>s.</span>
+        </label>
+        <label class="opt">
+          <input type="checkbox" id="optCP" />
+          <span><b>Compare by code point, not grapheme.</b> The buggy middle
+            ground — keeps surrogate pairs whole but lets a combining accent
+            float off its letter when reversed.</span>
+        </label>
+
+        <h2 class="section-gap">By the <em>numbers</em></h2>
+        <div class="counts" id="stats"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- stage ---------------- -->
+      <div class="stage-col">
+        <div class="card verdict-card">
+          <span class="name">Palindrome?</span>
+          <div class="big" id="verdict">—</div>
+          <p class="desc" id="verdictDesc">Type something above.</p>
+        </div>
+
+        <div class="card">
+          <span class="name">Folded to its comparison form</span>
+          <p class="desc">What actually gets compared, after your choices.
+            Dropped characters are <span class="dropped-eg">dimmed</span>; the
+            rest are the mirror the check runs on.</p>
+          <div class="out" id="folded"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">The mirror</span>
+          <p class="desc">Each kept character lined up against its partner from
+            the other end. Green pairs match; a <span class="bad-eg">red</span>
+            pair is the first break that makes the answer <em>no</em>.</p>
+          <div class="mirror" id="mirror"></div>
+        </div>
+
+        <div class="card compare-card">
+          <span class="name">The naive one-liner, side by side</span>
+          <p class="desc"><code>s === s.split("").reverse().join("")</code> —
+            exact, case- and accent-sensitive, and it splits by UTF-16 unit so
+            it mangles emoji and astral letters.</p>
+          <div class="compare" id="compare"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why a palindrome check
+        is a Unicode problem in disguise.
+      </p>
+    </footer>
+  </main>
+
+  <script src="palindrome-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
