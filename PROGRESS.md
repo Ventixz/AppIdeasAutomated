@@ -213,7 +213,7 @@ works down this section next, one project per day. Populated from the
 - [x] Reverse a String — 2026-10-05
 - [x] Pig Latin — 2026-10-06
 - [x] Count Vowels — 2026-10-07
-- [ ] Check if Palindrome
+- [x] Check if Palindrome — 2026-10-08
 - [ ] Count Words in a String
 - [ ] Text Editor
 - [ ] RSS Feed Creator
