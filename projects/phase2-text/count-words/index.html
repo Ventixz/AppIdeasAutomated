@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Count Words in a String</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Count Words in a String</h1>
+      <p class="tagline">
+        Everyone writes <code>str.trim().split(/\s+/).length</code> and calls it
+        done. It scores the empty string as <strong>one</strong> word, counts
+        <strong>:)</strong> and <strong>!!!</strong> as words, and can't see a
+        single boundary in <strong>你好世界</strong>. This page counts the honest
+        way — a token is a word only if it carries a letter or digit, split on
+        <em>all</em> of Unicode's whitespace — and shows the naive answer, and
+        the segmenter's answer, right beside it so you can see the gaps.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- input column ---------------- -->
+      <div class="panel controls-col">
+        <div class="row between tight">
+          <h2>Your <em>text</em></h2>
+          <span class="count-pill" id="cpPill">0 chars</span>
+        </div>
+
+        <textarea id="input" rows="6" spellcheck="false"
+          aria-label="text to count words in"></textarea>
+
+        <p class="hint">Try one — each shows a different rule at work:</p>
+        <div class="row wrap presets" id="presets"></div>
+
+        <h2 class="section-gap">By the <em>numbers</em></h2>
+        <div class="counts" id="stats"></div>
+
+        <p class="verify" id="verify" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------------- stage ---------------- -->
+      <div class="stage-col">
+        <div class="card total-card">
+          <span class="name">Words</span>
+          <div class="big" id="total">0</div>
+          <p class="desc" id="totalDesc">in <span id="descCount">0</span> code points.</p>
+        </div>
+
+        <div class="card compare-card">
+          <span class="name">Three answers, side by side</span>
+          <p class="desc">The honest count, the <code>split(/\s+/)</code>
+            one-liner, and Unicode word segmentation
+            (<code>Intl.Segmenter</code>). Watch where they part ways.</p>
+          <div class="compare3" id="compare"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">What got counted</span>
+          <p class="desc">Each <mark class="w">word</mark> is highlighted; the
+            <span class="drop-eg">punctuation and emoji</span> that were dropped
+            are dimmed and struck through. Whitespace shows as faint dots.</p>
+          <div class="out" id="highlight"></div>
+        </div>
+
+        <div class="card">
+          <span class="name">Dropped as non-words</span>
+          <p class="desc">Whitespace-delimited tokens with no letter or digit —
+            counted by the naive one-liner, correctly ignored here.</p>
+          <div class="chips" id="dropped"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why counting words is
+        a Unicode problem in disguise.
+      </p>
+    </footer>
+  </main>
+
+  <script src="words-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (37 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (38 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **5 / 12** |
+| Text | 🚧 In progress — **6 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -404,8 +404,30 @@ that must agree on both the verdict and the first-mismatch index — enforced at
 runtime and across a 40,000-string Unicode fuzz; the suite uses a palindrome
 **generator** as an oracle (`s + reverse(s)` is always a palindrome) and proves
 the verdict is **normalisation-invariant** under folding, with the two-impl and
-NFC/NFD checks running live as the ✓ Verified line. Next up, per the same rule,
-is **Count Words in a String**. Same rules, same source.
+NFC/NFD checks running live as the ✓ Verified line. The Text category's sixth
+entry, **Count Words in a String**, landed on 2026-10-09 — and it takes the
+genre's most reached-for one-liner, `str.trim().split(/\s+/).length`, and shows
+it is wrong in three ways at once. It scores the **empty string as one word**
+(`"".split(/\s+/)` is `[""]`, length `1`) — the single most common word-count
+bug there is; it counts pure punctuation like `:)` and `!!!` as words; and its
+`\s` misses half of Unicode's real separators. The honest rule splits on the
+whole `\p{White_Space}` property and keeps a token only if it carries a letter
+or digit (`\p{L}` or `\p{N}`), so `"hi -- there :) !!!"` is **two** words, not
+five, and `"   "` is **zero**. But the project's real lesson is the ceiling
+above even that fix: **no whitespace rule can count words in a script that
+doesn't use whitespace** — `你好世界` is four words with no separator anywhere —
+so the page carries a third number, Unicode text segmentation (UAX #29) via
+`Intl.Segmenter`, as the exhibit that sees the words whitespace literally
+cannot. All three answers — honest, naive, and segmenter — sit side by side so
+the gaps are visible, not asserted. The count is written **twice** (a
+per-code-point scan that banks a word at each boundary, and a whole-string
+whitespace split-and-filter) that must agree on both the count and the ordered
+token list across a 40,000-string Unicode fuzz; both are grounded against the
+naive oracle on clean ASCII where it's genuinely right, and the suite proves the
+render segments **tile the input exactly** and the count is **stable under
+whitespace normalisation**, with the scan-vs-regex check running live as the ✓
+Verified line. Next up, per the same rule, is **Text Editor**. Same rules, same
+source.
 
 ## Projects built so far
 
@@ -536,6 +558,7 @@ is **Count Words in a String**. Same rules, same source.
 | 123 | [Pig Latin](./projects/phase2-text/pig-latin/) | Text · Source 2 | 2026-10-06 |
 | 124 | [Count Vowels](./projects/phase2-text/count-vowels/) | Text · Source 2 | 2026-10-07 |
 | 125 | [Check if Palindrome](./projects/phase2-text/check-if-palindrome/) | Text · Source 2 | 2026-10-08 |
+| 126 | [Count Words in a String](./projects/phase2-text/count-words/) | Text · Source 2 | 2026-10-09 |
 
 ## Repository layout
 
@@ -594,6 +617,7 @@ projects/
     pig-latin/                # onset-based Pig Latin: y/qu rules, case & punctuation preserved; non-invertible (decode shows collisions); onset rule verified two ways
     count-vowels/             # vowel counting as a Unicode problem: NFD/NFKD folding of accents & ligatures, code points vs units, y optional; scan vs. regex cross-check, naive one-liner shown failing
     check-if-palindrome/      # palindrome by grapheme not byte: surrogate-pair & combining-mark traps, case/accent/punctuation toggles; two-pointer vs. reverse cross-check, naive one-liner shown failing
+    count-words/              # word counting as a Unicode problem: empty-string bug, punctuation isn't a word, full \p{White_Space}; scan vs. regex cross-check, naive one-liner & Intl.Segmenter shown beside the honest count
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
