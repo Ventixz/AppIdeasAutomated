@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Text Editor</h1>
+      <p class="tagline">
+        A Notepad that can <strong>open</strong>, <strong>write</strong> and
+        <strong>save</strong> a document — with the two things that actually make
+        it an editor underneath: it <em>diffs</em> every change into a minimal
+        edit instead of keeping the whole value, and it <em>coalesces</em> a run
+        of typing into one undo step, so <kbd>Ctrl</kbd>+<kbd>Z</kbd> takes back a
+        word, not a letter. The strip at the bottom shows those undo steps live,
+        next to the per-keystroke count a naive editor would have.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- editor column ---------------- -->
+      <div class="editor-col">
+        <div class="toolbar">
+          <div class="file">
+            <span class="fname" id="fname">untitled.txt</span>
+            <span class="dirty" id="dirty" title="unsaved changes" hidden>•</span>
+          </div>
+          <div class="tools">
+            <button id="btnNew" title="New (Ctrl+N — within the page)">New</button>
+            <button id="btnOpen" title="Open a .txt file from your computer">Open…</button>
+            <button id="btnSave" title="Save (Ctrl+S)">Save</button>
+            <span class="sep"></span>
+            <button id="btnUndo" title="Undo (Ctrl+Z)" disabled>↶ Undo</button>
+            <button id="btnRedo" title="Redo (Ctrl+Shift+Z / Ctrl+Y)" disabled>↷ Redo</button>
+          </div>
+          <input type="file" id="fileInput" accept=".txt,.md,text/*" hidden />
+        </div>
+
+        <textarea id="editor" spellcheck="false"
+          placeholder="Start typing… or Open a text file. Everything stays in your browser — no server, no network."
+          aria-label="document"></textarea>
+
+        <div class="statusbar">
+          <span id="stChars">0 chars</span>
+          <span id="stWords">0 words</span>
+          <span id="stLines">0 lines</span>
+          <span id="stBytes">0 B</span>
+          <span class="grow"></span>
+          <span class="verify" id="verify" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <!-- ---------------- side panel ---------------- -->
+      <aside class="side-col">
+        <div class="card">
+          <span class="name">Undo history</span>
+          <p class="desc">Each block is one <strong>undo step</strong>. Typing a
+            run, or holding Backspace, grows a single block; a newline, a pause,
+            a caret jump or switching type↔delete starts a new one. Filled blocks
+            are applied; hollow ones are the redo tail.</p>
+          <div class="hist" id="hist"></div>
+          <div class="hist-legend" id="histLegend"></div>
+        </div>
+
+        <div class="card compare-card">
+          <span class="name">Coalesced vs naive</span>
+          <p class="desc">Undo steps this session has banked, the honest way,
+            against the one-per-keystroke count a naive editor would keep.</p>
+          <div class="compare2" id="compare">
+            <div class="cmp honest">
+              <span class="cmp-n" id="cmpCoalesced">0</span>
+              <span class="cmp-l">coalesced steps</span>
+            </div>
+            <div class="cmp naive">
+              <span class="cmp-n" id="cmpNaive">0</span>
+              <span class="cmp-l">naive (per keystroke)</span>
+            </div>
+          </div>
+          <p class="cmp-note" id="cmpNote">Type a few words to see the gap open.</p>
+        </div>
+
+        <div class="card">
+          <span class="name">Autosave</span>
+          <p class="desc">A working copy is kept in this browser's
+            <code>localStorage</code> as you type, so a reload doesn't lose your
+            draft. It never leaves your machine.</p>
+          <p class="autosave" id="autosave">—</p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why diffing the change
+        and coalescing undo are the whole job.
+      </p>
+    </footer>
+  </main>
+
+  <script src="editor-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
