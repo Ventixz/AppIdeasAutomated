@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (38 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (39 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **6 / 12** |
+| Text | 🚧 In progress — **7 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -426,8 +426,24 @@ token list across a 40,000-string Unicode fuzz; both are grounded against the
 naive oracle on clean ASCII where it's genuinely right, and the suite proves the
 render segments **tile the input exactly** and the count is **stable under
 whitespace normalisation**, with the scan-vs-regex check running live as the ✓
-Verified line. Next up, per the same rule, is **Text Editor**. Same rules, same
-source.
+Verified line. The Text category's seventh entry, **Text Editor**, landed on
+2026-10-10 — a Notepad that opens, writes and saves a document, but built around
+the two things that actually make a text box an *editor*. First, an `input`
+event only ever hands you the textarea's **new value**, never what changed, so
+the editor **diffs** old against new (a common-prefix/suffix peel, in code
+points so an emoji is never split) to recover the minimal edit — and from that
+edit's inverse, undo runs on the very same machinery. Second, undo is **not one
+step per keystroke**: a run of typing or of backspacing **coalesces** into a
+single undo step and breaks on a newline, a pause, a caret jump or a type↔delete
+switch, so one <kbd>Ctrl</kbd>+<kbd>Z</kbd> takes back a word, not a letter. The
+page draws the undo steps as a live strip and shows the coalesced count beside
+the per-keystroke count a naive editor would keep, so typing `hello` reads as
+**1** step against **5**. Both hard parts are proved as **round-trip laws over a
+20,000-edit Unicode fuzz** — the diff is faithful (`applyEdit(old, diff) ===
+new`), the inverse inverts, and undo-all/redo-all plus any random interleaving
+stay equal to an independent forward reconstruction — with that same exactness
+check running live as the ✓ Verified line. Next up, per the same rule, is **RSS
+Feed Creator**. Same rules, same source.
 
 ## Projects built so far
 
@@ -559,6 +575,7 @@ source.
 | 124 | [Count Vowels](./projects/phase2-text/count-vowels/) | Text · Source 2 | 2026-10-07 |
 | 125 | [Check if Palindrome](./projects/phase2-text/check-if-palindrome/) | Text · Source 2 | 2026-10-08 |
 | 126 | [Count Words in a String](./projects/phase2-text/count-words/) | Text · Source 2 | 2026-10-09 |
+| 127 | [Text Editor](./projects/phase2-text/text-editor/) | Text · Source 2 | 2026-10-10 |
 
 ## Repository layout
 
@@ -618,6 +635,7 @@ projects/
     count-vowels/             # vowel counting as a Unicode problem: NFD/NFKD folding of accents & ligatures, code points vs units, y optional; scan vs. regex cross-check, naive one-liner shown failing
     check-if-palindrome/      # palindrome by grapheme not byte: surrogate-pair & combining-mark traps, case/accent/punctuation toggles; two-pointer vs. reverse cross-check, naive one-liner shown failing
     count-words/              # word counting as a Unicode problem: empty-string bug, punctuation isn't a word, full \p{White_Space}; scan vs. regex cross-check, naive one-liner & Intl.Segmenter shown beside the honest count
+    text-editor/              # open/write/save Notepad built on a code-point diff + coalescing undo/redo; round-trip laws over a 20k Unicode fuzz, live history strip showing coalesced vs. per-keystroke steps
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
