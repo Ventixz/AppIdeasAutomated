@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (39 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (40 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **7 / 12** |
+| Text | 🚧 In progress — **8 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -442,8 +442,25 @@ the per-keystroke count a naive editor would keep, so typing `hello` reads as
 20,000-edit Unicode fuzz** — the diff is faithful (`applyEdit(old, diff) ===
 new`), the inverse inverts, and undo-all/redo-all plus any random interleaving
 stay equal to an independent forward reconstruction — with that same exactness
-check running live as the ✓ Verified line. Next up, per the same rule, is **RSS
-Feed Creator**. Same rules, same source.
+check running live as the ✓ Verified line. The Text category's eighth entry,
+**RSS Feed Creator**, landed on 2026-10-12 — "given a link to an RSS/Atom feed,
+get all posts and display them," where the two words that carry the whole
+project are RSS *and* Atom: two different XML vocabularies, with two different
+date formats (RFC-822 `pubDate` vs RFC-3339 `<updated>`), two link conventions
+(`<link>` text vs a `<link href rel>` attribute), and the usual `dc:`/`content:`
+namespaced extensions, all reconciled into **one** post model so "get all posts"
+means the same shape whichever format the feed speaks. Because there is no
+`DOMParser` in Node, the XML is parsed **by hand** — CDATA kept literal,
+comments and PIs skipped, self-closing and namespaced tags, and numeric
+character references (decimal *and* hex, astral code points included) all
+handled, because real feeds contain every one. The reader's **writer** is its
+inverse: `toRss` re-emits a canonical RSS 2.0 document, and that inverse is how
+the whole thing is proved — `parseFeed(toRss(feed))` reproduces a random feed
+field-for-field over an **8,000-feed fuzz** whose palette mixes `< > & " '`, a
+literal `]]>`, an astral emoji and a combining mark, pinning the parser, the
+serialiser, the entity table and the date format all at once, with that same
+round-trip law running live in the browser as the ✓ Verified line. Next up, per
+the same rule, is **Quote Tracker**. Same rules, same source.
 
 ## Projects built so far
 
@@ -576,6 +593,7 @@ Feed Creator**. Same rules, same source.
 | 125 | [Check if Palindrome](./projects/phase2-text/check-if-palindrome/) | Text · Source 2 | 2026-10-08 |
 | 126 | [Count Words in a String](./projects/phase2-text/count-words/) | Text · Source 2 | 2026-10-09 |
 | 127 | [Text Editor](./projects/phase2-text/text-editor/) | Text · Source 2 | 2026-10-10 |
+| 128 | [RSS Feed Creator](./projects/phase2-text/rss-feed-creator/) | Text · Source 2 | 2026-10-12 |
 
 ## Repository layout
 
@@ -636,6 +654,7 @@ projects/
     check-if-palindrome/      # palindrome by grapheme not byte: surrogate-pair & combining-mark traps, case/accent/punctuation toggles; two-pointer vs. reverse cross-check, naive one-liner shown failing
     count-words/              # word counting as a Unicode problem: empty-string bug, punctuation isn't a word, full \p{White_Space}; scan vs. regex cross-check, naive one-liner & Intl.Segmenter shown beside the honest count
     text-editor/              # open/write/save Notepad built on a code-point diff + coalescing undo/redo; round-trip laws over a 20k Unicode fuzz, live history strip showing coalesced vs. per-keystroke steps
+    rss-feed-creator/         # RSS 2.0 + Atom reader normalised into one post model + canonical RSS writer; hand-written XML parser, two date grammars, parse(write(feed)) round-trip over an 8k fuzz
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
