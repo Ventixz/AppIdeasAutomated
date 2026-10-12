@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSS Feed Creator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>RSS Feed Creator</h1>
+      <p class="tagline">
+        Paste the XML of an <strong>RSS&nbsp;2.0</strong> or
+        <strong>Atom&nbsp;1.0</strong> feed and get <em>all its posts</em>,
+        normalised into one shape no matter which vocabulary the feed speaks —
+        two different date formats, two link conventions and the usual
+        <code>dc:</code>/<code>content:</code> extensions all handled. The
+        reader's <em>writer</em> is its inverse: rebuild a clean RSS&nbsp;2.0
+        file from the posts and download it. Everything runs in your browser —
+        <strong>no server, no network, no dependencies</strong>.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- source column ---------------- -->
+      <div class="editor-col">
+        <div class="toolbar">
+          <div class="tools">
+            <button id="btnRss" title="Load the bundled RSS 2.0 sample">RSS sample</button>
+            <button id="btnAtom" title="Load the bundled Atom 1.0 sample">Atom sample</button>
+            <button id="btnOpen" title="Open a feed file (.xml / .rss / .atom) from your computer">Open…</button>
+            <span class="sep"></span>
+            <button id="btnClear" title="Clear the input">Clear</button>
+          </div>
+          <input type="file" id="fileInput" accept=".xml,.rss,.atom,application/rss+xml,application/atom+xml,text/xml,application/xml" hidden />
+        </div>
+
+        <textarea id="source" spellcheck="false"
+          placeholder="Paste a feed's XML here — or load a sample. It is parsed as you type. Nothing leaves your browser."
+          aria-label="feed XML source"></textarea>
+
+        <div class="statusbar">
+          <span id="stKind" class="badge">—</span>
+          <span id="stPosts">0 posts</span>
+          <span class="grow"></span>
+          <span class="verify" id="verify" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <!-- ---------------- side panel ---------------- -->
+      <aside class="side-col">
+        <div class="card" id="feedCard" hidden>
+          <span class="name">Feed</span>
+          <p class="feed-title" id="feedTitle"></p>
+          <a class="feed-link" id="feedLink" target="_blank" rel="noopener"></a>
+          <p class="feed-desc" id="feedDesc"></p>
+        </div>
+
+        <div class="card">
+          <span class="name">Create — rebuild as RSS 2.0</span>
+          <p class="desc">The parser and the serialiser are <strong>inverses</strong>.
+            This takes the posts read above — from <em>either</em> format — and
+            writes one canonical RSS&nbsp;2.0 document, entities escaped and dates
+            in RFC-822. Download it, or copy it.</p>
+          <div class="create-btns">
+            <button id="btnDownload" disabled>⬇ Download .xml</button>
+            <button id="btnCopy" disabled>Copy</button>
+          </div>
+          <p class="copy-note" id="copyNote"></p>
+        </div>
+
+        <div class="card">
+          <span class="name">What's verified, live</span>
+          <p class="desc">The ✓ line in the status bar re-runs the round-trip law
+            on what you're looking at: parse the feed, write it back out as
+            RSS&nbsp;2.0, parse <em>that</em>, and check every post survived.
+            The same law runs over an 8,000-feed fuzz in
+            <code>tests.js</code>.</p>
+          <p class="autosave" id="autosave">—</p>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ---------------- the posts ---------------- -->
+    <section class="posts-wrap">
+      <h2 id="postsHeading">Posts</h2>
+      <div id="posts" class="posts"></div>
+    </section>
+
+    <footer>
+      <p>
+        Built automatically by a scheduled
+        <a href="https://claude.com/claude-code">Claude Code</a> routine — one
+        project per day. See the
+        <a href="../../../README.md">repository README</a> for how it works, and
+        this project's <a href="README.md">README</a> for why reconciling RSS and
+        Atom into one post model is the whole job.
+      </p>
+    </footer>
+  </main>
+
+  <script src="feed-core.js"></script>
+  <script src="samples.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

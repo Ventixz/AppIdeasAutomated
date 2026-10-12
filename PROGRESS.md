@@ -216,7 +216,7 @@ works down this section next, one project per day. Populated from the
 - [x] Check if Palindrome — 2026-10-08
 - [x] Count Words in a String — 2026-10-09
 - [x] Text Editor — 2026-10-10
-- [ ] RSS Feed Creator
+- [x] RSS Feed Creator — 2026-10-12
 - [ ] Quote Tracker
 - [ ] Guestbook / Journal
 - [ ] Vigenere / Vernam / Caesar Ciphers
