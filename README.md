@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (40 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (41 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **8 / 12** |
+| Text | 🚧 In progress — **9 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -459,8 +459,26 @@ the whole thing is proved — `parseFeed(toRss(feed))` reproduces a random feed
 field-for-field over an **8,000-feed fuzz** whose palette mixes `< > & " '`, a
 literal `]]>`, an astral emoji and a combining mark, pinning the parser, the
 serialiser, the entity table and the date format all at once, with that same
-round-trip law running live in the browser as the ✓ Verified line. Next up, per
-the same rule, is **Quote Tracker**. Same rules, same source.
+round-trip law running live in the browser as the ✓ Verified line. The Text
+category's ninth entry, **Quote Tracker**, landed on 2026-10-13 — "gather and
+store quotes along with their attributions," where the whole project is the four
+questions a kept collection has to answer that `array.push(string)` gets wrong:
+*where does the quote end and the author begin* (a `parseAttribution` that splits
+`"…" — Author` across straight and curly quote marks and the em/en/double/single
+dash, never on the hyphen inside `well-being`, and only on the **last** separator
+so a dashed aside stays in the quote), *is this the same quote I already saved*
+(a canonical identity key — NFC, wrapping-glyph-stripped, whitespace-collapsed,
+case-folded — so the same saying pasted with different quotes or casing is stored
+once, while the same words by a different author are kept), *which quote do I show
+today, fairly* (a seeded per-cycle shuffle so every quote appears exactly once
+before any repeats, deterministic per day and needing no "last shown"
+bookkeeping), and *can I get my quotes back out* (a field-for-field JSON
+round-trip with idempotent, deduping import). All four are proved as laws over a
+fuzz — the attribution round-trip over 20,000 pairs mixing an astral emoji and a
+combining mark, the rotation a verified permutation for every store size 1–100,
+the serialisation over 400 random stores — with the same four laws running live
+in the browser as the ✓ Verified line. Next up, per the same rule, is
+**Guestbook / Journal**. Same rules, same source.
 
 ## Projects built so far
 
@@ -594,6 +612,7 @@ the same rule, is **Quote Tracker**. Same rules, same source.
 | 126 | [Count Words in a String](./projects/phase2-text/count-words/) | Text · Source 2 | 2026-10-09 |
 | 127 | [Text Editor](./projects/phase2-text/text-editor/) | Text · Source 2 | 2026-10-10 |
 | 128 | [RSS Feed Creator](./projects/phase2-text/rss-feed-creator/) | Text · Source 2 | 2026-10-12 |
+| 129 | [Quote Tracker](./projects/phase2-text/quote-tracker/) | Text · Source 2 | 2026-10-13 |
 
 ## Repository layout
 
