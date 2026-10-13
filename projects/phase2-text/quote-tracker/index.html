@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Quote Tracker</h1>
+      <p class="tagline">
+        Gather and store quotes with their <strong>attributions</strong>. Paste a
+        line like <code>"…" — Author</code> and it's <em>split</em> into quote and
+        author across every dash and quote-mark convention; the same saying pasted
+        twice is <em>stored once</em>; and the <em>quote of the day</em> rotates
+        fairly, showing every quote exactly once before any repeats. Everything
+        lives in your browser — no build step, no server, no network.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- left: add + featured ---------------- -->
+      <div class="col-left">
+        <div class="card featured">
+          <div class="card-head">
+            <h2>Quote of the day</h2>
+            <button id="shuffle" class="ghost" title="show the next day's pick">↻ next</button>
+          </div>
+          <blockquote id="qotd-text">—</blockquote>
+          <div class="qotd-by" id="qotd-by"></div>
+          <div class="qotd-tags" id="qotd-tags"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Add a quote</h2></div>
+          <label class="field">
+            <span>Paste <code>"quote" — author</code>, or just the quote</span>
+            <textarea id="paste" rows="3" placeholder="&ldquo;Stay hungry, stay foolish.&rdquo; &mdash; Steve Jobs"></textarea>
+          </label>
+          <div class="split">
+            <label class="field">
+              <span>Quote</span>
+              <textarea id="f-text" rows="2"></textarea>
+            </label>
+            <label class="field">
+              <span>Author</span>
+              <input id="f-author" type="text" placeholder="(optional)" />
+            </label>
+          </div>
+          <label class="field">
+            <span>Tags <small>(comma-separated)</small></span>
+            <input id="f-tags" type="text" placeholder="code, wisdom" />
+          </label>
+          <div class="row">
+            <button id="add" class="primary">Add quote</button>
+            <span id="add-msg" class="msg"></span>
+          </div>
+        </div>
+
+        <div class="card data">
+          <div class="card-head"><h2>Collection</h2></div>
+          <div class="row">
+            <button id="export">Export JSON</button>
+            <button id="import-btn">Import JSON</button>
+            <input id="import-file" type="file" accept="application/json,.json" hidden />
+          </div>
+          <p class="hint">
+            Your collection is autosaved in this browser. Export to move it
+            elsewhere; import merges in new quotes (duplicates are skipped).
+          </p>
+        </div>
+      </div>
+
+      <!-- ---------------- right: browse ---------------- -->
+      <div class="col-right">
+        <div class="card">
+          <div class="card-head">
+            <h2>Browse</h2>
+            <span class="count" id="count"></span>
+          </div>
+          <input id="search" class="search" type="search"
+                 placeholder="Search quote, author or tag…" />
+          <div class="tagbar" id="tagbar"></div>
+          <ul class="quotes" id="quotes"></ul>
+          <p class="empty" id="empty" hidden>No quotes match.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span id="verify" class="verify">checking…</span>
+      <span class="sep">·</span>
+      <span>Part of <a href="../../../README.md">AppIdeasAutomated</a>, one project a day by an automated Claude routine.</span>
+    </footer>
+  </main>
+
+  <script src="tracker-core.js"></script>
+  <script src="samples.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
