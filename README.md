@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (41 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (42 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **9 / 12** |
+| Text | 🚧 In progress — **10 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -477,8 +477,28 @@ round-trip with idempotent, deduping import). All four are proved as laws over a
 fuzz — the attribution round-trip over 20,000 pairs mixing an astral emoji and a
 combining mark, the rotation a verified permutation for every store size 1–100,
 the serialisation over 400 random stores — with the same four laws running live
-in the browser as the ✓ Verified line. Next up, per the same rule, is
-**Guestbook / Journal**. Same rules, same source.
+in the browser as the ✓ Verified line. The Text category's tenth entry,
+**Guestbook / Journal**, landed on 2026-10-14 — "a place where people can add
+comments or journal entries; it can allow or disallow comments, timestamp each
+one, and work as a shout box" — where the whole project is the four questions a
+guestbook has to answer that `entries.push(text)` gets wrong, because the text
+comes from *other people*: *what happens when a visitor types `<script>`* (an
+`escapeHtml` + `linkify` that renders every body as text, never markup, turning a
+bare `https://…` into a safe link in one pass so the only tags the output can
+contain are the `<a>` wrappers the engine wrote), *how long ago was that, said
+like a human* (a `relativeTime` with correct pluralisation and **calendar-day**
+boundaries — *yesterday*, not "two hours ago", across midnight — that is
+monotonic and never runs into the future), *is the book open, closed, or
+moderated* (a mode that shows posts immediately, queues them for approval, or
+refuses them, plus a consecutive-duplicate flood guard that still keeps the same
+words from a different author), and *where does one day end and the next begin* (a
+`groupByDay` that partitions the entries into Today / Yesterday / dated sections
+with every entry in exactly one group and the input order preserved). All four
+are proved as laws over a fuzz — the rendering injection-proof and lossless over
+20,000 hostile strings, the timestamps monotonic over 20,000 pairs, the day
+partition over 2,000 spreads, the serialisation over 400 random books — with the
+core of them running live in the browser as the ✓ Verified line. Next up, per the
+same rule, is **Vigenere / Vernam / Caesar Ciphers**. Same rules, same source.
 
 ## Projects built so far
 
@@ -613,6 +633,7 @@ in the browser as the ✓ Verified line. Next up, per the same rule, is
 | 127 | [Text Editor](./projects/phase2-text/text-editor/) | Text · Source 2 | 2026-10-10 |
 | 128 | [RSS Feed Creator](./projects/phase2-text/rss-feed-creator/) | Text · Source 2 | 2026-10-12 |
 | 129 | [Quote Tracker](./projects/phase2-text/quote-tracker/) | Text · Source 2 | 2026-10-13 |
+| 130 | [Guestbook / Journal](./projects/phase2-text/guestbook-journal/) | Text · Source 2 | 2026-10-14 |
 
 ## Repository layout
 
@@ -674,6 +695,8 @@ projects/
     count-words/              # word counting as a Unicode problem: empty-string bug, punctuation isn't a word, full \p{White_Space}; scan vs. regex cross-check, naive one-liner & Intl.Segmenter shown beside the honest count
     text-editor/              # open/write/save Notepad built on a code-point diff + coalescing undo/redo; round-trip laws over a 20k Unicode fuzz, live history strip showing coalesced vs. per-keystroke steps
     rss-feed-creator/         # RSS 2.0 + Atom reader normalised into one post model + canonical RSS writer; hand-written XML parser, two date grammars, parse(write(feed)) round-trip over an 8k fuzz
+    quote-tracker/            # attribution parse/format across every dash & quote-mark style, canonical dedup key, fair seeded quote-of-the-day rotation; round-trip, permutation & dedup laws over a fuzz
+    guestbook-journal/        # injection-proof escape+linkify, human monotonic relative time, open/moderated/closed store with flood guard, day-grouped journal; laws over a 20k hostile-string fuzz
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

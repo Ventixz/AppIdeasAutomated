@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guestbook / Journal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Guestbook <span class="slash">/</span> Journal</h1>
+      <p class="tagline">
+        A place where people can leave a note — a <strong>guestbook</strong>, a
+        <strong>journal</strong>, or a shout box. Whatever a visitor types is
+        shown as <em>text, never markup</em>, so a stray <code>&lt;script&gt;</code>
+        is harmless and a bare <code>https://…</code> becomes a safe link.
+        Timestamps read like a human (<em>just now</em>, <em>yesterday</em>),
+        entries are grouped by day, and the book can be <em>open</em>,
+        <em>moderated</em>, or <em>closed</em>. Everything lives in your browser —
+        no build step, no server, no network.
+      </p>
+    </header>
+
+    <section class="workbench">
+      <!-- ---------------- left: sign + controls ---------------- -->
+      <div class="col-left">
+        <div class="card">
+          <div class="card-head">
+            <h2>Sign the book</h2>
+            <span class="mode-pill" id="mode-pill">open</span>
+          </div>
+          <label class="field">
+            <span>Name <small>(optional)</small></span>
+            <input id="f-name" type="text" placeholder="Anonymous" maxlength="80" />
+          </label>
+          <label class="field">
+            <span>Message</span>
+            <textarea id="f-body" rows="4" placeholder="Leave a note… links become clickable."></textarea>
+          </label>
+          <div class="row">
+            <button id="sign" class="primary">Add entry</button>
+            <span id="sign-msg" class="msg"></span>
+          </div>
+          <p class="hint" id="closed-hint" hidden>The book is closed — posting is disabled.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Who can post</h2></div>
+          <div class="row modes">
+            <button class="mode" data-mode="open">Open</button>
+            <button class="mode" data-mode="moderated">Moderated</button>
+            <button class="mode" data-mode="closed">Closed</button>
+          </div>
+          <p class="hint" id="mode-hint">Open: entries appear immediately.</p>
+        </div>
+
+        <div class="card" id="pending-card" hidden>
+          <div class="card-head">
+            <h2>Awaiting approval</h2>
+            <span class="count" id="pending-count"></span>
+          </div>
+          <ul class="entries pending-list" id="pending"></ul>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>The book</h2></div>
+          <div class="row">
+            <button id="export">Export JSON</button>
+            <button id="import-btn">Import JSON</button>
+            <input id="import-file" type="file" accept="application/json,.json" hidden />
+          </div>
+          <p class="hint">
+            Autosaved in this browser. Export to keep a copy; import merges in
+            entries you don't already have.
+          </p>
+        </div>
+      </div>
+
+      <!-- ---------------- right: the entries ---------------- -->
+      <div class="col-right">
+        <div class="card">
+          <div class="card-head">
+            <h2>Entries</h2>
+            <span class="count" id="count"></span>
+          </div>
+          <input id="search" class="search" type="search"
+                 placeholder="Search name or message…" />
+          <div class="journal" id="journal"></div>
+          <p class="empty" id="empty" hidden>No entries yet — be the first to sign.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span id="verify" class="verify">checking…</span>
+      <span class="sep">·</span>
+      <span>Part of <a href="../../../README.md">AppIdeasAutomated</a>, one project a day by an automated Claude routine.</span>
+    </footer>
+  </main>
+
+  <script src="guestbook-core.js"></script>
+  <script src="samples.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
