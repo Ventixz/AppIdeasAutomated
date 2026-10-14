@@ -218,6 +218,6 @@ works down this section next, one project per day. Populated from the
 - [x] Text Editor — 2026-10-10
 - [x] RSS Feed Creator — 2026-10-12
 - [x] Quote Tracker — 2026-10-13
-- [ ] Guestbook / Journal
+- [x] Guestbook / Journal — 2026-10-14
 - [ ] Vigenere / Vernam / Caesar Ciphers
 - [ ] Regex Query Tool
