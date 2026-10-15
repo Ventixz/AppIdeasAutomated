@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caesar · Vigenère · Vernam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Caesar · Vigenère · Vernam</h1>
+      <p class="tagline">
+        Three classical ciphers that are really <em>one idea at three scales</em>:
+        add a fixed number to every letter (<strong>Caesar</strong>), change the
+        number every letter with a repeating keyword (<strong>Vigenère</strong>),
+        or make the key as long as the message, random, and used once
+        (<strong>Vernam</strong>, the one-time pad). The first two are broken on
+        this very page — <em>no key required</em> — so you can watch why only the
+        third is unbreakable.
+      </p>
+    </header>
+
+    <!-- ============ tabs ============ -->
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="caesar">Caesar</button>
+      <button class="tab" data-tab="vigenere">Vigenère</button>
+      <button class="tab" data-tab="vernam">Vernam / OTP</button>
+      <button class="tab" data-tab="break">Break it</button>
+    </nav>
+
+    <!-- ============ CAESAR ============ -->
+    <section class="panel tabpage" id="page-caesar">
+      <h2>Caesar — <em>shift every letter by a fixed amount</em></h2>
+      <p class="hint">Only 25 useful shifts exist, which is exactly why it's
+        trivial to break. The key letter below is the Vigenère key this shift is
+        equivalent to.</p>
+      <div class="field">
+        <label for="cText">Text</label>
+        <textarea id="cText" rows="3" spellcheck="false">The quick brown fox jumps over the lazy dog.</textarea>
+      </div>
+      <div class="row wrap controls">
+        <label class="slider-wrap">Shift <strong id="cShiftVal">3</strong>
+          (key <code id="cKeyLetter">D</code>)
+          <input type="range" id="cShift" min="0" max="25" value="3" />
+        </label>
+        <span class="seg">
+          <button class="segbtn active" id="cEnc">Encrypt</button>
+          <button class="segbtn" id="cDec">Decrypt</button>
+        </span>
+      </div>
+      <div class="field">
+        <label>Result</label>
+        <div class="output" id="cOut"></div>
+      </div>
+    </section>
+
+    <!-- ============ VIGENÈRE ============ -->
+    <section class="panel tabpage hidden" id="page-vigenere">
+      <h2>Vigenère — <em>a repeating keyword picks the shift</em></h2>
+      <p class="hint">Each letter of the key is its own Caesar shift, cycled
+        across the message. Non-letters pass through and don't consume a key
+        position.</p>
+      <div class="field">
+        <label for="vText">Text</label>
+        <textarea id="vText" rows="3" spellcheck="false">Attack at dawn on the north bridge</textarea>
+      </div>
+      <div class="row wrap controls">
+        <label class="grow">Key
+          <input type="text" id="vKey" value="LEMON" spellcheck="false" />
+        </label>
+        <span class="seg">
+          <button class="segbtn active" id="vEnc">Encrypt</button>
+          <button class="segbtn" id="vDec">Decrypt</button>
+        </span>
+      </div>
+      <div class="field">
+        <label>Result</label>
+        <div class="output" id="vOut"></div>
+      </div>
+      <p class="hint" id="vNote"></p>
+    </section>
+
+    <!-- ============ VERNAM ============ -->
+    <section class="panel tabpage hidden" id="page-vernam">
+      <h2>Vernam — <em>the one-time pad</em></h2>
+      <p class="hint">XOR over raw bytes with a key <strong>at least as long as
+        the message</strong>. Used once with a truly random key, it is the only
+        cipher proven unbreakable. This page refuses a key that's too short,
+        because a repeated pad is no longer a one-time pad.</p>
+      <div class="field">
+        <label for="nText">Message</label>
+        <textarea id="nText" rows="3" spellcheck="false">meet me at midnight</textarea>
+      </div>
+      <div class="row wrap controls">
+        <button class="btn" id="nGen">🎲 Generate a random pad</button>
+        <span class="muted small" id="nPadInfo"></span>
+      </div>
+      <div class="field">
+        <label for="nKey">Key / pad (as text, or base64 from the dice)</label>
+        <textarea id="nKey" rows="2" spellcheck="false">a one time pad as long as msg</textarea>
+      </div>
+      <div class="field">
+        <label>Ciphertext (base64)</label>
+        <div class="output mono" id="nOut"></div>
+      </div>
+      <div class="field">
+        <label>Decrypts back to</label>
+        <div class="output" id="nBack"></div>
+      </div>
+    </section>
+
+    <!-- ============ BREAK IT ============ -->
+    <section class="panel tabpage hidden" id="page-break">
+      <h2>Break it — <em>recover the message with no key</em></h2>
+      <p class="hint">Paste Vigenère ciphertext (or use the sample). The index of
+        coincidence guesses the key length; chi-squared frequency analysis then
+        solves each column as a Caesar. This is why these ciphers are history,
+        not security.</p>
+      <div class="field">
+        <label for="bText">Ciphertext</label>
+        <textarea id="bText" rows="5" spellcheck="false"></textarea>
+      </div>
+      <div class="row wrap controls">
+        <button class="btn primary" id="bCrack">🔓 Crack it</button>
+        <button class="btn" id="bSample">Load a sample</button>
+      </div>
+      <div id="bResult"></div>
+
+      <h3 class="section-gap">The two-time pad</h3>
+      <p class="hint">A one-time pad is perfect — <em>once</em>. Encrypt two
+        messages with the <strong>same</strong> key and the key cancels when you
+        XOR the ciphertexts, leaking P1 XOR P2. Below, both messages share a pad;
+        the key never appears in the recovery.</p>
+      <div class="row wrap">
+        <div class="field grow"><label>Message 1</label>
+          <input type="text" id="ttA" value="attack the eastern gate at noon" spellcheck="false" /></div>
+        <div class="field grow"><label>Message 2</label>
+          <input type="text" id="ttB" value="retreat to the river before dusk" spellcheck="false" /></div>
+      </div>
+      <button class="btn" id="ttGo">Show the leak</button>
+      <div id="ttResult"></div>
+    </section>
+
+    <footer>
+      <p>
+        One DOM-free engine in <code>ciphers-core.js</code>; the same code runs
+        under Node in <code>tests.js</code> (81 checks). Part of an
+        <strong>automated <a href="https://claude.com/claude-code">Claude Code</a>
+        routine</strong> — see the <a href="../../../README.md">repo README</a>.
+      </p>
+      <p class="warn-line">⚠️ Caesar and Vigenère are <strong>not secure</strong>.
+        This is a teaching toy — never protect anything real with them.</p>
+    </footer>
+  </main>
+
+  <script src="ciphers-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
