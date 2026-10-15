@@ -219,5 +219,5 @@ works down this section next, one project per day. Populated from the
 - [x] RSS Feed Creator — 2026-10-12
 - [x] Quote Tracker — 2026-10-13
 - [x] Guestbook / Journal — 2026-10-14
-- [ ] Vigenere / Vernam / Caesar Ciphers
+- [x] Vigenere / Vernam / Caesar Ciphers — 2026-10-15
 - [ ] Regex Query Tool
