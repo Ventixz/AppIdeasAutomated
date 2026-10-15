@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (42 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (43 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **10 / 12** |
+| Text | 🚧 In progress — **11 / 12** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -497,8 +497,28 @@ with every entry in exactly one group and the input order preserved). All four
 are proved as laws over a fuzz — the rendering injection-proof and lossless over
 20,000 hostile strings, the timestamps monotonic over 20,000 pairs, the day
 partition over 2,000 spreads, the serialisation over 400 random books — with the
-core of them running live in the browser as the ✓ Verified line. Next up, per the
-same rule, is **Vigenere / Vernam / Caesar Ciphers**. Same rules, same source.
+core of them running live in the browser as the ✓ Verified line. The Text
+category's eleventh entry, **Vigenere / Vernam / Caesar Ciphers**, landed on
+2026-10-15 — "encrypts a message using one of these ciphers" — built around the
+insight that the three are *one idea at three scales*: Caesar adds a fixed number
+to every letter, Vigenère changes that number every letter with a repeating
+keyword, and Vernam (the one-time pad) stretches the key to the message's full
+length over XOR'd bytes. So the engine is **one** Vigenère routine, with Caesar
+implemented by *calling* it with a one-letter key (`caesar(s) ===
+vigenere(keyForShift(s))`, pinned across all 26 shifts) — and the honest part is
+that it doesn't stop at encrypting: it **breaks** two of the three on the same
+page. `crackVigenere` recovers the key and plaintext from ciphertext alone, using
+the index of coincidence to find the key length (English ≈ 0.0667, random ≈
+0.0385) and chi-squared frequency analysis to solve each column as a Caesar;
+`caesar.bruteForce` floats the English answer to the top of all 25 shifts; and
+`twoTimePad` shows the one-time pad's fatal failure — reuse one key for two
+messages and `C1 ⊕ C2 = P1 ⊕ P2`, the key cancelling itself out. The engine even
+refuses to encrypt a Vernam message with a too-short key, because a repeated pad
+is no longer a one-time pad. All of it is proved as laws over a fuzz — Caesar and
+Vigenère round-tripping over 400 random texts, Vernam over full Unicode, the key
+recovered exactly from a Hamlet passage with no key supplied — 81 checks in all,
+the same code running live in the browser. Next up, per the same rule, is the
+**Regex Query Tool**, the Text category's last entry. Same rules, same source.
 
 ## Projects built so far
 
@@ -634,6 +654,7 @@ same rule, is **Vigenere / Vernam / Caesar Ciphers**. Same rules, same source.
 | 128 | [RSS Feed Creator](./projects/phase2-text/rss-feed-creator/) | Text · Source 2 | 2026-10-12 |
 | 129 | [Quote Tracker](./projects/phase2-text/quote-tracker/) | Text · Source 2 | 2026-10-13 |
 | 130 | [Guestbook / Journal](./projects/phase2-text/guestbook-journal/) | Text · Source 2 | 2026-10-14 |
+| 131 | [Vigenère / Vernam / Caesar Ciphers](./projects/phase2-text/vigenere-vernam-caesar-ciphers/) | Text · Source 2 | 2026-10-15 |
 
 ## Repository layout
 
@@ -697,6 +718,7 @@ projects/
     rss-feed-creator/         # RSS 2.0 + Atom reader normalised into one post model + canonical RSS writer; hand-written XML parser, two date grammars, parse(write(feed)) round-trip over an 8k fuzz
     quote-tracker/            # attribution parse/format across every dash & quote-mark style, canonical dedup key, fair seeded quote-of-the-day rotation; round-trip, permutation & dedup laws over a fuzz
     guestbook-journal/        # injection-proof escape+linkify, human monotonic relative time, open/moderated/closed store with flood guard, day-grouped journal; laws over a 20k hostile-string fuzz
+    vigenere-vernam-caesar-ciphers/  # one Vigenère engine, Caesar as its 1-letter special case, Vernam/OTP over XOR'd bytes; breaks two of the three — IoC + chi-squared key recovery, caesar brute force, two-time-pad leak; 81 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
