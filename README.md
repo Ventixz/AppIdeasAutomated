@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (43 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (44 built)**
 
 | Category | Status |
 | --- | --- |
@@ -47,7 +47,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classic Algorithms | ✅ Complete — **4 / 4** |
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
-| Text | 🚧 In progress — **11 / 12** |
+| Text | ✅ Complete — **12 / 12** |
+| Networking | 🚧 In progress — **0 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -517,8 +518,27 @@ refuses to encrypt a Vernam message with a too-short key, because a repeated pad
 is no longer a one-time pad. All of it is proved as laws over a fuzz — Caesar and
 Vigenère round-tripping over 400 random texts, Vernam over full Unicode, the key
 recovered exactly from a Hamlet passage with no key supplied — 81 checks in all,
-the same code running live in the browser. Next up, per the same rule, is the
-**Regex Query Tool**, the Text category's last entry. Same rules, same source.
+the same code running live in the browser. The Text category's twelfth and final
+entry, **Regex Query Tool**, landed on 2026-10-16 — "extracts regexp syntax from
+the user and a search string from the user and displays the results of matching."
+The three-line version (`new RegExp` + `matchAll`) is wrong in three ways, and
+each is a function in the engine: `matchAll` reports *what* matched but not where
+the capture groups are, so the tool forces the `d` flag (`hasIndices`) and reports
+a real `[start, end)` for every group, named or numbered; zero-width matches
+(`/^/gm`, `/\b/g`, lookahead) break both the naive scan loop (it never terminates)
+and the naive highlighter (it draws nothing), so the scan bumps `lastIndex` past
+empty matches and the segmenter emits explicit zero-width markers; and because JS
+has **no regex timeout**, a pattern like `(a+)+$` can hang the page forever, so a
+static `analyze` pass flags the catastrophic-backtracking shapes (nested
+quantifiers, overlapping quantified alternation) *before* the pattern runs on
+untrusted text. An `explain` pass reads the pattern back token by token in
+English, its tokens reconstructing the source exactly. 69 checks pin down the
+corpus, the group positions, the zero-width cases, the ReDoS analyzer (both the
+patterns it must flag and the safe ones it must not), the explainer and the error
+guardrails. **That completes the Text category — all 12 projects built.** Per the
+"one level at a time" rule, the routine has unlocked the next karan/Projects
+category, **Networking**; its first entry, **FTP Program**, is next. Same rules,
+same source.
 
 ## Projects built so far
 
@@ -655,6 +675,7 @@ the same code running live in the browser. Next up, per the same rule, is the
 | 129 | [Quote Tracker](./projects/phase2-text/quote-tracker/) | Text · Source 2 | 2026-10-13 |
 | 130 | [Guestbook / Journal](./projects/phase2-text/guestbook-journal/) | Text · Source 2 | 2026-10-14 |
 | 131 | [Vigenère / Vernam / Caesar Ciphers](./projects/phase2-text/vigenere-vernam-caesar-ciphers/) | Text · Source 2 | 2026-10-15 |
+| 132 | [Regex Query Tool](./projects/phase2-text/regex-query-tool/) | Text · Source 2 | 2026-10-16 |
 
 ## Repository layout
 
@@ -719,6 +740,7 @@ projects/
     quote-tracker/            # attribution parse/format across every dash & quote-mark style, canonical dedup key, fair seeded quote-of-the-day rotation; round-trip, permutation & dedup laws over a fuzz
     guestbook-journal/        # injection-proof escape+linkify, human monotonic relative time, open/moderated/closed store with flood guard, day-grouped journal; laws over a 20k hostile-string fuzz
     vigenere-vernam-caesar-ciphers/  # one Vigenère engine, Caesar as its 1-letter special case, Vernam/OTP over XOR'd bytes; breaks two of the three — IoC + chi-squared key recovery, caesar brute force, two-time-pad leak; 81 checks
+    regex-query-tool/         # live regex matcher over the host RegExp: group positions via the d flag, zero-width-safe scan+highlight, static ReDoS detection for (a+)+ shapes, plain-English pattern explainer; 69 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
