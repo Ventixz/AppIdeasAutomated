@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regex Query Tool</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Regex Query Tool</h1>
+    <p class="tagline">
+      Type a <strong>regular expression</strong> and a <strong>search string</strong>;
+      see every match, every <em>capture group</em>, and exactly <em>where</em> each one
+      landed. It also reads the pattern back in English — and warns you before you run
+      one that could hang the browser.
+    </p>
+  </header>
+
+  <section class="panel">
+    <div class="field">
+      <label for="pattern">Regular expression</label>
+      <div class="row wrap">
+        <span class="delim">/</span>
+        <input type="text" id="pattern" class="grow" spellcheck="false"
+               placeholder="e.g. (\w+)\s+(\w+)" value="(?<first>\w+)\s+(?<last>\w+)">
+        <span class="delim">/</span>
+        <input type="text" id="flags" spellcheck="false" placeholder="flags"
+               value="g" aria-label="flags" style="max-width:120px">
+      </div>
+      <p class="small muted" id="flag-help"></p>
+    </div>
+
+    <div class="field">
+      <label for="input">Search string</label>
+      <textarea id="input" rows="5" spellcheck="false" placeholder="text to search…">Ada Lovelace, Alan Turing, and Grace Hopper walk into a bar.</textarea>
+    </div>
+
+    <div class="row wrap controls">
+      <label class="small muted" for="library" style="text-transform:uppercase;letter-spacing:.04em">Load an example</label>
+      <select id="library"></select>
+      <span class="grow"></span>
+      <span id="status" class="small"></span>
+    </div>
+  </section>
+
+  <h3 class="section-gap">Result <em id="match-count"></em></h3>
+  <div id="redos" class="redos hidden"></div>
+  <div id="highlight" class="output highlight" aria-live="polite"></div>
+
+  <div id="groups-wrap" class="hidden">
+    <h3 class="section-gap">Matches &amp; capture groups</h3>
+    <div id="matches"></div>
+  </div>
+
+  <h3 class="section-gap">What this pattern means</h3>
+  <div id="explain" class="explain"></div>
+
+  <footer>
+    <p class="warn-line">
+      Everything runs locally in your browser — no build step, no server, no network.
+    </p>
+    <p>
+      A <strong>Source 2</strong> project built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described in the
+      <a href="../../../README.md">repository README</a>. The matching engine lives in
+      <code>regex-core.js</code> and is covered by <code>tests.js</code> (69 checks).
+    </p>
+  </footer>
+</main>
+<script src="regex-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

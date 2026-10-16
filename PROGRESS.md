@@ -220,4 +220,21 @@ works down this section next, one project per day. Populated from the
 - [x] Quote Tracker — 2026-10-13
 - [x] Guestbook / Journal — 2026-10-14
 - [x] Vigenere / Vernam / Caesar Ciphers — 2026-10-15
-- [ ] Regex Query Tool
+- [x] Regex Query Tool — 2026-10-16
+
+**Text complete — all 12 projects built. The next category, Networking, is now
+unlocked.**
+
+### Networking
+
+Unlocked 2026-10-16 after the Text category was finished. The routine works down
+this section next, one project per day. Populated from the
+[karan/Projects Networking section](https://github.com/karan/Projects).
+
+- [ ] FTP Program
+- [ ] Bandwidth Monitor
+- [ ] Port Scanner
+- [ ] Mail Checker (POP3 / IMAP)
+- [ ] Country from IP Lookup
+- [ ] Whois Search Tool
+- [ ] Site Checker with Time Scheduling
