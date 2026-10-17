@@ -231,7 +231,7 @@ Unlocked 2026-10-16 after the Text category was finished. The routine works down
 this section next, one project per day. Populated from the
 [karan/Projects Networking section](https://github.com/karan/Projects).
 
-- [ ] FTP Program
+- [x] FTP Program — 2026-10-17
 - [ ] Bandwidth Monitor
 - [ ] Port Scanner
 - [ ] Mail Checker (POP3 / IMAP)

@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (44 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (45 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **0 / 7** |
+| Networking | 🚧 In progress — **1 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -536,9 +536,33 @@ English, its tokens reconstructing the source exactly. 69 checks pin down the
 corpus, the group positions, the zero-width cases, the ReDoS analyzer (both the
 patterns it must flag and the safe ones it must not), the explainer and the error
 guardrails. **That completes the Text category — all 12 projects built.** Per the
-"one level at a time" rule, the routine has unlocked the next karan/Projects
-category, **Networking**; its first entry, **FTP Program**, is next. Same rules,
-same source.
+"one level at a time" rule, the routine unlocked the next karan/Projects
+category, **Networking**, whose first entry, **FTP Program**, landed on
+2026-10-17 — "transfer files to and from a remote computer using the FTP
+protocol." The thing that makes FTP *FTP*, and the thing a naive "send a file"
+version gets wrong, is that it uses **two** connections: a persistent *control*
+channel carrying text commands and 3-digit reply codes, and a *data* channel
+opened fresh for every single `LIST`/`RETR`/`STOR` and closed when that transfer
+ends. So a full [RFC 959](https://www.rfc-editor.org/rfc/rfc959) client **and**
+server were written from scratch — transport-agnostic and DOM-free in
+`ftp-core.js` — and modelled honestly: the "reply, transfer, reply" dance (a
+transfer gets a preliminary `150`, then the bytes, then a completion `226`, and
+a client that reads one reply or reads the `226` before draining the data
+deadlocks or truncates); passive mode, where the server opens a port and spells
+its address out as six bytes in a `227` reply with the port split high-byte-first
+(`195,80` → `195×256+80`), round-tripped across the whole port range; multi-line
+replies that end only on a line beginning with *the same code and a space*; and a
+path-normalising in-memory filesystem where `..` can never climb above the root.
+The browser page wires the client and server together over an in-memory "wire"
+(no sockets) and shows the live control-channel transcript — every command and
+reply, colour-coded by class, with data connections called out as they open and
+close — beside a working file browser (navigate, download, upload, mkdir,
+delete). And because an engine that only talks to itself proves nothing,
+`ftp-node.js` binds the *same* cores to real 127.0.0.1 TCP sockets; the 39-check
+test suite runs the pure protocol units, a full in-memory session, **and** a
+complete session (login, `LIST`, `RETR`, `STOR`→`RETR` round-trip, `QUIT`) over
+genuine loopback TCP. Next in the Networking category: **Bandwidth Monitor**.
+Same rules, same source.
 
 ## Projects built so far
 
@@ -676,6 +700,7 @@ same source.
 | 130 | [Guestbook / Journal](./projects/phase2-text/guestbook-journal/) | Text · Source 2 | 2026-10-14 |
 | 131 | [Vigenère / Vernam / Caesar Ciphers](./projects/phase2-text/vigenere-vernam-caesar-ciphers/) | Text · Source 2 | 2026-10-15 |
 | 132 | [Regex Query Tool](./projects/phase2-text/regex-query-tool/) | Text · Source 2 | 2026-10-16 |
+| 133 | [FTP Program](./projects/phase2-networking/ftp-program/) | Networking · Source 2 | 2026-10-17 |
 
 ## Repository layout
 
@@ -741,6 +766,8 @@ projects/
     guestbook-journal/        # injection-proof escape+linkify, human monotonic relative time, open/moderated/closed store with flood guard, day-grouped journal; laws over a 20k hostile-string fuzz
     vigenere-vernam-caesar-ciphers/  # one Vigenère engine, Caesar as its 1-letter special case, Vernam/OTP over XOR'd bytes; breaks two of the three — IoC + chi-squared key recovery, caesar brute force, two-time-pad leak; 81 checks
     regex-query-tool/         # live regex matcher over the host RegExp: group positions via the d flag, zero-width-safe scan+highlight, static ReDoS detection for (a+)+ shapes, plain-English pattern explainer; 69 checks
+  phase2-networking/          # Source 2 (karan/Projects) — Networking category
+    ftp-program/              # full RFC 959 FTP client + server from scratch: two-channel control/data design, reply-transfer-reply ordering, PASV byte-encoded ports, multi-line replies, path-safe in-memory FS; in-memory wire for the browser + real 127.0.0.1 TCP under Node; 39 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
