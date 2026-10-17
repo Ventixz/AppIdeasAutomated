@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FTP Program</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>FTP Program</h1>
+    <p class="tagline">
+      A working <strong>File Transfer Protocol</strong> client and server
+      (<em>RFC&nbsp;959</em>), wired together in your browser. Watch the
+      two-channel conversation happen: a <em>control</em> connection trading
+      3-digit reply codes, and a throwaway <em>data</em> connection opened for
+      every listing and transfer. The same engine runs over real TCP under Node.
+    </p>
+  </header>
+
+  <div class="layout">
+    <!-- left: the server's filesystem + actions -->
+    <section class="panel fs-panel">
+      <div class="fs-head">
+        <h3><em>Server</em> filesystem</h3>
+        <span class="muted small" id="session-state">connecting…</span>
+      </div>
+
+      <div class="path-bar">
+        <button id="btn-up" class="btn ghost" title="CDUP">↑ up</button>
+        <code id="cwd">/</code>
+        <button id="btn-refresh" class="btn ghost" title="LIST">⟳</button>
+      </div>
+
+      <table class="listing" id="listing"><tbody></tbody></table>
+
+      <div class="actions">
+        <div class="field">
+          <label for="up-name">Upload a file (STOR)</label>
+          <div class="row">
+            <input type="text" id="up-name" class="grow" placeholder="filename.txt" />
+            <button id="btn-upload" class="btn">Upload</button>
+          </div>
+          <textarea id="up-body" rows="2" placeholder="file contents…">hello from the browser client\n</textarea>
+        </div>
+        <div class="row wrap">
+          <input type="text" id="mkd-name" placeholder="new-folder" />
+          <button id="btn-mkd" class="btn ghost">New folder (MKD)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- right: the live protocol transcript -->
+    <section class="panel wire-panel">
+      <div class="wire-head">
+        <h3>Control channel <span class="muted small">— the live wire</span></h3>
+        <label class="small toggle"><input type="checkbox" id="auto-scroll" checked /> follow</label>
+      </div>
+      <div class="legend small">
+        <span class="chip cmd">&gt; command</span>
+        <span class="chip c1">1xx preliminary</span>
+        <span class="chip c2">2xx ok</span>
+        <span class="chip c3">3xx need more</span>
+        <span class="chip c45">4xx/5xx error</span>
+        <span class="chip data">data channel</span>
+      </div>
+      <div class="transcript" id="transcript"></div>
+      <button id="btn-clear" class="btn ghost small">clear transcript</button>
+    </section>
+  </div>
+
+  <section class="viewer panel hidden" id="viewer">
+    <div class="wire-head">
+      <h3>Downloaded: <code id="viewer-name"></code> <span class="muted small" id="viewer-size"></span></h3>
+      <button id="viewer-close" class="btn ghost small">close</button>
+    </div>
+    <pre id="viewer-body"></pre>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      This page runs a faithful FTP client and server entirely in memory — no
+      real sockets, no network, no dependencies, no build step. The protocol
+      logic lives in <code>ftp-core.js</code>; <code>ftp-node.js</code> binds
+      the very same cores to real 127.0.0.1 TCP sockets, exercised by
+      <code>tests.js</code> (39 checks). See the
+      <a href="./README.md">project README</a>.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="ftp-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
