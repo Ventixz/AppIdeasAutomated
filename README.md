@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (45 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (46 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **1 / 7** |
+| Networking | 🚧 In progress — **2 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -561,8 +561,30 @@ delete). And because an engine that only talks to itself proves nothing,
 `ftp-node.js` binds the *same* cores to real 127.0.0.1 TCP sockets; the 39-check
 test suite runs the pure protocol units, a full in-memory session, **and** a
 complete session (login, `LIST`, `RETR`, `STOR`→`RETR` round-trip, `QUIT`) over
-genuine loopback TCP. Next in the Networking category: **Bandwidth Monitor**.
-Same rules, same source.
+genuine loopback TCP. The Networking category's second entry, **Bandwidth
+Monitor**, landed on 2026-10-18 — "monitor your Internet bandwidth and keep
+track of it over several days." It sounds trivial ("show me my speed"), but an
+interface never gives you a speed — only a **cumulative byte counter** that
+counts up forever, and the whole task is turning that into a rate, a daily total
+and a week of history while surviving the counter's two nasty habits. It
+**wraps**: a 32-bit counter rolls over to 0 every ~4.3 GB, and a naive
+`(now − before) / seconds` paints a spike that never happened; the
+`RateSampler` recognises the rollover (accepting the wrapped delta only if the
+implied rate is physically plausible) and the demo's "32-bit wrap" source lets
+you watch the rate stay flat *through* the rollover. And it **resets**: take the
+interface down and up and the counter restarts from 0 — which also looks like a
+backwards step, but isn't a wrap, so the engine tells them apart and, on a reset,
+records the bytes it can account for while reporting the rate as *unknown* rather
+than inventing one. Counters are held as `BigInt` so modern **64-bit** values
+(past `2⁵³`) stay exact, `formatBytes`/`formatRate` keep the bits-vs-bytes
+confusion honest (an 8 MB/s download is a 64 Mbit/s link), and a `DailyLedger`
+buckets traffic by calendar day with a rolling 30-day window — the "over several
+days" part. As ever the engine is DOM-free in `bandwidth-core.js`, and
+`bandwidth-node.js` binds it to **real** Linux `/proc/net/dev` counters; the
+24-check suite covers the rate math (wrap, reset, 64-bit exactness), the ledger
+and buffers, `/proc/net/dev` parsing, and a live read of the host's actual
+interface counters when run on Linux. Next in the Networking category: **Port
+Scanner**. Same rules, same source.
 
 ## Projects built so far
 
@@ -701,6 +723,7 @@ Same rules, same source.
 | 131 | [Vigenère / Vernam / Caesar Ciphers](./projects/phase2-text/vigenere-vernam-caesar-ciphers/) | Text · Source 2 | 2026-10-15 |
 | 132 | [Regex Query Tool](./projects/phase2-text/regex-query-tool/) | Text · Source 2 | 2026-10-16 |
 | 133 | [FTP Program](./projects/phase2-networking/ftp-program/) | Networking · Source 2 | 2026-10-17 |
+| 134 | [Bandwidth Monitor](./projects/phase2-networking/bandwidth-monitor/) | Networking · Source 2 | 2026-10-18 |
 
 ## Repository layout
 
@@ -768,6 +791,7 @@ projects/
     regex-query-tool/         # live regex matcher over the host RegExp: group positions via the d flag, zero-width-safe scan+highlight, static ReDoS detection for (a+)+ shapes, plain-English pattern explainer; 69 checks
   phase2-networking/          # Source 2 (karan/Projects) — Networking category
     ftp-program/              # full RFC 959 FTP client + server from scratch: two-channel control/data design, reply-transfer-reply ordering, PASV byte-encoded ports, multi-line replies, path-safe in-memory FS; in-memory wire for the browser + real 127.0.0.1 TCP under Node; 39 checks
+    bandwidth-monitor/        # cumulative byte counter → rate, surviving 32-bit wrap and interface reset; exact 64-bit BigInt counters, bits-vs-bytes formatting, 30-day DailyLedger; live gauges/chart + real /proc/net/dev counters under Node; 24 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

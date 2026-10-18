@@ -1,0 +1,116 @@
+/* Bandwidth Monitor — dark theme, matching the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --rx: #46d17f;   /* download / receive */
+  --tx: #b48cf0;   /* upload / transmit */
+  --warn: #f5b942;
+  --bad: #ff6b6b;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main { max-width: 1040px; margin: 0 auto; padding: 28px 20px 60px; }
+
+header h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); max-width: 80ch; margin: 0 0 22px; }
+.tagline strong { color: var(--ink); }
+.tagline em { color: var(--accent); font-style: normal; }
+
+h3 { margin: 0; font-size: 16px; font-weight: 600; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+.muted { color: var(--muted); }
+.small { font-size: 12.5px; }
+a { color: var(--accent); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+.panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+}
+
+/* ---- gauges ---- */
+.gauges {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 18px;
+}
+.gauge {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px;
+}
+.gauge.rx { border-left: 3px solid var(--rx); }
+.gauge.tx { border-left: 3px solid var(--tx); }
+.gauge.total { border-left: 3px solid var(--accent); }
+.g-label { color: var(--muted); font-size: 12.5px; letter-spacing: .02em; }
+.g-rate {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 30px; font-variant-numeric: tabular-nums; margin: 4px 0 2px;
+}
+.g-rate.small-rate { font-size: 24px; }
+.gauge.rx .g-rate { color: var(--rx); }
+.gauge.tx .g-rate { color: var(--tx); }
+.g-sub { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* ---- controls ---- */
+.controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.controls .sep { opacity: .5; }
+.toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); cursor: pointer; }
+.btn {
+  background: var(--accent); color: #0c1220; border: 0; border-radius: 8px;
+  padding: 7px 13px; font: inherit; font-weight: 600; cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); font-weight: 500; }
+.btn.small { padding: 5px 10px; font-size: 12.5px; }
+.btn:active { transform: translateY(1px); }
+.sel {
+  background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 8px; padding: 6px 8px; font: inherit; font-size: 13px;
+}
+
+/* ---- chart ---- */
+.chart-panel #chart {
+  width: 100%; height: 220px; display: block;
+  background: var(--panel-2); border-radius: 10px; border: 1px solid var(--line);
+}
+.legend { margin-top: 10px; display: flex; gap: 14px; flex-wrap: wrap; }
+.chip { color: var(--muted); display: inline-flex; align-items: center; gap: 5px; }
+.rx-chip { color: var(--rx); }
+.tx-chip { color: var(--tx); }
+.ev-chip { color: var(--warn); }
+
+/* ---- daily table ---- */
+table.days { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+table.days th, table.days td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+table.days thead th { color: var(--muted); font-weight: 500; font-size: 12.5px; }
+table.days th:first-child, table.days td:first-child { text-align: left; font-family: ui-monospace, Menlo, monospace; }
+table.days tbody td { font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+table.days tfoot th { color: var(--ink); font-size: 13px; }
+table.days tr.today td { color: var(--ink); }
+table.days tr.today td:first-child::after { content: " ●"; color: var(--accent); }
+.empty { margin: 10px 2px 0; }
+
+footer { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 14px; }
+footer p { margin: 6px 0; }
+
+@media (max-width: 640px) {
+  .gauges { grid-template-columns: 1fr; }
+  .g-rate { font-size: 26px; }
+}
