@@ -232,7 +232,7 @@ this section next, one project per day. Populated from the
 [karan/Projects Networking section](https://github.com/karan/Projects).
 
 - [x] FTP Program — 2026-10-17
-- [ ] Bandwidth Monitor
+- [x] Bandwidth Monitor — 2026-10-18
 - [ ] Port Scanner
 - [ ] Mail Checker (POP3 / IMAP)
 - [ ] Country from IP Lookup

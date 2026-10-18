@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bandwidth Monitor</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Bandwidth Monitor</h1>
+    <p class="tagline">
+      A live <strong>network throughput monitor</strong> — the honest kind. It
+      reads a <em>cumulative</em> byte counter, turns it into a rate the way a
+      real monitor must (coping with counter <em>wrap</em> and interface
+      <em>reset</em>), and keeps a running total <em>over several days</em>. The
+      same engine reads real <code>/proc/net/dev</code> counters under Node.
+    </p>
+  </header>
+
+  <!-- live gauges -->
+  <section class="gauges">
+    <div class="gauge rx">
+      <div class="g-label">▼ Download</div>
+      <div class="g-rate" id="rx-rate">—</div>
+      <div class="g-sub"><span id="rx-avg">avg —</span> · <span id="rx-peak">peak —</span></div>
+    </div>
+    <div class="gauge tx">
+      <div class="g-label">▲ Upload</div>
+      <div class="g-rate" id="tx-rate">—</div>
+      <div class="g-sub"><span id="tx-avg">avg —</span> · <span id="tx-peak">peak —</span></div>
+    </div>
+    <div class="gauge total">
+      <div class="g-label">Σ This session</div>
+      <div class="g-rate small-rate" id="session-total">—</div>
+      <div class="g-sub"><span id="sample-count">0 samples</span></div>
+    </div>
+  </section>
+
+  <!-- live chart -->
+  <section class="panel chart-panel">
+    <div class="panel-head">
+      <h3>Throughput <span class="muted small">— last <span id="window-span">120</span> samples</span></h3>
+      <div class="controls">
+        <label class="small toggle"><input type="checkbox" id="unit-bits" checked /> bits/s</label>
+        <span class="muted small sep">|</span>
+        <span class="muted small">source:</span>
+        <select id="source" class="sel">
+          <option value="sim-steady">Simulated — steady</option>
+          <option value="sim-bursty" selected>Simulated — bursty</option>
+          <option value="sim-wrap">Simulated — 32-bit wrap</option>
+          <option value="real">Real — this page's downloads</option>
+        </select>
+        <button id="btn-run" class="btn">⏸ Pause</button>
+        <button id="btn-reset" class="btn ghost small">reset</button>
+      </div>
+    </div>
+    <svg id="chart" viewBox="0 0 800 220" preserveAspectRatio="none" role="img"
+         aria-label="throughput over time"></svg>
+    <div class="legend small">
+      <span class="chip rx-chip">▼ download</span>
+      <span class="chip tx-chip">▲ upload</span>
+      <span class="chip ev-chip" id="event-chip" hidden></span>
+    </div>
+  </section>
+
+  <!-- daily history -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3>Daily history <span class="muted small">— kept across days</span></h3>
+      <button id="btn-seed" class="btn ghost small">add sample days</button>
+    </div>
+    <table class="days" id="days">
+      <thead>
+        <tr><th>Day</th><th>▼ Down</th><th>▲ Up</th><th>Total</th><th>Peak ▼</th></tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot><tr><th>Total</th><th id="ft-rx"></th><th id="ft-tx"></th><th id="ft-tot"></th><th></th></tr></tfoot>
+    </table>
+    <p class="small muted empty" id="days-empty">No days recorded yet — let the monitor run, or seed some sample days.</p>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      A browser can't read your NIC's counters, so the demo feeds the engine a
+      simulated (but genuinely cumulative) counter — and one source reads
+      <em>real</em> bytes this page has downloaded via the Resource Timing API.
+      The rate math, wrap/reset handling and daily rollup live in
+      <code>bandwidth-core.js</code>; <code>bandwidth-node.js</code> binds the
+      same engine to real <code>/proc/net/dev</code> counters, exercised by
+      <code>tests.js</code> (24 checks). See the
+      <a href="./README.md">project README</a>.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="bandwidth-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
