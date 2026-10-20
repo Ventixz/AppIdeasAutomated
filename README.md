@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (46 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (47 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **2 / 7** |
+| Networking | 🚧 In progress — **3 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -583,8 +583,32 @@ days" part. As ever the engine is DOM-free in `bandwidth-core.js`, and
 `bandwidth-node.js` binds it to **real** Linux `/proc/net/dev` counters; the
 24-check suite covers the rate math (wrap, reset, 64-bit exactness), the ledger
 and buffers, `/proc/net/dev` parsing, and a live read of the host's actual
-interface counters when run on Linux. Next in the Networking category: **Port
-Scanner**. Same rules, same source.
+interface counters when run on Linux. The Networking category's third entry,
+**Port Scanner**, landed on 2026-10-20 — "attempt to open a socket on a range of
+ports to see which are **open**, **closed**, or **filtered**." The lesson hides
+in that one sentence: a scan's value isn't "open vs. shut", it's the *three-way*
+split, and the hard distinction is **closed vs. filtered**. A *closed* port is a
+fast, definite "no" — the host sends a TCP `RST` (`ECONNREFUSED`), so you know
+it's reachable but nothing is listening there. A *filtered* port is **silence** —
+your `SYN` goes out and *nothing* comes back, because a firewall quietly dropped
+it. A naive scanner lumps both into "not open" and throws away the single most
+useful signal a scan produces: whether a port answered you or ignored you. The
+difference comes down to *who owns the clock*, so the engine — not the probe —
+holds a timeout: `withTimeout` races the probe against a deadline, and when the
+deadline wins with no answer, that silence *is* the verdict (the engine aborts
+the probe so no real socket leaks). Host-unreachable and DNS failures are a
+fourth thing, **error**, because they aren't a verdict about the port at all. A
+bounded-concurrency `runPool` keeps exactly N probes in flight (one at a time is
+glacial, all at once melts the host), and a strict `parsePortSpec` turns
+`22,80,8000-8100` into a sorted, de-duplicated port list while rejecting typos
+loudly. As ever the engine is DOM-free in `portscan-core.js`, and
+`portscan-node.js` binds it to **real** TCP sockets via Node's `net` module — a
+plain unprivileged connect scan, honest about its scope; the 28-check suite
+covers the parser, the open/closed/filtered/error classifier (with the
+*filtered* verdict coming from the scanner's real timeout firing), the
+concurrency bound, cancellation, and real loopback sockets scanning as open,
+closed and never-falsely-open. Next in the Networking category: **Mail Checker
+(POP3 / IMAP)**. Same rules, same source.
 
 ## Projects built so far
 
@@ -724,6 +748,7 @@ Scanner**. Same rules, same source.
 | 132 | [Regex Query Tool](./projects/phase2-text/regex-query-tool/) | Text · Source 2 | 2026-10-16 |
 | 133 | [FTP Program](./projects/phase2-networking/ftp-program/) | Networking · Source 2 | 2026-10-17 |
 | 134 | [Bandwidth Monitor](./projects/phase2-networking/bandwidth-monitor/) | Networking · Source 2 | 2026-10-18 |
+| 135 | [Port Scanner](./projects/phase2-networking/port-scanner/) | Networking · Source 2 | 2026-10-20 |
 
 ## Repository layout
 
@@ -792,6 +817,7 @@ projects/
   phase2-networking/          # Source 2 (karan/Projects) — Networking category
     ftp-program/              # full RFC 959 FTP client + server from scratch: two-channel control/data design, reply-transfer-reply ordering, PASV byte-encoded ports, multi-line replies, path-safe in-memory FS; in-memory wire for the browser + real 127.0.0.1 TCP under Node; 39 checks
     bandwidth-monitor/        # cumulative byte counter → rate, surviving 32-bit wrap and interface reset; exact 64-bit BigInt counters, bits-vs-bytes formatting, 30-day DailyLedger; live gauges/chart + real /proc/net/dev counters under Node; 24 checks
+    port-scanner/             # open/closed/filtered three-way split (refusal vs. silence), engine-owned timeout → filtered, bounded-concurrency pool, strict port-spec parser; simulated-host demo + real net-socket connect scan under Node; 28 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
