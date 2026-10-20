@@ -233,7 +233,7 @@ this section next, one project per day. Populated from the
 
 - [x] FTP Program — 2026-10-17
 - [x] Bandwidth Monitor — 2026-10-18
-- [ ] Port Scanner
+- [x] Port Scanner — 2026-10-20
 - [ ] Mail Checker (POP3 / IMAP)
 - [ ] Country from IP Lookup
 - [ ] Whois Search Tool
