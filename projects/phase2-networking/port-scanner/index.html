@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Port Scanner</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Port Scanner</h1>
+    <p class="tagline">
+      Attempt to open a socket on a <strong>range of ports</strong> and sort each
+      one into <strong>open</strong>, <strong>closed</strong> or
+      <strong>filtered</strong> — the three-way split that makes a scan useful.
+      <em>Closed</em> means the host refused you; <em>filtered</em> means it said
+      nothing at all. The same engine drives <em>real</em> TCP sockets under Node
+      (see the README and tests).
+    </p>
+  </header>
+
+  <!-- controls -->
+  <section class="panel">
+    <div class="controls">
+      <div class="field">
+        <label for="host">Target (simulated)</label>
+        <select id="host">
+          <option value="web">web-server — 22, 80, 443 open</option>
+          <option value="db" selected>db-box — services + a firewall</option>
+          <option value="locked">locked-down — mostly filtered</option>
+          <option value="dead">offline host — all refused</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="ports">Ports</label>
+        <input id="ports" class="ports" value="20-25,53,80,110,143,443,3306,5432,8080" />
+      </div>
+      <div class="field">
+        <label for="timeout">Timeout (ms)</label>
+        <input id="timeout" class="num" type="number" value="600" min="50" step="50" />
+      </div>
+      <div class="field">
+        <label for="concurrency">Concurrency</label>
+        <input id="concurrency" class="num" type="number" value="8" min="1" step="1" />
+      </div>
+      <button id="btn-scan" class="btn">▶ Scan</button>
+      <button id="btn-cancel" class="btn ghost" disabled>Cancel</button>
+    </div>
+    <p class="err" id="err"></p>
+
+    <div class="progress-wrap">
+      <div class="bar"><span id="bar"></span></div>
+      <div class="progress-label small muted">
+        <span id="prog-text">idle</span>
+        <span id="prog-time"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- summary -->
+  <section class="panel">
+    <div class="panel-head"><h3>Summary</h3></div>
+    <div class="summary">
+      <div class="stat open"><div class="n" id="s-open">0</div><div class="k">open</div></div>
+      <div class="stat closed"><div class="n" id="s-closed">0</div><div class="k">closed</div></div>
+      <div class="stat filtered"><div class="n" id="s-filtered">0</div><div class="k">filtered</div></div>
+      <div class="stat error"><div class="n" id="s-error">0</div><div class="k">error</div></div>
+    </div>
+
+    <div class="panel-head" style="margin-top:18px"><h3 class="small muted">Port map</h3></div>
+    <div class="portmap" id="portmap"></div>
+    <div class="legend">
+      <span class="chip"><span class="swatch open"></span> open</span>
+      <span class="chip"><span class="swatch closed"></span> closed</span>
+      <span class="chip"><span class="swatch filtered"></span> filtered</span>
+      <span class="chip"><span class="swatch error"></span> error</span>
+    </div>
+  </section>
+
+  <!-- results -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3>Results <span class="muted small" id="result-note"></span></h3>
+      <label class="small muted"><input type="checkbox" id="only-interesting" checked /> hide closed</label>
+    </div>
+    <table class="results" id="results">
+      <thead>
+        <tr><th>Port</th><th>State</th><th>Service</th><th>Latency</th><th>Detail</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <p class="small muted empty" id="results-empty">Run a scan to see per-port results.</p>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      A browser can't open an arbitrary TCP socket, so this page scans a
+      <em>simulated</em> host: each profile declares which ports are open, which
+      refuse, and which a firewall silently drops. The scanner itself is real —
+      bounded concurrency, a per-port timeout, and the open/closed/filtered
+      classifier all live in <code>portscan-core.js</code>.
+      <code>portscan-node.js</code> binds the very same engine to real
+      <code>net</code> sockets, exercised against loopback by
+      <code>tests.js</code> (28 checks). See the
+      <a href="./README.md">project README</a>.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="portscan-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
