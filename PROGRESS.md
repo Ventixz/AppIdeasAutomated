@@ -234,7 +234,7 @@ this section next, one project per day. Populated from the
 - [x] FTP Program — 2026-10-17
 - [x] Bandwidth Monitor — 2026-10-18
 - [x] Port Scanner — 2026-10-20
-- [ ] Mail Checker (POP3 / IMAP)
+- [x] Mail Checker (POP3 / IMAP) — 2026-10-21
 - [ ] Country from IP Lookup
 - [ ] Whois Search Tool
 - [ ] Site Checker with Time Scheduling
