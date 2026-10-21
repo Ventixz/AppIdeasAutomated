@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (47 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (48 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **3 / 7** |
+| Networking | 🚧 In progress — **4 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -607,8 +607,33 @@ plain unprivileged connect scan, honest about its scope; the 28-check suite
 covers the parser, the open/closed/filtered/error classifier (with the
 *filtered* verdict coming from the scanner's real timeout firing), the
 concurrency bound, cancellation, and real loopback sockets scanning as open,
-closed and never-falsely-open. Next in the Networking category: **Mail Checker
-(POP3 / IMAP)**. Same rules, same source.
+closed and never-falsely-open. The Networking category's fourth entry, **Mail
+Checker (POP3 / IMAP)**, landed on 2026-10-21 — "take a username and password and
+check POP3 / IMAP mail." The one-sentence task hides a real lesson: the two
+protocols answer "do I have new mail?" in fundamentally different ways. POP3 is a
+download-and-forget spool with **no concept of read vs. unread** — `STAT` gives a
+count and a total size, and that's the whole story — so the checker returns
+`unseen: null` (*unknown*), never a dishonest `0`. IMAP keeps messages on the
+server with per-message flags, so it reports real **unseen** and **recent**
+counts, asked for with `STATUS` (which, unlike `SELECT`, doesn't disturb the
+`\Recent` flags). The engine normalises both into one status without ever
+pretending one protocol knows what the other can't. It also carries each
+protocol's signature framing trick, because that's where naive clients break:
+POP3's **dot-stuffing** (a body line beginning `.` is sent as `..`, and must be
+un-stuffed, or a message with a leading-dot line is silently corrupted) and
+IMAP's byte-counted **`{literal}`s** (a `{114}` means "the next 114 bytes are
+data, not lines" — so the engine reads them with `readExact`, honouring the count
+even when the bytes contain CRLFs or parens). And because credentials go onto a
+newline-delimited wire, an unescaped CR/LF would **inject a second command**, so
+POP3 credentials are refused if they carry control bytes and IMAP ones are
+properly quoted-and-escaped (the demo's IMAP password is `p@ss "word"` on
+purpose). TLS is the default in the Node binding (POP3S:995 / IMAPS:993), because
+plaintext hands your password to the network. As ever the engine is DOM-free in
+`mailcheck-core.js`, `mailcheck-node.js` binds the same client *and* the same
+simulated servers to **real** `net`/`tls` sockets, and the 31-check suite covers
+the parsers, the credential guards, the dot-stuffed and `{literal}` multi-line
+paths, and real loopback sockets. Next in the Networking category: **Country from
+IP Lookup**. Same rules, same source.
 
 ## Projects built so far
 
@@ -749,6 +774,7 @@ closed and never-falsely-open. Next in the Networking category: **Mail Checker
 | 133 | [FTP Program](./projects/phase2-networking/ftp-program/) | Networking · Source 2 | 2026-10-17 |
 | 134 | [Bandwidth Monitor](./projects/phase2-networking/bandwidth-monitor/) | Networking · Source 2 | 2026-10-18 |
 | 135 | [Port Scanner](./projects/phase2-networking/port-scanner/) | Networking · Source 2 | 2026-10-20 |
+| 136 | [Mail Checker (POP3 / IMAP)](./projects/phase2-networking/mail-checker/) | Networking · Source 2 | 2026-10-21 |
 
 ## Repository layout
 
@@ -818,6 +844,7 @@ projects/
     ftp-program/              # full RFC 959 FTP client + server from scratch: two-channel control/data design, reply-transfer-reply ordering, PASV byte-encoded ports, multi-line replies, path-safe in-memory FS; in-memory wire for the browser + real 127.0.0.1 TCP under Node; 39 checks
     bandwidth-monitor/        # cumulative byte counter → rate, surviving 32-bit wrap and interface reset; exact 64-bit BigInt counters, bits-vs-bytes formatting, 30-day DailyLedger; live gauges/chart + real /proc/net/dev counters under Node; 24 checks
     port-scanner/             # open/closed/filtered three-way split (refusal vs. silence), engine-owned timeout → filtered, bounded-concurrency pool, strict port-spec parser; simulated-host demo + real net-socket connect scan under Node; 28 checks
+    mail-checker/             # POP3 vs. IMAP honestly normalised (POP3 can't know unseen → null, not 0); dot-stuffed POP3 multi-lines + byte-counted IMAP {literal}s; CR/LF credential-injection guards, IMAP quoting, TLS by default; in-page protocol-speaking servers + real net/tls sockets under Node; 31 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mail Checker</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Mail Checker</h1>
+    <p class="tagline">
+      Take a username and password and <strong>check the mail</strong> over
+      <strong>POP3</strong> or <strong>IMAP</strong> — and watch the two protocols
+      answer the question differently. POP3 can only tell you <em>how many</em>
+      messages are spooled; it has no idea which are read. IMAP tracks per-message
+      flags, so it reports <strong>unseen</strong> and <strong>recent</strong>
+      counts too. The engine below speaks the real wire protocol — see the live
+      <em>session log</em> as it runs — and the <em>same</em> engine drives real
+      TCP/TLS sockets under Node (see the README and tests).
+    </p>
+  </header>
+
+  <!-- controls -->
+  <section class="panel">
+    <div class="proto" role="tablist">
+      <button id="p-pop3" class="on" role="tab">POP3</button>
+      <button id="p-imap" role="tab">IMAP</button>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <label for="account">Mailbox (simulated)</label>
+        <select id="account"></select>
+      </div>
+      <div class="field">
+        <label for="user">Username</label>
+        <input id="user" class="cred" value="alice" />
+      </div>
+      <div class="field">
+        <label for="pass">Password</label>
+        <input id="pass" class="cred" value="hunter2" />
+      </div>
+      <button id="btn-check" class="btn">✉ Check mail</button>
+    </div>
+    <p class="err" id="err"></p>
+  </section>
+
+  <!-- summary -->
+  <section class="panel">
+    <div class="panel-head"><h3>Mailbox status <span class="muted small" id="status-note"></span></h3></div>
+    <div class="summary">
+      <div class="stat total"><div class="n" id="s-total">—</div><div class="k">messages</div></div>
+      <div class="stat unseen"><div class="n" id="s-unseen">—</div><div class="k">unseen</div></div>
+      <div class="stat recent"><div class="n" id="s-recent">—</div><div class="k">recent</div></div>
+      <div class="stat size"><div class="n" id="s-size">—</div><div class="k">size</div></div>
+    </div>
+  </section>
+
+  <!-- messages -->
+  <section class="panel">
+    <div class="panel-head"><h3>Messages</h3></div>
+    <ul class="mail" id="mail"></ul>
+    <p class="small muted empty" id="mail-empty">Check a mailbox to list its messages.</p>
+  </section>
+
+  <!-- wire log -->
+  <section class="panel">
+    <div class="panel-head">
+      <h3>Session log</h3>
+      <span class="small muted"><span class="c" style="font-weight:650">C:</span> client &nbsp; <span class="s" style="font-weight:650">S:</span> server &nbsp; <span class="lit" style="font-weight:650">▒</span> literal / multiline body</span>
+    </div>
+    <div class="wire" id="wire"><span class="dim">The raw POP3 / IMAP exchange will appear here.</span></div>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      A browser can't open an arbitrary TCP socket, so this page talks to a
+      <em>simulated</em> mail server running in the same page — but one that
+      speaks the genuine line protocol, dot-stuffed POP3 multi-lines and
+      byte-counted IMAP <code>{literal}</code>s included. The client and that
+      server are the exact code in <code>mailcheck-core.js</code>;
+      <code>mailcheck-node.js</code> binds the same client — and the same server —
+      to real <code>net</code>/<code>tls</code> sockets, exercised over loopback
+      by <code>tests.js</code> (31 checks). See the
+      <a href="./README.md">project README</a>.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="mailcheck-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
