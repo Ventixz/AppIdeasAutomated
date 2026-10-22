@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **4 / 7** |
+| Networking | 🚧 In progress — **5 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -632,8 +632,34 @@ plaintext hands your password to the network. As ever the engine is DOM-free in
 `mailcheck-core.js`, `mailcheck-node.js` binds the same client *and* the same
 simulated servers to **real** `net`/`tls` sockets, and the 31-check suite covers
 the parsers, the credential guards, the dot-stuffed and `{literal}` multi-line
-paths, and real loopback sockets. Next in the Networking category: **Country from
-IP Lookup**. Same rules, same source.
+paths, and real loopback sockets. The Networking category's fifth entry,
+**Country from IP Lookup**, landed on 2026-10-22 — "enter an IP address and find
+the country that IP is **registered** in." The one sentence hides three honest
+problems, and the build cheats on none of them. It **parses** both families for
+real — strict IPv4 (leading-zero octets refused, so `010` is never read as octal)
+and full IPv6 with `::` compression, embedded IPv4, and the one-`::`/8-group
+rules — mapping both into one 128-bit `BigInt` so a single sorted table serves
+v4 and v6 alike. It **classifies special-use space first** (RFC 6890: private,
+loopback, link-local, CGNAT, the TEST-NET documentation blocks, multicast, ULA),
+because a lookup that returns a flag for `10.0.0.1` or `::1` is lying — those
+belong to no country, and an IPv4-mapped `::ffff:10.0.0.1` can't sneak a private
+address through in v6 clothing. And it **binary-searches a `RangeTable`** that is
+sorted and validated **non-overlapping** on construction (an ambiguous table is
+refused outright), returning the matching country — or `null` in a gap, an
+**unknown** that stays unknown rather than a nearest-neighbour guess. The word
+*registered* is load-bearing: the answer is the economy a block was **delegated
+to by its Regional Internet Registry**, which is exactly what the RIRs publish in
+their delegated-extended statistics files — not a GPS fix, and the engine never
+pretends otherwise. `parseRirDelegated` turns those real files
+(`apnic|JP|ipv4|133.0.0.0|16777216|…`) straight into table ranges, and it's the
+*same* code path that builds the tiny illustrative demo snapshot, so demo and
+registry file can't drift apart. As ever the engine is DOM-free in
+`geoip-core.js`; `geoip-node.js` loads a CSV or a real RIR file and reads IPs from
+argv or stdin; and the 54-check suite covers strict dual-family parsing, CIDR
+math, every special-use class, the range table's sort/overlap/boundary/gap
+behaviour (including a 10 000-range search), the RIR parser, and that the
+snapshot, a CSV and a parsed RIR file all agree. Next in the Networking category:
+**Whois Search Tool**. Same rules, same source.
 
 ## Projects built so far
 
@@ -775,6 +801,7 @@ IP Lookup**. Same rules, same source.
 | 134 | [Bandwidth Monitor](./projects/phase2-networking/bandwidth-monitor/) | Networking · Source 2 | 2026-10-18 |
 | 135 | [Port Scanner](./projects/phase2-networking/port-scanner/) | Networking · Source 2 | 2026-10-20 |
 | 136 | [Mail Checker (POP3 / IMAP)](./projects/phase2-networking/mail-checker/) | Networking · Source 2 | 2026-10-21 |
+| 137 | [Country from IP Lookup](./projects/phase2-networking/country-from-ip/) | Networking · Source 2 | 2026-10-22 |
 
 ## Repository layout
 
@@ -845,6 +872,7 @@ projects/
     bandwidth-monitor/        # cumulative byte counter → rate, surviving 32-bit wrap and interface reset; exact 64-bit BigInt counters, bits-vs-bytes formatting, 30-day DailyLedger; live gauges/chart + real /proc/net/dev counters under Node; 24 checks
     port-scanner/             # open/closed/filtered three-way split (refusal vs. silence), engine-owned timeout → filtered, bounded-concurrency pool, strict port-spec parser; simulated-host demo + real net-socket connect scan under Node; 28 checks
     mail-checker/             # POP3 vs. IMAP honestly normalised (POP3 can't know unseen → null, not 0); dot-stuffed POP3 multi-lines + byte-counted IMAP {literal}s; CR/LF credential-injection guards, IMAP quoting, TLS by default; in-page protocol-speaking servers + real net/tls sockets under Node; 31 checks
+    country-from-ip/          # IP → registered country as 3 honest steps: strict dual-family parse (IPv4 no-octal, IPv6 ::/embedded-v4) into one 128-bit space, RFC 6890 special-use classified first (private/loopback/… have no country), binary search over a validated non-overlapping RangeTable → cc or honest null; "registered" = RIR delegation, real delegated-stats parser, CSV/RIR loaders under Node; 54 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

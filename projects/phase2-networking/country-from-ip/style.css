@@ -1,0 +1,116 @@
+/* Country from IP — dark theme, matching the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --ok: #46d17f;      /* a registered country found — green */
+  --special: #f5b942; /* special-use, no country     — amber */
+  --unknown: #5b6680; /* routable but not in the table — grey */
+  --err: #ff6b6b;     /* bad input                   — red  */
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px; }
+
+header h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); max-width: 80ch; margin: 0 0 22px; }
+.tagline strong { color: var(--ink); }
+code { background: #0a0e17; padding: 1px 5px; border-radius: 4px; font-size: 0.9em; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin: 0 0 20px;
+}
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+/* --- input --- */
+.controls { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.grow { flex: 1 1 320px; }
+.field label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.field input {
+  background: var(--panel-2); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; font: inherit;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 16px;
+}
+.field input:focus { outline: none; border-color: var(--accent); }
+
+.btn {
+  background: var(--accent); color: #0b1020; border: none;
+  border-radius: 8px; padding: 11px 20px; font: inherit; font-weight: 650; cursor: pointer;
+}
+.btn:hover { filter: brightness(1.08); }
+
+.err { color: var(--err); font-size: 13px; min-height: 18px; margin: 12px 0 0; }
+
+.examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
+.ex {
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink);
+  border-radius: 999px; padding: 4px 11px; font-size: 12.5px; cursor: pointer;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+.ex:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --- result verdict --- */
+.result { border-left: 4px solid var(--line); }
+.result.ok { border-left-color: var(--ok); }
+.result.special { border-left-color: var(--special); }
+.result.unknown { border-left-color: var(--unknown); }
+.result.err { border-left-color: var(--err); }
+
+.verdict { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.verdict .flag { font-size: 52px; line-height: 1; }
+.verdict .who { display: flex; flex-direction: column; gap: 3px; }
+.verdict .country { font-size: 24px; font-weight: 700; }
+.verdict .sub { color: var(--muted); font-size: 14px; }
+.verdict .sub code { font-size: 13px; }
+.result.ok .verdict .country { color: var(--ok); }
+.result.special .verdict .country { color: var(--special); }
+.result.unknown .verdict .country { color: var(--unknown); }
+.result.err .verdict .country { color: var(--err); }
+
+/* --- the three honest steps --- */
+.steps { list-style: none; counter-reset: step; margin: 20px 0 0; padding: 0; }
+.steps li {
+  position: relative; padding: 12px 14px 12px 46px; margin-bottom: 10px;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px;
+}
+.steps li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 12px; top: 12px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #0b1020;
+  font-size: 13px; font-weight: 700; display: grid; place-items: center;
+}
+.steps .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.steps .val { margin-top: 3px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13.5px; word-break: break-all; }
+.steps .val.good { color: var(--ok); }
+.steps .val.flag-amber { color: var(--special); }
+.steps .val.flag-grey { color: var(--unknown); }
+
+footer { margin-top: 28px; }
+footer a { color: var(--accent); }
+footer strong { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .field.grow { flex: 1 1 100%; }
+  .btn { flex: 1 1 100%; }
+}
