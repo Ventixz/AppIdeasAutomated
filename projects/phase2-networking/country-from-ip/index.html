@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Country from IP</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Country from IP</h1>
+    <p class="tagline">
+      Enter an IP address and find the country it's <strong>registered</strong>
+      in. Both <strong>IPv4</strong> and <strong>IPv6</strong> work. The lookup is
+      honest about the three things that make this harder than it looks: it
+      <em>parses</em> the address properly (compressed IPv6 <code>::</code> and
+      all), it <em>recognises special-use space</em> — private, loopback,
+      documentation — which belongs to no country, and it <em>binary-searches</em>
+      a sorted range table, returning <em>unknown</em> rather than a guess when an
+      address falls in a gap. The same engine runs under Node against real
+      registry data (see the README).
+    </p>
+  </header>
+
+  <!-- input -->
+  <section class="panel">
+    <div class="controls">
+      <div class="field grow">
+        <label for="ip">IP address</label>
+        <input id="ip" value="8.8.8.8" autocomplete="off" spellcheck="false" />
+      </div>
+      <button id="btn" class="btn">🌍 Look up</button>
+    </div>
+    <p class="err" id="err"></p>
+    <div class="examples">
+      <span class="small muted">Try:</span>
+      <span class="ex" data-ip="8.8.8.8">8.8.8.8</span>
+      <span class="ex" data-ip="133.11.22.33">133.11.22.33</span>
+      <span class="ex" data-ip="1.1.1.1">1.1.1.1</span>
+      <span class="ex" data-ip="2606:4700::1111">2606:4700::1111</span>
+      <span class="ex" data-ip="2001:200::1">2001:200::1</span>
+      <span class="ex" data-ip="192.168.1.1">192.168.1.1</span>
+      <span class="ex" data-ip="127.0.0.1">127.0.0.1</span>
+      <span class="ex" data-ip="169.254.0.1">169.254.0.1</span>
+      <span class="ex" data-ip="::ffff:10.0.0.1">::ffff:10.0.0.1</span>
+      <span class="ex" data-ip="203.0.200.1">203.0.200.1</span>
+    </div>
+  </section>
+
+  <!-- result -->
+  <section class="panel result" id="result" hidden>
+    <div class="verdict" id="verdict"></div>
+    <ol class="steps" id="steps"></ol>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      <strong>What "country" means here.</strong> This returns the economy a
+      block was <em>delegated to</em> by its Regional Internet Registry — which is
+      what the task's "registered in" asks for, and what the RIR statistics files
+      record. It is <em>not</em> a precise geolocation: a block registered to one
+      country can be routed in another. The built-in data is a tiny
+      <em>illustrative</em> snapshot of real, well-known registrations, written in
+      the RIR delegated format and parsed by the same code that ingests a full
+      registry file under Node.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>. See the
+      <a href="./README.md">project README</a>; the engine lives in
+      <code>geoip-core.js</code> and is covered by <code>tests.js</code> (54
+      checks).
+    </p>
+  </footer>
+</main>
+
+<script src="geoip-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
