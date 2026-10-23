@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (48 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (49 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **5 / 7** |
+| Networking | 🚧 In progress — **6 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -658,8 +658,32 @@ registry file can't drift apart. As ever the engine is DOM-free in
 argv or stdin; and the 54-check suite covers strict dual-family parsing, CIDR
 math, every special-use class, the range table's sort/overlap/boundary/gap
 behaviour (including a 10 000-range search), the RIR parser, and that the
-snapshot, a CSV and a parsed RIR file all agree. Next in the Networking category:
-**Whois Search Tool**. Same rules, same source.
+snapshot, a CSV and a parsed RIR file all agree. The Networking category's sixth
+entry, **Whois Search Tool**, landed on 2026-10-23 — "perform a WHOIS lookup on a
+domain or IP and show the result in a readable format." The trivial-looking task
+hides three honest problems, and the build cheats on none of them. It **works out
+which server to ask** — there is no single WHOIS server, so it parses the target
+first (a pasted URL stripped to its host, a non-ASCII label refused until it's
+punycoded, strict IPv4/IPv6) and maps the TLD to its registry, falling back to
+the IANA root (which refers onward) for anything unknown. It **follows the
+referral** — `.com`/`.net` are *thin*, meaning the registry hands back only the
+sponsoring registrar and a pointer to *its* server where the real record lives,
+so a correct client makes the second hop and **merges** the two answers (registry
+fields first, registrar's layered on, name servers and statuses unioned, each
+field remembering which server it came from), with a loop guard, a hop cap, and a
+dead-end referral downgraded to a note rather than a lost lookup. And it **parses
+free-form text** that every registry formats differently: dozens of field-name
+spellings folded to one record, four date grammars (ISO, date-only, Nominet's
+`05-Dec-1996`, `.jp`'s `2023.08.14`) normalised to ISO 8601 with an impossible
+date *rejected* not rolled over, EPP status codes split off their URLs and
+explained in plain English, `.uk`'s indented name-server block handled, GDPR
+redaction and `No match` surfaced honestly, and legal boilerplate stripped so it
+never poses as a field. As ever the engine is network- and DOM-free in
+`whois-core.js` — the socket is injected as a `resolver(server, query)`, so
+`whois-node.js` binds it to real TCP/43, the browser binds it to bundled
+snapshots, and the 72-check suite binds it to fakes (including a self-referrer
+that proves the loop guard). Next in the Networking category: **Site Checker with
+Time Scheduling**. Same rules, same source.
 
 ## Projects built so far
 
@@ -802,6 +826,7 @@ snapshot, a CSV and a parsed RIR file all agree. Next in the Networking category
 | 135 | [Port Scanner](./projects/phase2-networking/port-scanner/) | Networking · Source 2 | 2026-10-20 |
 | 136 | [Mail Checker (POP3 / IMAP)](./projects/phase2-networking/mail-checker/) | Networking · Source 2 | 2026-10-21 |
 | 137 | [Country from IP Lookup](./projects/phase2-networking/country-from-ip/) | Networking · Source 2 | 2026-10-22 |
+| 138 | [Whois Search Tool](./projects/phase2-networking/whois-search/) | Networking · Source 2 | 2026-10-23 |
 
 ## Repository layout
 
@@ -873,6 +898,7 @@ projects/
     port-scanner/             # open/closed/filtered three-way split (refusal vs. silence), engine-owned timeout → filtered, bounded-concurrency pool, strict port-spec parser; simulated-host demo + real net-socket connect scan under Node; 28 checks
     mail-checker/             # POP3 vs. IMAP honestly normalised (POP3 can't know unseen → null, not 0); dot-stuffed POP3 multi-lines + byte-counted IMAP {literal}s; CR/LF credential-injection guards, IMAP quoting, TLS by default; in-page protocol-speaking servers + real net/tls sockets under Node; 31 checks
     country-from-ip/          # IP → registered country as 3 honest steps: strict dual-family parse (IPv4 no-octal, IPv6 ::/embedded-v4) into one 128-bit space, RFC 6890 special-use classified first (private/loopback/… have no country), binary search over a validated non-overlapping RangeTable → cc or honest null; "registered" = RIR delegation, real delegated-stats parser, CSV/RIR loaders under Node; 54 checks
+    whois-search/             # domain/IP WHOIS done honestly: classify target → pick registry/RIR server (IANA fallback), follow the thin .com→registrar referral and merge with per-field provenance (loop-guarded, hop-capped), parse free-form text (dozens of field aliases, 4 date grammars, EPP status codes explained, .uk block layout, GDPR redaction, no-match); socket injected as a resolver → real TCP/43 under Node, bundled snapshots in the browser; 72 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
