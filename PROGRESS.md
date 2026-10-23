@@ -236,5 +236,5 @@ this section next, one project per day. Populated from the
 - [x] Port Scanner — 2026-10-20
 - [x] Mail Checker (POP3 / IMAP) — 2026-10-21
 - [x] Country from IP Lookup — 2026-10-22
-- [ ] Whois Search Tool
+- [x] Whois Search Tool — 2026-10-23
 - [ ] Site Checker with Time Scheduling
