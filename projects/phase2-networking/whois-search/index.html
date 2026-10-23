@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Whois Search Tool</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Whois Search Tool</h1>
+    <p class="tagline">
+      Enter a <strong>domain</strong> or an <strong>IP address</strong> and see
+      who it's registered to. The tool is honest about the three things that make
+      WHOIS harder than a single HTTP call: it <em>works out which server to
+      ask</em> (every TLD has its own registry; IPs go to a regional registry),
+      it <em>follows the referral</em> — <code>.com</code>/<code>.net</code> are
+      <em>thin</em>, so the registry only points at the registrar that holds the
+      real record — and it <em>parses the free-form text</em> that every registry
+      formats differently, normalising dates, EPP status codes and GDPR
+      redaction into one record. The same engine runs under Node against the
+      live port-43 servers (see the README).
+    </p>
+  </header>
+
+  <!-- input -->
+  <section class="panel">
+    <div class="controls">
+      <div class="field grow">
+        <label for="q">Domain or IP</label>
+        <input id="q" value="google.com" autocomplete="off" spellcheck="false" />
+      </div>
+      <button id="btn" class="btn">🔍 Look up</button>
+    </div>
+    <p class="err" id="err"></p>
+    <div class="examples">
+      <span class="small muted">Try:</span>
+      <span class="ex" data-q="google.com">google.com</span>
+      <span class="ex" data-q="example.org">example.org</span>
+      <span class="ex" data-q="example.co.uk">example.co.uk</span>
+      <span class="ex" data-q="8.8.8.8">8.8.8.8</span>
+      <span class="ex" data-q="example.com">example.com</span>
+      <span class="ex" data-q="doesnotexist-zzzz.com">doesnotexist-zzzz.com</span>
+    </div>
+  </section>
+
+  <!-- result -->
+  <section class="panel result" id="result" hidden>
+    <div class="verdict" id="verdict"></div>
+    <div id="chain" class="chain"></div>
+    <div id="record" class="record"></div>
+    <div id="statuses" class="statuses"></div>
+    <details id="rawbox" class="rawbox">
+      <summary>Show the raw WHOIS response(s) the parser read</summary>
+      <div id="raw"></div>
+    </details>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      <strong>About the data.</strong> A browser can't open a TCP port-43 socket,
+      so this demo runs the <em>real</em> engine over a small set of bundled,
+      real-shaped WHOIS snapshots (<code>whois-fixtures.js</code>) — enough to
+      light up every path: a thin <code>.com</code> that referral-hops to its
+      registrar, a thick GDPR-redacted <code>.org</code>, a <code>.uk</code> with
+      its own date grammar and indented name-server block, an IP that hops
+      <code>IANA → ARIN</code>, and a "no match". Point the same code at live
+      servers with <code>whois-node.js</code> and nothing in the engine changes.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>. See the
+      <a href="./README.md">project README</a>; the engine lives in
+      <code>whois-core.js</code> and is covered by <code>tests.js</code> (72
+      checks).
+    </p>
+  </footer>
+</main>
+
+<script src="whois-core.js"></script>
+<script src="whois-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
