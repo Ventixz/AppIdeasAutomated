@@ -237,4 +237,24 @@ this section next, one project per day. Populated from the
 - [x] Mail Checker (POP3 / IMAP) — 2026-10-21
 - [x] Country from IP Lookup — 2026-10-22
 - [x] Whois Search Tool — 2026-10-23
-- [ ] Site Checker with Time Scheduling
+- [x] Site Checker with Time Scheduling — 2026-10-24
+
+**Networking complete — all 7 projects built. The next category, Classes
+(Object-Oriented Programming), is now unlocked.**
+
+### Classes
+
+Unlocked 2026-10-24 after the Networking category was finished. The routine works
+down this section next, one project per day. Populated from the
+[karan/Projects Classes section](https://github.com/karan/Projects).
+
+- [ ] Product Inventory Project
+- [ ] Airline / Hotel Reservation System
+- [ ] Company Manager
+- [ ] Bank Account Manager
+- [ ] Patient / Doctor Scheduler
+- [ ] Recipe Creator and Manager
+- [ ] Image Gallery
+- [ ] Shape Area and Perimeter Classes
+- [ ] Flower Shop Ordering To Go
+- [ ] Family Tree Creator
