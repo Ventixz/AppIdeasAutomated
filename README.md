@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (49 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (51 built)**
 
 | Category | Status |
 | --- | --- |
@@ -48,7 +48,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Graph | ✅ Complete — **5 / 5** |
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
-| Networking | 🚧 In progress — **6 / 7** |
+| Networking | ✅ Complete — **7 / 7** |
+| Classes (OOP) | 🚧 In progress — **0 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -682,8 +683,30 @@ never poses as a field. As ever the engine is network- and DOM-free in
 `whois-core.js` — the socket is injected as a `resolver(server, query)`, so
 `whois-node.js` binds it to real TCP/43, the browser binds it to bundled
 snapshots, and the 72-check suite binds it to fakes (including a self-referrer
-that proves the loop guard). Next in the Networking category: **Site Checker with
-Time Scheduling**. Same rules, same source.
+that proves the loop guard). The Networking category's seventh and final entry,
+**Site Checker with Time Scheduling**, landed on 2026-10-24 — "check whether a
+site is up or down, on a timer, and report uptime over time." "Ping a site every
+N seconds" is the one-sentence version, and the build does none of the three
+things it hides by eye. The **scheduling is drift-free**: ticks are anchored to a
+start time (tick *k* = `start + k·interval`), never `now + interval`, so a slow
+check can't push every future check later — and after a sleep gap it *skips the
+stale backlog* instead of firing a dozen catch-up requests at a site that may
+already be hurting. A flip to "down" is only **confirmed** after N consecutive
+failures (anti-flap), so one dropped packet isn't an outage — and when an outage
+*is* confirmed it's dated honestly to the *first* of the failing run, the moment
+the site really went down, not the check that happened to confirm it. And
+**uptime is time-weighted**: it builds a segment timeline from the confirmed
+transitions and weighs each segment by its duration (including the still-open one
+up to "now"), because "90 of 100 checks passed" quietly lies the moment checks
+aren't evenly spaced — the tests prove a run where counting says 75% but the
+honest answer is 50%. As ever the engine is network- and DOM-free in
+`checker-core.js` — the probe is injected as `url → {ok,status,ms,error}`, so
+`checker-node.js` binds it to real HTTP `HEAD` requests on a real clock, the
+browser replays scripted scenarios in simulated time, and the 92-check suite
+drives it with explicit results at explicit timestamps (no clock, no network).
+That completes the Networking category (7 / 7). The routine now moves to the next
+karan/Projects category, **Classes** (Object-Oriented Programming), beginning
+with the **Product Inventory Project**. Same rules, same source.
 
 ## Projects built so far
 
@@ -827,6 +850,7 @@ Time Scheduling**. Same rules, same source.
 | 136 | [Mail Checker (POP3 / IMAP)](./projects/phase2-networking/mail-checker/) | Networking · Source 2 | 2026-10-21 |
 | 137 | [Country from IP Lookup](./projects/phase2-networking/country-from-ip/) | Networking · Source 2 | 2026-10-22 |
 | 138 | [Whois Search Tool](./projects/phase2-networking/whois-search/) | Networking · Source 2 | 2026-10-23 |
+| 139 | [Site Checker with Time Scheduling](./projects/phase2-networking/site-checker/) | Networking · Source 2 | 2026-10-24 |
 
 ## Repository layout
 
@@ -899,6 +923,7 @@ projects/
     mail-checker/             # POP3 vs. IMAP honestly normalised (POP3 can't know unseen → null, not 0); dot-stuffed POP3 multi-lines + byte-counted IMAP {literal}s; CR/LF credential-injection guards, IMAP quoting, TLS by default; in-page protocol-speaking servers + real net/tls sockets under Node; 31 checks
     country-from-ip/          # IP → registered country as 3 honest steps: strict dual-family parse (IPv4 no-octal, IPv6 ::/embedded-v4) into one 128-bit space, RFC 6890 special-use classified first (private/loopback/… have no country), binary search over a validated non-overlapping RangeTable → cc or honest null; "registered" = RIR delegation, real delegated-stats parser, CSV/RIR loaders under Node; 54 checks
     whois-search/             # domain/IP WHOIS done honestly: classify target → pick registry/RIR server (IANA fallback), follow the thin .com→registrar referral and merge with per-field provenance (loop-guarded, hop-capped), parse free-form text (dozens of field aliases, 4 date grammars, EPP status codes explained, .uk block layout, GDPR redaction, no-match); socket injected as a resolver → real TCP/43 under Node, bundled snapshots in the browser; 72 checks
+    site-checker/             # uptime monitor with scheduling done honestly: drift-free ticks anchored to start (skip the stale backlog after a sleep, don't stampede), a flip to down confirmed only after N consecutive fails and dated to the first of them (anti-flap), uptime time-weighted over a segment timeline not counted by checks; probe injected as url→{ok,status,ms,error} → real HTTP HEAD under Node, scripted scenarios in simulated time in the browser; 92 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
