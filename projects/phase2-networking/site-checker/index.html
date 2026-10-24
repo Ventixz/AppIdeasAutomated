@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Site Checker with Time Scheduling</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Site Checker with Time Scheduling</h1>
+    <p class="tagline">
+      Watch a site, on a <strong>schedule</strong>, and report whether it's up or
+      down over time. The interesting parts aren't the ping — they're the three
+      things a naïve checker gets wrong: the <em>scheduling</em> is drift-free and
+      skips a backlog of stale checks after a sleep instead of stampeding the
+      target; a flip to "down" is only <em>confirmed</em> after N consecutive
+      failures, so one dropped packet isn't an outage; and <em>uptime is
+      time-weighted</em>, not a count of checks. The same engine runs under Node
+      against live HTTP (see the README); here it replays scripted scenarios in
+      simulated time so a day of monitoring plays out in seconds.
+    </p>
+  </header>
+
+  <!-- controls -->
+  <section class="panel">
+    <div class="controls">
+      <div class="field grow">
+        <label for="scenario">Target scenario</label>
+        <select id="scenario"></select>
+      </div>
+      <div class="field">
+        <label for="interval">Interval (s)</label>
+        <input id="interval" type="number" min="1" value="60" />
+      </div>
+      <div class="field">
+        <label for="confirm">Confirm (checks)</label>
+        <input id="confirm" type="number" min="1" value="2" />
+      </div>
+    </div>
+    <div class="btns">
+      <button id="start" class="btn">▶ Start monitoring</button>
+      <button id="pause" class="btn ghost" disabled>⏸ Pause</button>
+      <button id="step" class="btn ghost">⏭ Step one check</button>
+      <button id="reset" class="btn ghost">↺ Reset</button>
+    </div>
+    <p class="hint">
+      <strong>Interval</strong> is the simulated gap between checks (uptime math
+      uses it); each tick here plays in a fraction of a second so you can watch
+      hours go by. <strong>Confirm</strong> is how many consecutive bad checks it
+      takes to call the site down — raise it and the “Flaky link” scenario stops
+      registering outages.
+    </p>
+  </section>
+
+  <!-- live status -->
+  <section class="panel status unknown" id="status">
+    <div class="verdict">
+      <div class="dot" id="dot">⏳</div>
+      <div class="who">
+        <div class="title" id="verdict-title">Idle</div>
+        <div class="sub" id="verdict-sub">Pick a scenario and press Start.</div>
+      </div>
+      <div class="pct">
+        <div class="big" id="uptime">—</div>
+        <div class="cap">uptime (time-weighted)</div>
+      </div>
+    </div>
+    <div class="nextbar">
+      <div class="row"><span id="next-label">next check</span><span id="clock">—</span></div>
+      <div class="meter"><span id="meterfill"></span></div>
+    </div>
+  </section>
+
+  <!-- timeline -->
+  <section class="panel">
+    <div class="label">Availability timeline</div>
+    <div class="timeline" id="timeline"></div>
+    <div class="tl-legend">
+      <span class="k"><span class="sw up"></span> up</span>
+      <span class="k"><span class="sw down"></span> down (confirmed outage)</span>
+      <span class="k"><span class="sw unknown"></span> not yet confirmed</span>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <section class="panel">
+    <div class="label">Over the monitored window</div>
+    <div class="stats">
+      <div class="stat"><div class="v" id="s-checks">0</div><div class="k">checks run</div></div>
+      <div class="stat"><div class="v" id="s-outages">0</div><div class="k">confirmed outages</div></div>
+      <div class="stat"><div class="v" id="s-longest">—</div><div class="k">longest outage</div></div>
+      <div class="stat"><div class="v" id="s-measured">—</div><div class="k">time monitored</div></div>
+    </div>
+  </section>
+
+  <!-- incidents -->
+  <section class="panel incidents">
+    <div class="label">Incidents</div>
+    <div id="incidents"><p class="none">No outages yet.</p></div>
+  </section>
+
+  <!-- check log -->
+  <section class="panel">
+    <div class="label">Check log (newest first)</div>
+    <div class="log">
+      <table>
+        <thead><tr><th>sim time</th><th>raw</th><th>reason</th><th>confirmed</th><th class="ms">latency</th></tr></thead>
+        <tbody id="logbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      <strong>About the data.</strong> A browser can't open arbitrary sockets or
+      sit for real hours, so this demo replays scripted probe sequences
+      (<code>checker-fixtures.js</code>) through the <em>real</em> engine
+      (<code>checker-core.js</code>) in <em>simulated</em> time: each tick advances
+      a virtual clock by the configured interval. The scheduling, confirmation and
+      time-weighted uptime math are exactly what <code>checker-node.js</code> runs
+      against live HTTP — only the probe and the clock change.
+    </p>
+    <p class="small muted">
+      Built automatically by the daily
+      <a href="https://claude.com/claude-code">Claude Code</a> routine described
+      in the <a href="../../../README.md">repository README</a>. See the
+      <a href="./README.md">project README</a>; the engine lives in
+      <code>checker-core.js</code> and is covered by <code>tests.js</code> (92
+      checks).
+    </p>
+  </footer>
+</main>
+
+<script src="checker-core.js"></script>
+<script src="checker-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
