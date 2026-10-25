@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (51 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (52 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **0 / 10** |
+| Classes (OOP) | 🚧 In progress — **1 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -704,9 +704,29 @@ honest answer is 50%. As ever the engine is network- and DOM-free in
 `checker-node.js` binds it to real HTTP `HEAD` requests on a real clock, the
 browser replays scripted scenarios in simulated time, and the 92-check suite
 drives it with explicit results at explicit timestamps (no clock, no network).
-That completes the Networking category (7 / 7). The routine now moves to the next
-karan/Projects category, **Classes** (Object-Oriented Programming), beginning
-with the **Product Inventory Project**. Same rules, same source.
+That completes the Networking category (7 / 7), so — by the "one level at a
+time" rule — the routine unlocked the next karan/Projects category, **Classes**
+(Object-Oriented Programming), whose first entry, **Product Inventory Project**,
+landed on 2026-10-25 — "manage an inventory of products: a product class with a
+price, id and quantity, and an inventory class that holds products and sums their
+value." This category is about *design*, not features, and "a product has a
+price and a quantity; an inventory sums them" hides three things a naïve version
+gets wrong. The build does none of them by eye. **Money is integer cents, never
+a float** — `0.1 + 0.2` is `0.30000000000000004`, and an inventory's whole job
+is to add prices up, so a `Product` stores `priceCents` and dollars exist only at
+the parsed-in / formatted-out edges; the suite proves `3 × $0.10` is exactly
+`$0.30`. **The invariants live in the object**: you can't build a product with a
+negative price or blank id, `quantity` is a getter with no setter, and `ship()`
+*refuses to oversell* (`cannot ship 999999 of A-100 — only 240 on hand`) rather
+than going negative. And **the inventory is an aggregate with one index of
+truth** — products live in a `Map` keyed by id, duplicate ids are an error not a
+silent overwrite, and every rollup (total value, unit count, low-stock report) is
+derived from that one Map, so the summary can't disagree with the line items. As
+ever one engine backs three front ends: `inventory-core.js` is DOM- and
+I/O-free, `inventory-node.js` binds it to a CLI (report + REPL), the browser
+drives a live stock table, and `tests.js` runs 41 checks — including the float
+trap, proved absent. Same rules, same source: the routine now works down the
+rest of the Classes list, one project per day.
 
 ## Projects built so far
 
@@ -851,6 +871,7 @@ with the **Product Inventory Project**. Same rules, same source.
 | 137 | [Country from IP Lookup](./projects/phase2-networking/country-from-ip/) | Networking · Source 2 | 2026-10-22 |
 | 138 | [Whois Search Tool](./projects/phase2-networking/whois-search/) | Networking · Source 2 | 2026-10-23 |
 | 139 | [Site Checker with Time Scheduling](./projects/phase2-networking/site-checker/) | Networking · Source 2 | 2026-10-24 |
+| 140 | [Product Inventory](./projects/phase2-classes/product-inventory/) | Classes (OOP) · Source 2 | 2026-10-25 |
 
 ## Repository layout
 
@@ -924,6 +945,8 @@ projects/
     country-from-ip/          # IP → registered country as 3 honest steps: strict dual-family parse (IPv4 no-octal, IPv6 ::/embedded-v4) into one 128-bit space, RFC 6890 special-use classified first (private/loopback/… have no country), binary search over a validated non-overlapping RangeTable → cc or honest null; "registered" = RIR delegation, real delegated-stats parser, CSV/RIR loaders under Node; 54 checks
     whois-search/             # domain/IP WHOIS done honestly: classify target → pick registry/RIR server (IANA fallback), follow the thin .com→registrar referral and merge with per-field provenance (loop-guarded, hop-capped), parse free-form text (dozens of field aliases, 4 date grammars, EPP status codes explained, .uk block layout, GDPR redaction, no-match); socket injected as a resolver → real TCP/43 under Node, bundled snapshots in the browser; 72 checks
     site-checker/             # uptime monitor with scheduling done honestly: drift-free ticks anchored to start (skip the stale backlog after a sleep, don't stampede), a flip to down confirmed only after N consecutive fails and dated to the first of them (anti-flap), uptime time-weighted over a segment timeline not counted by checks; probe injected as url→{ok,status,ms,error} → real HTTP HEAD under Node, scripted scenarios in simulated time in the browser; 92 checks
+  phase2-classes/             # Source 2 (karan/Projects) — Classes (OOP) category
+    product-inventory/        # Product + Inventory classes done right: money as integer cents (the float trap proved absent), invariants in the object (no negative price, quantity is a getter-only, ship() refuses to oversell), inventory as a Map-keyed aggregate with one source of truth (dup ids rejected, every rollup derived); one DOM/IO-free engine behind a CLI+REPL, a live browser stock table, and 41 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

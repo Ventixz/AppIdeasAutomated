@@ -248,7 +248,7 @@ Unlocked 2026-10-24 after the Networking category was finished. The routine work
 down this section next, one project per day. Populated from the
 [karan/Projects Classes section](https://github.com/karan/Projects).
 
-- [ ] Product Inventory Project
+- [x] Product Inventory Project — 2026-10-25
 - [ ] Airline / Hotel Reservation System
 - [ ] Company Manager
 - [ ] Bank Account Manager
