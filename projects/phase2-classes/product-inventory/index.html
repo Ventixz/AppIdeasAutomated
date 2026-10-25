@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product Inventory</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Product Inventory</h1>
+    <p class="tagline">
+      A <strong>Product</strong> class (price, id, quantity) and an
+      <strong>Inventory</strong> class that holds many products and sums their
+      value — the first task in karan/Projects' <em>Classes</em> category. The
+      point here is the design, not the buttons: money is kept as
+      <em>integer cents</em> so totalling a catalogue is exact, and the objects
+      enforce their own rules — you can't oversell stock, drive a quantity
+      negative, or register two products under the same id. The same classes run
+      under Node (see the README); this page just drives them with a live table.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Total value</div><div class="big" id="t-value">—</div></div>
+    <div class="tile"><div class="label">SKUs</div><div class="big" id="t-skus">—</div></div>
+    <div class="tile"><div class="label">Units on hand</div><div class="big" id="t-units">—</div></div>
+    <div class="tile"><div class="label">Low stock (≤5)</div><div class="big" id="t-low">—</div></div>
+  </section>
+
+  <!-- add a product -->
+  <section class="panel">
+    <div class="label">Add a product</div>
+    <form id="add-form" class="controls">
+      <div class="field"><label for="f-id">ID / SKU</label><input id="f-id" placeholder="D-500" /></div>
+      <div class="field grow"><label for="f-name">Name</label><input id="f-name" placeholder="Standing Desk" /></div>
+      <div class="field"><label for="f-price">Price ($)</label><input id="f-price" placeholder="149.99" /></div>
+      <div class="field"><label for="f-qty">Qty</label><input id="f-qty" placeholder="0" /></div>
+      <button type="submit">Add</button>
+    </form>
+    <p class="msg" id="msg">&nbsp;</p>
+  </section>
+
+  <!-- the live table -->
+  <section class="panel">
+    <div class="label">Stock &mdash; most valuable line first</div>
+    <table id="table">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th class="r">Price</th><th class="r">Qty</th><th class="r">Line value</th><th class="r">Move stock</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      Built by an automated Claude routine. Everything on this page runs the
+      exact <code>Product</code> and <code>Inventory</code> classes in
+      <code>inventory-core.js</code> — no framework, no build step. Run
+      <code>node tests.js</code> for the engine's proof suite, or
+      <code>node inventory-node.js</code> for the CLI version.
+    </p>
+  </footer>
+</main>
+
+<script src="inventory-core.js"></script>
+<script src="inventory-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
