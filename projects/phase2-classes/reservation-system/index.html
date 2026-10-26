@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hotel Reservation System</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Hotel Reservation System</h1>
+    <p class="tagline">
+      A <strong>Hotel</strong> of <strong>Room</strong>s in priced
+      <strong>RoomType</strong> sections (standard, suite, penthouse…), and
+      <strong>Reservation</strong>s that book a room for a stay — the third task
+      in karan/Projects' <em>Classes</em> category. The point here is the design,
+      not the buttons: a room <em>cannot be double-booked</em> for overlapping
+      nights, rates are kept as <em>integer cents</em> so stay totals are exact,
+      and the dates are <em>half-open</em> so a checkout and a same-day check-in
+      don't collide. The same classes run under Node (see the README); this page
+      just drives them with a live calendar.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Rooms</div><div class="big" id="t-rooms">—</div></div>
+    <div class="tile"><div class="label">Reservations</div><div class="big" id="t-res">—</div></div>
+    <div class="tile"><div class="label">Booked revenue</div><div class="big" id="t-rev">—</div></div>
+    <div class="tile"><div class="label">Occupied tonight*</div><div class="big" id="t-occ">—</div></div>
+  </section>
+
+  <!-- book a room -->
+  <section class="panel">
+    <div class="label">Book a room</div>
+    <form id="book-form" class="controls">
+      <div class="field">
+        <label for="f-room">Room</label>
+        <select id="f-room"></select>
+      </div>
+      <div class="field grow"><label for="f-guest">Guest</label><input id="f-guest" placeholder="Jane Doe" /></div>
+      <div class="field"><label for="f-in">Check-in</label><input id="f-in" type="date" /></div>
+      <div class="field"><label for="f-out">Check-out</label><input id="f-out" type="date" /></div>
+      <button type="submit">Book</button>
+    </form>
+    <p class="msg" id="msg">&nbsp;</p>
+  </section>
+
+  <!-- availability search -->
+  <section class="panel">
+    <div class="label">Check availability</div>
+    <form id="avail-form" class="controls">
+      <div class="field"><label for="a-in">Check-in</label><input id="a-in" type="date" /></div>
+      <div class="field"><label for="a-out">Check-out</label><input id="a-out" type="date" /></div>
+      <div class="field">
+        <label for="a-type">Type</label>
+        <select id="a-type"><option value="">Any</option></select>
+      </div>
+      <button type="submit" class="ghost">Search</button>
+    </form>
+    <p class="avail" id="avail">&nbsp;</p>
+  </section>
+
+  <!-- the live reservations table -->
+  <section class="panel">
+    <div class="label">Reservations &mdash; by check-in date</div>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Room</th><th>Type</th><th>Guest</th>
+          <th>Check-in</th><th>Check-out</th><th class="r">Nights</th>
+          <th class="r">Total</th><th class="r"></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      *"Tonight" is the earliest check-in date in the sample data, so the demo
+      shows a non-empty night. Built by an automated Claude routine. Everything
+      on this page runs the exact <code>Hotel</code>, <code>Room</code> and
+      <code>Reservation</code> classes in <code>reservation-core.js</code> — no
+      framework, no build step. Run <code>node tests.js</code> for the engine's
+      proof suite, or <code>node reservation-node.js</code> for the CLI version.
+    </p>
+  </footer>
+</main>
+
+<script src="reservation-core.js"></script>
+<script src="reservation-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
