@@ -249,7 +249,7 @@ down this section next, one project per day. Populated from the
 [karan/Projects Classes section](https://github.com/karan/Projects).
 
 - [x] Product Inventory Project — 2026-10-25
-- [ ] Airline / Hotel Reservation System
+- [x] Airline / Hotel Reservation System — 2026-10-26
 - [ ] Company Manager
 - [ ] Bank Account Manager
 - [ ] Patient / Doctor Scheduler
