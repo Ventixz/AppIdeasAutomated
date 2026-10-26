@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **1 / 10** |
+| Classes (OOP) | 🚧 In progress — **2 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -725,8 +725,27 @@ derived from that one Map, so the summary can't disagree with the line items. As
 ever one engine backs three front ends: `inventory-core.js` is DOM- and
 I/O-free, `inventory-node.js` binds it to a CLI (report + REPL), the browser
 drives a live stock table, and `tests.js` runs 41 checks — including the float
-trap, proved absent. Same rules, same source: the routine now works down the
-rest of the Classes list, one project per day.
+trap, proved absent. The second Classes entry, the **Airline / Hotel Reservation
+System**, landed on 2026-10-26 — "book airline seats or hotel rooms, charging
+various rates for sections: first class over coach, a suite over a standard
+room." Modelled as a hotel (a fare class is a `RoomType`, a seat a `Room`, a
+flight a one-night stay), its design turns on the one state a booking system must
+never enter: **a room cannot be double-booked**. The guard lives in `Room`, so
+`book()` refuses an overlapping stay and names the clash (`room 101 is already
+booked 2026-11-01 → 2026-11-04 … cannot also book 2026-11-03 → 2026-11-05`) no
+matter which front end calls it. Dates are **half-open** `[checkIn, checkOut)`,
+the off-by-one that sinks naïve code: a checkout and a *same-day* check-in are
+not a conflict — the room turns over, exactly as a real hotel does — and
+`DateRange` keeps dates as integer UTC day-numbers so overlap is plain integer
+math and `2026-02-30` is rejected, not rolled into March. Money stays integer
+cents and a `Reservation`'s total is **derived** (`rate × nights`), so it can't
+drift; the `Hotel` keeps rooms and reservations in `Map`s and derives every
+rollup (availability, occupancy, revenue) on demand. One DOM- and network-free
+engine backs the CLI (room roster + booking REPL), the browser (a booking form,
+an availability search, a live reservations table), and `tests.js` — **52
+checks**, the half-open turnover and the double-booking refusal among them. Same
+rules, same source: the routine now works down the rest of the Classes list, one
+project per day.
 
 ## Projects built so far
 
@@ -872,6 +891,7 @@ rest of the Classes list, one project per day.
 | 138 | [Whois Search Tool](./projects/phase2-networking/whois-search/) | Networking · Source 2 | 2026-10-23 |
 | 139 | [Site Checker with Time Scheduling](./projects/phase2-networking/site-checker/) | Networking · Source 2 | 2026-10-24 |
 | 140 | [Product Inventory](./projects/phase2-classes/product-inventory/) | Classes (OOP) · Source 2 | 2026-10-25 |
+| 141 | [Airline / Hotel Reservation System](./projects/phase2-classes/reservation-system/) | Classes (OOP) · Source 2 | 2026-10-26 |
 
 ## Repository layout
 
@@ -947,6 +967,7 @@ projects/
     site-checker/             # uptime monitor with scheduling done honestly: drift-free ticks anchored to start (skip the stale backlog after a sleep, don't stampede), a flip to down confirmed only after N consecutive fails and dated to the first of them (anti-flap), uptime time-weighted over a segment timeline not counted by checks; probe injected as url→{ok,status,ms,error} → real HTTP HEAD under Node, scripted scenarios in simulated time in the browser; 92 checks
   phase2-classes/             # Source 2 (karan/Projects) — Classes (OOP) category
     product-inventory/        # Product + Inventory classes done right: money as integer cents (the float trap proved absent), invariants in the object (no negative price, quantity is a getter-only, ship() refuses to oversell), inventory as a Map-keyed aggregate with one source of truth (dup ids rejected, every rollup derived); one DOM/IO-free engine behind a CLI+REPL, a live browser stock table, and 41 checks
+    reservation-system/       # Hotel/Room/RoomType/Reservation classes done right: a room cannot be double-booked (the guard lives in Room, refuses overlapping stays), dates are half-open [in,out) so a same-day turnover doesn't clash and 2026-02-30 is rejected (integer UTC day-numbers), money as integer cents with the stay total derived (rate × nights), Hotel as Map-keyed aggregate deriving availability/occupancy/revenue on demand; one DOM/IO-free engine behind a CLI+REPL, a live browser booking table, and 52 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
