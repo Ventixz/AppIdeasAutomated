@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Company Manager</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Company Manager</h1>
+    <p class="tagline">
+      An abstract <strong>Employee</strong> and its subclasses —
+      <strong>HourlyEmployee</strong>, <strong>SalariedEmployee</strong>,
+      <strong>Manager</strong> and <strong>Executive</strong> — gathered into a
+      <strong>Company</strong> that hires, fires and pays them. The third task in
+      karan/Projects' <em>Classes</em> category. The point is the design, not the
+      buttons: you <em>cannot</em> instantiate the abstract base, every subclass
+      computes pay <em>its own way</em> (hourly with real weekly overtime, salary
+      sliced into periods, a manager's bonus, an executive's profit share), and
+      money is kept in <em>integer cents</em> so every total is exact. The same
+      classes run under Node (see the README); this page just drives them.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Headcount</div><div class="big" id="t-head">—</div></div>
+    <div class="tile"><div class="label">Kinds</div><div class="big" id="t-kinds">—</div></div>
+    <div class="tile"><div class="label">This pay run</div><div class="big" id="t-run">—</div></div>
+    <div class="tile"><div class="label">Annual wage bill</div><div class="big" id="t-year">—</div></div>
+  </section>
+
+  <!-- pay-run controls -->
+  <section class="panel">
+    <div class="label">Pay period</div>
+    <form id="period-form" class="controls">
+      <div class="field">
+        <label for="f-periods">Periods / year</label>
+        <select id="f-periods">
+          <option value="12">12 — monthly</option>
+          <option value="24" selected>24 — semi-monthly</option>
+          <option value="26">26 — biweekly</option>
+          <option value="52">52 — weekly</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-profit">Company profit (for execs)</label><input id="f-profit" value="4,000,000" /></div>
+      <button type="submit" class="ghost">Recalculate</button>
+    </form>
+    <p class="msg small muted" id="period-note">&nbsp;</p>
+  </section>
+
+  <!-- hire an employee -->
+  <section class="panel">
+    <div class="label">Hire an employee</div>
+    <form id="hire-form" class="controls">
+      <div class="field grow"><label for="f-name">Name</label><input id="f-name" placeholder="Jane Doe" /></div>
+      <div class="field">
+        <label for="f-kind">Kind</label>
+        <select id="f-kind">
+          <option value="Hourly">Hourly</option>
+          <option value="Salaried">Salaried</option>
+          <option value="Manager">Manager</option>
+          <option value="Executive">Executive</option>
+        </select>
+      </div>
+
+      <!-- fields shown only for the chosen kind -->
+      <div class="kind-fields active" data-kind="Hourly">
+        <div class="field"><label for="f-rate">Rate / hour</label><input id="f-rate" value="32.00" /></div>
+        <div class="field"><label for="f-hours">Hours (per week, space-sep)</label><input id="f-hours" value="40 45" /></div>
+      </div>
+      <div class="kind-fields" data-kind="Salaried">
+        <div class="field"><label for="f-salary-s">Annual salary</label><input id="f-salary-s" value="95,000" /></div>
+      </div>
+      <div class="kind-fields" data-kind="Manager">
+        <div class="field"><label for="f-salary-m">Annual salary</label><input id="f-salary-m" value="160,000" /></div>
+        <div class="field"><label for="f-bonus-m">Annual bonus</label><input id="f-bonus-m" value="25,000" /></div>
+      </div>
+      <div class="kind-fields" data-kind="Executive">
+        <div class="field"><label for="f-salary-e">Annual salary</label><input id="f-salary-e" value="300,000" /></div>
+        <div class="field"><label for="f-bonus-e">Annual bonus</label><input id="f-bonus-e" value="70,000" /></div>
+        <div class="field"><label for="f-share-e">Profit share %</label><input id="f-share-e" value="2" /></div>
+      </div>
+
+      <button type="submit">Hire</button>
+    </form>
+    <p class="msg" id="msg">&nbsp;</p>
+  </section>
+
+  <!-- the live payroll table -->
+  <section class="panel">
+    <div class="label">Payroll &mdash; one pay period</div>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Name</th><th>Kind</th>
+          <th class="r">Annual pay</th><th class="r">This period</th><th class="r"></th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+      <tfoot>
+        <tr><td colspan="4" class="r">Total this period</td><td class="r pay" id="foot-total">—</td><td></td></tr>
+      </tfoot>
+    </table>
+  </section>
+
+  <!-- org chart -->
+  <section class="panel org">
+    <div class="label">Org chart &mdash; who reports to whom</div>
+    <div id="org"></div>
+    <p class="msg small muted">
+      Tip: the sample data wires up a reporting tree. Hire a manager, then use the
+      CLI (<code>report &lt;manager&gt; &lt;employee&gt;</code>) to extend it.
+    </p>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      Built by an automated Claude routine. Everything on this page runs the exact
+      <code>Employee</code> hierarchy and <code>Company</code> aggregate in
+      <code>company-core.js</code> — no framework, no build step. Run
+      <code>node tests.js</code> for the engine's proof suite, or
+      <code>node company-node.js</code> for the CLI version.
+    </p>
+  </footer>
+</main>
+
+<script src="company-core.js"></script>
+<script src="company-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
