@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (52 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (54 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **2 / 10** |
+| Classes (OOP) | 🚧 In progress — **3 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -743,9 +743,31 @@ drift; the `Hotel` keeps rooms and reservations in `Map`s and derives every
 rollup (availability, occupancy, revenue) on demand. One DOM- and network-free
 engine backs the CLI (room roster + booking REPL), the browser (a booking form,
 an availability search, a live reservations table), and `tests.js` — **52
-checks**, the half-open turnover and the double-booking refusal among them. Same
-rules, same source: the routine now works down the rest of the Classes list, one
-project per day.
+checks**, the half-open turnover and the double-booking refusal among them. The
+third Classes entry, **Company Manager**, landed on 2026-10-27 — "an hierarchy of
+classes: abstract `Employee` and subclasses `HourlyEmployee`, `SalariedEmployee`,
+`Manager` and `Executive`, each paid differently." This task *names* its design:
+inheritance where the one thing that varies down the chain is **how pay is
+computed**, the textbook setup for polymorphism — `employee.calculatePay(period)`
+dispatching to a different rule per class. The engine enforces three things a
+naïve version fumbles. **The base class is abstract, and so is the pay rule**:
+`new Employee()` throws, and a subclass that forgets to override `calculatePay()`
+throws too, so you can't create an employee whose pay is undefined. **Each
+subclass really pays differently — and correctly**: hourly with *real weekly
+overtime* (past 40 hours *in a week* is 1.5×, settled per week — 45h then 35h is
+40+5(OT) then 35, not 80 pooled), salary sliced into pay periods, a manager's
+salaried base plus a bonus, an executive's that plus a share of the company's
+profit — a genuine four-deep chain where `super.calculatePay()` does real work.
+And **money is integer cents** with every unavoidable fraction (1.5×, salary ÷
+periods, a profit percentage) rounded once to the cent, while the `Company`
+aggregate derives every rollup (a pay run, headcount by kind, the annual wage
+bill) from one `Map` and detaches a fired employee from every manager's reports
+so the org chart can't dangle. One DOM- and network-free engine backs the CLI
+(roster + org chart + a hire/fire/raise/pay REPL), the browser (a live payroll
+table with per-kind pay breakdowns and a rendered org tree), and `tests.js` —
+**57 checks**, the weekly-overtime trap and the abstract-instantiation refusal
+among them. Same rules, same source: the routine now works down the rest of the
+Classes list, one project per day.
 
 ## Projects built so far
 
@@ -892,6 +914,7 @@ project per day.
 | 139 | [Site Checker with Time Scheduling](./projects/phase2-networking/site-checker/) | Networking · Source 2 | 2026-10-24 |
 | 140 | [Product Inventory](./projects/phase2-classes/product-inventory/) | Classes (OOP) · Source 2 | 2026-10-25 |
 | 141 | [Airline / Hotel Reservation System](./projects/phase2-classes/reservation-system/) | Classes (OOP) · Source 2 | 2026-10-26 |
+| 142 | [Company Manager](./projects/phase2-classes/company-manager/) | Classes (OOP) · Source 2 | 2026-10-27 |
 
 ## Repository layout
 
@@ -968,6 +991,7 @@ projects/
   phase2-classes/             # Source 2 (karan/Projects) — Classes (OOP) category
     product-inventory/        # Product + Inventory classes done right: money as integer cents (the float trap proved absent), invariants in the object (no negative price, quantity is a getter-only, ship() refuses to oversell), inventory as a Map-keyed aggregate with one source of truth (dup ids rejected, every rollup derived); one DOM/IO-free engine behind a CLI+REPL, a live browser stock table, and 41 checks
     reservation-system/       # Hotel/Room/RoomType/Reservation classes done right: a room cannot be double-booked (the guard lives in Room, refuses overlapping stays), dates are half-open [in,out) so a same-day turnover doesn't clash and 2026-02-30 is rejected (integer UTC day-numbers), money as integer cents with the stay total derived (rate × nights), Hotel as Map-keyed aggregate deriving availability/occupancy/revenue on demand; one DOM/IO-free engine behind a CLI+REPL, a live browser booking table, and 52 checks
+    company-manager/          # Employee hierarchy done right: abstract base can't be instantiated (nor can a subclass that forgets calculatePay), each subclass pays its own way — hourly with real weekly overtime (40h/wk at 1.5×, settled per week not pooled), salary ÷ periods, manager salary+bonus, executive +profit share — a four-deep chain where super.calculatePay does real work; money as integer cents rounded once, Company as Map-keyed aggregate deriving payroll/headcount/wage-bill and detaching fired reports; one DOM/IO-free engine behind a CLI+REPL, a live browser payroll table + org tree, and 57 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

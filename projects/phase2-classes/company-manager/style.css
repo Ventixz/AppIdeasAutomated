@@ -1,0 +1,115 @@
+/* Company Manager — dark theme, the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --ok: #46d17f;
+  --err: #ff6b6b;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1000px; margin: 0 auto; padding: 28px 20px 60px; }
+header h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); max-width: 88ch; margin: 0 0 22px; }
+.tagline strong { color: var(--ink); }
+.tagline em { color: var(--accent); font-style: normal; }
+code {
+  background: #0a0e17; padding: 1px 5px; border-radius: 4px; font-size: 0.9em;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px; margin: 0 0 20px;
+}
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.label {
+  font-size: 12px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 12px;
+}
+
+/* summary tiles */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.tile .big { font-size: 24px; font-weight: 650; letter-spacing: -0.01em; }
+.tile:nth-child(4) .big { color: var(--ok); }
+
+/* forms */
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.grow { flex: 1 1 160px; }
+.field label { font-size: 12px; color: var(--muted); }
+input, select {
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink);
+  border-radius: 8px; padding: 9px 11px; font-size: 14px; width: 150px;
+}
+.field.grow input { width: 100%; }
+input:focus, select:focus { outline: none; border-color: var(--accent); }
+button {
+  background: var(--accent); color: #07101f; border: none; border-radius: 8px;
+  padding: 9px 16px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+button:hover { filter: brightness(1.08); }
+button.ghost {
+  background: transparent; color: var(--ink); border: 1px solid var(--line);
+  padding: 6px 12px; font-weight: 500;
+}
+button.ghost:hover { border-color: var(--accent); }
+button.danger { background: transparent; color: var(--err); border: 1px solid transparent; padding: 4px 8px; font-weight: 500; }
+button.danger:hover { border-color: var(--err); }
+
+.msg { margin: 12px 0 0; font-size: 13px; min-height: 1.2em; }
+.msg.err { color: var(--err); }
+.msg.ok { color: var(--ok); }
+
+/* the per-kind fields toggle — only the relevant inputs show */
+.kind-fields { display: none; gap: 12px; flex-wrap: wrap; }
+.kind-fields.active { display: flex; }
+
+/* table */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+th.r, td.r { text-align: right; }
+td.id { font-family: ui-monospace, Menlo, monospace; color: var(--accent); }
+td.pay { font-variant-numeric: tabular-nums; }
+tbody tr:last-child td { border-bottom: none; }
+tfoot td { border-top: 2px solid var(--line); font-weight: 650; padding-top: 11px; }
+
+/* kind badges — one hue per class, the "paid differently" idea made visible */
+.pill { font-size: 11px; padding: 1px 8px; border-radius: 999px; font-weight: 600; white-space: nowrap; }
+.pill.k-Hourly    { background: rgba(151,162,186,0.18); color: #c3ccdf; }
+.pill.k-Salaried  { background: rgba(110,168,254,0.16); color: var(--accent); }
+.pill.k-Manager   { background: rgba(245,185,66,0.16);  color: #f5b942; }
+.pill.k-Executive { background: rgba(199,125,255,0.18); color: #c77dff; }
+
+/* org chart */
+.org ul { list-style: none; margin: 0; padding-left: 22px; border-left: 1px solid var(--line); }
+.org > ul { padding-left: 0; border-left: none; }
+.org li { margin: 4px 0; }
+.org .node { display: inline-flex; align-items: center; gap: 8px; }
+.org .name { color: var(--ink); }
+
+.pay-detail { color: var(--muted); font-size: 12px; }
+
+footer { margin-top: 10px; }
+
+@media (max-width: 760px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  table { font-size: 13px; }
+  input, select { width: 130px; }
+  th:nth-child(4), td:nth-child(4) { display: none; } /* hide annual col on narrow screens */
+}
