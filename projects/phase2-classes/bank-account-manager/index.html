@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bank Account Manager</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Bank Account Manager</h1>
+    <p class="tagline">
+      An abstract <strong>Account</strong> and its subclasses —
+      <strong>CheckingAccount</strong>, <strong>SavingsAccount</strong> and
+      <strong>BusinessAccount</strong> — gathered into a <strong>Bank</strong>
+      that opens them and moves money between them, ATM-style. The fourth task in
+      karan/Projects' <em>Classes</em> category. The point is the design, not the
+      buttons: you <em>cannot</em> instantiate the abstract base, every subclass
+      debits <em>its own way</em> (checking overdraws to a limit then charges a
+      one-time fee, savings never overdraws but earns interest and caps
+      withdrawals, business pays a fee on every transaction), money is kept in
+      <em>integer cents</em> and the balance is <em>derived from the ledger</em>
+      so the statement can't lie, and every transfer is <em>atomic</em>. The same
+      classes run under Node (see the README); this page just drives them.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Accounts</div><div class="big" id="t-count">—</div></div>
+    <div class="tile"><div class="label">Kinds</div><div class="big" id="t-kinds">—</div></div>
+    <div class="tile"><div class="label">Overdrawn</div><div class="big" id="t-over">—</div></div>
+    <div class="tile"><div class="label">Total assets</div><div class="big" id="t-assets">—</div></div>
+  </section>
+
+  <!-- open an account -->
+  <section class="panel">
+    <div class="label">Open an account</div>
+    <form id="open-form" class="controls">
+      <div class="field grow"><label for="f-owner">Owner</label><input id="f-owner" placeholder="Jane Doe" /></div>
+      <div class="field">
+        <label for="f-kind">Kind</label>
+        <select id="f-kind">
+          <option value="Checking">Checking</option>
+          <option value="Savings">Savings</option>
+          <option value="Business">Business</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-open">Opening balance</label><input id="f-open" value="1,000" /></div>
+
+      <!-- fields shown only for the chosen kind -->
+      <div class="kind-fields active" data-kind="Checking">
+        <div class="field"><label for="f-od-limit-c">Overdraft limit</label><input id="f-od-limit-c" value="200" /></div>
+        <div class="field"><label for="f-od-fee-c">Overdraft fee</label><input id="f-od-fee-c" value="35" /></div>
+      </div>
+      <div class="kind-fields" data-kind="Savings">
+        <div class="field"><label for="f-rate-s">Interest %/yr</label><input id="f-rate-s" value="1.5" /></div>
+        <div class="field"><label for="f-wd-s">Withdrawals / cycle</label><input id="f-wd-s" value="6" /></div>
+      </div>
+      <div class="kind-fields" data-kind="Business">
+        <div class="field"><label for="f-fee-b">Fee / transaction</label><input id="f-fee-b" value="0.25" /></div>
+        <div class="field"><label for="f-od-limit-b">Overdraft limit</label><input id="f-od-limit-b" value="2,000" /></div>
+      </div>
+
+      <button type="submit">Open</button>
+    </form>
+    <p class="msg" id="msg">&nbsp;</p>
+  </section>
+
+  <!-- the live accounts table -->
+  <section class="panel">
+    <div class="label">Accounts</div>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Owner</th><th>Kind</th><th>Terms</th>
+          <th class="r">Balance</th><th class="r">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+      <tfoot>
+        <tr><td colspan="4" class="r">Total assets</td><td class="r pay" id="foot-total">—</td><td></td></tr>
+      </tfoot>
+    </table>
+    <p class="msg small muted">
+      The selected account is highlighted; its statement is below. Deposits and
+      withdrawals act on the selected account; a transfer moves money between two.
+    </p>
+  </section>
+
+  <!-- teller operations -->
+  <section class="panel">
+    <div class="label">Teller — deposit, withdraw, transfer</div>
+    <form id="op-form" class="controls">
+      <div class="field">
+        <label for="f-acct">Account</label>
+        <select id="f-acct"></select>
+      </div>
+      <div class="field"><label for="f-amount">Amount</label><input id="f-amount" value="100" /></div>
+      <button type="submit" data-op="deposit" class="ghost">Deposit</button>
+      <button type="button" data-op="withdraw" class="ghost">Withdraw</button>
+      <button type="button" data-op="interest" class="ghost">Accrue interest</button>
+    </form>
+    <form id="transfer-form" class="controls" style="margin-top:12px">
+      <div class="field">
+        <label for="f-from">From</label>
+        <select id="f-from"></select>
+      </div>
+      <div class="field">
+        <label for="f-to">To</label>
+        <select id="f-to"></select>
+      </div>
+      <div class="field"><label for="f-tamount">Amount</label><input id="f-tamount" value="50" /></div>
+      <button type="submit" class="ghost">Transfer</button>
+    </form>
+  </section>
+
+  <!-- statement of the selected account -->
+  <section class="panel">
+    <div class="label">Statement &mdash; <span id="stmt-title">(select an account)</span></div>
+    <table id="stmt-table">
+      <thead>
+        <tr><th>#</th><th>Type</th><th class="r">Amount</th><th class="r">Balance</th><th>Note</th></tr>
+      </thead>
+      <tbody id="stmt-rows"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      Built by an automated Claude routine. Everything on this page runs the exact
+      <code>Account</code> hierarchy and <code>Bank</code> aggregate in
+      <code>bank-core.js</code> — no framework, no build step. Run
+      <code>node tests.js</code> for the engine's proof suite, or
+      <code>node bank-node.js</code> for the ATM-style CLI.
+    </p>
+  </footer>
+</main>
+
+<script src="bank-core.js"></script>
+<script src="bank-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

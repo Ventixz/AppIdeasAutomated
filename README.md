@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (54 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (55 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **3 / 10** |
+| Classes (OOP) | 🚧 In progress — **4 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -766,8 +766,34 @@ so the org chart can't dangle. One DOM- and network-free engine backs the CLI
 (roster + org chart + a hire/fire/raise/pay REPL), the browser (a live payroll
 table with per-kind pay breakdowns and a rendered org tree), and `tests.js` —
 **57 checks**, the weekly-overtime trap and the abstract-instantiation refusal
-among them. Same rules, same source: the routine now works down the rest of the
-Classes list, one project per day.
+among them. The fourth Classes entry, **Bank Account Manager**, landed on
+2026-10-28 — the task spells the hierarchy out: "an abstract `Account` for three
+classes, `CheckingAccount`, `SavingsAccount` and `BusinessAccount`, with credits
+and debits managed ATM-style." The one thing that varies down the chain is **how
+a debit is allowed and charged** — polymorphism again, this time behind
+`account.withdraw(amount)`. The engine enforces three things a naïve version
+fumbles. **The base class is abstract, and so is the debit policy**:
+`new Account()` throws, and so does a subclass that never defined its policy
+hooks, so no account exists whose overdraft rule is undefined. **Each subclass
+really debits differently — and correctly**: a checking account overdraws down to
+a limit and charges a *one-time* overdraft fee the first time it dips negative (an
+already-overdrawn account isn't re-charged), a savings account never overdraws,
+earns interest, and *caps the number of withdrawals per cycle* (the (N+1)th is
+refused, Regulation-D style), and a business account charges a *flat
+per-transaction fee on every debit* — three rules reached through one `withdraw()`
+template that consults two overridable hooks (`minimumBalanceCents` and
+`feeFor()`). And **money is integer cents with the balance derived from the
+ledger** — the balance is the signed sum of every transaction, never a stored
+field that could drift from the statement — while the `Bank` aggregate makes
+every transfer *atomic*: it attempts the debit first and credits the destination
+only if that succeeds, so a transfer a savings account can't fund (or has capped)
+leaves both sides untouched and money is never created or lost in flight. One
+DOM- and network-free engine backs the CLI (accounts, statements, and an
+open/deposit/withdraw/transfer/interest/close REPL), the browser (a teller panel
+with a live accounts table and per-account statement), and `tests.js` — **70
+checks**, the one-time overdraft fee, the withdrawal cap, and the half-moved-money
+trap among them. Same rules, same source: the routine now works down the rest of
+the Classes list, one project per day.
 
 ## Projects built so far
 
@@ -915,6 +941,7 @@ Classes list, one project per day.
 | 140 | [Product Inventory](./projects/phase2-classes/product-inventory/) | Classes (OOP) · Source 2 | 2026-10-25 |
 | 141 | [Airline / Hotel Reservation System](./projects/phase2-classes/reservation-system/) | Classes (OOP) · Source 2 | 2026-10-26 |
 | 142 | [Company Manager](./projects/phase2-classes/company-manager/) | Classes (OOP) · Source 2 | 2026-10-27 |
+| 143 | [Bank Account Manager](./projects/phase2-classes/bank-account-manager/) | Classes (OOP) · Source 2 | 2026-10-28 |
 
 ## Repository layout
 
@@ -992,6 +1019,7 @@ projects/
     product-inventory/        # Product + Inventory classes done right: money as integer cents (the float trap proved absent), invariants in the object (no negative price, quantity is a getter-only, ship() refuses to oversell), inventory as a Map-keyed aggregate with one source of truth (dup ids rejected, every rollup derived); one DOM/IO-free engine behind a CLI+REPL, a live browser stock table, and 41 checks
     reservation-system/       # Hotel/Room/RoomType/Reservation classes done right: a room cannot be double-booked (the guard lives in Room, refuses overlapping stays), dates are half-open [in,out) so a same-day turnover doesn't clash and 2026-02-30 is rejected (integer UTC day-numbers), money as integer cents with the stay total derived (rate × nights), Hotel as Map-keyed aggregate deriving availability/occupancy/revenue on demand; one DOM/IO-free engine behind a CLI+REPL, a live browser booking table, and 52 checks
     company-manager/          # Employee hierarchy done right: abstract base can't be instantiated (nor can a subclass that forgets calculatePay), each subclass pays its own way — hourly with real weekly overtime (40h/wk at 1.5×, settled per week not pooled), salary ÷ periods, manager salary+bonus, executive +profit share — a four-deep chain where super.calculatePay does real work; money as integer cents rounded once, Company as Map-keyed aggregate deriving payroll/headcount/wage-bill and detaching fired reports; one DOM/IO-free engine behind a CLI+REPL, a live browser payroll table + org tree, and 57 checks
+    bank-account-manager/     # Account hierarchy done right: abstract base can't be instantiated (nor a subclass missing its policy hooks), each subclass debits its own way through one withdraw() template — checking overdraws to a limit then charges a one-time fee, savings never overdraws but earns interest and caps withdrawals per cycle, business charges a flat per-transaction fee — the rules living in overridable minimumBalanceCents/feeFor hooks; money as integer cents with the balance DERIVED from the ledger (can't drift from the statement) and Bank transfers atomic (debit first, credit only on success); one DOM/IO-free engine behind an ATM CLI+REPL, a live browser teller + statement, and 70 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
