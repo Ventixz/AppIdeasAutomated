@@ -251,7 +251,7 @@ down this section next, one project per day. Populated from the
 - [x] Product Inventory Project — 2026-10-25
 - [x] Airline / Hotel Reservation System — 2026-10-26
 - [x] Company Manager — 2026-10-27
-- [ ] Bank Account Manager
+- [x] Bank Account Manager — 2026-10-28
 - [ ] Patient / Doctor Scheduler
 - [ ] Recipe Creator and Manager
 - [ ] Image Gallery
