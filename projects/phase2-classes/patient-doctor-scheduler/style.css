@@ -1,0 +1,119 @@
+/* Patient / Doctor Scheduler — dark theme, the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #6ea8fe;
+  --ok: #46d17f;
+  --err: #ff6b6b;
+  --warn: #f5b942;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1000px; margin: 0 auto; padding: 28px 20px 60px; }
+header h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); max-width: 90ch; margin: 0 0 22px; }
+.tagline strong { color: var(--ink); }
+.tagline em { color: var(--accent); font-style: normal; }
+code {
+  background: #0a0e17; padding: 1px 5px; border-radius: 4px; font-size: 0.9em;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px; margin: 0 0 20px;
+}
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.label {
+  font-size: 12px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 12px;
+}
+
+/* summary tiles */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.tile .big { font-size: 24px; font-weight: 650; letter-spacing: -0.01em; }
+.tile:nth-child(3) .big { color: var(--accent); }
+.tile:nth-child(4) .big { color: var(--ok); }
+
+/* forms */
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.grow { flex: 1 1 160px; }
+.field label { font-size: 12px; color: var(--muted); }
+input, select {
+  background: var(--panel-2); border: 1px solid var(--line); color: var(--ink);
+  border-radius: 8px; padding: 9px 11px; font-size: 14px; width: 150px;
+}
+.field.grow input { width: 100%; }
+input:focus, select:focus { outline: none; border-color: var(--accent); }
+button {
+  background: var(--accent); color: #07101f; border: none; border-radius: 8px;
+  padding: 9px 16px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+button:hover { filter: brightness(1.08); }
+button.ghost {
+  background: transparent; color: var(--ink); border: 1px solid var(--line);
+  padding: 9px 14px; font-weight: 500;
+}
+button.ghost:hover { border-color: var(--accent); }
+button.mini { background: transparent; color: var(--accent); border: 1px solid transparent; padding: 4px 8px; font-weight: 500; font-size: 13px; }
+button.mini:hover { border-color: var(--accent); }
+button.mini.danger { color: var(--err); }
+button.mini.danger:hover { border-color: var(--err); }
+
+.msg { margin: 12px 0 0; font-size: 13px; min-height: 1.2em; }
+.msg.err { color: var(--err); }
+.msg.ok { color: var(--ok); }
+
+/* tables (general) */
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+th.r, td.r { text-align: right; }
+td.pay { font-variant-numeric: tabular-nums; }
+.terms { color: var(--muted); font-size: 12px; }
+tbody tr:last-child td { border-bottom: none; }
+
+/* the day grid */
+.grid-wrap { overflow-x: auto; }
+#grid { min-width: 420px; }
+#grid th { white-space: nowrap; }
+#grid th .cap {
+  display: inline-block; margin-left: 7px; font-size: 11px; font-weight: 600;
+  color: var(--ok); font-variant-numeric: tabular-nums;
+}
+#grid th .cap.full { color: var(--warn); }
+#grid .slot-col {
+  color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap;
+  font-size: 13px; width: 1%;
+}
+#grid td { border: 1px solid var(--line); }
+#grid td.open {
+  color: var(--line); text-align: center; cursor: pointer; font-weight: 700;
+}
+#grid td.open:hover { background: rgba(110,168,254,0.10); color: var(--accent); }
+#grid td.booked { cursor: pointer; background: rgba(110,168,254,0.09); }
+#grid td.booked:hover { background: rgba(255,107,107,0.14); }
+#grid td.booked .pname { font-size: 13px; }
+
+footer { margin-top: 10px; }
+
+@media (max-width: 760px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  table { font-size: 13px; }
+  input, select { width: 130px; }
+}

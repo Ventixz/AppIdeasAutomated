@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Patient / Doctor Scheduler</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Patient / Doctor Scheduler</h1>
+    <p class="tagline">
+      An abstract <strong>Person</strong> and its subclasses —
+      <strong>Patient</strong> and <strong>Doctor</strong> — gathered into a
+      <strong>Scheduler</strong> that books appointments and keeps them honest.
+      The fifth task in karan/Projects' <em>Classes</em> category. The point is
+      the design, not the buttons: you <em>cannot</em> instantiate the abstract
+      base, time is a <em>discrete slot grid</em> (an 8-hour day is exactly 16
+      half-hour slots, parsed onto the grid — <code>09:15</code> is refused, not
+      rounded), a doctor refuses a <em>double-booking</em> and more than
+      <em>16 appointments a day</em>, a patient can't be in <em>two places at
+      once</em>, and every booking is <em>atomic</em>. A patient's appointments
+      are <em>derived</em> from the doctors' schedules, so the two views can't
+      disagree. The same classes run under Node (see the README); this page just
+      drives them.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Doctors</div><div class="big" id="t-docs">—</div></div>
+    <div class="tile"><div class="label">Patients</div><div class="big" id="t-pats">—</div></div>
+    <div class="tile"><div class="label">Booked today</div><div class="big" id="t-booked">—</div></div>
+    <div class="tile"><div class="label">Free slots</div><div class="big" id="t-free">—</div></div>
+  </section>
+
+  <!-- register -->
+  <section class="panel">
+    <div class="label">Register</div>
+    <form id="doctor-form" class="controls">
+      <div class="field grow"><label for="d-name">Doctor name</label><input id="d-name" placeholder="Dr. Jane Doe" /></div>
+      <div class="field"><label for="d-spec">Specialty</label><input id="d-spec" value="General Practice" /></div>
+      <div class="field"><label for="d-cap">Max / day</label><input id="d-cap" value="16" /></div>
+      <button type="submit">Add doctor</button>
+    </form>
+    <form id="patient-form" class="controls" style="margin-top:12px">
+      <div class="field grow"><label for="p-name">Patient name</label><input id="p-name" placeholder="Pat Smith" /></div>
+      <div class="field grow"><label for="p-reason">Reason</label><input id="p-reason" placeholder="checkup" /></div>
+      <button type="submit" class="ghost">Add patient</button>
+    </form>
+    <p class="msg" id="msg">&nbsp;</p>
+  </section>
+
+  <!-- book -->
+  <section class="panel">
+    <div class="label">Book an appointment</div>
+    <form id="book-form" class="controls">
+      <div class="field"><label for="b-patient">Patient</label><select id="b-patient"></select></div>
+      <div class="field"><label for="b-doctor">Doctor</label><select id="b-doctor"></select></div>
+      <div class="field"><label for="b-day">Day</label><input id="b-day" /></div>
+      <div class="field"><label for="b-time">Time</label><input id="b-time" value="10:30" /></div>
+      <button type="submit">Book</button>
+      <button type="button" id="book-next" class="ghost">Book earliest free</button>
+    </form>
+    <p class="msg small muted">
+      Time is <code>HH:MM</code> on a 30-minute boundary between 09:00 and 17:00.
+      Click any free cell in the grid below to pre-fill the doctor and time.
+    </p>
+  </section>
+
+  <!-- the day grid -->
+  <section class="panel">
+    <div class="label">Day grid &mdash; <span id="grid-day">—</span></div>
+    <div class="grid-wrap">
+      <table id="grid">
+        <thead><tr id="grid-head"></tr></thead>
+        <tbody id="grid-body"></tbody>
+      </table>
+    </div>
+    <p class="msg small muted">
+      One column per doctor, one row per 30-minute slot. A filled cell is a booked
+      appointment (click it to cancel); a dot is free (click it to book the
+      selected patient). The footer shows each doctor's load against their cap.
+    </p>
+  </section>
+
+  <!-- a patient's appointments -->
+  <section class="panel">
+    <div class="label">Patient schedule</div>
+    <form id="who-form" class="controls">
+      <div class="field"><label for="w-patient">Patient</label><select id="w-patient"></select></div>
+      <button type="submit" class="ghost">Show appointments</button>
+    </form>
+    <table id="who-table" style="margin-top:12px">
+      <thead><tr><th>Day</th><th>Time</th><th>Doctor</th><th>Specialty</th><th></th></tr></thead>
+      <tbody id="who-rows"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      Built by an automated Claude routine. Everything on this page runs the exact
+      <code>Person</code> hierarchy and <code>Scheduler</code> aggregate in
+      <code>scheduler-core.js</code> — no framework, no build step. Run
+      <code>node tests.js</code> for the engine's proof suite, or
+      <code>node scheduler-node.js</code> for the CLI.
+    </p>
+  </footer>
+</main>
+
+<script src="scheduler-core.js"></script>
+<script src="scheduler-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
