@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (55 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (56 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **4 / 10** |
+| Classes (OOP) | 🚧 In progress — **5 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -792,8 +792,34 @@ DOM- and network-free engine backs the CLI (accounts, statements, and an
 open/deposit/withdraw/transfer/interest/close REPL), the browser (a teller panel
 with a live accounts table and per-account statement), and `tests.js` — **70
 checks**, the one-time overdraft fee, the withdrawal cap, and the half-moved-money
-trap among them. Same rules, same source: the routine now works down the rest of
-the Classes list, one project per day.
+trap among them. The fifth Classes entry, **Patient / Doctor Scheduler**, landed
+on 2026-10-29 — the task reads "a patient class and a doctor class; a doctor
+handles several patients; a scheduling program where a doctor can only handle
+**16 patients in an 8-hour work day**." That cap is the whole design hiding in
+plain sight: an 8-hour day at 30 minutes a visit is **exactly 16 slots**, so the
+engine is built around a discrete, exact slot grid rather than a floating clock.
+**`Person` is abstract and the role is the subclass**: `new Person()` throws,
+`Patient` and `Doctor` are the only concrete kinds, and each answers `role` its
+own way (a subclass that forgets still can't be used). **Time is integer minutes
+on a half-hour grid**: `"09:30"` *is* slot 1, while `"09:15"` (off the grid) and
+`"17:00"` (past the last slot, clinic closed) are *refused* rather than silently
+rounded — so "no two appointments overlap" collapses to a trivially correct
+integer comparison. And **the invariants are the objects' job, with every
+booking atomic**: a `Doctor` refuses a second patient in a held slot and refuses
+more than its daily cap (default 16; a shorter clinic can set a lower one, and a
+5th booking is refused even with slots still open), the `Scheduler` adds the rule
+a lone doctor can't see — *a patient can't be in two places at the same instant* —
+and a rejected booking or a bad reschedule leaves both sides untouched, because
+every check passes before anything is written and a move validates its target
+before releasing the old slot. A patient's appointments are *derived* by scanning
+the doctors' day books, so the two views can never disagree. One DOM- and
+network-free engine backs the CLI (a printed day grid plus a
+book/booknext/cancel/move/who REPL), the browser (a live day grid you click to
+book a free cell or cancel a filled one, cap shown per doctor), and `tests.js` —
+**77 checks**, the off-grid-time refusal, the daily cap with slots to spare, the
+one-patient-two-places trap, and the atomic reschedule among them. Same rules,
+same source: the routine now works down the rest of the Classes list, one project
+per day.
 
 ## Projects built so far
 
@@ -942,6 +968,7 @@ the Classes list, one project per day.
 | 141 | [Airline / Hotel Reservation System](./projects/phase2-classes/reservation-system/) | Classes (OOP) · Source 2 | 2026-10-26 |
 | 142 | [Company Manager](./projects/phase2-classes/company-manager/) | Classes (OOP) · Source 2 | 2026-10-27 |
 | 143 | [Bank Account Manager](./projects/phase2-classes/bank-account-manager/) | Classes (OOP) · Source 2 | 2026-10-28 |
+| 144 | [Patient / Doctor Scheduler](./projects/phase2-classes/patient-doctor-scheduler/) | Classes (OOP) · Source 2 | 2026-10-29 |
 
 ## Repository layout
 
@@ -1020,6 +1047,7 @@ projects/
     reservation-system/       # Hotel/Room/RoomType/Reservation classes done right: a room cannot be double-booked (the guard lives in Room, refuses overlapping stays), dates are half-open [in,out) so a same-day turnover doesn't clash and 2026-02-30 is rejected (integer UTC day-numbers), money as integer cents with the stay total derived (rate × nights), Hotel as Map-keyed aggregate deriving availability/occupancy/revenue on demand; one DOM/IO-free engine behind a CLI+REPL, a live browser booking table, and 52 checks
     company-manager/          # Employee hierarchy done right: abstract base can't be instantiated (nor can a subclass that forgets calculatePay), each subclass pays its own way — hourly with real weekly overtime (40h/wk at 1.5×, settled per week not pooled), salary ÷ periods, manager salary+bonus, executive +profit share — a four-deep chain where super.calculatePay does real work; money as integer cents rounded once, Company as Map-keyed aggregate deriving payroll/headcount/wage-bill and detaching fired reports; one DOM/IO-free engine behind a CLI+REPL, a live browser payroll table + org tree, and 57 checks
     bank-account-manager/     # Account hierarchy done right: abstract base can't be instantiated (nor a subclass missing its policy hooks), each subclass debits its own way through one withdraw() template — checking overdraws to a limit then charges a one-time fee, savings never overdraws but earns interest and caps withdrawals per cycle, business charges a flat per-transaction fee — the rules living in overridable minimumBalanceCents/feeFor hooks; money as integer cents with the balance DERIVED from the ledger (can't drift from the statement) and Bank transfers atomic (debit first, credit only on success); one DOM/IO-free engine behind an ATM CLI+REPL, a live browser teller + statement, and 70 checks
+    patient-doctor-scheduler/ # Person→Patient/Doctor hierarchy done right: abstract base can't be instantiated (nor a subclass that forgets role), time as a discrete 16-slot grid (8h / 30min) with every time validated onto it — "09:15" refused not rounded, "17:00" out of hours — so overlap is an integer compare; a Doctor enforces its own two rules (no double-booking, a daily cap ≤16, refused with slots to spare), the Scheduler adds the one a lone doctor can't see (a patient is never in two places at once), booking and reschedule are atomic (every check passes before any write; a move validates its target before freeing the old slot) and a patient's appointments are DERIVED from the doctors' day books; one DOM/IO-free engine behind a day-grid CLI+REPL, a clickable browser day grid, and 77 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
