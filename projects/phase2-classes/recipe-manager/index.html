@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recipe Creator and Manager</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Recipe Creator and Manager</h1>
+    <p class="tagline">
+      A <strong>Recipe</strong> holds its ingredients, title, category and steps;
+      a <strong>RecipeBook</strong> stores them and organises them
+      <em>by category</em> or <em>by main ingredient</em>. The sixth task in
+      karan/Projects' <em>Classes</em> category. The point is the design, not the
+      buttons: every amount is an <em>exact rational with a unit</em>, so scaling
+      a recipe to a new number of servings is exact (⅓ of a cup, then ×3, is a
+      cup again — not <code>0.9999</code>); the book's category and ingredient
+      views are a <em>derived index</em> that can't drift from the recipes; and
+      <em>“what can I make?”</em> compares quantities in a shared unit and is
+      honest when it <em>can't</em> (grams vs. cups needs a density, so it says
+      so rather than guessing). The same classes run under Node (see the README);
+      this page just drives them.
+    </p>
+  </header>
+
+  <!-- summary tiles -->
+  <section class="tiles">
+    <div class="tile"><div class="label">Recipes</div><div class="big" id="t-recipes">—</div></div>
+    <div class="tile"><div class="label">Categories</div><div class="big" id="t-cats">—</div></div>
+    <div class="tile"><div class="label">Ingredients</div><div class="big" id="t-ings">—</div></div>
+    <div class="tile"><div class="label">Makeable now</div><div class="big" id="t-make">—</div></div>
+  </section>
+
+  <!-- browse controls -->
+  <section class="panel">
+    <div class="label">Browse</div>
+    <div class="controls">
+      <div class="field">
+        <label for="view">Organise by</label>
+        <select id="view">
+          <option value="category">Category</option>
+          <option value="main">Main ingredient</option>
+        </select>
+      </div>
+      <div class="field grow">
+        <label for="q">Filter (title or ingredient)</label>
+        <input id="q" placeholder="e.g. flour, cookies, rice" />
+      </div>
+    </div>
+  </section>
+
+  <div class="split">
+    <!-- grouped recipe browser -->
+    <section class="panel">
+      <div class="label">Cookbook &mdash; <span id="browse-count">—</span></div>
+      <div id="browser"></div>
+    </section>
+
+    <!-- selected recipe, with a live serving scaler -->
+    <section class="panel">
+      <div class="label">Recipe</div>
+      <div id="detail" class="detail-empty">Pick a recipe on the left to see it here.</div>
+    </section>
+  </div>
+
+  <!-- pantry / what can I make -->
+  <section class="panel">
+    <div class="label">What can I make? &mdash; from the pantry</div>
+    <form id="pantry-form" class="controls">
+      <div class="field grow"><label for="pi-item">Add to pantry — item</label><input id="pi-item" placeholder="brown sugar" /></div>
+      <div class="field"><label for="pi-qty">Quantity</label><input id="pi-qty" placeholder="1 cup / 500 g / 3" /></div>
+      <button type="submit">Add to pantry</button>
+      <button type="button" id="pantry-reset" class="ghost">Reset pantry</button>
+    </form>
+    <p class="msg" id="pantry-msg">&nbsp;</p>
+    <table id="make-table" style="margin-top:6px">
+      <thead><tr><th>Recipe</th><th>Can make?</th><th>What's blocking it</th></tr></thead>
+      <tbody id="make-rows"></tbody>
+    </table>
+    <p class="msg small muted">
+      A <span class="ok-text">✓</span> means every ingredient is covered (a “to
+      taste” line counts as covered if the item is in the pantry at all).
+      <strong>missing</strong> = not stocked, <strong>short</strong> = not enough,
+      <strong>can't compare</strong> = the pantry holds it in a unit that doesn't
+      convert to the recipe's (e.g. a count of tomatoes vs. a weight).
+    </p>
+  </section>
+
+  <footer>
+    <p class="muted small">
+      Built by an automated Claude routine. Everything on this page runs the exact
+      <code>Recipe</code> / <code>RecipeBook</code> / <code>Quantity</code>
+      classes in <code>recipe-core.js</code> — no framework, no build step. Run
+      <code>node tests.js</code> for the engine's proof suite (94 checks), or
+      <code>node recipe-node.js</code> for the CLI.
+    </p>
+  </footer>
+</main>
+
+<script src="recipe-core.js"></script>
+<script src="recipe-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
