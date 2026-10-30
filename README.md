@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (56 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (57 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **5 / 10** |
+| Classes (OOP) | 🚧 In progress — **6 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -817,9 +817,32 @@ network-free engine backs the CLI (a printed day grid plus a
 book/booknext/cancel/move/who REPL), the browser (a live day grid you click to
 book a free cell or cancel a filled one, cap shown per doctor), and `tests.js` —
 **77 checks**, the off-grid-time refusal, the daily cap with slots to spare, the
-one-patient-two-places trap, and the atomic reschedule among them. Same rules,
-same source: the routine now works down the rest of the Classes list, one project
-per day.
+one-patient-two-places trap, and the atomic reschedule among them. The sixth
+Classes entry, **Recipe Creator and Manager**, landed on 2026-10-30 — the task
+reads "create a recipe class with ingredients, then a manager that stores them
+and categorises them by category or by main ingredient." That one sentence hides
+three things a naive version gets wrong. **A quantity is an exact amount with a
+unit, not a float**: amounts are exact rationals over `BigInt` and units convert
+by exact ratios (`1 cup = 236.5882365 ml`, from `1 gallon = 3.785411784 L`), so
+scaling a 4-serving recipe to 6 multiplies every amount by exactly `3/2` — `1½`
+cups of flour become exactly `2¼`, and scaling up then back down returns the
+original to the last digit, where floats would drift. "To taste" lines carry a
+`null` quantity so they're never treated as zero or dropped. **The manager's
+categories are a *derived* index, not a second copy**: the recipes are the single
+source of truth, and the by-category, by-ingredient and by-main-ingredient
+indexes are rebuilt from them and kept in lock-step on every add and remove, so a
+lookup can never show a recipe the book no longer holds — a test asserts the live
+indexes always equal a full reindex. And **"what can I make?" is unit-aware and
+honest**: given a `Pantry`, it compares quantities in a shared unit and refuses to
+guess across incompatible dimensions — "6 tomatoes" against a recipe asking for
+"800 g" comes back *can't compare* rather than a silent pass or fail, alongside
+*missing*, *short* and *have*. One DOM- and network-free engine backs the CLI
+(the cookbook grouped by category or main ingredient, plus show/scale/find/make),
+the browser (browse and filter, open a recipe and scale it live to any serving
+count, watch the pantry's verdicts update as you stock it), and `tests.js` —
+**94 checks**, the exact scale round-trip, the index-equals-reindex invariant,
+and the honest cross-dimension refusal among them. Same rules, same source: the
+routine now works down the rest of the Classes list, one project per day.
 
 ## Projects built so far
 
@@ -969,6 +992,7 @@ per day.
 | 142 | [Company Manager](./projects/phase2-classes/company-manager/) | Classes (OOP) · Source 2 | 2026-10-27 |
 | 143 | [Bank Account Manager](./projects/phase2-classes/bank-account-manager/) | Classes (OOP) · Source 2 | 2026-10-28 |
 | 144 | [Patient / Doctor Scheduler](./projects/phase2-classes/patient-doctor-scheduler/) | Classes (OOP) · Source 2 | 2026-10-29 |
+| 145 | [Recipe Creator and Manager](./projects/phase2-classes/recipe-manager/) | Classes (OOP) · Source 2 | 2026-10-30 |
 
 ## Repository layout
 
