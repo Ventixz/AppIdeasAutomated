@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (57 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (58 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **6 / 10** |
+| Classes (OOP) | 🚧 In progress — **7 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -841,8 +841,37 @@ guess across incompatible dimensions — "6 tomatoes" against a recipe asking fo
 the browser (browse and filter, open a recipe and scale it live to any serving
 count, watch the pantry's verdicts update as you stock it), and `tests.js` —
 **94 checks**, the exact scale round-trip, the index-equals-reindex invariant,
-and the honest cross-dimension refusal among them. Same rules, same source: the
-routine now works down the rest of the Classes list, one project per day.
+and the honest cross-dimension refusal among them. The seventh Classes entry,
+**Image Gallery**, landed on 2026-11-01 — the task reads "create an image
+abstract class and then a class that inherits from it for each image type," then
+a gallery to hold them. The one sentence hides three things a naive version gets
+wrong, all about *where behaviour should live*. **The abstract class owns the
+invariant; subclasses declare capabilities, not branches**: `ImageAsset` is
+genuinely abstract (constructing one throws) and holds identity, dimensions,
+tags and the transform pipeline, while `JpegImage` / `PngImage` / `GifImage` /
+`SvgImage` supply only what differs — a `{ alpha, animation, lossy, vector }`
+capability profile and a byte estimate. Nothing in the gallery switches on a
+format string or `instanceof`, so adding WebP is one new class and zero edits
+elsewhere; a visible payoff is that an SVG's estimated size doesn't grow when
+scaled up while a PNG's does, from the same `estimatedBytes()` call. **Transforms
+compose exactly and lazily**: crop/resize/scale/rotate/flip fold through an
+immutable pipeline as exact rationals over `BigInt`, so scaling a 4000×3000 photo
+by `3/2` then `2/3` returns 4000×3000 to the pixel, four 90° turns are the
+identity, and an oversized crop is refused against the *post-scale* dimensions —
+no pixels touched until a count is actually needed. And **conversion is honest
+about loss**: `convertTo` compares the two capability profiles and reports
+exactly what the target can't keep — *alpha flattened*, *animation reduced to the
+first frame*, *vector rasterized*, *re-encoded lossy* — with an empty loss list
+iff nothing is lost, never a silent drop. The `Gallery` keeps the images as the
+single source of truth and rebuilds its by-tag / by-format indexes in lock-step.
+One DOM- and network-free engine backs the CLI (list/show/convert/transform/album
+commands over stdin), the browser (a filterable, sortable grid you click to open
+an image, transform it and watch the dimensions and estimated size change
+exactly, and convert it to see the capability losses), and `tests.js` — **67
+checks**, the abstract-base refusal, the scale round-trip, the four-rotation
+identity, the four conversion-loss cases, and the index-equals-reindex invariant
+among them. Same rules, same source: the routine now works down the rest of the
+Classes list, one project per day.
 
 ## Projects built so far
 
@@ -993,6 +1022,7 @@ routine now works down the rest of the Classes list, one project per day.
 | 143 | [Bank Account Manager](./projects/phase2-classes/bank-account-manager/) | Classes (OOP) · Source 2 | 2026-10-28 |
 | 144 | [Patient / Doctor Scheduler](./projects/phase2-classes/patient-doctor-scheduler/) | Classes (OOP) · Source 2 | 2026-10-29 |
 | 145 | [Recipe Creator and Manager](./projects/phase2-classes/recipe-manager/) | Classes (OOP) · Source 2 | 2026-10-30 |
+| 146 | [Image Gallery](./projects/phase2-classes/image-gallery/) | Classes (OOP) · Source 2 | 2026-11-01 |
 
 ## Repository layout
 
