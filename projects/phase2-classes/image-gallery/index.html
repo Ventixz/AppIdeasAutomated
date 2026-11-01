@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Image Gallery</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Image Gallery</h1>
+    <p class="tagline">
+      An abstract <strong>ImageAsset</strong> and one subclass per format —
+      <strong>JPEG</strong>, <strong>PNG</strong>, <strong>GIF</strong>,
+      <strong>SVG</strong> — plus a <strong>Gallery</strong> that holds and
+      displays them. The seventh task in karan/Projects' <em>Classes</em>
+      category. The point is the design, not the buttons: the gallery
+      <em>never switches on format</em>, it asks the object; transforms
+      (crop, scale, rotate) compose as <em>exact geometry</em> so scaling by
+      ×½ then ×2 is the original to the pixel; and format conversion is
+      <em>honest about loss</em> — a transparent PNG saved as JPEG says it
+      flattened the alpha, it doesn't drop it in silence. The same classes
+      run under Node (see the README); this page just drives them.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <div class="toolbar">
+      <label>Filter by tag
+        <select id="tagFilter"><option value="">— all tags —</option></select>
+      </label>
+      <label>Filter by format
+        <select id="formatFilter"><option value="">— all formats —</option></select>
+      </label>
+      <label>Album
+        <select id="albumFilter"><option value="">— whole gallery —</option></select>
+      </label>
+      <label>Sort
+        <select id="sortKey">
+          <option value="title">title (A–Z)</option>
+          <option value="newest">newest first</option>
+          <option value="oldest">oldest first</option>
+          <option value="largest">largest (megapixels)</option>
+          <option value="heaviest">heaviest (est. bytes)</option>
+        </select>
+      </label>
+      <label class="grow">Search title
+        <input id="search" type="text" placeholder="e.g. sunset" />
+      </label>
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <section class="panel" id="detailPanel" hidden>
+    <div class="detail-head">
+      <h2 id="detailTitle">—</h2>
+      <button id="closeDetail" class="ghost">✕ close</button>
+    </div>
+    <div class="detail-body">
+      <div class="preview" id="preview"></div>
+      <div class="detail-info">
+        <dl id="detailMeta"></dl>
+
+        <h3>Transform <span class="muted small">(exact geometry — no pixels touched)</span></h3>
+        <div class="xform-row">
+          <button data-x="scale" data-arg="1/2">scale ½</button>
+          <button data-x="scale" data-arg="2">scale ×2</button>
+          <button data-x="rotate" data-arg="1">rotate 90°</button>
+          <button data-x="fliph">flip H</button>
+          <button data-x="flipv">flip V</button>
+          <button data-x="crop">crop to 50%</button>
+          <button data-x="reset" class="ghost">reset</button>
+        </div>
+        <p class="small muted" id="xformTrail">no transforms applied</p>
+
+        <h3>Convert <span class="muted small">(declares what the target can't keep)</span></h3>
+        <div class="xform-row">
+          <button data-convert="jpeg">→ JPEG</button>
+          <button data-convert="png">→ PNG</button>
+          <button data-convert="gif">→ GIF</button>
+          <button data-convert="svg">→ SVG</button>
+        </div>
+        <div id="convertResult" class="convert-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="small muted">
+      Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+      routine — one <a href="https://github.com/karan/Projects">karan/Projects</a>
+      task a day. All logic lives in <code>gallery-core.js</code> and is shared,
+      unchanged, by this page, the <code>node gallery-node.js</code> CLI and
+      <code>node tests.js</code>.
+    </p>
+  </footer>
+</main>
+
+<script src="gallery-core.js"></script>
+<script src="gallery-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

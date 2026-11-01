@@ -254,7 +254,7 @@ down this section next, one project per day. Populated from the
 - [x] Bank Account Manager — 2026-10-28
 - [x] Patient / Doctor Scheduler — 2026-10-29
 - [x] Recipe Creator and Manager — 2026-10-30
-- [ ] Image Gallery
+- [x] Image Gallery — 2026-11-01
 - [ ] Shape Area and Perimeter Classes
 - [ ] Flower Shop Ordering To Go
 - [ ] Family Tree Creator
