@@ -255,6 +255,6 @@ down this section next, one project per day. Populated from the
 - [x] Patient / Doctor Scheduler — 2026-10-29
 - [x] Recipe Creator and Manager — 2026-10-30
 - [x] Image Gallery — 2026-11-01
-- [ ] Shape Area and Perimeter Classes
+- [x] Shape Area and Perimeter Classes — 2026-11-02
 - [ ] Flower Shop Ordering To Go
 - [ ] Family Tree Creator

@@ -870,8 +870,38 @@ an image, transform it and watch the dimensions and estimated size change
 exactly, and convert it to see the capability losses), and `tests.js` — **67
 checks**, the abstract-base refusal, the scale round-trip, the four-rotation
 identity, the four conversion-loss cases, and the index-equals-reindex invariant
-among them. Same rules, same source: the routine now works down the rest of the
-Classes list, one project per day.
+among them. The eighth Classes entry, **Shape Area &amp; Perimeter Classes**,
+landed on 2026-11-02 — the task reads "create an abstract class Shape and then
+inherit from it other shapes like diamond, rectangle, circle, triangle etc., and
+define the respective methods to compute area and perimeter." The naive version is
+one `area(type, ...dims)` with a `switch` inside, and it gets three things wrong.
+**The abstract class owns the invariant; subclasses supply only what differs**:
+`Shape` is genuinely abstract (constructing one throws) and holds the name, the
+once-validated positive dimensions and the promise of `area()`/`perimeter()`,
+while `Circle`, `Rectangle`/`Square`, `RightTriangle`/`EquilateralTriangle`/
+`Triangle`, `Rhombus`, `RegularPolygon` and `Ellipse` each supply only their two
+formulas. Nothing ever switches on a type string or uses `instanceof` to pick an
+answer — the collection sorts and totals by calling `area()` — so adding a
+trapezoid is one new class and zero edits, and `scaled()` is defined once on the
+base from each subclass's declared dimension order. **A measurement is an exact
+value, not a float**: areas and perimeters flow through a `Quantity` type — a
+rational part plus rational multiples of π and of square-root surds, all over
+`BigInt` — so a circle of radius 7 has area exactly `49π`, a 3-4-5 triangle has
+perimeter exactly `12`, an equilateral triangle of side 2 has area `√3`, a
+13-14-15 triangle has Heron area exactly `84` (the `√112896` reduces to `336`,
+then `/4`), and a rectangle `8 × 5/2` has area `20`; floats appear only at
+`.toNumber()`. And **the design is honest about what can't be exact**: a regular
+pentagon's area and an ellipse's perimeter have no closed form here, so those
+quantities are flagged inexact and carry a numeric approximation only — the
+pentagon reports an exact perimeter but an `≈` area, the ellipse an exact `15π`
+area but an `≈` perimeter, and a collection's total is exact only if every member
+is and says so. One engine backs the CLI (compute a shape, or build a collection
+with running totals and an exact/approximate split), the browser (pick a shape,
+type fractions, see the exact form beside a proportioned sketch), and `tests.js` —
+**108 checks**, the abstract-base refusal, surd reduction (`√50 = 5√2`), Heron's
+exact `84`, the area-scales-by-the-square law for every shape, the inexact flags,
+and the triangle-inequality refusal among them. Same rules, same source: the
+routine now works down the rest of the Classes list, one project per day.
 
 ## Projects built so far
 
@@ -1023,6 +1053,7 @@ Classes list, one project per day.
 | 144 | [Patient / Doctor Scheduler](./projects/phase2-classes/patient-doctor-scheduler/) | Classes (OOP) · Source 2 | 2026-10-29 |
 | 145 | [Recipe Creator and Manager](./projects/phase2-classes/recipe-manager/) | Classes (OOP) · Source 2 | 2026-10-30 |
 | 146 | [Image Gallery](./projects/phase2-classes/image-gallery/) | Classes (OOP) · Source 2 | 2026-11-01 |
+| 147 | [Shape Area &amp; Perimeter Classes](./projects/phase2-classes/shape-area-perimeter/) | Classes (OOP) · Source 2 | 2026-11-02 |
 
 ## Repository layout
 
