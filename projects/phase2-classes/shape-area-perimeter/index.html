@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shape Area & Perimeter</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Shape Area &amp; Perimeter Classes</h1>
+    <p class="tagline">
+      An abstract <strong>Shape</strong> with one subclass per figure —
+      <strong>Circle</strong>, <strong>Rectangle</strong>/<strong>Square</strong>,
+      <strong>Triangle</strong> (general, right &amp; equilateral),
+      <strong>Rhombus</strong>, <strong>RegularPolygon</strong>,
+      <strong>Ellipse</strong> — each supplying only its own
+      <code>area()</code> and <code>perimeter()</code>. The eighth task in
+      karan/Projects' <em>Classes</em> category. The point is the design, not the
+      buttons: nothing ever <em>switches on a shape's type</em>, it asks the
+      object; measurements are <em>exact values</em>, not floats, so a circle's
+      area is literally <code>49π</code> and a 3-4-5 triangle's perimeter is
+      exactly <code>12</code>; and the design is <em>honest about what can't be
+      exact</em> — a pentagon's area and an ellipse's perimeter are shown as
+      approximations, flagged. The same classes run under Node (see the README);
+      this page just drives them.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <h2>Compute a shape</h2>
+    <p class="muted small">Pick a shape, type its dimensions (whole numbers or
+      fractions like <code>5/2</code> are fine — the arithmetic stays exact), and
+      the object computes its own area and perimeter.</p>
+    <div class="toolbar">
+      <label>Shape
+        <select id="shapeKind"></select>
+      </label>
+      <span id="argFields" class="argfields"></span>
+      <button id="computeBtn" type="button">Compute</button>
+      <button id="addBtn" type="button" class="ghost">Add to table</button>
+    </div>
+    <div id="computeOut" class="result"></div>
+  </section>
+
+  <section class="panel">
+    <div class="toolbar between">
+      <h2 style="margin:0">The collection</h2>
+      <span>
+        <button id="sampleBtn" type="button" class="ghost">Load sample</button>
+        <button id="clearBtn" type="button" class="ghost">Clear</button>
+      </span>
+    </div>
+    <table id="shapeTable">
+      <thead>
+        <tr>
+          <th>Shape</th><th>Sketch</th><th>Area</th><th>Perimeter</th><th>Exact?</th>
+        </tr>
+      </thead>
+      <tbody id="shapeRows"></tbody>
+      <tfoot id="shapeFoot"></tfoot>
+    </table>
+    <p class="muted small" id="emptyNote" hidden>The collection is empty — add a shape above, or load the sample.</p>
+  </section>
+
+  <footer class="muted small">
+    <p>Area/perimeter formulas and all arithmetic live in
+      <code>shape-core.js</code>; this page only reads inputs, calls the objects,
+      and paints. Part of a daily automated
+      <a href="https://claude.com/claude-code">Claude Code</a> routine — see the
+      repository <code>README.md</code> and <code>PROGRESS.md</code>.</p>
+  </footer>
+</main>
+
+<script src="shape-core.js"></script>
+<script src="shape-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
