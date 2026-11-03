@@ -256,5 +256,5 @@ down this section next, one project per day. Populated from the
 - [x] Recipe Creator and Manager — 2026-10-30
 - [x] Image Gallery — 2026-11-01
 - [x] Shape Area and Perimeter Classes — 2026-11-02
-- [ ] Flower Shop Ordering To Go
+- [x] Flower Shop Ordering To Go — 2026-11-03
 - [ ] Family Tree Creator
