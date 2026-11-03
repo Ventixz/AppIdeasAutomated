@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (58 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (59 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **7 / 10** |
+| Classes (OOP) | 🚧 In progress — **8 / 10** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -900,8 +900,39 @@ with running totals and an exact/approximate split), the browser (pick a shape,
 type fractions, see the exact form beside a proportioned sketch), and `tests.js` —
 **108 checks**, the abstract-base refusal, surd reduction (`√50 = 5√2`), Heron's
 exact `84`, the area-scales-by-the-square law for every shape, the inexact flags,
-and the triangle-inequality refusal among them. Same rules, same source: the
-routine now works down the rest of the Classes list, one project per day.
+and the triangle-inequality refusal among them. The ninth Classes entry,
+**Flower Shop — Ordering To Go**, landed on 2026-11-03 — the task reads "create a
+flower shop application which deals in flower objects and use those flower objects
+in a bouquet object," tracking stock as orders go out. The naive version is a cart
+that branches on `item.type`, sums `price` floats and decrements a stock dict as
+it goes, and it gets three things wrong — each about *where behaviour and
+invariants belong*. **A flower and a bouquet are the same kind of thing
+(Composite)**: `Saleable` is abstract (constructing one throws) and promises only
+`price()` and `stems()`; `Flower` is the leaf (one priced stem) and `Bouquet` the
+composite (a list of saleables, an arrangement fee, an optional discount).
+Nothing switches on which kind a line is — the cart totals by calling `price()`,
+the shop checks stock by calling `stems()` — and because a bouquet's items are
+themselves `Saleable`, a bouquet can *contain another bouquet* (the "Anniversary
+Grand" wraps the whole "Dozen Red Roses" plus more flowers, and its price and
+29-stem demand fall out of the same recursion), so a gift basket tomorrow is one
+new subclass and zero edits. **Money is an exact value, not a float**: a `Money`
+value object stores integer cents, so `$2.50 + 3×$0.10` is exactly `$2.80` and a
+dozen roses — `12×$2.50 + 6×$0.60 + $4.00` fee, then 10% off — is exactly `$33.84`
+with a `$3.76` saving; the one unavoidable rounding (a percentage) is done half-up
+to the cent explicitly, and `Money` is frozen so a price can't be mutated. And
+**an order is an atomic transaction**: `Shop` owns the invariant that stock is
+never negative and the register and shelves always agree, so `checkout` totals the
+entire stem demand and checks every flower up front — if one stem is short it
+throws `OutOfStockError` (carrying the shortfalls) and *nothing* mutates, no
+decrement and no charge; only a fully-fulfillable order changes anything, and
+`lowStock()` flags what's fallen to its reorder level. One engine backs the CLI
+(a menu, a cart, and atomic checkout over stdin), the browser (click flowers and
+bouquets onto an order, watch the total, check out to a receipt or an in-full
+refusal with the shelves untouched), and `tests.js` — **53 checks**, exact money
+and half-up rounding, two-level composite pricing and stem recursion, a mixed
+cart that never branches, and the atomicity test that a refused order leaves
+stock and register byte-for-byte unchanged among them. Same rules, same source:
+the routine now works down the rest of the Classes list, one project per day.
 
 ## Projects built so far
 
@@ -1054,6 +1085,7 @@ routine now works down the rest of the Classes list, one project per day.
 | 145 | [Recipe Creator and Manager](./projects/phase2-classes/recipe-manager/) | Classes (OOP) · Source 2 | 2026-10-30 |
 | 146 | [Image Gallery](./projects/phase2-classes/image-gallery/) | Classes (OOP) · Source 2 | 2026-11-01 |
 | 147 | [Shape Area &amp; Perimeter Classes](./projects/phase2-classes/shape-area-perimeter/) | Classes (OOP) · Source 2 | 2026-11-02 |
+| 148 | [Flower Shop — Ordering To Go](./projects/phase2-classes/flower-shop/) | Classes (OOP) · Source 2 | 2026-11-03 |
 
 ## Repository layout
 

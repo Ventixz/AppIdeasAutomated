@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flower Shop To Go</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Flower Shop — Ordering To Go</h1>
+    <p class="tagline">
+      An abstract <strong>Saleable</strong> with two subclasses —
+      <strong>Flower</strong> (one stem) and <strong>Bouquet</strong> (an
+      arrangement of saleables) — plus a <strong>Shop</strong> that owns the
+      stock. The ninth task in karan/Projects' <em>Classes</em> category. The
+      point is the design, not the buttons: a flower and a bouquet are
+      <em>priced the same way</em> because both are <code>Saleable</code> (the
+      composite pattern — a bouquet can even hold another bouquet); money is
+      <em>exact integer cents</em>, never a float, so a 12-stem bouquet is
+      exactly <code>$33.84</code>; and an order is <em>atomic</em> — if one stem
+      is short the whole order is refused and nothing leaves the shelves. The
+      same classes run under Node (see the README); this page just drives them.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <h2>The menu</h2>
+    <p class="muted small">Click a flower or a bouquet to add it to your order.
+      Bouquet prices already include the arrangement fee and any discount —
+      computed by the object, not this page.</p>
+    <div class="menu-cols">
+      <div>
+        <h3 class="menu-h">Flowers <span class="muted small">(per stem)</span></h3>
+        <div id="flowerMenu" class="chips"></div>
+      </div>
+      <div>
+        <h3 class="menu-h">Bouquets</h3>
+        <div id="bouquetMenu" class="chips"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="two-col">
+    <section class="panel">
+      <div class="toolbar between">
+        <h2 style="margin:0">Your order <span class="muted small">(to go)</span></h2>
+        <button id="clearCartBtn" type="button" class="ghost">Empty</button>
+      </div>
+      <table id="cartTable">
+        <thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Each</th><th class="num">Line</th><th></th></tr></thead>
+        <tbody id="cartRows"></tbody>
+        <tfoot id="cartFoot"></tfoot>
+      </table>
+      <p class="muted small" id="cartEmpty">Your order is empty — pick something from the menu.</p>
+      <div class="toolbar" style="margin-top:12px">
+        <button id="checkoutBtn" type="button">Check out</button>
+      </div>
+      <div id="checkoutOut" class="result"></div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar between">
+        <h2 style="margin:0">Inventory</h2>
+        <button id="resetBtn" type="button" class="ghost">Reset shop</button>
+      </div>
+      <p class="muted small">Live stock. A successful checkout decrements exactly
+        the stems used; a refused one changes nothing. Low stock is flagged.</p>
+      <table id="stockTable">
+        <thead><tr><th>Flower</th><th class="num">In stock</th><th>Status</th></tr></thead>
+        <tbody id="stockRows"></tbody>
+      </table>
+      <p class="register" id="register"></p>
+    </section>
+  </div>
+
+  <footer class="muted small">
+    <p>All pricing, stem arithmetic and the atomic inventory rule live in
+      <code>flower-core.js</code>; this page only reads clicks, calls the objects,
+      and paints. Part of a daily automated
+      <a href="https://claude.com/claude-code">Claude Code</a> routine — see the
+      repository <code>README.md</code> and <code>PROGRESS.md</code>.</p>
+  </footer>
+</main>
+
+<script src="flower-core.js"></script>
+<script src="flower-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
