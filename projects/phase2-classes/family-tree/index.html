@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Family Tree Creator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Family Tree Creator</h1>
+    <p class="tagline">
+      A <strong>Person</strong> is just a description — a name and some years —
+      and holds <em>no</em> relationships of its own. The <strong>FamilyTree</strong>
+      owns every parent→child edge and enforces its own rules. The tenth and last
+      task in karan/Projects' <em>Classes</em> category. The point is the design,
+      not the names on screen: there is <em>one source of truth</em> (the edges),
+      so siblings, cousins and grandparents are <em>derived</em>, never stored;
+      the tree <em>cannot be built into an impossible shape</em> (no cycles, no
+      three parents); and every blood relationship — sibling, cousin, aunt,
+      "second cousin once removed" — comes from <em>one algorithm</em>: the lowest
+      common ancestor and how far each person sits below it. The same classes run
+      under Node (see the README); this page just drives them.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <h2>How are two people related?</h2>
+    <p class="muted small">Pick anyone for A and anyone for B. The label is
+      computed by the tree from the pair of distances to their lowest common
+      ancestor — this page never decides what "second cousin" means.</p>
+    <div class="rel-pickers">
+      <label>Person A <select id="selA"></select></label>
+      <span class="arrow">↔</span>
+      <label>Person B <select id="selB"></select></label>
+    </div>
+    <div id="relOut" class="result"></div>
+  </section>
+
+  <div class="two-col">
+    <section class="panel">
+      <h2>The family</h2>
+      <p class="muted small">Indented from the roots, following children. Click a
+        name to see everyone they're related to. A ↑ marks a second appearance
+        (two parents meet at a child).</p>
+      <div id="treeView" class="tree"></div>
+    </section>
+
+    <section class="panel">
+      <h2 id="whoTitle">Relatives</h2>
+      <p class="muted small">Every row is a live query over the edges — nothing
+        here is stored on the person.</p>
+      <div id="whoView" class="who"></div>
+    </section>
+  </div>
+
+  <footer class="muted small">
+    <p>Every relationship, the no-cycle rule and the kinship algorithm live in
+      <code>family-core.js</code>; this page only reads clicks, calls the tree,
+      and paints. Part of a daily automated
+      <a href="https://claude.com/claude-code">Claude Code</a> routine — see the
+      repository <code>README.md</code> and <code>PROGRESS.md</code>.</p>
+  </footer>
+</main>
+
+<script src="family-core.js"></script>
+<script src="family-fixtures.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
