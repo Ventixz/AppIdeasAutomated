@@ -257,4 +257,16 @@ down this section next, one project per day. Populated from the
 - [x] Image Gallery — 2026-11-01
 - [x] Shape Area and Perimeter Classes — 2026-11-02
 - [x] Flower Shop Ordering To Go — 2026-11-03
-- [ ] Family Tree Creator
+- [x] Family Tree Creator — 2026-11-04
+
+**Classes complete — all 10 projects built. The next category, Threading, is now
+unlocked.**
+
+### Threading
+
+Unlocked 2026-11-04 after the Classes category was finished. The routine works
+down this section next, one project per day. Populated from the
+[karan/Projects Threading section](https://github.com/karan/Projects).
+
+- [ ] Create a Progress Bar for Downloads
+- [ ] Bulk Thumbnail Creator

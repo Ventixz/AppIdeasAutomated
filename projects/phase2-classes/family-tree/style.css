@@ -1,0 +1,92 @@
+/* Family Tree — dark theme, the routine's house style. */
+:root {
+  --bg: #0f1420;
+  --panel: #171d2c;
+  --panel-2: #1e2638;
+  --ink: #e8ecf6;
+  --muted: #97a2ba;
+  --line: #2b3550;
+  --accent: #5fcaa8;   /* sap green for this one */
+  --accent-2: #6ea8fe;
+  --ok: #46d17f;
+  --err: #ff6b6b;
+  --warn: #f5b942;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+main { max-width: 1040px; margin: 0 auto; padding: 28px 20px 60px; }
+header h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); max-width: 90ch; margin: 0 0 22px; }
+.tagline strong { color: var(--ink); }
+.tagline em { color: var(--accent); font-style: normal; }
+code {
+  background: #0a0e17; padding: 1px 5px; border-radius: 4px; font-size: 0.9em;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+a { color: var(--accent-2); }
+
+.panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px; margin: 0 0 20px;
+}
+.panel h2 { margin: 0 0 10px; font-size: 18px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+/* summary tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.tile { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+.tile .num { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+.tile .lbl { color: var(--muted); font-size: 13px; }
+
+/* relationship pickers */
+.rel-pickers { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
+.rel-pickers label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.rel-pickers .arrow { font-size: 22px; color: var(--accent); padding-bottom: 6px; }
+select {
+  background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 12px; font: inherit; min-width: 160px;
+}
+
+/* two-column layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.two-col .panel { margin: 0; }
+
+/* the indented tree */
+.tree { font-family: ui-monospace, Menlo, monospace; font-size: 13px; line-height: 1.7; }
+.tree .row { white-space: pre; cursor: pointer; border-radius: 6px; padding: 1px 6px; display: block; width: fit-content; }
+.tree .row:hover { background: var(--panel-2); }
+.tree .row.sel { background: color-mix(in srgb, var(--accent) 24%, var(--panel-2)); color: var(--ink); }
+.tree .yrs { color: var(--muted); }
+.tree .repeat { color: var(--accent); }
+
+/* the "who" relatives panel */
+.who dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: baseline; }
+.who dt { color: var(--muted); font-size: 13px; text-align: right; }
+.who dd { margin: 0; }
+.who .name-head { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+.who .life { color: var(--muted); font-weight: 400; font-size: 13px; }
+.who .pill { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); margin-left: 6px; }
+.who .pill.living { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 50%, var(--line)); }
+.who .none { color: var(--muted); }
+
+/* result card */
+.result { margin-top: 16px; }
+.result .card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.result .card.ok { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.result .headline { font-size: 18px; margin: 0 0 6px; }
+.result .headline strong { color: var(--accent); }
+.result .detail { color: var(--muted); font-size: 13px; margin: 2px 0 0; }
+.result .detail code { color: var(--ink); }
+
+@media (max-width: 720px) {
+  .two-col { grid-template-columns: 1fr; }
+}
