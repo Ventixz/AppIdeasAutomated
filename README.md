@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (59 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (61 built)**
 
 | Category | Status |
 | --- | --- |
@@ -49,7 +49,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Data Structures | ✅ Complete — **1 / 1** |
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
-| Classes (OOP) | 🚧 In progress — **8 / 10** |
+| Classes (OOP) | ✅ Complete — **10 / 10** |
+| Threading | 🚧 In progress — **0 / 2** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -931,8 +932,37 @@ bouquets onto an order, watch the total, check out to a receipt or an in-full
 refusal with the shelves untouched), and `tests.js` — **53 checks**, exact money
 and half-up rounding, two-level composite pricing and stem recursion, a mixed
 cart that never branches, and the atomicity test that a refused order leaves
-stock and register byte-for-byte unchanged among them. Same rules, same source:
-the routine now works down the rest of the Classes list, one project per day.
+stock and register byte-for-byte unchanged among them. The tenth and final
+Classes entry, **Family Tree Creator**, landed on 2026-11-04 — the task reads
+"create a class called Person with a name, birth and (if any) death year, then
+set up relationships and query the tree to find who is X's grandfather, who are
+Y's cousins." The naive version hangs a `parent` string and a `children` list on
+each person, hand-writes a method per relationship, and gets "second cousin once
+removed" wrong; it gets three things wrong, each about *where facts should
+live*. **Relationships are derived, not stored**: a `Person` is a frozen value
+object that holds *no* relatives — the only stored fact is an atomic parent→child
+edge owned by the `FamilyTree`, and siblings, grandparents, aunts and cousins are
+all *computed* by walking those edges, so adding one relative updates every query
+with no stale lists (a test adds a child and the far branch's "first cousin once
+removed" answers correctly with zero bookkeeping). **The tree enforces its own
+invariants**: every edge goes through the one `connect()` chokepoint, which
+updates both directions at once and refuses a self-parent, a third parent, a
+duplicate, a stranger, or a link that would make someone their own ancestor
+(`CycleError`) — a malformed family is simply unconstructable. And **one kinship
+algorithm names every blood relationship** rather than a special case per name:
+find the lowest common ancestor of two people, measure how many generations each
+sits below it, and the distance pair `(dA, dB)` *is* the relationship — `(1,1)`
+siblings, `(2,2)` first cousins, `(2,3)` first cousin once removed, `(1,2)`
+aunt/uncle, `(0,k)` a direct ancestor — with cousin degree `min−1`, "removed"
+`|dA−dB|`, and sex choosing only the word. One engine backs the CLI (`who`,
+`rel`, `ancestors`, an indented tree), the browser (pick any two people, see the
+label with the LCA and `(dA, dB)` it used; click a name for all their relatives),
+and `tests.js` — **70 checks**, the invariant refusals, a newly added relative
+appearing in derived queries with no sync, and the whole kinship table from
+great-grandparent to second cousin to marriage-only "no blood relation" among
+them. **That completes the Classes category — all 10 projects built.** Per the
+"one level at a time" rule, the routine unlocked the next karan/Projects
+category, **Threading**, and now works down it one project per day.
 
 ## Projects built so far
 
@@ -1086,6 +1116,7 @@ the routine now works down the rest of the Classes list, one project per day.
 | 146 | [Image Gallery](./projects/phase2-classes/image-gallery/) | Classes (OOP) · Source 2 | 2026-11-01 |
 | 147 | [Shape Area &amp; Perimeter Classes](./projects/phase2-classes/shape-area-perimeter/) | Classes (OOP) · Source 2 | 2026-11-02 |
 | 148 | [Flower Shop — Ordering To Go](./projects/phase2-classes/flower-shop/) | Classes (OOP) · Source 2 | 2026-11-03 |
+| 149 | [Family Tree Creator](./projects/phase2-classes/family-tree/) | Classes (OOP) · Source 2 | 2026-11-04 |
 
 ## Repository layout
 
@@ -1165,6 +1196,7 @@ projects/
     company-manager/          # Employee hierarchy done right: abstract base can't be instantiated (nor can a subclass that forgets calculatePay), each subclass pays its own way — hourly with real weekly overtime (40h/wk at 1.5×, settled per week not pooled), salary ÷ periods, manager salary+bonus, executive +profit share — a four-deep chain where super.calculatePay does real work; money as integer cents rounded once, Company as Map-keyed aggregate deriving payroll/headcount/wage-bill and detaching fired reports; one DOM/IO-free engine behind a CLI+REPL, a live browser payroll table + org tree, and 57 checks
     bank-account-manager/     # Account hierarchy done right: abstract base can't be instantiated (nor a subclass missing its policy hooks), each subclass debits its own way through one withdraw() template — checking overdraws to a limit then charges a one-time fee, savings never overdraws but earns interest and caps withdrawals per cycle, business charges a flat per-transaction fee — the rules living in overridable minimumBalanceCents/feeFor hooks; money as integer cents with the balance DERIVED from the ledger (can't drift from the statement) and Bank transfers atomic (debit first, credit only on success); one DOM/IO-free engine behind an ATM CLI+REPL, a live browser teller + statement, and 70 checks
     patient-doctor-scheduler/ # Person→Patient/Doctor hierarchy done right: abstract base can't be instantiated (nor a subclass that forgets role), time as a discrete 16-slot grid (8h / 30min) with every time validated onto it — "09:15" refused not rounded, "17:00" out of hours — so overlap is an integer compare; a Doctor enforces its own two rules (no double-booking, a daily cap ≤16, refused with slots to spare), the Scheduler adds the one a lone doctor can't see (a patient is never in two places at once), booking and reschedule are atomic (every check passes before any write; a move validates its target before freeing the old slot) and a patient's appointments are DERIVED from the doctors' day books; one DOM/IO-free engine behind a day-grid CLI+REPL, a clickable browser day grid, and 77 checks
+    family-tree/              # Person + FamilyTree done right: a Person is a frozen value object holding NO relatives — the only stored fact is an atomic parent→child edge, so siblings/grandparents/aunts/cousins are all DERIVED by walking edges (add a relative, every query updates with no stale lists); the tree enforces its own invariants at one connect() chokepoint (no self-parent, no third parent, no duplicate, no stranger, no cycle → CycleError), so a malformed family is unconstructable; and ONE kinship algorithm names every blood relationship — lowest common ancestor + the distance pair (dA,dB) gives sibling/cousin/aunt/removed, sex only picks the word; one DOM/IO-free engine behind a who/rel CLI+REPL, a browser relationship explorer, and 70 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
