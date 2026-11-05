@@ -268,5 +268,5 @@ Unlocked 2026-11-04 after the Classes category was finished. The routine works
 down this section next, one project per day. Populated from the
 [karan/Projects Threading section](https://github.com/karan/Projects).
 
-- [ ] Create a Progress Bar for Downloads
+- [x] Create a Progress Bar for Downloads — 2026-11-05
 - [ ] Bulk Thumbnail Creator
