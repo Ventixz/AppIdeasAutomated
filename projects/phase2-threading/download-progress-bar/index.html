@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Download Progress Bar</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Download Progress Bar</h1>
+    <p class="tagline">
+      Several download <strong>workers</strong> run at once and all want to move
+      the <em>same</em> bar. The naive version has each worker do
+      <code>total += chunk</code> on a shared counter — a read-modify-write that
+      <em>loses</em> bytes when two chunks land at the same moment, so the bar
+      silently stalls below 100%. This one removes the race instead of locking
+      it: every worker reports only <em>its own</em> cumulative position — an
+      <em>absolute, monotonic</em> number — and one <strong>aggregator</strong>
+      owns the sum. Absolute updates are <em>idempotent and order-independent</em>,
+      so replaying, dropping or reordering them leaves the total exactly right.
+      First of two tasks in karan/Projects' <em>Threading</em> category. The
+      same engine drives real concurrent HTTP range-downloads under Node (see
+      the README); this page simulates the workers so you can watch — and
+      sabotage — the coordination.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <h2>Overall progress</h2>
+    <div id="overallBar" class="bar big"><span></span></div>
+    <div id="overallText" class="barline muted small"></div>
+    <div class="controls">
+      <button id="start">Start download</button>
+      <button id="reset" class="ghost">Reset</button>
+      <label class="chk">
+        <input type="checkbox" id="chaos" /> Chaos mode
+        <span class="muted small">— randomly drop, duplicate &amp; reorder updates</span>
+      </label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>The workers</h2>
+    <p class="muted small">Each row is one concurrent download part, advancing in
+      its own irregular bursts. The row shows the <em>absolute position</em> that
+      worker last reported — the only thing it ever tells the aggregator.</p>
+    <div id="workers" class="workers"></div>
+  </section>
+
+  <section class="panel" id="chaosPanel" hidden>
+    <h2>Chaos log</h2>
+    <p class="muted small">With chaos on, each report is randomly dropped,
+      duplicated or delayed/reordered before reaching the aggregator — exactly
+      what unpredictable concurrent delivery does. The overall bar still lands on
+      100% because positions are absolute: a dropped update is undone by the next
+      one, and a stale/duplicate update is a no-op.</p>
+    <div id="chaosLog" class="log"></div>
+  </section>
+
+  <footer class="muted small">
+    <p>The aggregator, the EWMA rate, the ETA and the bar renderer all live in
+      <code>progress-core.js</code> with no DOM and no sockets; this page and
+      <code>progress-node.js</code> just feed it updates. Part of a daily
+      automated <a href="https://claude.com/claude-code">Claude Code</a>
+      routine — see the repository <code>README.md</code> and
+      <code>PROGRESS.md</code>.</p>
+  </footer>
+</main>
+
+<script src="progress-core.js" onerror="window.__noCore=1"></script>
+<script src="script.js"></script>
+</body>
+</html>
