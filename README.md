@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (61 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (62 built)**
 
 | Category | Status |
 | --- | --- |
@@ -50,7 +50,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
-| Threading | 🚧 In progress — **0 / 2** |
+| Threading | 🚧 In progress — **1 / 2** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -962,7 +962,34 @@ appearing in derived queries with no sync, and the whole kinship table from
 great-grandparent to second cousin to marriage-only "no blood relation" among
 them. **That completes the Classes category — all 10 projects built.** Per the
 "one level at a time" rule, the routine unlocked the next karan/Projects
-category, **Threading**, and now works down it one project per day.
+category, **Threading**, and now works down it one project per day. The first
+Threading entry, **Download Progress Bar**, landed on 2026-11-05 — the task reads
+"download a file from a server and show a progress bar as the download goes." The
+bar itself is trivial; the task sits in *Threading* because a real download runs
+**several transfers at once** (split the file into ranges, fetch them in
+parallel) and all of them want to move the *same* bar. The naive design keeps one
+shared counter and lets each worker do `shared.done += chunk.length` — but `+=`
+is a **read-modify-write**, so when two workers' chunks land at the same moment
+both read the old value and one write is lost; the download finishes on disk but
+**the bar never reaches 100%**, and wrapping the `+=` in a lock just serialises
+every worker and still breaks on a duplicated or dropped update. The fix changes
+*what* a worker reports rather than guarding the write: **each worker reports its
+own cumulative bytes so far — an absolute, monotonic position, never a delta —
+and one `ProgressAggregator` owns the sum**. Absolute updates are **idempotent
+and order-independent**, so a duplicated update is a no-op, a dropped update is
+undone by the next one (self-healing), a reordered stale update is ignored by a
+monotonic guard, and a worker can't overflow the whole — the same principle that
+makes idempotent writes the backbone of reliable distributed systems. On top of
+that an **EWMA-smoothed rate** (one half-life knob, no history buffer, correct for
+irregular I/O spacing) keeps the ETA from flickering, and an **unknown total**
+(a chunked response with no `Content-Length`) is an explicit `null` that renders
+an indeterminate bar rather than a divide-by-zero or a fake 100%. One engine
+backs the CLI (real N-way concurrent HTTP range-downloads with a live terminal
+bar), the browser (a **Chaos mode** that randomly drops, duplicates and reorders
+every update and watches the bar still land on exactly 100%), and `tests.js` —
+**21 checks** that replay, drop, duplicate and scramble updates and assert the
+aggregate stays exact. One more Threading project (**Bulk Thumbnail Creator**)
+remains before the category is complete.
 
 ## Projects built so far
 
@@ -1117,6 +1144,7 @@ category, **Threading**, and now works down it one project per day.
 | 147 | [Shape Area &amp; Perimeter Classes](./projects/phase2-classes/shape-area-perimeter/) | Classes (OOP) · Source 2 | 2026-11-02 |
 | 148 | [Flower Shop — Ordering To Go](./projects/phase2-classes/flower-shop/) | Classes (OOP) · Source 2 | 2026-11-03 |
 | 149 | [Family Tree Creator](./projects/phase2-classes/family-tree/) | Classes (OOP) · Source 2 | 2026-11-04 |
+| 150 | [Download Progress Bar](./projects/phase2-threading/download-progress-bar/) | Threading · Source 2 | 2026-11-05 |
 
 ## Repository layout
 
