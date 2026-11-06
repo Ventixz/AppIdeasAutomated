@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bulk Thumbnail Creator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header>
+    <h1>Bulk Thumbnail Creator</h1>
+    <p class="tagline">
+      Generating thumbnails for a <strong>batch</strong> of images looks
+      embarrassingly parallel, so the naive "threaded" version is one line:
+      <code>await Promise.all(files.map(makeThumbnail))</code>. That launches
+      <em>every</em> job at once — thousands of decode buffers and file handles
+      alive together — and throughput <em>collapses</em> under the thrash while
+      the first broken file rejects the whole batch. This one uses a
+      <strong>bounded worker pool</strong>: a fixed crew pulls jobs from a shared
+      queue, so in-flight work is <em>capped</em> no matter how big the batch is,
+      slow jobs <em>self-balance</em>, and a bad file is isolated as a failure
+      while the batch rolls on. Second of two tasks in karan/Projects'
+      <em>Threading</em> category. The same engine thumbnails real PPM files
+      under Node (see the README); this page does real canvas resizes so you can
+      watch the pool work — and sabotage it.
+    </p>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <section class="panel">
+    <h2>Run a batch</h2>
+    <div class="controls grid">
+      <label>Batch size
+        <input type="range" id="batch" min="4" max="120" value="40" />
+        <output id="batchOut">40 images</output>
+      </label>
+      <label>Pool size (workers)
+        <input type="range" id="pool" min="1" max="12" value="4" />
+        <output id="poolOut">4 workers</output>
+      </label>
+      <label>Thumb size
+        <input type="range" id="size" min="48" max="200" step="8" value="96" />
+        <output id="sizeOut">96 px</output>
+      </label>
+      <label>Fit mode
+        <select id="mode">
+          <option value="contain">contain</option>
+          <option value="cover">cover</option>
+          <option value="stretch">stretch</option>
+        </select>
+      </label>
+    </div>
+    <div class="controls">
+      <button id="start">Generate thumbnails</button>
+      <button id="fanout" class="ghost">Compare vs <code>Promise.all</code> fan-out</button>
+      <label class="chk">
+        <input type="checkbox" id="chaos" /> Inject bad files
+        <span class="muted small">— ~1 in 8 images fails to "decode"</span>
+      </label>
+    </div>
+    <div id="overallBar" class="bar big"><span></span></div>
+    <div id="overallText" class="barline muted small">Idle.</div>
+  </section>
+
+  <section class="panel">
+    <h2>Worker lanes</h2>
+    <p class="muted small">One row per worker in the pool. The number of rows is
+      the <em>only</em> thing that bounds how much runs at once — the batch can
+      be 10 or 10,000 and the lane count never changes. Watch a worker that
+      draws a slow job fall behind while the others keep pulling: the queue
+      balances itself.</p>
+    <div id="lanes" class="lanes"></div>
+    <div id="peakNote" class="muted small"></div>
+  </section>
+
+  <section class="panel" id="resultPanel" hidden>
+    <h2>Thumbnails <span id="resultCount" class="muted small"></span></h2>
+    <div id="thumbs" class="thumbs"></div>
+  </section>
+
+  <footer class="muted small">
+    <p>The pool (<code>runPool</code>), the fit geometry and the area-averaging
+      resampler all live in <code>pool-core.js</code> with no DOM — this page and
+      <code>thumbnail-node.js</code> just feed it jobs. Part of a daily automated
+      <a href="https://claude.com/claude-code">Claude Code</a> routine — see the
+      repository <code>README.md</code> and <code>PROGRESS.md</code>.</p>
+  </footer>
+</main>
+
+<script src="pool-core.js" onerror="window.__noCore=1"></script>
+<script src="script.js"></script>
+</body>
+</html>

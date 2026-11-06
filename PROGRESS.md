@@ -269,4 +269,23 @@ down this section next, one project per day. Populated from the
 [karan/Projects Threading section](https://github.com/karan/Projects).
 
 - [x] Create a Progress Bar for Downloads — 2026-11-05
-- [ ] Bulk Thumbnail Creator
+- [x] Bulk Thumbnail Creator — 2026-11-06
+
+**Threading complete — all 2 projects built. The next category, Web, is now
+unlocked.**
+
+### Web
+
+Unlocked 2026-11-06 after the Threading category was finished. The routine works
+down this section next, one project per day. Populated from the
+[karan/Projects Web section](https://github.com/karan/Projects).
+
+- [ ] Page Scraper
+- [ ] Online White Board
+- [ ] Get Atomic Time from Internet Clock
+- [ ] Fetch Current Weather
+- [ ] Scheduled Auto Login and Action
+- [ ] E-Card Generator
+- [ ] Content Management System
+- [ ] Web Board (Forum)
+- [ ] CAPTCHA Maker

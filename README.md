@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (62 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (63 built)**
 
 | Category | Status |
 | --- | --- |
@@ -50,7 +50,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Text | ✅ Complete — **12 / 12** |
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
-| Threading | 🚧 In progress — **1 / 2** |
+| Threading | ✅ Complete — **2 / 2** |
+| Web | 🚧 In progress — **0 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -988,8 +989,42 @@ backs the CLI (real N-way concurrent HTTP range-downloads with a live terminal
 bar), the browser (a **Chaos mode** that randomly drops, duplicates and reorders
 every update and watches the bar still land on exactly 100%), and `tests.js` —
 **21 checks** that replay, drop, duplicate and scramble updates and assert the
-aggregate stays exact. One more Threading project (**Bulk Thumbnail Creator**)
-remains before the category is complete.
+aggregate stays exact. The second and final Threading entry, **Bulk Thumbnail
+Creator**, landed on 2026-11-06 — the task reads "generate thumbnails from a
+batch of images; use the threading and multiprocessing libraries to compare
+performance." Making one thumbnail is trivial; making *thousands* is the
+Threading problem, and the job being embarrassingly parallel is exactly the
+trap. The textbook "parallel" answer, `await Promise.all(files.map(makeThumbnail))`,
+doesn't process the batch — it **starts every file at once**, so a large batch
+holds thousands of decode buffers and file handles live together, throughput
+**collapses** under the thrash, the process dies on `EMFILE`/out-of-memory, and
+`Promise.all`'s **fail-fast** means the first corrupt image rejects the whole
+batch and discards every thumbnail that already succeeded. The fix is the
+thread-pool pattern: a **fixed crew of workers pulls jobs from a shared queue**,
+so in-flight work is **capped at the worker count regardless of batch size**,
+load **self-balances** (a worker that draws a slow job just pulls its next one
+later, unlike a static partition that stalls on its slowest chunk), and each job
+is wrapped in its own try/catch so a **bad file is isolated** as a settled
+`rejected` record while the batch rolls on. The only shared mutable state is a
+single cursor (`const i = cursor++`) — which JS's one event loop increments
+atomically for free, which is *why* pulling from a tiny counter beats locking a
+big shared result set. The honest payoff is the one karan's task points at:
+resizing is **CPU-bound**, so in-process concurrency (JS's single thread, or
+Python's GIL) **overlaps the file I/O but can't run two resizes at once** — the
+Node benchmark shows throughput rising a little then flattening — and **true CPU
+parallelism needs real parallelism** (`worker_threads`, or `multiprocessing`'s
+separate processes), a backend you can swap *under the same pool* precisely
+because the queue/worker shape doesn't care what a worker is. The per-job work
+is real: a dependency-free **area-averaging box resampler** with contain/cover/
+stretch fit modes. One engine backs the CLI (thumbnails real **PPM** files and
+benchmarks throughput across pool sizes), the browser (real **canvas** resizes
+with live worker lanes, a bad-file injector, and a one-click comparison against
+unbounded `Promise.all` fan-out), and `tests.js` — **17 checks** on the
+concurrency cap, pull-balancing, failure isolation, ordering and the resampler
+math. **That completes the Threading category — both projects built.** Per the
+"one level at a time" rule, the routine unlocked the next karan/Projects
+category, **Web**, and begins working down it (Page Scraper, Online White Board,
+Fetch Current Weather, …) one project per day.
 
 ## Projects built so far
 
@@ -1145,6 +1180,7 @@ remains before the category is complete.
 | 148 | [Flower Shop — Ordering To Go](./projects/phase2-classes/flower-shop/) | Classes (OOP) · Source 2 | 2026-11-03 |
 | 149 | [Family Tree Creator](./projects/phase2-classes/family-tree/) | Classes (OOP) · Source 2 | 2026-11-04 |
 | 150 | [Download Progress Bar](./projects/phase2-threading/download-progress-bar/) | Threading · Source 2 | 2026-11-05 |
+| 151 | [Bulk Thumbnail Creator](./projects/phase2-threading/bulk-thumbnail-creator/) | Threading · Source 2 | 2026-11-06 |
 
 ## Repository layout
 
