@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Scraper — link &amp; image extractor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Page Scraper</h1>
+    <p class="tagline">
+      Pull every link and image out of a page — and <em>resolve each one</em>
+      into a real absolute URL, the RFC&nbsp;3986 way.
+    </p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="field">
+        <label for="base">Base URL <span class="hint">(where the page "came from" — references resolve against this)</span></label>
+        <input type="text" id="base" value="https://shop.example/catalog/index.html" spellcheck="false">
+      </div>
+
+      <div class="field">
+        <label for="html">Page HTML <span class="hint">paste markup, or load a sample</span></label>
+        <textarea id="html" spellcheck="false" rows="12"></textarea>
+      </div>
+
+      <div class="buttons">
+        <button id="scrape" class="primary">Scrape</button>
+        <button id="sample" class="ghost">Load sample page</button>
+        <button id="clear" class="ghost">Clear</button>
+        <label class="toggle"><input type="checkbox" id="naive"> Compare with naïve <code>base + href</code></label>
+      </div>
+
+      <details class="cors-note">
+        <summary>Why paste HTML instead of a URL?</summary>
+        <p>
+          A page in your browser <strong>cannot fetch another site's HTML</strong> —
+          the <em>same-origin policy</em> blocks the cross-origin read, and that is a
+          security feature, not a bug. Real scrapers run on a server (see
+          <code>scraper-node.js</code> in this folder, which fetches over
+          <code>https</code> with zero dependencies). This demo takes the HTML you
+          already have and does the part that is actually hard and identical in both
+          places: <strong>finding and resolving the references</strong>.
+        </p>
+      </details>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <div class="summary" id="summary"></div>
+      <div class="tabs" id="tabs">
+        <button data-tab="links" class="active">Links <span class="badge" id="count-links">0</span></button>
+        <button data-tab="images">Images <span class="badge" id="count-images">0</span></button>
+        <button data-tab="assets">Assets <span class="badge" id="count-assets">0</span></button>
+      </div>
+      <div class="panel" id="panel"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Part of a daily automated <a href="https://claude.com/claude-code">Claude Code</a>
+      routine. Source task: <a href="https://github.com/karan/Projects">karan/Projects</a>
+      → Web → Page Scraper. The engine (<code>scraper-core.js</code>) is shared by this
+      page, the Node CLI, and the tests.
+    </p>
+  </footer>
+
+  <script src="scraper-core.js" onerror="window.__noCore=true"></script>
+  <script src="script.js"></script>
+</body>
+</html>

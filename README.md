@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (63 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (64 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **0 / 9** |
+| Web | 🚧 In progress — **1 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1026,6 +1026,32 @@ math. **That completes the Threading category — both projects built.** Per the
 category, **Web**, and begins working down it (Page Scraper, Online White Board,
 Fetch Current Weather, …) one project per day.
 
+The first Web entry, **Page Scraper**, landed on 2026-11-08 — the task reads
+"connect to a site and pull out all links, or images, and save them to a list."
+The trap is that this sounds like a one-liner (find every `href`, done) when the
+real work is **resolving** each reference into a usable URL. The `href` you pull
+out of a tag is almost never fetchable as-is: it's `../about`, `/logo.png`,
+`//cdn.example/app.js`, `?page=2`, or `#top`, and the `base + href` string-join
+everyone writes first mangles all of those — `/` becomes `.../catalog//`,
+`../about` becomes `.../catalog/../about`, a protocol-relative CDN URL and an
+already-absolute external link both come out garbage. So the engine implements
+the actual **RFC 3986 §5** reference-resolution algorithm — parse into the five
+components (keeping *absent* distinct from *empty*), `remove_dot_segments` to
+interpret `.`/`..`, merge, recompose — and its test suite is anchored on the
+**RFC's own §5.4 "normal" and "abnormal" vector tables**, the exact cases every
+URL library is validated against (the naive join fails about a third of them).
+The other half is finding the references in tag soup without a DOM: a tolerant
+scanner that reads URL-bearing attributes across `a`/`img`/`link`/`script`/
+`source`/… while **skipping `<script>`/`<style>`/comment bodies**, decodes
+`&amp;` so query strings survive, honours a document's own `<base href>`, and
+parses `srcset` by the WHATWG rules (not a naive comma-split). Results come back
+de-duplicated, classified internal vs external, and tagged with their source
+element. One engine (`scraper-core.js`) backs all three faces: the CLI (fetches
+over `http`/`https` following redirects, then **saves** `links.txt`/`images.txt`/
+`assets.txt`), the browser demo (paste markup, see every reference resolved,
+with a one-click side-by-side against the naïve join so you can watch it break),
+and `tests.js` — **25 checks** led by the RFC vectors.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1181,6 +1207,7 @@ Fetch Current Weather, …) one project per day.
 | 149 | [Family Tree Creator](./projects/phase2-classes/family-tree/) | Classes (OOP) · Source 2 | 2026-11-04 |
 | 150 | [Download Progress Bar](./projects/phase2-threading/download-progress-bar/) | Threading · Source 2 | 2026-11-05 |
 | 151 | [Bulk Thumbnail Creator](./projects/phase2-threading/bulk-thumbnail-creator/) | Threading · Source 2 | 2026-11-06 |
+| 152 | [Page Scraper](./projects/phase2-web/page-scraper/) | Web · Source 2 | 2026-11-08 |
 
 ## Repository layout
 
