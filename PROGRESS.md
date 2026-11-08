@@ -280,7 +280,7 @@ Unlocked 2026-11-06 after the Threading category was finished. The routine works
 down this section next, one project per day. Populated from the
 [karan/Projects Web section](https://github.com/karan/Projects).
 
-- [ ] Page Scraper
+- [x] Page Scraper — 2026-11-08
 - [ ] Online White Board
 - [ ] Get Atomic Time from Internet Clock
 - [ ] Fetch Current Weather
