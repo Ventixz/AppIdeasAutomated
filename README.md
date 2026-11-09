@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (64 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (65 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **1 / 9** |
+| Web | 🚧 In progress — **2 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1052,6 +1052,37 @@ over `http`/`https` following redirects, then **saves** `links.txt`/`images.txt`
 with a one-click side-by-side against the naïve join so you can watch it break),
 and `tests.js` — **25 checks** led by the RFC vectors.
 
+The second Web entry, the **Online White Board**, landed on 2026-11-09 — the
+task asks for an app to "draw pictures, write notes and use various colors,"
+with the optional stretch to "invite friends to collaborate on a white board
+online." A whiteboard looks like a weekend `<canvas>` project right up until
+every hard thing shows up at once, and the build is organized around the three
+that matter. **First: a whiteboard is a *document*, not a bitmap.** The naive
+save — `canvas.toDataURL()` — stores pixels and so throws away everything that
+makes a whiteboard one: no undo, no erasing a single shape without scarring the
+rest, no scalable export. So the board is a *list of vector elements* and pixels
+are only ever a rendering of it — which makes undo/redo, a geometry-based eraser
+(point-to-segment hit-testing), `.wbd` save/load, and **PNG *and* real SVG**
+export all fall out for free. **Second: freehand strokes need smoothing**, drawn
+as quadratic Béziers through the midpoint of each pair of samples rather than
+`lineTo` between raw points (which shows every corner) — and the canvas drawing
+and the SVG export run the *same* algorithm, so what you export is curve-for-curve
+what you drew. **Third — the collaboration — is a convergence problem.** Naively
+broadcasting "draw this now" does not guarantee two screens end up alike: messages
+reorder, duplicate, and race. So every editor is a *replica* with a Lamport clock,
+every edit is an immutable operation in an append-only log, and the visible board
+is a pure function of the *set* of operations ordered by `(lamport, siteId)`.
+That makes the board converge: any replicas that have seen the same edits compute
+a byte-identical document, whatever order those edits arrived in — which `tests.js`
+proves by delivering a set of edits to two replicas in shuffled, duplicated order
+and asserting the results are identical. The transport is deliberately swappable;
+the browser app wires the op-log to a `BroadcastChannel`, so **opening the room
+link in a second tab is real, live, multi-user collaboration with no server** —
+point the same engine at a WebSocket and it works across the internet unchanged.
+One engine (`whiteboard-core.js`, no DOM/canvas/network) backs the browser app,
+a headless CLI that builds and **saves** a board and exports SVG without a
+browser, and `tests.js` — **45 checks** led by the convergence property.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1208,6 +1239,7 @@ and `tests.js` — **25 checks** led by the RFC vectors.
 | 150 | [Download Progress Bar](./projects/phase2-threading/download-progress-bar/) | Threading · Source 2 | 2026-11-05 |
 | 151 | [Bulk Thumbnail Creator](./projects/phase2-threading/bulk-thumbnail-creator/) | Threading · Source 2 | 2026-11-06 |
 | 152 | [Page Scraper](./projects/phase2-web/page-scraper/) | Web · Source 2 | 2026-11-08 |
+| 153 | [Online White Board](./projects/phase2-web/online-white-board/) | Web · Source 2 | 2026-11-09 |
 
 ## Repository layout
 
