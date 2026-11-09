@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Online White Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <strong>White&nbsp;Board</strong>
+      <span class="sub">vector · smoothed · collaborative</span>
+    </div>
+
+    <div class="tools" role="toolbar" aria-label="Drawing tools">
+      <button class="tool" data-tool="pen" title="Pen (P)" aria-pressed="true">✏️<span>Pen</span></button>
+      <button class="tool" data-tool="highlighter" title="Highlighter (H)">🖍️<span>Marker</span></button>
+      <button class="tool" data-tool="line" title="Line (L)">╱<span>Line</span></button>
+      <button class="tool" data-tool="rect" title="Rectangle (R)">▭<span>Rect</span></button>
+      <button class="tool" data-tool="ellipse" title="Ellipse (O)">◯<span>Oval</span></button>
+      <button class="tool" data-tool="text" title="Text note (T)">T<span>Note</span></button>
+      <button class="tool" data-tool="eraser" title="Eraser (E)">⌫<span>Erase</span></button>
+    </div>
+
+    <div class="group" aria-label="Color">
+      <div class="swatches" id="swatches"></div>
+      <input type="color" id="customColor" value="#1f6feb" title="Custom color" aria-label="Custom color">
+    </div>
+
+    <div class="group" aria-label="Stroke width">
+      <label class="width-label">Size
+        <input type="range" id="width" min="1" max="40" value="4">
+      </label>
+      <label class="fill-label"><input type="checkbox" id="fill"> Fill shapes</label>
+    </div>
+
+    <div class="group actions">
+      <button id="undo" title="Undo (Ctrl+Z)">↶ Undo</button>
+      <button id="redo" title="Redo (Ctrl+Y)">↷ Redo</button>
+      <button id="clear" title="Clear board">Clear</button>
+    </div>
+
+    <div class="group actions">
+      <button id="save" title="Save document (.wbd / JSON)">💾 Save</button>
+      <button id="load" title="Load a saved document">📂 Load</button>
+      <button id="pngBtn" title="Export PNG">PNG</button>
+      <button id="svgBtn" title="Export SVG (vector)">SVG</button>
+      <input type="file" id="fileInput" accept=".wbd,.json,application/json" hidden>
+    </div>
+
+    <div class="group collab">
+      <button id="collabBtn" class="collab-btn" title="Collaborate in real time across tabs">👥 Collaborate</button>
+    </div>
+  </header>
+
+  <main>
+    <canvas id="board" aria-label="Whiteboard canvas"></canvas>
+    <div id="textLayer"></div>
+    <div id="cursors" aria-hidden="true"></div>
+  </main>
+
+  <footer class="statusbar">
+    <span id="status">Pen · 4px · drag to draw</span>
+    <span class="spacer"></span>
+    <span id="collabStatus" class="collab-status">solo</span>
+    <span id="count">0 elements</span>
+  </footer>
+
+  <div id="collabPanel" class="panel" hidden>
+    <div class="panel-inner">
+      <h2>Collaborate online</h2>
+      <p>
+        Share this board with others <strong>in real time, with no server.</strong>
+        Open this same page in another browser tab or window — paste the room
+        link into it — and every stroke, shape and note appears on both at once.
+      </p>
+      <label>Room link
+        <input id="roomLink" readonly>
+      </label>
+      <div class="panel-row">
+        <button id="copyLink">Copy link</button>
+        <button id="openTab">Open a second tab</button>
+        <button id="closePanel" class="ghost">Done</button>
+      </div>
+      <p class="fine">
+        How it works: each tab is an independent <em>replica</em>. Edits travel
+        between them as operations on a shared <code>BroadcastChannel</code>,
+        and the board you see is computed from the set of operations ordered by a
+        Lamport clock — so the tabs always converge, whatever order edits land
+        in. Swap the channel for a WebSocket and the same engine works across the
+        internet. <em>(BroadcastChannel links tabs in the same browser; it's the
+        honest, serverless version of the collaboration the engine is built for.)</em>
+      </p>
+    </div>
+  </div>
+
+  <script src="whiteboard-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
