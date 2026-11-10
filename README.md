@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **2 / 9** |
+| Web | 🚧 In progress — **3 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1083,6 +1083,30 @@ One engine (`whiteboard-core.js`, no DOM/canvas/network) backs the browser app,
 a headless CLI that builds and **saves** a board and exports SVG without a
 browser, and `tests.js` — **45 checks** led by the convergence property.
 
+The third Web entry, **Get Atomic Time from an Internet Clock**, landed on
+2026-11-10 — the task asks for an app that "provides the exact time from an atomic
+clock on the internet," which is the **Network Time Protocol** (NTP / SNTP, RFC
+5905). It sounds like a one-liner (open a socket, read the number, set the clock),
+and the trap is that *the number is already stale by the time you read it*: the
+server's timestamp spent a network trip reaching you, so you're now that far
+behind — and you don't know how far. NTP's answer is to record **four**
+timestamps around one request/reply — `T1` client-send, `T2` server-receive,
+`T3` server-send, `T4` client-receive — and from them compute the clock offset
+`θ = ((T2−T1) + (T3−T4)) / 2` and round-trip delay `δ = (T4−T1) − (T3−T2)`. The
+algebra cancels the travel time *if the two legs are symmetric*, so your own
+(wrong) clock drops out and the corrected time is `T4 + θ`; the browser demo
+makes this visible with sliders, hitting **exact** on a symmetric path while the
+naive "just trust the server's `T3`" answer stays wrong by the reply's trip home,
+and showing the residual error reappear — exactly half the asymmetry — when you
+pull the legs apart. The second hard part is NTP's own clock format: a 64-bit
+timestamp of **seconds since 1900** plus a **1/2³²-second fraction**, with the
+32-bit seconds field first rolling over on **2036-02-07** — so the engine does
+era-aware conversion, checked against a post-2036 value. One engine
+(`ntp-core.js`, no sockets) backs the browser demo, a real Node **UDP/123**
+client (`dgram`, zero dependencies, with an offline `--demo`), and `tests.js` —
+**17 checks** led by the RFC §8 offset/delay worked example, the epoch math, the
+2036 rollover, and a full packet round-trip.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1240,6 +1264,7 @@ browser, and `tests.js` — **45 checks** led by the convergence property.
 | 151 | [Bulk Thumbnail Creator](./projects/phase2-threading/bulk-thumbnail-creator/) | Threading · Source 2 | 2026-11-06 |
 | 152 | [Page Scraper](./projects/phase2-web/page-scraper/) | Web · Source 2 | 2026-11-08 |
 | 153 | [Online White Board](./projects/phase2-web/online-white-board/) | Web · Source 2 | 2026-11-09 |
+| 154 | [Get Atomic Time from Internet Clock](./projects/phase2-web/atomic-time-ntp/) | Web · Source 2 | 2026-11-10 |
 
 ## Repository layout
 
@@ -1320,6 +1345,13 @@ projects/
     bank-account-manager/     # Account hierarchy done right: abstract base can't be instantiated (nor a subclass missing its policy hooks), each subclass debits its own way through one withdraw() template — checking overdraws to a limit then charges a one-time fee, savings never overdraws but earns interest and caps withdrawals per cycle, business charges a flat per-transaction fee — the rules living in overridable minimumBalanceCents/feeFor hooks; money as integer cents with the balance DERIVED from the ledger (can't drift from the statement) and Bank transfers atomic (debit first, credit only on success); one DOM/IO-free engine behind an ATM CLI+REPL, a live browser teller + statement, and 70 checks
     patient-doctor-scheduler/ # Person→Patient/Doctor hierarchy done right: abstract base can't be instantiated (nor a subclass that forgets role), time as a discrete 16-slot grid (8h / 30min) with every time validated onto it — "09:15" refused not rounded, "17:00" out of hours — so overlap is an integer compare; a Doctor enforces its own two rules (no double-booking, a daily cap ≤16, refused with slots to spare), the Scheduler adds the one a lone doctor can't see (a patient is never in two places at once), booking and reschedule are atomic (every check passes before any write; a move validates its target before freeing the old slot) and a patient's appointments are DERIVED from the doctors' day books; one DOM/IO-free engine behind a day-grid CLI+REPL, a clickable browser day grid, and 77 checks
     family-tree/              # Person + FamilyTree done right: a Person is a frozen value object holding NO relatives — the only stored fact is an atomic parent→child edge, so siblings/grandparents/aunts/cousins are all DERIVED by walking edges (add a relative, every query updates with no stale lists); the tree enforces its own invariants at one connect() chokepoint (no self-parent, no third parent, no duplicate, no stranger, no cycle → CycleError), so a malformed family is unconstructable; and ONE kinship algorithm names every blood relationship — lowest common ancestor + the distance pair (dA,dB) gives sibling/cousin/aunt/removed, sex only picks the word; one DOM/IO-free engine behind a who/rel CLI+REPL, a browser relationship explorer, and 70 checks
+  phase2-threading/           # Source 2 (karan/Projects) — Threading category
+    download-progress-bar/    # bounded concurrent downloads with a live aggregate progress bar: a pure scheduler drives N workers over a shared queue, progress derived from per-task byte counts, backed by a Node CLI + browser demo + tests
+    bulk-thumbnail-creator/   # a fixed worker pool resizes many images at once: a DOM/IO-free pool engine caps concurrency and isolates per-file failures, behind a Node CLI, a canvas browser demo with live worker lanes, and 17 checks
+  phase2-web/                 # Source 2 (karan/Projects) — Web category
+    page-scraper/             # connect to a site and pull out every link/image: the real work is RFC 3986 §5 reference resolution (parse/remove_dot_segments/merge/recompose), not base+href; a tolerant DOM-free tag scanner (skips script/style, decodes entities, honours <base>, parses srcset); one engine behind a fetch-and-save CLI, a browser demo with a naive side-by-side, and 25 checks led by the RFC §5.4 vectors
+    online-white-board/       # draw/note/collaborate: a whiteboard is a vector DOCUMENT not a bitmap (so undo, geometry eraser, PNG+SVG export fall out), freehand smoothed as quadratic Béziers shared by canvas and SVG, and collaboration as a convergence problem — Lamport-clocked op-log replicas converge byte-identical over BroadcastChannel; one engine behind a browser app, a headless CLI, and 45 checks led by the convergence property
+    atomic-time-ntp/          # get the EXACT time off the internet = NTP (RFC 5905): the trap is that the server's timestamp is stale on arrival, so four timestamps (T1..T4) give offset θ=((T2−T1)+(T3−T4))/2 and delay δ, cancelling symmetric travel so your wrong clock drops out; plus NTP's 1900-epoch 64-bit fixed-point timestamp with 2036 era-rollover handling; one DOM/socket-free engine behind a real UDP/123 Node client (--demo offline), a slider-driven browser demo + hex packet decoder, and 17 checks led by the RFC §8 worked example
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
