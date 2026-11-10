@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atomic Time from an Internet Clock — NTP</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>Atomic Time from an Internet Clock</h1>
+  <p class="tagline">
+    Getting the exact time off the internet is the <em>Network Time Protocol</em>.
+    The trick isn't reading the server's clock — it's cancelling the network
+    delay that makes the answer stale before it arrives. Drag the sliders and
+    watch the <em>four-timestamp exchange</em> do it.
+  </p>
+</header>
+
+<main>
+  <section class="controls">
+    <p class="section-label">A single request / reply, under your control</p>
+
+    <div class="slider-grid">
+      <div class="field">
+        <label for="skew">Your clock is off by
+          <span class="val" id="skewVal"></span>
+          <span class="hint">— negative = your clock runs slow (behind the server)</span>
+        </label>
+        <input type="range" id="skew" min="-5000" max="5000" step="50" value="-1200" />
+      </div>
+      <div class="field">
+        <label for="out">Network delay, request out
+          <span class="val" id="outVal"></span>
+        </label>
+        <input type="range" id="out" min="0" max="500" step="5" value="90" />
+      </div>
+      <div class="field">
+        <label for="back">Network delay, reply back
+          <span class="val" id="backVal"></span>
+          <span class="hint">— NTP assumes this ≈ the out trip</span>
+        </label>
+        <input type="range" id="back" min="0" max="500" step="5" value="90" />
+      </div>
+      <div class="field">
+        <label for="proc">Server processing time
+          <span class="val" id="procVal"></span>
+        </label>
+        <input type="range" id="proc" min="0" max="200" step="5" value="15" />
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="primary" id="animate">Replay the exchange ▸</button>
+      <label class="toggle"><input type="checkbox" id="symlock" checked /> keep return trip = out trip</label>
+    </div>
+  </section>
+
+  <section class="exchange">
+    <div class="lane-wrap">
+      <div class="lane client">
+        <span class="lane-name">your&nbsp;computer</span>
+        <span class="clocknote" id="clientClockNote"></span>
+      </div>
+      <div class="lane server">
+        <span class="lane-name">atomic&nbsp;time&nbsp;server</span>
+        <span class="clocknote">stratum&nbsp;1 · GPS&nbsp;/&nbsp;cesium reference</span>
+      </div>
+      <svg id="diagram" viewBox="0 0 640 290" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="Timeline of the four NTP timestamps T1 through T4"></svg>
+    </div>
+  </section>
+
+  <section class="results" id="results"></section>
+
+  <section class="decoder">
+    <details>
+      <summary>Decode a real 48-byte NTP packet (hex)</summary>
+      <p class="hint">
+        Paste the 48 bytes of a server reply as hex (spaces/newlines fine). This
+        is exactly what <code>ntp-node.js</code> receives over UDP — the page
+        parses it with the same <code>ntp-core.js</code>. A sample stratum-1
+        reply is pre-filled.
+      </p>
+      <textarea id="hexIn" rows="4" spellcheck="false"></textarea>
+      <div class="buttons">
+        <button class="ghost" id="decodeBtn">Parse packet</button>
+      </div>
+      <div id="decodeOut"></div>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <p>
+    A browser can't send a UDP datagram, so this page <strong>simulates</strong>
+    the exchange and decodes real packet bytes — the arithmetic (offset, delay,
+    the 1900-epoch 64-bit timestamp) is the identical <code>ntp-core.js</code>
+    that the Node client and the tests use. For a live query run
+    <code>node ntp-node.js time.cloudflare.com</code>.
+  </p>
+  <p>
+    Part of a daily automated <a href="https://claude.com/claude-code">Claude Code</a>
+    routine — one project per day. See the repo
+    <a href="../../../README.md">README</a> and
+    <a href="../../../PROGRESS.md">PROGRESS</a>.
+  </p>
+</footer>
+
+<script src="ntp-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
