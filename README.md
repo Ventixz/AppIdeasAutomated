@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **3 / 9** |
+| Web | 🚧 In progress — **4 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1107,6 +1107,33 @@ client (`dgram`, zero dependencies, with an offline `--demo`), and `tests.js` �
 **17 checks** led by the RFC §8 offset/delay worked example, the epoch math, the
 2036 rollover, and a full packet round-trip.
 
+The fourth Web entry, **Fetch Current Weather**, landed on 2026-11-11 — the task
+reads "get the current weather for a specified location." It sounds like one API
+call; it is at least two, and the number it returns is not the number a person
+wants. First, there is no "weather for a place name" endpoint — weather is indexed
+by coordinates, so the name is *geocoded* to a lat/lon, and because names are
+ambiguous (there are dozens of Springfields) geocoding returns a **list of
+candidates** to pick from, not an answer. Then comes the real work: a thermometer
+reads **air temperature**, which is almost never what the air *feels* like — wind
+strips warmth off your skin (**wind chill**) and humidity stops sweat evaporating
+(**heat index**), i.e. exactly the cold-snap and heat-wave conditions people check
+the weather *for*. So the engine computes the apparent temperature with the real
+formulas (Environment Canada wind chill, the NWS Rothfusz heat-index regression) —
+and the correctness trap is not the algebra but the **domain**: wind chill is only
+defined for ≤ 10 °C and wind > 4.8 km/h, heat index only for ≥ 27 °C, so each
+returns `null` outside its range and a dispatcher picks wind chill, heat index, or
+*neither* (apparent = air temp). Apply the wrong one — heat index on a cold
+morning, wind chill on a warm breeze — and you get confident nonsense; the browser
+demo's slider lab makes those switch-off boundaries visible. The condition itself
+arrives as a bare integer (**WMO code table 4677**), decoded to words and a glyph
+with graceful handling of codes it has never seen, and coordinate rounding doubles
+as the forecast cache key. Built on [Open-Meteo](https://open-meteo.com) (free, no
+API key); one DOM/network-free engine (`weather-core.js`) backs a zero-dependency
+Node CLI (`weather-node.js`, with an offline `--demo`), a live-search browser demo
+with graceful offline fallback, and `tests.js` — **61 checks** anchored on the
+published wind-chill/heat-index reference values and a full geocode→forecast
+round-trip.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1265,6 +1292,7 @@ client (`dgram`, zero dependencies, with an offline `--demo`), and `tests.js` �
 | 152 | [Page Scraper](./projects/phase2-web/page-scraper/) | Web · Source 2 | 2026-11-08 |
 | 153 | [Online White Board](./projects/phase2-web/online-white-board/) | Web · Source 2 | 2026-11-09 |
 | 154 | [Get Atomic Time from Internet Clock](./projects/phase2-web/atomic-time-ntp/) | Web · Source 2 | 2026-11-10 |
+| 155 | [Fetch Current Weather](./projects/phase2-web/fetch-current-weather/) | Web · Source 2 | 2026-11-11 |
 
 ## Repository layout
 
@@ -1352,6 +1380,7 @@ projects/
     page-scraper/             # connect to a site and pull out every link/image: the real work is RFC 3986 §5 reference resolution (parse/remove_dot_segments/merge/recompose), not base+href; a tolerant DOM-free tag scanner (skips script/style, decodes entities, honours <base>, parses srcset); one engine behind a fetch-and-save CLI, a browser demo with a naive side-by-side, and 25 checks led by the RFC §5.4 vectors
     online-white-board/       # draw/note/collaborate: a whiteboard is a vector DOCUMENT not a bitmap (so undo, geometry eraser, PNG+SVG export fall out), freehand smoothed as quadratic Béziers shared by canvas and SVG, and collaboration as a convergence problem — Lamport-clocked op-log replicas converge byte-identical over BroadcastChannel; one engine behind a browser app, a headless CLI, and 45 checks led by the convergence property
     atomic-time-ntp/          # get the EXACT time off the internet = NTP (RFC 5905): the trap is that the server's timestamp is stale on arrival, so four timestamps (T1..T4) give offset θ=((T2−T1)+(T3−T4))/2 and delay δ, cancelling symmetric travel so your wrong clock drops out; plus NTP's 1900-epoch 64-bit fixed-point timestamp with 2036 era-rollover handling; one DOM/socket-free engine behind a real UDP/123 Node client (--demo offline), a slider-driven browser demo + hex packet decoder, and 17 checks led by the RFC §8 worked example
+    fetch-current-weather/    # "get the weather for a place" = a 2-step pipeline over a service you don't control: no "weather by name" endpoint, so geocode the (ambiguous) name to coords first, THEN fetch; and the thermometer is the wrong number — wind chill (Environment Canada) and heat index (NWS Rothfusz) give what the air FEELS like, with the real correctness trap being the DOMAIN (wind chill only ≤10°C & wind >4.8km/h, heat index only ≥27°C) so a guarded dispatcher picks wind-chill / heat-index / neither; WMO code 4677 → words+glyph with graceful unknowns, coord rounding as the cache key; Open-Meteo (no key), one DOM/net-free engine behind a zero-dep Node CLI (--demo offline), a live-search browser demo with offline fallback + a feels-like slider lab, and 61 checks on published reference values + a full geocode→forecast round-trip
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
