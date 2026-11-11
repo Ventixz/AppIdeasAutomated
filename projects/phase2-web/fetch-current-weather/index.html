@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fetch Current Weather</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Fetch Current Weather</h1>
+    <p class="sub">
+      Source 2 (karan/Projects) &middot; <b>Web</b> &middot; current conditions for any
+      place, via the free <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> API
+      (no key). Built by an automated <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude&nbsp;Code</a> routine.
+    </p>
+  </header>
+
+  <!-- ============ 1. The real thing: search a city ============ -->
+  <section class="card">
+    <h2>1 &middot; Look up a place</h2>
+    <p class="note">
+      There is no "weather for a place name" endpoint. A name is <em>geocoded</em>
+      to coordinates first &mdash; and names are ambiguous, so you get a list to
+      pick from. Then the coordinates are used to fetch the current conditions.
+    </p>
+    <form id="search-form" class="searchbar" autocomplete="off">
+      <input id="place" type="text" placeholder="Try: Paris, Springfield, Tokyo&hellip;" aria-label="Place name">
+      <label class="units">
+        <input type="checkbox" id="imperial"> &deg;F / mph
+      </label>
+      <button type="submit">Fetch</button>
+    </form>
+    <p id="status" class="status" role="status"></p>
+    <div id="candidates" class="candidates" hidden></div>
+    <div id="result" class="result" hidden></div>
+  </section>
+
+  <!-- ============ 2. The interesting part: feels-like ============ -->
+  <section class="card">
+    <h2>2 &middot; Why the thermometer is the wrong number</h2>
+    <p class="note">
+      A thermometer reads the <b>air temperature</b>. It is not what the air
+      <em>feels</em> like: wind strips warmth off your skin (wind&nbsp;chill), and
+      humidity stops sweat evaporating (heat&nbsp;index). Each formula only applies
+      in its own domain &mdash; apply the wrong one and you get nonsense. Drag the
+      sliders and watch which model takes over, and where the boundaries are.
+    </p>
+
+    <div class="sliders">
+      <label>Air temperature
+        <input type="range" id="t" min="-30" max="45" step="0.5" value="-3">
+        <output id="t-out">-3 &deg;C</output>
+      </label>
+      <label>Wind speed
+        <input type="range" id="w" min="0" max="90" step="1" value="25">
+        <output id="w-out">25 km/h</output>
+      </label>
+      <label>Relative humidity
+        <input type="range" id="h" min="0" max="100" step="1" value="72">
+        <output id="h-out">72 %</output>
+      </label>
+    </div>
+
+    <div class="feels">
+      <div class="feels-box">
+        <span class="feels-label">Air temp</span>
+        <span class="feels-val" id="air-val">-3.0 &deg;C</span>
+      </div>
+      <div class="feels-arrow">&rarr;</div>
+      <div class="feels-box highlight">
+        <span class="feels-label">Feels like</span>
+        <span class="feels-val" id="feels-val">&mdash;</span>
+      </div>
+      <div class="feels-model" id="feels-model"></div>
+    </div>
+    <p class="explain" id="feels-explain"></p>
+  </section>
+
+  <!-- ============ 3. The WMO code decoder ============ -->
+  <section class="card">
+    <h2>3 &middot; The condition is a number, not a phrase</h2>
+    <p class="note">
+      Forecast APIs return <code>weather_code</code>: a single integer from WMO
+      table 4677. A weather display's job is turning that number into words and a
+      glyph. Here is the whole table the core knows &mdash; click a code.
+    </p>
+    <div id="wmo-grid" class="wmo-grid"></div>
+    <div id="wmo-detail" class="wmo-detail" hidden></div>
+  </section>
+
+  <footer>
+    <p>
+      Pure logic in <code>weather-core.js</code>; this page only adds the network
+      and the DOM. Same core powers the Node CLI (<code>weather-node.js</code>) and
+      the test suite (<code>tests.js</code>). See the
+      <a href="README.md">README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="weather-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
