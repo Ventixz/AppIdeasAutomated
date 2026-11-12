@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (65 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (66 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **4 / 9** |
+| Web | 🚧 In progress — **5 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1134,6 +1134,38 @@ with graceful offline fallback, and `tests.js` — **61 checks** anchored on the
 published wind-chill/heat-index reference values and a full geocode→forecast
 round-trip.
 
+The fifth Web entry, **Scheduled Auto Login and Action**, landed on 2026-11-12 —
+the task asks for "a program that will automatically log in to a site on a
+specified schedule and perform an action." The naïve version is ten lines
+(`setInterval`, send credentials, do the thing) and is wrong in three specific,
+testable ways, so the build is organised around those three — and, deliberately,
+around a **mock** site, because the hard parts need no real third party. **First:
+"every day at 09:00" is not "now + 24h."** Adding a flat period drifts and breaks
+outright across a clock change (the spring-forward day is 23 hours long, so `+24h`
+fires at the wrong time), so the engine recomputes the *next wall-clock occurrence*
+every time — strictly after the moment you pass, which is the off-by-one that
+double-fires schedulers — with the honest DST caveat that a fixed offset has no
+transitions and a real zone needs the IANA database, though the *shape* of the fix
+is identical. **Second: the site will say "no."** A login or action fails, a
+session silently expires — and a tight retry loop is how you get blocked and how a
+fleet of clients synchronises into a spike. So there's a **session state machine**
+(whether you're logged in is a function of the current time, not a startup flag;
+a mid-action expiry is normal lifecycle, re-auth not backoff) plus **exponential
+backoff with jitter** (capped, de-synchronised), distinguishing a transient failure
+(back off, up to a give-up limit) from a hard credential **rejection** (never
+retry). **Third: the config you log contains the password** — so `redactSecrets`
+masks any field whose *name* looks secret, making "log the whole config" safe by
+default. A missed-run policy (`skip`/`one`/`all`) makes "what about the fires we
+missed while down?" an explicit choice. The whole engine runs on an injected
+virtual clock and seeded RNG, so one `scheduler-core.js` backs the browser demo
+(a schedule simulator with a live event log, a backoff visualiser, a redaction
+panel), a zero-dependency Node CLI (a real `--live` loop, an offline `--demo`,
+`--next`, `--config`), and `tests.js` — **68 checks** led by exact next-fire times,
+the backoff sequence, and three full scripted simulations asserted event-by-event.
+The responsible framing is explicit throughout: for a real service, drive its
+official API within its terms of service, and keep credentials in the environment,
+never in code.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1293,6 +1325,7 @@ round-trip.
 | 153 | [Online White Board](./projects/phase2-web/online-white-board/) | Web · Source 2 | 2026-11-09 |
 | 154 | [Get Atomic Time from Internet Clock](./projects/phase2-web/atomic-time-ntp/) | Web · Source 2 | 2026-11-10 |
 | 155 | [Fetch Current Weather](./projects/phase2-web/fetch-current-weather/) | Web · Source 2 | 2026-11-11 |
+| 156 | [Scheduled Auto Login and Action](./projects/phase2-web/scheduled-auto-login/) | Web · Source 2 | 2026-11-12 |
 
 ## Repository layout
 
@@ -1381,6 +1414,7 @@ projects/
     online-white-board/       # draw/note/collaborate: a whiteboard is a vector DOCUMENT not a bitmap (so undo, geometry eraser, PNG+SVG export fall out), freehand smoothed as quadratic Béziers shared by canvas and SVG, and collaboration as a convergence problem — Lamport-clocked op-log replicas converge byte-identical over BroadcastChannel; one engine behind a browser app, a headless CLI, and 45 checks led by the convergence property
     atomic-time-ntp/          # get the EXACT time off the internet = NTP (RFC 5905): the trap is that the server's timestamp is stale on arrival, so four timestamps (T1..T4) give offset θ=((T2−T1)+(T3−T4))/2 and delay δ, cancelling symmetric travel so your wrong clock drops out; plus NTP's 1900-epoch 64-bit fixed-point timestamp with 2036 era-rollover handling; one DOM/socket-free engine behind a real UDP/123 Node client (--demo offline), a slider-driven browser demo + hex packet decoder, and 17 checks led by the RFC §8 worked example
     fetch-current-weather/    # "get the weather for a place" = a 2-step pipeline over a service you don't control: no "weather by name" endpoint, so geocode the (ambiguous) name to coords first, THEN fetch; and the thermometer is the wrong number — wind chill (Environment Canada) and heat index (NWS Rothfusz) give what the air FEELS like, with the real correctness trap being the DOMAIN (wind chill only ≤10°C & wind >4.8km/h, heat index only ≥27°C) so a guarded dispatcher picks wind-chill / heat-index / neither; WMO code 4677 → words+glyph with graceful unknowns, coord rounding as the cache key; Open-Meteo (no key), one DOM/net-free engine behind a zero-dep Node CLI (--demo offline), a live-search browser demo with offline fallback + a feels-like slider lab, and 61 checks on published reference values + a full geocode→forecast round-trip
+    scheduled-auto-login/     # log in on a schedule and do something: the ten-liner is wrong three ways, so (against a MOCK site) — "daily at 09:00" is not "now+24h" (recompute the next wall-clock time, strictly-after, with the honest DST caveat); the site says "no", so a session state machine (validity is a function of time; expiry = re-auth not failure) + exponential backoff with jitter (capped, de-synced), transient-failure vs hard-rejection; and redactSecrets keeps the password out of your logs; plus a skip/one/all missed-run policy; injected clock+RNG so one engine backs a browser demo (sim + backoff viz + redaction), a Node CLI (real --live loop, offline --demo), and 68 checks led by three event-by-event scripted simulations — responsibly: real services = official API within ToS, creds from the environment
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
