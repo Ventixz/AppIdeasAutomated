@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scheduled Auto Login and Action</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Scheduled Auto Login &amp; Action</h1>
+    <p class="sub">
+      Source 2 (karan/Projects) &middot; <b>Web</b> &middot; the scheduling and
+      resilient-session engine behind "log in on a schedule and do something" &mdash;
+      run entirely offline against a <b>mock</b> site. Built by an automated
+      <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude&nbsp;Code</a> routine.
+    </p>
+    <p class="scope">
+      <b>Scope &amp; responsibility.</b> There is no real third party here. The
+      hard, interesting parts of this task are <em>when</em> to run, how to survive
+      a site saying "no," and how to keep secrets out of your logs &mdash; all pure
+      logic, shown below. For a real service, drive its <b>official API</b> within
+      its terms of service, and keep credentials in the environment, never in code.
+    </p>
+  </header>
+
+  <!-- ============ 1. The schedule simulator ============ -->
+  <section class="card">
+    <h2>1 &middot; When does it run, and what happens when the site says no?</h2>
+    <p class="note">
+      "Every day at 09:00" is <em>not</em> "now + 24h" &mdash; it is the next
+      wall-clock occurrence, recomputed each time. And a login or action can fail,
+      or a session can silently expire. Set it up and run a simulated window: watch
+      the fire times land on schedule and the engine back off, give up, or
+      re-authenticate. The clock and the randomness are seeded, so it is repeatable.
+    </p>
+
+    <div class="controls">
+      <label>Schedule
+        <select id="sched-kind">
+          <option value="interval">Every N (interval)</option>
+          <option value="dailyAt" selected>Daily at HH:MM</option>
+          <option value="weeklyAt">Weekly on a day</option>
+        </select>
+      </label>
+      <label id="wrap-every" hidden>Interval
+        <select id="every">
+          <option value="3600000">1 hour</option>
+          <option value="21600000" selected>6 hours</option>
+          <option value="43200000">12 hours</option>
+        </select>
+      </label>
+      <label id="wrap-weekday" hidden>Day
+        <select id="weekday">
+          <option value="1" selected>Monday</option><option value="2">Tuesday</option>
+          <option value="3">Wednesday</option><option value="4">Thursday</option>
+          <option value="5">Friday</option><option value="6">Saturday</option>
+          <option value="0">Sunday</option>
+        </select>
+      </label>
+      <label id="wrap-time">At
+        <input id="at-time" type="time" value="09:00">
+      </label>
+      <label>Session TTL
+        <select id="ttl">
+          <option value="1800000">30 min</option>
+          <option value="3600000" selected>1 hour</option>
+          <option value="14400000">4 hours</option>
+        </select>
+      </label>
+      <label>Window
+        <select id="window">
+          <option value="1" selected>1 day</option>
+          <option value="3">3 days</option>
+          <option value="7">1 week</option>
+        </select>
+      </label>
+      <label>Site reliability
+        <select id="flaky">
+          <option value="0">Perfect (never fails)</option>
+          <option value="0.25" selected>Flaky (25%)</option>
+          <option value="0.5">Very flaky (50%)</option>
+          <option value="reject">Bad credentials (always rejects)</option>
+        </select>
+      </label>
+      <button id="run-sim" type="submit">Run simulation</button>
+    </div>
+
+    <div id="sim-stats" class="stats" hidden></div>
+    <div id="sim-log" class="log" hidden></div>
+  </section>
+
+  <!-- ============ 2. The backoff visualizer ============ -->
+  <section class="card">
+    <h2>2 &middot; Exponential backoff with jitter</h2>
+    <p class="note">
+      Retrying a failed login immediately, in a tight loop, is how you get blocked
+      and how a crowd of clients syncs into a spike. The fix is to wait longer after
+      each failure (<b>exponential</b>), capped, and to <b>jitter</b> the wait so
+      clients don't retry in lockstep. Drag the controls and watch the retry delays.
+    </p>
+    <div class="sliders">
+      <label>Base delay
+        <input type="range" id="b-base" min="100" max="5000" step="100" value="1000">
+        <output id="b-base-out">1000 ms</output>
+      </label>
+      <label>Factor
+        <input type="range" id="b-factor" min="1.2" max="4" step="0.1" value="2">
+        <output id="b-factor-out">2&times;</output>
+      </label>
+      <label>Max (cap)
+        <input type="range" id="b-max" min="2000" max="60000" step="1000" value="30000">
+        <output id="b-max-out">30000 ms</output>
+      </label>
+      <label>Jitter
+        <select id="b-jitter">
+          <option value="none">none (exact)</option>
+          <option value="full" selected>full [0, delay]</option>
+          <option value="equal">equal [delay/2, delay]</option>
+        </select>
+      </label>
+    </div>
+    <div id="backoff-bars" class="bars"></div>
+    <p class="explain" id="backoff-note"></p>
+  </section>
+
+  <!-- ============ 3. Credential redaction ============ -->
+  <section class="card">
+    <h2>3 &middot; Keeping secrets out of your logs</h2>
+    <p class="note">
+      A scheduler that prints its config to debug will happily print the password
+      too &mdash; and now it's in a log file forever. <code>redactSecrets</code>
+      masks any field whose <em>name</em> looks secret, so logging the whole config
+      is safe by default. Edit the config and watch what a log would actually show.
+    </p>
+    <div class="redact-grid">
+      <div>
+        <h3>Your config</h3>
+        <textarea id="redact-in" spellcheck="false"></textarea>
+      </div>
+      <div>
+        <h3>What a log would show</h3>
+        <pre id="redact-out" class="redact-out"></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      Pure logic in <code>scheduler-core.js</code>; this page only adds the DOM.
+      The same core powers the Node CLI (<code>scheduler-node.js</code>, with a real
+      <code>--live</code> loop and an offline <code>--demo</code>) and the test suite
+      (<code>tests.js</code>, 68 checks). See the <a href="README.md">README</a>.
+    </p>
+  </footer>
+</main>
+
+<script src="scheduler-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
