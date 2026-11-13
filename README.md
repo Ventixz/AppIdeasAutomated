@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (66 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (67 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **5 / 9** |
+| Web | 🚧 In progress — **6 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1166,6 +1166,33 @@ The responsible framing is explicit throughout: for a real service, drive its
 official API within its terms of service, and keep credentials in the environment,
 never in code.
 
+The sixth Web entry, the **E-Card Generator**, landed on 2026-11-13 — the task
+asks for "a site that allows people to generate a digital postcard with a message
+and image." The twist that makes it more than a form is that an e-card only
+matters if you can *send* it, and the chosen design sends the whole card **in a
+link** — no server, no upload, nothing stored — which drags in a famous trap.
+**Trap 1: you cannot `btoa` an emoji.** The browser's base64 helper only accepts
+Latin-1, so `btoa('🎂')` (and even `btoa('é')`) throws outright — fatal for a
+greeting card. The fix is to go through UTF-8 first (each character to its 1–4
+bytes) and then **base64url** (the `-`/`_` alphabet, no padding) so the token
+drops straight into a URL with nothing to escape; `ecard-core.js` implements both
+codecs by hand so the round-trip is deterministic and unit-testable. The token is
+**versioned** and `decodeCard` *throws* on anything malformed (a corrupt link
+falls back to the default card rather than crashing), and the card rides in the
+URL **fragment**, which browsers never send to a server, so the message stays on
+the two machines that matter. **Trap 2: text has to fit a fixed rectangle** —
+`wrapText` does greedy word wrap, hard-breaks a word too long to ever fit, and
+truncates with an ellipsis instead of spilling over; the core wraps by character
+count (pure, testable) and the canvas renderer refines it by *measuring* each
+line against the real proportional font. **Trap 3: the message is user input** —
+`escapeHtml` is in the core and tested, and field lengths are capped by *code
+point* so truncation never splits an emoji. One dependency-free core backs the
+browser UI (live canvas preview, occasion presets, colour/font pickers, download
+PNG, copy share link) and **62 Node checks** led by codec round-trips (emoji,
+accents, CJK), bad-token rejection, and the three wrapping behaviours. **That
+makes six of the nine Web projects** — three remain (Content Management System,
+Web Board, CAPTCHA Maker).
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1326,6 +1353,7 @@ never in code.
 | 154 | [Get Atomic Time from Internet Clock](./projects/phase2-web/atomic-time-ntp/) | Web · Source 2 | 2026-11-10 |
 | 155 | [Fetch Current Weather](./projects/phase2-web/fetch-current-weather/) | Web · Source 2 | 2026-11-11 |
 | 156 | [Scheduled Auto Login and Action](./projects/phase2-web/scheduled-auto-login/) | Web · Source 2 | 2026-11-12 |
+| 157 | [E-Card Generator](./projects/phase2-web/ecard-generator/) | Web · Source 2 | 2026-11-13 |
 
 ## Repository layout
 

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Card Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-head">
+    <h1>E-Card Generator</h1>
+    <p class="tagline">
+      Design a digital postcard, then share it with a link — the whole card
+      lives in the URL, so nothing is uploaded anywhere.
+    </p>
+  </header>
+
+  <main class="layout">
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Editor -->
+    <!-- ------------------------------------------------------------------ -->
+    <section class="editor" aria-label="Card editor">
+      <fieldset>
+        <legend>Occasion</legend>
+        <div id="occasions" class="chips" role="radiogroup" aria-label="Occasion"></div>
+      </fieldset>
+
+      <label class="field">
+        <span>Heading</span>
+        <input id="heading" type="text" maxlength="48" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        <span>Message</span>
+        <textarea id="message" rows="4" maxlength="300"
+          placeholder="Write something kind…"></textarea>
+        <small id="msg-count" class="count"></small>
+      </label>
+
+      <label class="field">
+        <span>Signature</span>
+        <input id="signature" type="text" maxlength="48" autocomplete="off"
+          placeholder="From …" />
+      </label>
+
+      <div class="row">
+        <label class="field narrow">
+          <span>Emoji</span>
+          <input id="emoji" type="text" maxlength="8" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Font</span>
+          <select id="font"></select>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Colours</legend>
+        <div class="row colors">
+          <label class="color"><span>Top</span><input id="bg1" type="color" /></label>
+          <label class="color"><span>Bottom</span><input id="bg2" type="color" /></label>
+          <label class="color"><span>Text</span><input id="text" type="color" /></label>
+        </div>
+      </fieldset>
+
+      <p id="warnings" class="warnings" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Preview + actions -->
+    <!-- ------------------------------------------------------------------ -->
+    <section class="preview-pane" aria-label="Card preview">
+      <canvas id="canvas" width="800" height="560"
+        aria-label="Live preview of your e-card"></canvas>
+
+      <div class="actions">
+        <button id="download" type="button" class="primary">Download PNG</button>
+        <button id="copy-link" type="button">Copy share link</button>
+        <button id="copy-text" type="button">Copy message</button>
+      </div>
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <p>
+      Part of <strong>AppIdeasAutomated</strong> — a project built by an
+      automated <a href="https://claude.com/claude-code">Claude Code</a> routine.
+      Source task: <em>E-Card Generator</em> from
+      <a href="https://github.com/karan/Projects">karan/Projects</a>.
+    </p>
+  </footer>
+
+  <script src="ecard-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
