@@ -1,0 +1,184 @@
+:root {
+  --bg: #f4f1fb;
+  --panel: #ffffff;
+  --ink: #241b3a;
+  --muted: #6b6482;
+  --line: #e2dcf0;
+  --accent: #7c4dff;
+  --accent-ink: #ffffff;
+  --warn: #b4453c;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(60, 40, 110, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
+
+.site-head {
+  text-align: center;
+  padding: 2rem 1rem 0.5rem;
+}
+.site-head h1 { margin: 0 0 0.3rem; font-size: 1.9rem; }
+.tagline { margin: 0 auto; max-width: 42rem; color: var(--muted); }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 1.5rem;
+  max-width: 1040px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+.editor,
+.preview-pane {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.8rem 0.8rem;
+}
+legend { padding: 0 0.4rem; font-weight: 600; font-size: 0.85rem; color: var(--muted); }
+
+.field { display: block; margin-bottom: 1rem; }
+.field > span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+  color: var(--ink);
+  background: #fbfaff;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+textarea { resize: vertical; }
+
+.count { display: block; text-align: right; font-size: 0.75rem; color: var(--muted); }
+
+.row { display: flex; gap: 0.8rem; }
+.row .field { flex: 1; }
+.field.narrow { flex: 0 0 5.5rem; }
+
+.colors { align-items: flex-end; }
+.color { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8rem; color: var(--muted); flex: 1; }
+.color input[type="color"] {
+  width: 100%;
+  height: 2.4rem;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fbfaff;
+  cursor: pointer;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  border: 1px solid var(--line);
+  background: #fbfaff;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.chip[aria-checked="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.warnings { min-height: 1.2rem; margin: 0; color: var(--warn); font-size: 0.85rem; }
+
+.preview-pane { display: flex; flex-direction: column; align-items: center; }
+canvas {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: #ddd;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.1rem;
+}
+button {
+  font: inherit;
+  padding: 0.55rem 1.05rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: #fbfaff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.12s ease;
+}
+button:hover { background: #f1ecff; }
+button:active { transform: translateY(1px); }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.primary:hover { background: #6a3ce0; }
+
+.toast { min-height: 1.2rem; margin: 0.7rem 0 0; font-size: 0.85rem; color: var(--accent); }
+
+.site-foot {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 1rem 1rem 2.5rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+.site-foot a { color: var(--accent); }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121f;
+    --panel: #1e1930;
+    --ink: #ece7fb;
+    --muted: #a79fc4;
+    --line: #342b4d;
+    --accent: #a98bff;
+    --accent-ink: #1a1226;
+  }
+  input[type="text"], textarea, select, .chip, button, .color input[type="color"] { background: #251f38; }
+  button:hover { background: #2e2746; }
+}
