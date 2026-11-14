@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (67 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (68 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **6 / 9** |
+| Web | 🚧 In progress — **7 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1189,9 +1189,36 @@ line against the real proportional font. **Trap 3: the message is user input** �
 point* so truncation never splits an emoji. One dependency-free core backs the
 browser UI (live canvas preview, occasion presets, colour/font pickers, download
 PNG, copy share link) and **62 Node checks** led by codec round-trips (emoji,
-accents, CJK), bad-token rejection, and the three wrapping behaviours. **That
-makes six of the nine Web projects** — three remain (Content Management System,
-Web Board, CAPTCHA Maker).
+accents, CJK), bad-token rejection, and the three wrapping behaviours.
+
+The seventh Web entry, a **Content Management System** (*"make a CMS like
+WordPress, Blogger etc. and make it easy to install and set up"*), landed on
+2026-11-14 — **Flatpress**, a tiny flat-file CMS that runs entirely in the
+browser: write posts and pages in Markdown, tag them, keep them as drafts or
+publish them, and it renders a complete static website you can preview live.
+"Easy to install" is taken literally — open `index.html` and it works; content
+lives in `localStorage` with JSON export/import. A CMS is a machine that turns
+text written by one person into HTML served to everyone else, so the engine is
+built around that danger and three traps cluster on it. **Trap 1: render
+Markdown without opening an XSS hole.** The naïve renderer regex-replaces the
+raw string and hands it to `innerHTML`, so an author's literal
+`<script>alert(document.cookie)</script>` runs in every reader's browser. The
+fix is an ordering discipline — pull code spans out first (so `` `*not italic*` ``
+stays literal), **escape the entire string**, then re-introduce *only* the tags
+we generate ourselves from already-escaped text; the author can never inject a
+tag we didn't choose to emit. **Trap 2: a link's scheme is an attack surface** —
+`[x](javascript:alert(1))` puts the payload in an attribute we *do* emit and
+escaping doesn't touch it, so `sanitizeUrl` is a scheme allowlist that collapses
+`javascript:`/`data:`/`vbscript:` (and the tab-obfuscated `java\tscript:` bypass)
+to `#`. **Trap 3: slugs must be unique *and* stable** — duplicate titles get
+`-2`/`-3` suffixes, but renaming a published post's title deliberately does *not*
+change its slug, so existing links never silently break; `slugify` folds accents
+to ASCII and falls back to `untitled`. One dependency-free core
+(`cms-core.js`) backs both the three-tab admin UI (live preview, publish
+workflow, site preview in a sandboxed iframe) and **104 Node checks** — led by
+an end-to-end test that renders a deliberately malicious post and asserts no
+`<script>` tag and no `javascript:` href survive to the output. **That makes
+seven of the nine Web projects** — two remain (Web Board, CAPTCHA Maker).
 
 ## Projects built so far
 
@@ -1354,6 +1381,7 @@ Web Board, CAPTCHA Maker).
 | 155 | [Fetch Current Weather](./projects/phase2-web/fetch-current-weather/) | Web · Source 2 | 2026-11-11 |
 | 156 | [Scheduled Auto Login and Action](./projects/phase2-web/scheduled-auto-login/) | Web · Source 2 | 2026-11-12 |
 | 157 | [E-Card Generator](./projects/phase2-web/ecard-generator/) | Web · Source 2 | 2026-11-13 |
+| 158 | [Content Management System](./projects/phase2-web/content-management-system/) | Web · Source 2 | 2026-11-14 |
 
 ## Repository layout
 
@@ -1443,6 +1471,8 @@ projects/
     atomic-time-ntp/          # get the EXACT time off the internet = NTP (RFC 5905): the trap is that the server's timestamp is stale on arrival, so four timestamps (T1..T4) give offset θ=((T2−T1)+(T3−T4))/2 and delay δ, cancelling symmetric travel so your wrong clock drops out; plus NTP's 1900-epoch 64-bit fixed-point timestamp with 2036 era-rollover handling; one DOM/socket-free engine behind a real UDP/123 Node client (--demo offline), a slider-driven browser demo + hex packet decoder, and 17 checks led by the RFC §8 worked example
     fetch-current-weather/    # "get the weather for a place" = a 2-step pipeline over a service you don't control: no "weather by name" endpoint, so geocode the (ambiguous) name to coords first, THEN fetch; and the thermometer is the wrong number — wind chill (Environment Canada) and heat index (NWS Rothfusz) give what the air FEELS like, with the real correctness trap being the DOMAIN (wind chill only ≤10°C & wind >4.8km/h, heat index only ≥27°C) so a guarded dispatcher picks wind-chill / heat-index / neither; WMO code 4677 → words+glyph with graceful unknowns, coord rounding as the cache key; Open-Meteo (no key), one DOM/net-free engine behind a zero-dep Node CLI (--demo offline), a live-search browser demo with offline fallback + a feels-like slider lab, and 61 checks on published reference values + a full geocode→forecast round-trip
     scheduled-auto-login/     # log in on a schedule and do something: the ten-liner is wrong three ways, so (against a MOCK site) — "daily at 09:00" is not "now+24h" (recompute the next wall-clock time, strictly-after, with the honest DST caveat); the site says "no", so a session state machine (validity is a function of time; expiry = re-auth not failure) + exponential backoff with jitter (capped, de-synced), transient-failure vs hard-rejection; and redactSecrets keeps the password out of your logs; plus a skip/one/all missed-run policy; injected clock+RNG so one engine backs a browser demo (sim + backoff viz + redaction), a Node CLI (real --live loop, offline --demo), and 68 checks led by three event-by-event scripted simulations — responsibly: real services = official API within ToS, creds from the environment
+    ecard-generator/          # generate a digital postcard with a message and image: an e-card only matters if you can SEND it, so the whole card rides in a URL — no server — which drags in the trap that btoa('🎂') (even btoa('é')) THROWS, so UTF-8→base64url by hand with a versioned token that decodeCard rejects on corruption; plus greedy word-wrap that hard-breaks and ellipsis-truncates to a fixed rectangle, and escapeHtml + code-point-capped fields so truncation never splits an emoji; one DOM-free core behind a live-canvas browser UI (presets, pickers, PNG download, share link) and 62 checks led by codec round-trips (emoji/accents/CJK) and bad-token rejection
+    content-management-system/ # a CMS like WordPress "easy to install and set up": Flatpress — a flat-file CMS that runs entirely in the browser (localStorage, JSON export/import, open index.html and it works). A CMS turns one person's text into HTML served to everyone, so it's built around that danger: render Markdown WITHOUT an XSS hole (pull code spans out, escape the whole string, then re-emit only the tags we generate — author can't inject a tag we didn't choose), sanitizeUrl as a scheme allowlist that kills javascript:/data:/the java\\tscript: bypass, and slugs that are unique (-2/-3) AND stable (renaming a title never changes a published slug). One dependency-free core behind a three-tab admin (live preview, publish workflow, sandboxed site preview) and 104 checks led by an end-to-end render of a malicious post asserting no <script>/javascript: survives
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
