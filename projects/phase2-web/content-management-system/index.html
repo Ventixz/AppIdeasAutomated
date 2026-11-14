@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flatpress — a tiny CMS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>Flatpress <small>a tiny flat-file CMS</small></h1>
+  <nav>
+    <button id="tab-content" class="tab active">Content</button>
+    <button id="tab-preview" class="tab">Site preview</button>
+    <button id="tab-data" class="tab">Export / import</button>
+  </nav>
+</header>
+
+<main>
+  <!-- CONTENT TAB -->
+  <section id="view-content" class="view">
+    <div class="columns">
+      <!-- List + filters -->
+      <aside class="sidebar">
+        <div class="toolbar">
+          <button id="new-post" class="primary">+ New post</button>
+          <button id="new-page">+ New page</button>
+        </div>
+        <input id="search" type="search" placeholder="Search title / body…" aria-label="Search">
+        <div class="filters">
+          <label><input type="radio" name="statusf" value="" checked> All</label>
+          <label><input type="radio" name="statusf" value="published"> Published</label>
+          <label><input type="radio" name="statusf" value="draft"> Drafts</label>
+        </div>
+        <ul id="item-list" class="item-list"></ul>
+      </aside>
+
+      <!-- Editor -->
+      <div class="editor">
+        <p id="editor-empty" class="empty">Select an item, or create a new one.</p>
+        <form id="editor-form" hidden>
+          <div class="row">
+            <input id="f-title" type="text" placeholder="Title" autocomplete="off">
+            <span id="f-status-badge" class="badge"></span>
+          </div>
+          <div class="row meta">
+            <label class="slug">/<span id="f-slug"></span>.html
+              <button type="button" id="reslug" title="Regenerate slug from title">↻</button>
+            </label>
+            <input id="f-tags" type="text" placeholder="tags, comma, separated">
+          </div>
+          <div class="split">
+            <textarea id="f-body" placeholder="Write in Markdown…" spellcheck="false"></textarea>
+            <div id="live-preview" class="live-preview" aria-live="polite"></div>
+          </div>
+          <div class="actions">
+            <button type="button" id="save" class="primary">Save</button>
+            <button type="button" id="toggle-publish"></button>
+            <button type="button" id="delete" class="danger">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREVIEW TAB -->
+  <section id="view-preview" class="view" hidden>
+    <div class="toolbar">
+      <label>Site title: <input id="site-title" type="text" value="My Site"></label>
+      <select id="page-picker" aria-label="Page to preview"></select>
+    </div>
+    <iframe id="site-frame" title="Rendered site preview"></iframe>
+  </section>
+
+  <!-- DATA TAB -->
+  <section id="view-data" class="view" hidden>
+    <p>Everything lives in your browser's <code>localStorage</code> — nothing is
+    sent anywhere. Export the JSON to back it up or move it to another machine.</p>
+    <div class="toolbar">
+      <button id="export">Copy export JSON</button>
+      <button id="import">Import from JSON below</button>
+      <button id="seed">Load sample content</button>
+      <button id="wipe" class="danger">Erase everything</button>
+    </div>
+    <textarea id="data-box" spellcheck="false" placeholder="CMS JSON appears here on export; paste here then Import."></textarea>
+  </section>
+</main>
+
+<footer class="sitefoot">
+  <p>Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+  routine · Source 2 (karan/Projects) · Web · Content Management System.
+  The engine (<code>cms-core.js</code>) is shared by this UI and
+  <code>node tests.js</code> (104 checks).</p>
+</footer>
+
+<script src="cms-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
