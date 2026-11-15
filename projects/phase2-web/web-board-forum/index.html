@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Web Board — a tiny forum</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <h1>🗂️ Web Board</h1>
+    <p class="tag">A tiny flat-file forum — threads, nested replies, no server.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- ============ INDEX VIEW: list of threads ============ -->
+  <section id="indexView">
+    <div class="rowbar">
+      <h2>Threads</h2>
+      <button id="newThreadBtn" class="primary">+ New thread</button>
+    </div>
+
+    <form id="newThreadForm" class="card composer" hidden>
+      <div class="field">
+        <label for="ntTitle">Title</label>
+        <input id="ntTitle" maxlength="120" placeholder="What's this about?" />
+      </div>
+      <div class="field">
+        <label for="ntAuthor">Your name</label>
+        <input id="ntAuthor" maxlength="40" placeholder="anon" />
+      </div>
+      <div class="field">
+        <label for="ntBody">Opening post</label>
+        <textarea id="ntBody" rows="4" placeholder="Say something. URLs like https://example.com become links."></textarea>
+      </div>
+      <label class="check"><input type="checkbox" id="ntSticky" /> Pin to top (sticky)</label>
+      <div class="actions">
+        <button type="submit" class="primary">Post thread</button>
+        <button type="button" id="ntCancel" class="ghost">Cancel</button>
+      </div>
+    </form>
+
+    <ul id="threadList" class="threadlist"></ul>
+    <p id="emptyThreads" class="empty" hidden>No threads yet — start one.</p>
+  </section>
+
+  <!-- ============ THREAD VIEW: one thread + reply tree ============ -->
+  <section id="threadView" hidden>
+    <button id="backBtn" class="ghost">← All threads</button>
+    <h2 id="threadTitle"></h2>
+    <p id="threadMeta" class="meta"></p>
+    <div id="postTree" class="tree"></div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>
+    Built by an automated <a href="https://claude.com/claude-code">Claude Code</a>
+    routine · Source 2 (karan/Projects) · Web · project 8 of 9.
+    Data lives in your browser's <code>localStorage</code>.
+    <button id="seedBtn" class="linklike">Load demo data</button> ·
+    <button id="exportBtn" class="linklike">Export JSON</button> ·
+    <button id="resetBtn" class="linklike danger">Reset</button>
+  </p>
+</footer>
+
+<!-- Reply form template, cloned under whichever post you reply to. -->
+<template id="replyTpl">
+  <form class="card composer reply-composer">
+    <div class="field">
+      <label>Your name</label>
+      <input class="r-author" maxlength="40" placeholder="anon" />
+    </div>
+    <div class="field">
+      <label>Reply</label>
+      <textarea class="r-body" rows="3" placeholder="Write a reply…"></textarea>
+    </div>
+    <div class="actions">
+      <button type="submit" class="primary">Post reply</button>
+      <button type="button" class="ghost r-cancel">Cancel</button>
+    </div>
+  </form>
+</template>
+
+<script src="forum-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
