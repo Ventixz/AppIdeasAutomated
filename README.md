@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (68 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (69 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **7 / 9** |
+| Web | 🚧 In progress — **8 / 9** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1220,6 +1220,34 @@ an end-to-end test that renders a deliberately malicious post and asserts no
 `<script>` tag and no `javascript:` href survive to the output. **That makes
 seven of the nine Web projects** — two remain (Web Board, CAPTCHA Maker).
 
+The eighth Web entry, a **Web Board (Forum)** (*"a simple message board
+system"*), landed on 2026-11-15 — a flat-file forum that runs entirely in the
+browser: start threads, reply to any post, nest replies arbitrarily deep, pin a
+thread, and soft-delete posts, with content in `localStorage` and JSON export. A
+forum looks like a two-line CRUD app and is not; the project is built around
+three things it actually gets wrong. **Trap 1: the reply tree is stored flat and
+breaks three ways.** Posts are a flat list keyed by `parentId`, and the naïve
+"recurse from the root" builder drops whole subtrees when a parent is deleted
+(orphans), loops forever on an edit-induced cycle (`A → B → A`), and renders
+siblings in arbitrary order. `buildTree` resolves each post's *effective* parent
+by walking the chain with a `seen` set — re-parenting true orphans and
+cycle-trapped posts to the thread root instead of losing them — carries a second
+`visited` guard in the final DFS, and sorts siblings by `(createdAt, id)`; the
+tests assert the node count is preserved across deleted parents, dangling
+parents, cross-thread parents, and an injected cycle. **Trap 2: "latest" is the
+wrong sort.** The index orders by *last live activity*, not creation time, and a
+**deleted** reply must not float its thread — so `lastActivity` counts only
+non-deleted posts (falling back to the thread's own time when all are gone), with
+sticky threads pinned above everything. **Trap 3: every post is hostile text** —
+`renderBody` escapes the whole raw string first, *then* autolinks bare URLs in
+the escaped text, emitting only `http`/`https` anchors it builds itself (so
+`javascript:`/`data:` are never linked) and leaving trailing punctuation like
+`).` outside the link. One dependency-free core (`forum-core.js`) backs both the
+browser UI and **72 Node checks**, and a Playwright smoke test confirms a reply
+containing `<script>window.__pwned=1</script>` renders as inert text with zero
+`<script>` nodes in the DOM. **That leaves just one Web project** — CAPTCHA Maker
+— before Source 2's Web category is complete.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1382,6 +1410,7 @@ seven of the nine Web projects** — two remain (Web Board, CAPTCHA Maker).
 | 156 | [Scheduled Auto Login and Action](./projects/phase2-web/scheduled-auto-login/) | Web · Source 2 | 2026-11-12 |
 | 157 | [E-Card Generator](./projects/phase2-web/ecard-generator/) | Web · Source 2 | 2026-11-13 |
 | 158 | [Content Management System](./projects/phase2-web/content-management-system/) | Web · Source 2 | 2026-11-14 |
+| 159 | [Web Board (Forum)](./projects/phase2-web/web-board-forum/) | Web · Source 2 | 2026-11-15 |
 
 ## Repository layout
 
