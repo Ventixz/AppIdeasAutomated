@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAPTCHA Maker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <header>
+      <h1>CAPTCHA Maker</h1>
+      <p class="sub">A self-contained, image-based CAPTCHA — generated, drawn, and
+      verified entirely in your browser. No server, no build step.</p>
+    </header>
+
+    <section class="demo" aria-labelledby="demo-h">
+      <h2 id="demo-h">Prove you're human</h2>
+
+      <div class="captcha">
+        <canvas id="canvas" width="280" height="90" role="img"
+                aria-label="CAPTCHA challenge image"></canvas>
+        <div class="captcha-actions">
+          <button id="reload" type="button" class="icon-btn" title="New challenge"
+                  aria-label="Get a new challenge">↻</button>
+        </div>
+      </div>
+
+      <form id="form" autocomplete="off">
+        <label for="answer">Type the characters above</label>
+        <div class="row">
+          <input id="answer" name="answer" type="text" inputmode="text"
+                 autocapitalize="characters" autocomplete="off" spellcheck="false"
+                 aria-describedby="status" />
+          <button id="submit" type="submit">Verify</button>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+
+      <dl class="meta">
+        <div><dt>Alphabet</dt><dd id="m-alpha">—</dd></div>
+        <div><dt>Entropy</dt><dd id="m-entropy">—</dd></div>
+        <div><dt>Expires in</dt><dd id="m-expires">—</dd></div>
+        <div><dt>Attempts left</dt><dd id="m-attempts">—</dd></div>
+      </dl>
+    </section>
+
+    <section class="controls" aria-labelledby="ctl-h">
+      <h2 id="ctl-h">Tune the generator</h2>
+      <div class="sliders">
+        <label>Length <output id="o-length">6</output>
+          <input id="s-length" type="range" min="4" max="8" value="6" step="1" /></label>
+        <label>Distortion <output id="o-tilt">medium</output>
+          <input id="s-tilt" type="range" min="0" max="100" value="45" step="5" /></label>
+        <label>Noise lines <output id="o-lines">5</output>
+          <input id="s-lines" type="range" min="0" max="12" value="5" step="1" /></label>
+        <label>TTL (seconds) <output id="o-ttl">120</output>
+          <input id="s-ttl" type="range" min="10" max="300" value="120" step="10" /></label>
+      </div>
+      <p class="hint">Changing any slider issues a fresh challenge.</p>
+    </section>
+
+    <footer>
+      <p>The challenge text, the one-time token, the expiry and the attempt budget
+      all live in <code>captcha-core.js</code> — the same engine checked by
+      <code>node tests.js</code> (67 checks). This page only draws pixels and
+      shows results.</p>
+      <p class="about">Part of an automated <a href="https://claude.com/claude-code">Claude Code</a>
+      routine that builds one project a day. See the
+      <a href="../../../README.md">repository README</a>.</p>
+    </footer>
+  </main>
+
+  <script src="captcha-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

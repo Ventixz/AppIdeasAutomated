@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (69 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (72 built)**
 
 | Category | Status |
 | --- | --- |
@@ -51,7 +51,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Networking | ✅ Complete — **7 / 7** |
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
-| Web | 🚧 In progress — **8 / 9** |
+| Web | ✅ Complete — **9 / 9** |
+| Files | 🚧 In progress — **0 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1248,6 +1249,34 @@ containing `<script>window.__pwned=1</script>` renders as inert text with zero
 `<script>` nodes in the DOM. **That leaves just one Web project** — CAPTCHA Maker
 — before Source 2's Web category is complete.
 
+The ninth and final Web entry, a **CAPTCHA Maker** (*"takes a bunch of text and
+creates an image used for verification purposes"*), landed on 2026-11-16 — a
+self-contained, image-based CAPTCHA that generates a random code, draws it onto a
+`<canvas>` with tilt, colour, speckle and distractor lines, and verifies the
+answer, all in the browser with no server. It looks like "draw wobbly letters and
+compare strings" and is not; the project is built around three things it actually
+gets wrong. **Trap 1: readable-for-humans and hard-for-bots fight each other.**
+The usual own goal is the alphabet — ship both `O`/`0` or `1`/`I`/`l` and you
+force yourself to "accept `O` for `0`" at verify time, which hands bots a free
+pass too; the fix is upstream, a 31-symbol alphabet
+(`ABCDEFGHJKMNPQRSTUVWXYZ23456789`) with every confusable glyph removed, so
+normalization need only fold case and strip whitespace. **Trap 2: the answer must
+never reach the client, and a solved code must die.** A `CaptchaStore` stands in
+for the server — `issue()` returns an opaque token and the text to *render*, but
+the verifiable secret stays server-side keyed by that token; verification is
+single-use (a correct guess deletes the challenge so it can't be replayed),
+TTL-bounded (expired tokens are burned, boundary tested to the millisecond), and
+uses a constant-time compare that leaks neither length nor prefix. **Trap 3: a
+short code with unlimited guesses is no CAPTCHA.** Every challenge carries an
+attempt budget; the moment it's spent the token is burned — thereafter even the
+correct answer is refused, forcing a fresh challenge. One dependency-free core
+(`captcha-core.js`) backs both the browser UI and **67 Node checks**, and a
+Playwright smoke test confirms the answer appears nowhere in the DOM. **That
+completes the Web category — all 9 projects built.** Per the routine's rules it
+has unlocked the next karan/Projects category, **Files** (Quiz Maker, Sort
+Excel/CSV Utility, Zip File Maker, PDF Generator, Mp3 Tagger, Code Snippet
+Manager), and works down it one project per day from here.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1411,6 +1440,7 @@ containing `<script>window.__pwned=1</script>` renders as inert text with zero
 | 157 | [E-Card Generator](./projects/phase2-web/ecard-generator/) | Web · Source 2 | 2026-11-13 |
 | 158 | [Content Management System](./projects/phase2-web/content-management-system/) | Web · Source 2 | 2026-11-14 |
 | 159 | [Web Board (Forum)](./projects/phase2-web/web-board-forum/) | Web · Source 2 | 2026-11-15 |
+| 160 | [CAPTCHA Maker](./projects/phase2-web/captcha-maker/) | Web · Source 2 | 2026-11-16 |
 
 ## Repository layout
 
@@ -1502,6 +1532,8 @@ projects/
     scheduled-auto-login/     # log in on a schedule and do something: the ten-liner is wrong three ways, so (against a MOCK site) — "daily at 09:00" is not "now+24h" (recompute the next wall-clock time, strictly-after, with the honest DST caveat); the site says "no", so a session state machine (validity is a function of time; expiry = re-auth not failure) + exponential backoff with jitter (capped, de-synced), transient-failure vs hard-rejection; and redactSecrets keeps the password out of your logs; plus a skip/one/all missed-run policy; injected clock+RNG so one engine backs a browser demo (sim + backoff viz + redaction), a Node CLI (real --live loop, offline --demo), and 68 checks led by three event-by-event scripted simulations — responsibly: real services = official API within ToS, creds from the environment
     ecard-generator/          # generate a digital postcard with a message and image: an e-card only matters if you can SEND it, so the whole card rides in a URL — no server — which drags in the trap that btoa('🎂') (even btoa('é')) THROWS, so UTF-8→base64url by hand with a versioned token that decodeCard rejects on corruption; plus greedy word-wrap that hard-breaks and ellipsis-truncates to a fixed rectangle, and escapeHtml + code-point-capped fields so truncation never splits an emoji; one DOM-free core behind a live-canvas browser UI (presets, pickers, PNG download, share link) and 62 checks led by codec round-trips (emoji/accents/CJK) and bad-token rejection
     content-management-system/ # a CMS like WordPress "easy to install and set up": Flatpress — a flat-file CMS that runs entirely in the browser (localStorage, JSON export/import, open index.html and it works). A CMS turns one person's text into HTML served to everyone, so it's built around that danger: render Markdown WITHOUT an XSS hole (pull code spans out, escape the whole string, then re-emit only the tags we generate — author can't inject a tag we didn't choose), sanitizeUrl as a scheme allowlist that kills javascript:/data:/the java\\tscript: bypass, and slugs that are unique (-2/-3) AND stable (renaming a title never changes a published slug). One dependency-free core behind a three-tab admin (live preview, publish workflow, sandboxed site preview) and 104 checks led by an end-to-end render of a malicious post asserting no <script>/javascript: survives
+    web-board-forum/          # a simple message board: a forum looks like two-line CRUD and isn't — the reply tree is stored FLAT (each post keeps a parentId) and the naive "recurse from root" builder breaks three ways, so buildTree re-parents true orphans and cycle-trapped posts to the thread root (seen-set + DFS visited guard) and sorts siblings by (createdAt,id); the index orders by last LIVE activity (a deleted reply must not float its thread, sticky pins above all); and every post is hostile text, so renderBody escapes first then autolinks only http/https anchors it builds itself. One dependency-free core behind a browser UI and 72 checks, plus a Playwright smoke test proving a <script> payload renders inert
+    captcha-maker/            # takes text and makes an image for verification: a CAPTCHA looks like "draw wobbly letters, compare strings" and isn't — human-readable vs bot-hostile FIGHT, fixed upstream by a 31-symbol alphabet with every confusable (0/O 1/I/L) removed so normalization only folds case/whitespace; the answer must never reach the client, so a CaptchaStore stands in for the server (issue() returns an opaque token + text to render; the secret stays server-side) with single-use (solved = deleted, no replay), TTL expiry (boundary-tested), and constant-time compare; and a short code with unlimited guesses is no CAPTCHA, so an attempt budget burns the token when spent (even the right answer is then refused). One dependency-free core behind a canvas browser UI and 67 checks, plus a Playwright smoke test proving the answer is nowhere in the DOM
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
