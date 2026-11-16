@@ -288,4 +288,20 @@ down this section next, one project per day. Populated from the
 - [x] E-Card Generator — 2026-11-13
 - [x] Content Management System — 2026-11-14
 - [x] Web Board (Forum) — 2026-11-15
-- [ ] CAPTCHA Maker
+- [x] CAPTCHA Maker — 2026-11-16
+
+**Web complete — all 9 projects built. The next category, Files, is now
+unlocked.**
+
+### Files
+
+Unlocked 2026-11-16 after the Web category was finished. The routine works down
+this section next, one project per day. Populated from the
+[karan/Projects Files section](https://github.com/karan/Projects).
+
+- [ ] Quiz Maker
+- [ ] Sort Excel/CSV File Utility
+- [ ] Create Zip File Maker
+- [ ] PDF Generator
+- [ ] Mp3 Tagger
+- [ ] Code Snippet Manager
