@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Maker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Quiz Maker</h1>
+        <p class="sub">
+          Load a question file, and it assembles a fresh randomized quiz and
+          grades it against the answer key.
+          <span class="tag">Source 2 · karan/Projects · Files</span>
+        </p>
+      </header>
+
+      <!-- SETUP ------------------------------------------------------------ -->
+      <section id="setup" class="card">
+        <h2>1 · Question bank</h2>
+        <p class="hint">
+          Paste a bank below, or
+          <label class="link" for="file">open a <code>.quiz</code> file</label>
+          <input id="file" type="file" accept=".quiz,.txt,text/plain" hidden />
+          — or
+          <button id="load-sample" class="link-btn" type="button">load the sample</button>.
+          Format: a stem line, then <code>*</code> for correct and <code>-</code>
+          for wrong options; <code>{N}</code> sets points, <code>&gt;</code> adds
+          an explanation, <code>#</code> is a comment.
+        </p>
+        <textarea id="bank" spellcheck="false" placeholder="What is 2 + 2?&#10;* 4&#10;- 3&#10;- 5"></textarea>
+        <div id="bank-status" class="status" aria-live="polite"></div>
+
+        <div class="controls">
+          <label>Questions
+            <input id="count" type="number" min="1" value="10" />
+          </label>
+          <label>Seed (optional)
+            <input id="seed" type="text" placeholder="random each time" />
+          </label>
+          <label class="check">
+            <input id="partial" type="checkbox" />
+            partial credit for “select all”
+          </label>
+          <button id="start" type="button" disabled>Assemble quiz →</button>
+        </div>
+      </section>
+
+      <!-- QUIZ ------------------------------------------------------------- -->
+      <section id="quiz" class="card hidden">
+        <h2>2 · Take the quiz</h2>
+        <p class="hint">
+          Quiz seed <code id="active-seed"></code> — reuse it to regenerate this
+          exact quiz. Questions with more than one correct answer show checkboxes.
+        </p>
+        <form id="quiz-form"></form>
+        <div class="controls">
+          <button id="submit" type="button">Grade it</button>
+          <button id="reshuffle" class="secondary" type="button">New random quiz</button>
+        </div>
+      </section>
+
+      <!-- RESULTS ---------------------------------------------------------- -->
+      <section id="results" class="card hidden">
+        <h2>3 · Results</h2>
+        <div id="scoreboard"></div>
+        <div id="review"></div>
+        <div class="controls">
+          <button id="retake" class="secondary" type="button">Back to the bank</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="quiz-core.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

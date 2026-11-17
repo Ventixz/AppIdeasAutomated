@@ -299,7 +299,7 @@ Unlocked 2026-11-16 after the Web category was finished. The routine works down
 this section next, one project per day. Populated from the
 [karan/Projects Files section](https://github.com/karan/Projects).
 
-- [ ] Quiz Maker
+- [x] Quiz Maker — 2026-11-17
 - [ ] Sort Excel/CSV File Utility
 - [ ] Create Zip File Maker
 - [ ] PDF Generator
