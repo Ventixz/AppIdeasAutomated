@@ -1,0 +1,81 @@
+# sample-bank.quiz — a question bank in the Quiz Maker file format.
+#   stem line, optional "{N}" at the end for points (default 1)
+#   *  marks a correct option      -  marks an incorrect option
+#   >  adds an explanation         #  starts a comment
+# Multiple "*" in one question make it a "select all that apply" item.
+
+What is the capital of France?
+* Paris
+- London
+- Madrid
+- Rome
+> Paris has been France's capital, on and off, since 987 AD.
+
+Which planet is known as the Red Planet?
+- Venus
+* Mars
+- Jupiter
+- Mercury
+> Iron oxide (rust) on its surface gives Mars its colour.
+
+The chemical symbol "O" stands for which element?
+* Oxygen
+- Gold
+- Osmium
+- Hydrogen
+
+In computing, what does "CPU" stand for? {2}
+* Central Processing Unit
+- Computer Personal Unit
+- Central Peripheral Unit
+- Core Processing Utility
+
+Which of these are prime numbers? {3}
+* 2
+* 7
+* 13
+- 9
+- 21
+> A prime has exactly two distinct divisors: 1 and itself.
+
+The Great Wall of China is visible from space with the naked eye.
+- True
+* False
+> It is far too narrow; the claim is a popular myth.
+
+Which language runs natively in a web browser?
+* JavaScript
+- Python
+- C++
+- Rust
+
+How many continents are there on Earth?
+- 5
+- 6
+* 7
+- 8
+
+Which are programming languages? {2}
+* Python
+* Ruby
+- HTTP
+- JSON
+> HTTP is a protocol and JSON is a data format — neither is a language you program in.
+
+Water boils at what temperature at sea level?
+- 90°C
+* 100°C
+- 110°C
+- 120°C
+
+Who wrote the play "Romeo and Juliet"?
+* William Shakespeare
+- Charles Dickens
+- Mark Twain
+- Jane Austen
+
+What is 9 × 7?
+- 54
+* 63
+- 72
+- 56
