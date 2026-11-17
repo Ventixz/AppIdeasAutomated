@@ -52,7 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **0 / 6** |
+| Files | 🚧 In progress — **1 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1277,6 +1277,32 @@ has unlocked the next karan/Projects category, **Files** (Quiz Maker, Sort
 Excel/CSV Utility, Zip File Maker, PDF Generator, Mp3 Tagger, Code Snippet
 Manager), and works down it one project per day from here.
 
+The **Files** category opened on 2026-11-17 with a **Quiz Maker** (*"takes
+various questions from a file, picked randomly, and puts together a quiz for
+students"*) — it reads a plain-text question bank, assembles a randomized quiz,
+and grades the submission against an answer key, all in the browser with no
+server. Being a Files project, the whole thing is built around the file, and
+three things about that are genuinely hard. **Trap 1: the file is the interface,
+so the parser must be forgiving *and* strict.** Teacher-authored files are messy
+— trailing spaces, Windows line endings, blank lines, comments — and none of that
+changes meaning, so the parser tolerates all of it; but the things that *do*
+change meaning (an option before any question, a question with no correct answer,
+a duplicate option) are rejected loudly, each with its line number, and
+`parseBank` returns every problem at once instead of throwing on the first.
+**Trap 2: "a different quiz each time" fights "grade it with an answer key".** The
+textbook bug is to shuffle the options the student sees but keep the key as
+"the answer is option #1" — which is wrong the moment you shuffle. So the key is
+produced *by* the assembler, bound to that exact assembly: it shuffles, assigns
+the A/B/C letters *after* the shuffle, and only then records which letter is
+correct; a test re-runs the assembly across 25 seeds and asserts the key always
+points at where the known-correct option landed. And "different each time" is made
+reproducible with a seeded PRNG (mulberry32) — same seed, byte-identical quiz and
+key — so a teacher can reprint a quiz and the tests have something to pin.
+**Trap 3: the student quiz must not carry the answers** — `assembleQuiz` returns
+the quiz and the key as two separate objects, and a test serializes the quiz to
+JSON and asserts the word `correct` appears nowhere in it. One dependency-free
+core (`quiz-core.js`) backs the browser UI and **91 Node checks**.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1441,6 +1467,7 @@ Manager), and works down it one project per day from here.
 | 158 | [Content Management System](./projects/phase2-web/content-management-system/) | Web · Source 2 | 2026-11-14 |
 | 159 | [Web Board (Forum)](./projects/phase2-web/web-board-forum/) | Web · Source 2 | 2026-11-15 |
 | 160 | [CAPTCHA Maker](./projects/phase2-web/captcha-maker/) | Web · Source 2 | 2026-11-16 |
+| 161 | [Quiz Maker](./projects/phase2-files/quiz-maker/) | Files · Source 2 | 2026-11-17 |
 
 ## Repository layout
 
@@ -1534,6 +1561,8 @@ projects/
     content-management-system/ # a CMS like WordPress "easy to install and set up": Flatpress — a flat-file CMS that runs entirely in the browser (localStorage, JSON export/import, open index.html and it works). A CMS turns one person's text into HTML served to everyone, so it's built around that danger: render Markdown WITHOUT an XSS hole (pull code spans out, escape the whole string, then re-emit only the tags we generate — author can't inject a tag we didn't choose), sanitizeUrl as a scheme allowlist that kills javascript:/data:/the java\\tscript: bypass, and slugs that are unique (-2/-3) AND stable (renaming a title never changes a published slug). One dependency-free core behind a three-tab admin (live preview, publish workflow, sandboxed site preview) and 104 checks led by an end-to-end render of a malicious post asserting no <script>/javascript: survives
     web-board-forum/          # a simple message board: a forum looks like two-line CRUD and isn't — the reply tree is stored FLAT (each post keeps a parentId) and the naive "recurse from root" builder breaks three ways, so buildTree re-parents true orphans and cycle-trapped posts to the thread root (seen-set + DFS visited guard) and sorts siblings by (createdAt,id); the index orders by last LIVE activity (a deleted reply must not float its thread, sticky pins above all); and every post is hostile text, so renderBody escapes first then autolinks only http/https anchors it builds itself. One dependency-free core behind a browser UI and 72 checks, plus a Playwright smoke test proving a <script> payload renders inert
     captcha-maker/            # takes text and makes an image for verification: a CAPTCHA looks like "draw wobbly letters, compare strings" and isn't — human-readable vs bot-hostile FIGHT, fixed upstream by a 31-symbol alphabet with every confusable (0/O 1/I/L) removed so normalization only folds case/whitespace; the answer must never reach the client, so a CaptchaStore stands in for the server (issue() returns an opaque token + text to render; the secret stays server-side) with single-use (solved = deleted, no replay), TTL expiry (boundary-tested), and constant-time compare; and a short code with unlimited guesses is no CAPTCHA, so an attempt budget burns the token when spent (even the right answer is then refused). One dependency-free core behind a canvas browser UI and 67 checks, plus a Playwright smoke test proving the answer is nowhere in the DOM
+  phase2-files/               # Source 2 (karan/Projects) — Files category
+    quiz-maker/               # takes questions from a file, assembles a random quiz, grades it: a Files project built around the file — the parser is forgiving about what doesn't change meaning (trailing spaces, CRLF, blank lines, comments) and strict about what does (option before any question, no correct answer, duplicate option), returning every error with its line number instead of throwing; "a different quiz each time" FIGHTS "grade with an answer key", so the key is produced by the assembler bound to that assembly — letters assigned AFTER the shuffle, correctness recorded then (a test re-runs 25 seeds asserting the key points where the right option landed), made reproducible by a seeded PRNG (mulberry32) so a teacher can reprint; and the student quiz must not carry the answers, so assembleQuiz returns quiz + key as two objects (a test serializes the quiz and asserts "correct" appears nowhere). One dependency-free core behind a browser UI and 91 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
