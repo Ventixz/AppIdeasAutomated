@@ -300,7 +300,7 @@ this section next, one project per day. Populated from the
 [karan/Projects Files section](https://github.com/karan/Projects).
 
 - [x] Quiz Maker — 2026-11-17
-- [ ] Sort Excel/CSV File Utility
+- [x] Sort Excel/CSV File Utility — 2026-11-18
 - [ ] Create Zip File Maker
 - [ ] PDF Generator
 - [ ] Mp3 Tagger

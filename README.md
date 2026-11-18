@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (72 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (73 built)**
 
 | Category | Status |
 | --- | --- |
@@ -52,7 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **1 / 6** |
+| Files | 🚧 In progress — **2 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1303,6 +1303,33 @@ the quiz and the key as two separate objects, and a test serializes the quiz to
 JSON and asserts the word `correct` appears nowhere in it. One dependency-free
 core (`quiz-core.js`) backs the browser UI and **91 Node checks**.
 
+The Files category's second build, on 2026-11-18, is a **Sort Excel/CSV File
+Utility** (*"takes a CSV file and sorts its rows by a column the user chooses,
+ascending or descending, and writes the sorted file back"*) — load a CSV, pick
+one or more sort keys, and download the sorted result, all in the browser with no
+server. Being a Files project it lives or dies by handling the file correctly,
+and four things about that are genuinely hard. **Trap 1: you cannot sort a CSV
+until you can actually read one.** "Split each line on commas" is the classic
+bug — real CSV lets a quoted field hold the delimiter, an escaped `""` quote, and
+even newlines, so one record can span several lines of text; `"Smith, John"` is
+one field, and a naive split shifts every row below it by a column. So the parser
+is a character-level state machine that tracks whether it's inside quotes, and
+also absorbs CRLF/lone-CR endings, a leading Excel BOM, and trailing newlines that
+must not invent a phantom row. **Trap 2: "sort by a column" is meaningless until
+you decide what the column *is*** — sort numbers as text and `10` lands before
+`9`; so each column's type is inferred from its values (all-numeric → number,
+all-date → date, else text), numbers compare as numbers, dates chronologically,
+and text with a natural, case-insensitive collation so `item2` precedes `item10`;
+blanks always sink to the bottom. **Trap 3: multi-column sort only works if the
+sort is stable** — sort by city, then name, and equal-city rows must keep the
+order the previous key left them in, so `sortRows` decorates each row with its
+original index and uses that as the final tie-breaker rather than trusting the
+engine. **Trap 4: writing it back must be the exact inverse of reading it** — the
+serializer quotes a field only when it must and doubles interior quotes, and a
+test runs parse → serialize → parse over deliberately messy data and asserts the
+rows come back byte-identical. One dependency-free core (`csv-core.js`) backs the
+browser UI and **51 Node checks**.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1468,6 +1495,7 @@ core (`quiz-core.js`) backs the browser UI and **91 Node checks**.
 | 159 | [Web Board (Forum)](./projects/phase2-web/web-board-forum/) | Web · Source 2 | 2026-11-15 |
 | 160 | [CAPTCHA Maker](./projects/phase2-web/captcha-maker/) | Web · Source 2 | 2026-11-16 |
 | 161 | [Quiz Maker](./projects/phase2-files/quiz-maker/) | Files · Source 2 | 2026-11-17 |
+| 162 | [Sort Excel/CSV File Utility](./projects/phase2-files/sort-csv-utility/) | Files · Source 2 | 2026-11-18 |
 
 ## Repository layout
 
@@ -1563,6 +1591,7 @@ projects/
     captcha-maker/            # takes text and makes an image for verification: a CAPTCHA looks like "draw wobbly letters, compare strings" and isn't — human-readable vs bot-hostile FIGHT, fixed upstream by a 31-symbol alphabet with every confusable (0/O 1/I/L) removed so normalization only folds case/whitespace; the answer must never reach the client, so a CaptchaStore stands in for the server (issue() returns an opaque token + text to render; the secret stays server-side) with single-use (solved = deleted, no replay), TTL expiry (boundary-tested), and constant-time compare; and a short code with unlimited guesses is no CAPTCHA, so an attempt budget burns the token when spent (even the right answer is then refused). One dependency-free core behind a canvas browser UI and 67 checks, plus a Playwright smoke test proving the answer is nowhere in the DOM
   phase2-files/               # Source 2 (karan/Projects) — Files category
     quiz-maker/               # takes questions from a file, assembles a random quiz, grades it: a Files project built around the file — the parser is forgiving about what doesn't change meaning (trailing spaces, CRLF, blank lines, comments) and strict about what does (option before any question, no correct answer, duplicate option), returning every error with its line number instead of throwing; "a different quiz each time" FIGHTS "grade with an answer key", so the key is produced by the assembler bound to that assembly — letters assigned AFTER the shuffle, correctness recorded then (a test re-runs 25 seeds asserting the key points where the right option landed), made reproducible by a seeded PRNG (mulberry32) so a teacher can reprint; and the student quiz must not carry the answers, so assembleQuiz returns quiz + key as two objects (a test serializes the quiz and asserts "correct" appears nowhere). One dependency-free core behind a browser UI and 91 checks
+    sort-csv-utility/         # reads a CSV, sorts its rows by one or more columns, writes the sorted file back: a Files project that lives or dies by handling the file — you can't sort a CSV until you can READ one, so the parser is a character-level state machine (not a comma split) that keeps quoted commas/escaped ""/embedded newlines in one field and absorbs CRLF, a leading BOM, and trailing newlines that must not add a phantom row; "sort by a column" needs to know what the column IS, so each column's type is inferred (all-numeric → number so 10 sorts after 9, all-date → chronological, else natural case-insensitive text so item2 < item10) and blanks always sink; multi-key sort only works if STABLE, so sortRows tie-breaks on the original row index rather than trusting the engine; and the writer is the exact inverse of the reader (quote only when needed, double interior quotes) with a parse→serialize→parse round-trip test asserting byte-identical rows. One dependency-free core behind a browser UI and 51 checks
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

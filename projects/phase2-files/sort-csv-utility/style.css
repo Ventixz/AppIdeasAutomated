@@ -1,0 +1,95 @@
+:root {
+  --bg: #0f1116;
+  --panel: #171a21;
+  --panel-2: #1e222b;
+  --border: #2a2f3a;
+  --text: #e6e8ec;
+  --muted: #9aa3b2;
+  --accent: #5b9dff;
+  --accent-2: #3a7bd5;
+  --good: #3fb950;
+  --bad: #f85149;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+main { max-width: 920px; margin: 0 auto; padding: 32px 20px 48px; }
+header h1 { margin: 0 0 4px; font-size: 1.6rem; }
+.sub { color: var(--muted); margin: 0 0 24px; }
+h2 { font-size: 1.1rem; margin: 0 0 6px; }
+section { margin-bottom: 28px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+label.inline { color: var(--muted); font-size: .9rem; display: inline-flex; align-items: center; gap: 6px; }
+label.check { cursor: pointer; }
+select, textarea { font-family: var(--mono); }
+select {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+  border-radius: 7px; padding: 6px 8px;
+}
+textarea {
+  width: 100%; background: var(--panel); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  font-size: .85rem; resize: vertical;
+}
+#input { min-height: 150px; }
+#output { min-height: 120px; margin-top: 10px; }
+
+button, .filebtn {
+  font: inherit; cursor: pointer; border-radius: 8px; padding: 8px 14px;
+  border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+  transition: border-color .15s, background .15s;
+}
+button:hover, .filebtn:hover { border-color: var(--accent); }
+button.primary { background: var(--accent-2); border-color: var(--accent-2); color: #fff; font-weight: 600; }
+button.primary:hover { background: var(--accent); }
+button.ghost { background: transparent; }
+.filebtn { display: inline-block; }
+.filebtn input { display: none; }
+
+.status { font-size: .85rem; min-height: 1.2em; margin: 6px 0 0; }
+.status.err { color: var(--bad); }
+.status.ok { color: var(--good); }
+.hint { color: var(--muted); font-size: .85rem; margin: 0 0 12px; }
+
+#keys { display: flex; flex-direction: column; gap: 8px; }
+.keyrow {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 9px; padding: 8px 10px;
+}
+.keyrow .idx { color: var(--muted); font-size: .8rem; min-width: 1.4em; }
+.keyrow .typetag {
+  font-size: .72rem; color: var(--muted); border: 1px solid var(--border);
+  border-radius: 20px; padding: 1px 8px;
+}
+.keyrow .rm { margin-left: auto; color: var(--muted); border: none; background: none; font-size: 1.1rem; padding: 0 6px; }
+.keyrow .rm:hover { color: var(--bad); }
+.sortactions { display: flex; gap: 10px; margin-top: 14px; }
+
+.result-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.result-head > div { display: flex; gap: 8px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th { background: var(--panel-2); position: sticky; top: 0; font-weight: 600; }
+th .th-type { font-weight: 400; color: var(--muted); font-size: .72rem; margin-left: 6px; }
+tbody tr:nth-child(even) { background: rgba(255,255,255,.02); }
+td.num { font-family: var(--mono); color: #bcd; }
+
+details summary { cursor: pointer; color: var(--muted); margin-top: 12px; font-size: .9rem; }
+
+footer { border-top: 1px solid var(--border); }
+footer p { max-width: 920px; margin: 0 auto; padding: 16px 20px; color: var(--muted); font-size: .8rem; }
+footer a { color: var(--accent); }
+code { font-family: var(--mono); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+
+@media (max-width: 560px) {
+  .result-head { align-items: flex-start; }
+}
