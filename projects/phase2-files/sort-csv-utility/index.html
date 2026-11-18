@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sort Excel/CSV File Utility</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Sort CSV File Utility</h1>
+    <p class="sub">Load a CSV, sort it by one or more columns (type-aware), and download the sorted file back.</p>
+  </header>
+
+  <section class="io">
+    <div class="controls">
+      <label class="filebtn">
+        Open .csv file<input type="file" id="file" accept=".csv,text/csv,text/plain">
+      </label>
+      <button id="load-sample" type="button">Load sample</button>
+      <label class="inline">
+        Delimiter
+        <select id="delimiter">
+          <option value=",">, (comma)</option>
+          <option value=";">; (semicolon)</option>
+          <option value="&#9;">tab</option>
+          <option value="|">| (pipe)</option>
+        </select>
+      </label>
+      <label class="inline check">
+        <input type="checkbox" id="has-header" checked> First row is a header
+      </label>
+    </div>
+    <textarea id="input" spellcheck="false" placeholder="Paste CSV here, open a file, or load the sample…"></textarea>
+    <p id="parse-status" class="status"></p>
+  </section>
+
+  <section class="sortbar">
+    <h2>Sort keys</h2>
+    <p class="hint">Rows are sorted by the first key, ties broken by the next, and so on. Each column's type is detected automatically; override it if you disagree.</p>
+    <div id="keys"></div>
+    <div class="sortactions">
+      <button id="add-key" type="button" class="ghost">+ Add sort key</button>
+      <button id="sort" type="button" class="primary">Sort</button>
+    </div>
+  </section>
+
+  <section id="result-section" class="result" hidden>
+    <div class="result-head">
+      <h2>Result</h2>
+      <div>
+        <button id="download" type="button">Download sorted.csv</button>
+        <button id="copy" type="button" class="ghost">Copy</button>
+      </div>
+    </div>
+    <div class="tablewrap"><table id="table"></table></div>
+    <details>
+      <summary>Sorted CSV text</summary>
+      <textarea id="output" spellcheck="false" readonly></textarea>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <p>Part of an automated daily <a href="https://claude.com/claude-code">Claude Code</a> routine · Source: <a href="https://github.com/karan/Projects">karan/Projects</a> → Files. The sorting engine runs headless too — <code>node tests.js</code>.</p>
+</footer>
+
+<script src="csv-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
