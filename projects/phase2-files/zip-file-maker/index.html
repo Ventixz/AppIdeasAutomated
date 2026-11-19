@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Zip File Maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Zip File Maker</h1>
+    <p class="sub">Add files, give the archive a name, and build a real <code>.zip</code> — compressed with a from-scratch DEFLATE, entirely in your browser. Nothing is uploaded.</p>
+  </header>
+
+  <section class="io">
+    <div
+      id="drop"
+      class="dropzone"
+      tabindex="0"
+      role="button"
+      aria-label="Add files: drop them here or press to choose">
+      <p class="drop-main">Drop files here</p>
+      <p class="drop-sub">or
+        <label class="filebtn">choose files<input type="file" id="file" multiple></label>
+        · you can also <button id="add-text" type="button" class="linkbtn">add a text file by hand</button>
+        · or <button id="load-sample" type="button" class="linkbtn">load samples</button>
+      </p>
+    </div>
+  </section>
+
+  <section class="listbar">
+    <div class="list-head">
+      <h2>Files in the archive <span id="count" class="count"></span></h2>
+      <button id="clear" type="button" class="ghost" hidden>Clear all</button>
+    </div>
+    <ul id="list" class="filelist"></ul>
+    <p id="empty-note" class="hint">No files yet — drop some above, or load the samples to see how it works.</p>
+  </section>
+
+  <section class="buildbar">
+    <div class="buildrow">
+      <label class="inline">
+        Archive name
+        <input type="text" id="zipname" value="archive.zip" spellcheck="false">
+      </label>
+      <label class="inline check">
+        <input type="checkbox" id="store-only"> Store only (no compression)
+      </label>
+      <button id="build" type="button" class="primary" disabled>Build &amp; download .zip</button>
+    </div>
+    <p id="status" class="status"></p>
+  </section>
+</main>
+
+<footer>
+  <p>Part of an automated daily <a href="https://claude.com/claude-code">Claude Code</a> routine · Source: <a href="https://github.com/karan/Projects">karan/Projects</a> → Files. The ZIP engine (CRC-32, DEFLATE, container) runs headless too — <code>node tests.js</code>.</p>
+</footer>
+
+<!-- Modal for hand-authored text files -->
+<dialog id="text-dialog">
+  <form method="dialog" class="dlg">
+    <h3>Add a text file</h3>
+    <label>File name
+      <input type="text" id="text-name" value="notes.txt" spellcheck="false">
+    </label>
+    <label>Contents
+      <textarea id="text-body" spellcheck="false" placeholder="Type the file contents…"></textarea>
+    </label>
+    <div class="dlg-actions">
+      <button value="cancel" class="ghost">Cancel</button>
+      <button value="ok" id="text-ok" class="primary">Add file</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="zip-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
