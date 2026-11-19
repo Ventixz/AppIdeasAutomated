@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (73 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (74 built)**
 
 | Category | Status |
 | --- | --- |
@@ -52,7 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **2 / 6** |
+| Files | 🚧 In progress — **3 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1330,6 +1330,38 @@ test runs parse → serialize → parse over deliberately messy data and asserts
 rows come back byte-identical. One dependency-free core (`csv-core.js`) backs the
 browser UI and **51 Node checks**.
 
+The Files category's third build, on 2026-11-19, is a **Create Zip File Maker**
+(*"create a zip file maker — let the user put files in, then zip everything up
+into a zip file"*) — drop files into the page, name the archive, and download a
+real `.zip`, built entirely in the browser with **no zip library**: it implements
+the format from the bytes up. A zip is the most format-heavy file there is — a
+small binary database of other files — and three parts are genuinely hard.
+**Trap 1: a wrong CRC-32 makes every entry "corrupt."** Each file stores a
+CRC-32 of its uncompressed bytes (twice: local header and central directory), and
+unzip tools reject the entry if a single bit disagrees; the checksum is the
+standard reflected IEEE implementation, pinned in tests to published vectors
+(`crc32("123456789") === 0xCBF43926`). **Trap 2: "zip it up" means actually
+implementing DEFLATE** — a tool that only stores files is a packager, not a
+compressor, so `deflateRaw` does real LZ77 back-reference matching over a 32 KiB
+window (found with a zlib-style hash chain, so it isn't quadratic) and encodes
+the result with DEFLATE's fixed Huffman codes; the fiddly part is that bits pack
+into bytes LSB-first while Huffman codes are defined MSB-first, so every code is
+bit-reversed before it's written. The tests refuse to let the compressor grade
+itself: they inflate its output with **Node's built-in `zlib`** — a separate
+implementation — and assert the bytes come back identical, across empty input,
+runs, repeating patterns, 5,000 lines of text, and arbitrary binary. **Trap 3:
+the container is a graph of byte offsets that must all agree** — central-directory
+records point back at local headers by absolute offset, and the
+end-of-central-directory record points at the central directory, all little-endian
+integers computed by hand as the file streams out; `buildZip` tracks every offset,
+and `readZip` parses the result straight back (EOCD → central dir → local headers)
+to confirm names, content, CRCs, directory entries, UTF-8 filenames, and that
+compressible entries actually shrank. Each entry also picks its own method —
+DEFLATE kept only when it comes out smaller, otherwise stored — so a tiny file is
+never grown by a compression header. As a real-world check, the archives it builds
+pass `unzip -t` and extract byte-for-byte. One dependency-free core
+(`zip-core.js`) backs the drag-and-drop browser UI and **28 Node checks**.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1496,6 +1528,7 @@ browser UI and **51 Node checks**.
 | 160 | [CAPTCHA Maker](./projects/phase2-web/captcha-maker/) | Web · Source 2 | 2026-11-16 |
 | 161 | [Quiz Maker](./projects/phase2-files/quiz-maker/) | Files · Source 2 | 2026-11-17 |
 | 162 | [Sort Excel/CSV File Utility](./projects/phase2-files/sort-csv-utility/) | Files · Source 2 | 2026-11-18 |
+| 163 | [Create Zip File Maker](./projects/phase2-files/zip-file-maker/) | Files · Source 2 | 2026-11-19 |
 
 ## Repository layout
 
@@ -1592,6 +1625,7 @@ projects/
   phase2-files/               # Source 2 (karan/Projects) — Files category
     quiz-maker/               # takes questions from a file, assembles a random quiz, grades it: a Files project built around the file — the parser is forgiving about what doesn't change meaning (trailing spaces, CRLF, blank lines, comments) and strict about what does (option before any question, no correct answer, duplicate option), returning every error with its line number instead of throwing; "a different quiz each time" FIGHTS "grade with an answer key", so the key is produced by the assembler bound to that assembly — letters assigned AFTER the shuffle, correctness recorded then (a test re-runs 25 seeds asserting the key points where the right option landed), made reproducible by a seeded PRNG (mulberry32) so a teacher can reprint; and the student quiz must not carry the answers, so assembleQuiz returns quiz + key as two objects (a test serializes the quiz and asserts "correct" appears nowhere). One dependency-free core behind a browser UI and 91 checks
     sort-csv-utility/         # reads a CSV, sorts its rows by one or more columns, writes the sorted file back: a Files project that lives or dies by handling the file — you can't sort a CSV until you can READ one, so the parser is a character-level state machine (not a comma split) that keeps quoted commas/escaped ""/embedded newlines in one field and absorbs CRLF, a leading BOM, and trailing newlines that must not add a phantom row; "sort by a column" needs to know what the column IS, so each column's type is inferred (all-numeric → number so 10 sorts after 9, all-date → chronological, else natural case-insensitive text so item2 < item10) and blanks always sink; multi-key sort only works if STABLE, so sortRows tie-breaks on the original row index rather than trusting the engine; and the writer is the exact inverse of the reader (quote only when needed, double interior quotes) with a parse→serialize→parse round-trip test asserting byte-identical rows. One dependency-free core behind a browser UI and 51 checks
+    zip-file-maker/           # add files, zip them into a real .zip — with NO zip library, the format built from the bytes up: a zip is a binary database of files and three parts are hard — a wrong CRC-32 makes every entry "corrupt" (reflected IEEE, pinned to crc32("123456789")===0xCBF43926), so "zip it up" means actually implementing DEFLATE (LZ77 over a 32 KiB window via a hash chain + fixed Huffman, the gotcha being bits pack LSB-first while Huffman codes are MSB-first so each is bit-reversed) — verified not by self-check but by inflating the output with Node's own zlib; and the container is a graph of little-endian offsets that must all agree (local headers ← central directory ← end-of-central-directory), so buildZip tracks every offset and readZip parses it straight back, with each entry choosing DEFLATE only when it comes out smaller. Archives pass `unzip -t` and extract byte-for-byte; one dependency-free core behind a drag-and-drop browser UI, 28 Node checks, plus a Playwright smoke test building a 69%-smaller zip in-browser
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
