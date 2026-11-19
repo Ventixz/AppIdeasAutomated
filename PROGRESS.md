@@ -301,7 +301,7 @@ this section next, one project per day. Populated from the
 
 - [x] Quiz Maker — 2026-11-17
 - [x] Sort Excel/CSV File Utility — 2026-11-18
-- [ ] Create Zip File Maker
+- [x] Create Zip File Maker — 2026-11-19
 - [ ] PDF Generator
 - [ ] Mp3 Tagger
 - [ ] Code Snippet Manager
