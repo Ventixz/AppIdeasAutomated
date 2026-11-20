@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (74 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (75 built)**
 
 | Category | Status |
 | --- | --- |
@@ -52,7 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **3 / 6** |
+| Files | 🚧 In progress — **4 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1362,6 +1362,36 @@ never grown by a compression header. As a real-world check, the archives it buil
 pass `unzip -t` and extract byte-for-byte. One dependency-free core
 (`zip-core.js`) backs the drag-and-drop browser UI and **28 Node checks**.
 
+The Files category's fourth build, on 2026-11-20, is a **PDF Generator**
+(*"an application which can read in a text file, html file or some other file and
+generates a PDF file out of it"*) — drop in a `.txt` or `.html` file (or paste
+text), pick a font, page size and alignment, and download a real `.pdf`, built
+entirely in the browser with **no PDF library**: it implements PDF 1.7 from the
+bytes up. A PDF is one of the most structurally unforgiving files there is,
+because a reader walks it by byte offset rather than top to bottom, and three
+parts are genuinely hard. **Trap 1: the xref table is a list of byte offsets that
+must be exact** — a reader starts at the final `startxref`, reads the
+cross-reference table of ten-digit absolute offsets, and jumps straight to each
+object; one byte wrong and the document is "damaged," so `buildPdf` records the
+offset at the start of every object as it streams out, and an **independent reader**
+in the tests (`parsePdf`, which walks `startxref` → xref → objects like a real
+one) asserts every offset lands on the `N 0 obj` it claims. **Trap 2: "generate a
+PDF" means laying out the text yourself** — PDF has no line breaks or paragraphs,
+so the engine word-wraps the input and positions every line, and to wrap correctly
+it measures text with the **real Adobe AFM advance widths** of the 14 standard
+fonts (nothing embedded); that is what lets right-alignment, centering and full
+justification (stretching spaces via the `Tw` operator) land where the reader will
+actually paint the glyphs. **Trap 3: strings, streams and encoding all have to
+agree** — literal strings must escape `(` `)` `\`, non-ASCII is written in
+WinAnsiEncoding as single bytes (never UTF-8, or the offsets drift), and each
+content stream's `/Length` must equal the exact byte count between `stream` and
+`endstream`. As a real-world check — the tests refuse to let the writer grade
+itself — the output is run through poppler's `pdfinfo` and `pdftotext` (a
+completely separate PDF implementation), which recover the page count and the text
+in order. A small `htmlToText` converter handles the "html file" case with no DOM
+or parser dependency. One dependency-free core (`pdf-core.js`) backs a browser UI
+with a live in-page preview, and **54 Node checks**.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1529,6 +1559,7 @@ pass `unzip -t` and extract byte-for-byte. One dependency-free core
 | 161 | [Quiz Maker](./projects/phase2-files/quiz-maker/) | Files · Source 2 | 2026-11-17 |
 | 162 | [Sort Excel/CSV File Utility](./projects/phase2-files/sort-csv-utility/) | Files · Source 2 | 2026-11-18 |
 | 163 | [Create Zip File Maker](./projects/phase2-files/zip-file-maker/) | Files · Source 2 | 2026-11-19 |
+| 164 | [PDF Generator](./projects/phase2-files/pdf-generator/) | Files · Source 2 | 2026-11-20 |
 
 ## Repository layout
 
@@ -1626,6 +1657,7 @@ projects/
     quiz-maker/               # takes questions from a file, assembles a random quiz, grades it: a Files project built around the file — the parser is forgiving about what doesn't change meaning (trailing spaces, CRLF, blank lines, comments) and strict about what does (option before any question, no correct answer, duplicate option), returning every error with its line number instead of throwing; "a different quiz each time" FIGHTS "grade with an answer key", so the key is produced by the assembler bound to that assembly — letters assigned AFTER the shuffle, correctness recorded then (a test re-runs 25 seeds asserting the key points where the right option landed), made reproducible by a seeded PRNG (mulberry32) so a teacher can reprint; and the student quiz must not carry the answers, so assembleQuiz returns quiz + key as two objects (a test serializes the quiz and asserts "correct" appears nowhere). One dependency-free core behind a browser UI and 91 checks
     sort-csv-utility/         # reads a CSV, sorts its rows by one or more columns, writes the sorted file back: a Files project that lives or dies by handling the file — you can't sort a CSV until you can READ one, so the parser is a character-level state machine (not a comma split) that keeps quoted commas/escaped ""/embedded newlines in one field and absorbs CRLF, a leading BOM, and trailing newlines that must not add a phantom row; "sort by a column" needs to know what the column IS, so each column's type is inferred (all-numeric → number so 10 sorts after 9, all-date → chronological, else natural case-insensitive text so item2 < item10) and blanks always sink; multi-key sort only works if STABLE, so sortRows tie-breaks on the original row index rather than trusting the engine; and the writer is the exact inverse of the reader (quote only when needed, double interior quotes) with a parse→serialize→parse round-trip test asserting byte-identical rows. One dependency-free core behind a browser UI and 51 checks
     zip-file-maker/           # add files, zip them into a real .zip — with NO zip library, the format built from the bytes up: a zip is a binary database of files and three parts are hard — a wrong CRC-32 makes every entry "corrupt" (reflected IEEE, pinned to crc32("123456789")===0xCBF43926), so "zip it up" means actually implementing DEFLATE (LZ77 over a 32 KiB window via a hash chain + fixed Huffman, the gotcha being bits pack LSB-first while Huffman codes are MSB-first so each is bit-reversed) — verified not by self-check but by inflating the output with Node's own zlib; and the container is a graph of little-endian offsets that must all agree (local headers ← central directory ← end-of-central-directory), so buildZip tracks every offset and readZip parses it straight back, with each entry choosing DEFLATE only when it comes out smaller. Archives pass `unzip -t` and extract byte-for-byte; one dependency-free core behind a drag-and-drop browser UI, 28 Node checks, plus a Playwright smoke test building a 69%-smaller zip in-browser
+    pdf-generator/            # turn a .txt/.html file (or pasted text) into a real .pdf — with NO PDF library, PDF 1.7 built from the bytes up: a reader walks a PDF by byte offset, so three parts are hard — the xref table is ten-digit absolute offsets that must be exact (one byte off = "damaged"), so buildPdf records each object's offset as it streams and an independent parsePdf walks startxref→xref→objects asserting every offset lands on its "N 0 obj"; "generate a PDF" means laying out the text yourself (PDF has no line breaks), so the engine word-wraps and positions every line using the REAL Adobe AFM advance widths of the 14 standard fonts (nothing embedded), which is what makes right/center/justify — spaces stretched via Tw — land where glyphs actually paint; and strings escape ( ) \, non-ASCII is WinAnsi single bytes (never UTF-8, or offsets drift), and each stream's /Length must be byte-exact. Graded not by self-check but by poppler's pdfinfo/pdftotext (a separate implementation) recovering page count and text in order; a small htmlToText handles the "html file" case with no DOM. One dependency-free core behind a browser UI with a live preview, 54 Node checks, plus a Playwright smoke test building a valid PDF in-browser
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
