@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>PDF Generator</h1>
+    <p class="sub">Drop in a <code>.txt</code> or <code>.html</code> file (or just paste text), choose a font and layout, and build a real <code>.pdf</code> — assembled byte-by-byte in your browser with <strong>no PDF library</strong>. Nothing is uploaded.</p>
+  </header>
+
+  <section class="io">
+    <div
+      id="drop"
+      class="dropzone"
+      tabindex="0"
+      role="button"
+      aria-label="Add a file: drop it here or press to choose">
+      <p class="drop-main">Drop a .txt or .html file here</p>
+      <p class="drop-sub">or
+        <label class="filebtn">choose a file<input type="file" id="file" accept=".txt,.text,.md,.html,.htm,text/plain,text/html"></label>
+        · or type / paste below
+        · or <button id="load-sample" type="button" class="linkbtn">load a sample</button>
+      </p>
+    </div>
+  </section>
+
+  <section class="editor">
+    <div class="list-head">
+      <h2>Source text <span id="srcinfo" class="count"></span></h2>
+      <label class="inline check">
+        <input type="checkbox" id="as-html"> Treat as HTML (strip tags)
+      </label>
+    </div>
+    <textarea id="source" spellcheck="false" placeholder="Type or paste the text you want turned into a PDF…"></textarea>
+  </section>
+
+  <section class="options">
+    <h2>Layout</h2>
+    <div class="optgrid">
+      <label class="inline col">Title (optional)
+        <input type="text" id="title" placeholder="shown as a bold heading" spellcheck="false">
+      </label>
+      <label class="inline col">Font
+        <select id="font">
+          <option value="Helvetica">Helvetica (sans)</option>
+          <option value="Helvetica-Bold">Helvetica Bold</option>
+          <option value="Helvetica-Oblique">Helvetica Oblique</option>
+          <option value="Times-Roman">Times Roman (serif)</option>
+          <option value="Times-Bold">Times Bold</option>
+          <option value="Times-Italic">Times Italic</option>
+          <option value="Courier">Courier (monospace)</option>
+        </select>
+      </label>
+      <label class="inline col">Size
+        <select id="size">
+          <option>9</option><option>10</option><option>11</option>
+          <option selected>12</option><option>14</option><option>16</option><option>18</option>
+        </select>
+      </label>
+      <label class="inline col">Page
+        <select id="pagesize">
+          <option value="letter" selected>Letter</option>
+          <option value="a4">A4</option>
+          <option value="legal">Legal</option>
+          <option value="a5">A5</option>
+          <option value="tabloid">Tabloid</option>
+        </select>
+      </label>
+      <label class="inline col">Align
+        <select id="align">
+          <option value="left" selected>Left</option>
+          <option value="justify">Justify</option>
+          <option value="right">Right</option>
+          <option value="center">Center</option>
+        </select>
+      </label>
+      <label class="inline col">Wrapping
+        <select id="wrap">
+          <option value="word" selected>Word wrap (reflow)</option>
+          <option value="pre">Preformatted (keep spacing)</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="buildbar">
+    <div class="buildrow">
+      <label class="inline">
+        File name
+        <input type="text" id="pdfname" value="document.pdf" spellcheck="false">
+      </label>
+      <button id="preview" type="button">Update preview</button>
+      <button id="build" type="button" class="primary" disabled>Build &amp; download .pdf</button>
+    </div>
+    <p id="status" class="status"></p>
+  </section>
+
+  <section class="previewbar">
+    <h2>Preview</h2>
+    <iframe id="pv" title="PDF preview" class="preview"></iframe>
+    <p id="pv-note" class="hint">The preview updates when you build or press <em>Update preview</em>. It is the exact bytes you download, rendered by your browser's own PDF engine.</p>
+  </section>
+</main>
+
+<footer>
+  <p>Part of an automated daily <a href="https://claude.com/claude-code">Claude Code</a> routine · Source: <a href="https://github.com/karan/Projects">karan/Projects</a> → Files. The PDF engine (object graph, xref, text layout with real Adobe metrics) runs headless too — <code>node tests.js</code>.</p>
+</footer>
+
+<script src="pdf-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
