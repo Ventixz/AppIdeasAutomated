@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (75 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (76 built)**
 
 | Category | Status |
 | --- | --- |
@@ -52,7 +52,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **4 / 6** |
+| Files | 🚧 In progress — **5 / 6** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1392,6 +1392,38 @@ in order. A small `htmlToText` converter handles the "html file" case with no DO
 or parser dependency. One dependency-free core (`pdf-core.js`) backs a browser UI
 with a live in-page preview, and **54 Node checks**.
 
+The Files category's fifth build, on 2026-11-21, is an **MP3 Tagger**
+(*"analyze a group of MP3 files and tag them if they are missing the Title,
+Artist, Album, Year or other ID3 v1 and v2 fields"*) — drop in a batch of
+`.mp3` files, see exactly which standard fields each one is **missing**, fill the
+gaps, and write clean tags back, all in the browser with **no tagging library**:
+it reads and writes the ID3 formats from the bytes up. Three byte-level traps make
+this harder than it looks, and all three live in `id3-core.js`. **Trap 1:
+synchsafe integers** — an ID3v2 tag's size is stored 7 bits per byte (top bit
+always 0) so it can never contain the MP3 frame-sync word; read it as a normal
+32-bit int and you land ~11% past where you should and parse garbage (`0,0,2,1`
+means **257**, not 513), so the tests pin the codec to hand-computed spec values
+and prove it differs from a naive read. **Trap 2: every ID3v2 version lays its
+frames out differently** — v2.2 has 3-character frame IDs (`TT2`) and 3-byte
+sizes, v2.3 has 4-character IDs (`TIT2`) and plain 32-bit sizes, and v2.4 keeps
+the 4-character IDs but makes the frame sizes **synchsafe too**, so the same tag
+is walked three ways; `readV2` detects the version and aliases the old IDs onto
+the modern ones, and the tests parse a **hand-built v2.2 tag** (bytes the writer
+never emits) to check the reader stands alone, plus the awkward real values —
+`"3/12"` → track `3`, `"(17)"` → genre `Rock`, a v2.4 timestamp → a 4-digit year.
+**Trap 3: text frames carry their own encoding byte** — `0` ISO-8859-1, `1`
+UTF-16+BOM, `2` UTF-16BE, `3` UTF-8; guess wrong and every title turns to
+mojibake, so `decodeText` honours the byte and any BOM for all four, and
+`encodeText` writes the smallest faithful encoding. The point of the whole thing
+is that **the audio is never touched**: `applyTags` slices out the audio between
+the existing tags and wraps new ones around it, so re-tagging replaces rather than
+stacks — the tests assert the audio comes back byte-identical and still starts on
+an MPEG frame-sync (`0xFF 0xFB`). Graded not by self-check but, when installed, by
+`id3v2`/`ffprobe` (separate ID3 implementations) reading the written files back.
+One dependency-free core behind a multi-file browser UI with per-file
+missing-field reports, **61 Node checks**, plus a Playwright end-to-end check
+tagging an untagged file in-browser.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1560,6 +1592,7 @@ with a live in-page preview, and **54 Node checks**.
 | 162 | [Sort Excel/CSV File Utility](./projects/phase2-files/sort-csv-utility/) | Files · Source 2 | 2026-11-18 |
 | 163 | [Create Zip File Maker](./projects/phase2-files/zip-file-maker/) | Files · Source 2 | 2026-11-19 |
 | 164 | [PDF Generator](./projects/phase2-files/pdf-generator/) | Files · Source 2 | 2026-11-20 |
+| 165 | [MP3 Tagger](./projects/phase2-files/mp3-tagger/) | Files · Source 2 | 2026-11-21 |
 
 ## Repository layout
 
@@ -1658,6 +1691,7 @@ projects/
     sort-csv-utility/         # reads a CSV, sorts its rows by one or more columns, writes the sorted file back: a Files project that lives or dies by handling the file — you can't sort a CSV until you can READ one, so the parser is a character-level state machine (not a comma split) that keeps quoted commas/escaped ""/embedded newlines in one field and absorbs CRLF, a leading BOM, and trailing newlines that must not add a phantom row; "sort by a column" needs to know what the column IS, so each column's type is inferred (all-numeric → number so 10 sorts after 9, all-date → chronological, else natural case-insensitive text so item2 < item10) and blanks always sink; multi-key sort only works if STABLE, so sortRows tie-breaks on the original row index rather than trusting the engine; and the writer is the exact inverse of the reader (quote only when needed, double interior quotes) with a parse→serialize→parse round-trip test asserting byte-identical rows. One dependency-free core behind a browser UI and 51 checks
     zip-file-maker/           # add files, zip them into a real .zip — with NO zip library, the format built from the bytes up: a zip is a binary database of files and three parts are hard — a wrong CRC-32 makes every entry "corrupt" (reflected IEEE, pinned to crc32("123456789")===0xCBF43926), so "zip it up" means actually implementing DEFLATE (LZ77 over a 32 KiB window via a hash chain + fixed Huffman, the gotcha being bits pack LSB-first while Huffman codes are MSB-first so each is bit-reversed) — verified not by self-check but by inflating the output with Node's own zlib; and the container is a graph of little-endian offsets that must all agree (local headers ← central directory ← end-of-central-directory), so buildZip tracks every offset and readZip parses it straight back, with each entry choosing DEFLATE only when it comes out smaller. Archives pass `unzip -t` and extract byte-for-byte; one dependency-free core behind a drag-and-drop browser UI, 28 Node checks, plus a Playwright smoke test building a 69%-smaller zip in-browser
     pdf-generator/            # turn a .txt/.html file (or pasted text) into a real .pdf — with NO PDF library, PDF 1.7 built from the bytes up: a reader walks a PDF by byte offset, so three parts are hard — the xref table is ten-digit absolute offsets that must be exact (one byte off = "damaged"), so buildPdf records each object's offset as it streams and an independent parsePdf walks startxref→xref→objects asserting every offset lands on its "N 0 obj"; "generate a PDF" means laying out the text yourself (PDF has no line breaks), so the engine word-wraps and positions every line using the REAL Adobe AFM advance widths of the 14 standard fonts (nothing embedded), which is what makes right/center/justify — spaces stretched via Tw — land where glyphs actually paint; and strings escape ( ) \, non-ASCII is WinAnsi single bytes (never UTF-8, or offsets drift), and each stream's /Length must be byte-exact. Graded not by self-check but by poppler's pdfinfo/pdftotext (a separate implementation) recovering page count and text in order; a small htmlToText handles the "html file" case with no DOM. One dependency-free core behind a browser UI with a live preview, 54 Node checks, plus a Playwright smoke test building a valid PDF in-browser
+    mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```

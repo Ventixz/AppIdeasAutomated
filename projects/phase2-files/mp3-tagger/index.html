@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MP3 Tagger</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>MP3 Tagger</h1>
+    <p class="sub">Drop in a batch of <code>.mp3</code> files. Each one is scanned for its <strong>ID3v1</strong> and <strong>ID3v2</strong> tags, the <strong>missing</strong> fields are flagged, and you can fill them in and write clean tags back — read and written byte-by-byte in your browser with <strong>no tagging library</strong>. Nothing is uploaded.</p>
+  </header>
+
+  <section class="io">
+    <div
+      id="drop"
+      class="dropzone"
+      tabindex="0"
+      role="button"
+      aria-label="Add MP3 files: drop them here or press to choose">
+      <p class="drop-main">Drop .mp3 files here</p>
+      <p class="drop-sub">or
+        <label class="filebtn">choose files<input type="file" id="file" accept=".mp3,audio/mpeg" multiple></label>
+        · or <button id="load-sample" type="button" class="linkbtn">load a sample (untagged)</button>
+      </p>
+    </div>
+  </section>
+
+  <section class="editor">
+    <div class="list-head">
+      <h2>Files <span id="srcinfo" class="count"></span></h2>
+      <div class="headbtns">
+        <button id="fill-missing" type="button" disabled>Auto-fill from filename</button>
+        <button id="clear" type="button" disabled>Clear list</button>
+      </div>
+    </div>
+    <div id="empty" class="empty">No files yet. Add some MP3s above — or load the sample to see an untagged file get flagged.</div>
+    <ul id="files" class="filelist"></ul>
+  </section>
+</main>
+
+<footer>
+  <p>Part of an automated daily <a href="https://claude.com/claude-code">Claude Code</a> routine · Source: <a href="https://github.com/karan/Projects">karan/Projects</a> → Files. The ID3 engine (synchsafe sizes, v2.2/2.3/2.4 frames, ID3v1 footer, text encodings) runs headless too — <code>node tests.js</code>.</p>
+</footer>
+
+<!-- A single reusable editor template, cloned per file. -->
+<template id="row-tpl">
+  <li class="file">
+    <div class="file-head">
+      <div class="file-title">
+        <span class="fname"></span>
+        <span class="badge"></span>
+      </div>
+      <div class="file-meta"></div>
+    </div>
+    <div class="missing-line"></div>
+    <div class="taggrid">
+      <label class="inline col">Title<input type="text" data-f="title" spellcheck="false"></label>
+      <label class="inline col">Artist<input type="text" data-f="artist" spellcheck="false"></label>
+      <label class="inline col">Album<input type="text" data-f="album" spellcheck="false"></label>
+      <label class="inline col">Year<input type="text" data-f="year" spellcheck="false" maxlength="4"></label>
+      <label class="inline col">Track<input type="text" data-f="track" spellcheck="false"></label>
+      <label class="inline col">Genre
+        <input type="text" data-f="genre" list="genre-list" spellcheck="false">
+      </label>
+      <label class="inline col wide">Comment<input type="text" data-f="comment" spellcheck="false"></label>
+    </div>
+    <div class="rowbar">
+      <button type="button" class="save primary">Write tags &amp; download</button>
+      <span class="rowstatus status"></span>
+    </div>
+  </li>
+</template>
+
+<datalist id="genre-list"></datalist>
+
+<script src="id3-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
