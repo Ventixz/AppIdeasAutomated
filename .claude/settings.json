@@ -1,0 +1,14 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "includeCoAuthoredBy": false,
+  "env": {
+    "GIT_AUTHOR_NAME": "Ventixz",
+    "GIT_AUTHOR_EMAIL": "79677277+Ventixz@users.noreply.github.com",
+    "GIT_COMMITTER_NAME": "Ventixz",
+    "GIT_COMMITTER_EMAIL": "79677277+Ventixz@users.noreply.github.com"
+  }
+}
