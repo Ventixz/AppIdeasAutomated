@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Snippet Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ------------------------------------------------ sidebar -->
+    <aside class="sidebar">
+      <header class="sidebar-head">
+        <h1>Snippets</h1>
+        <button id="new-btn" class="btn btn-primary" title="New snippet (Ctrl/Cmd+B)">+ New</button>
+      </header>
+
+      <div class="search-wrap">
+        <input id="search" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Search…  try  lang:py  #api  parse" />
+        <p class="hint">Filter with <code>lang:</code>, <code>tag:</code> or <code>#tag</code>; words rank across title, tags &amp; code.</p>
+      </div>
+
+      <div class="facets" id="facets"></div>
+
+      <ul id="snippet-list" class="snippet-list"></ul>
+
+      <footer class="sidebar-foot">
+        <span id="count-label">0 snippets</span>
+        <button id="sample-btn" class="btn btn-ghost" title="Load a few example snippets">Load samples</button>
+      </footer>
+    </aside>
+
+    <!-- --------------------------------------------------- main -->
+    <main class="main">
+      <!-- empty state -->
+      <section id="empty" class="empty">
+        <div class="empty-inner">
+          <h2>Code Snippet Manager</h2>
+          <p>Save functions, classes and other reusable code — organised by language
+             and tags, with syntax highlighting rendered by a hand-written lexer
+             (no highlighting library). Everything is stored locally in your browser.</p>
+          <button id="empty-new" class="btn btn-primary">+ New snippet</button>
+          <button id="empty-sample" class="btn btn-ghost">Load samples</button>
+        </div>
+      </section>
+
+      <!-- editor / viewer -->
+      <section id="editor" class="editor hidden">
+        <div class="editor-top">
+          <input id="title" class="title-input" type="text" placeholder="Snippet title" />
+          <div class="editor-actions">
+            <button id="copy-btn" class="btn btn-ghost" title="Copy code to clipboard">Copy</button>
+            <button id="delete-btn" class="btn btn-danger" title="Delete snippet">Delete</button>
+          </div>
+        </div>
+
+        <div class="editor-meta">
+          <label>Language
+            <select id="language"></select>
+          </label>
+          <label class="grow">Tags <small>(comma-separated)</small>
+            <input id="tags" type="text" autocomplete="off" placeholder="e.g. util, date, api" />
+          </label>
+        </div>
+
+        <div class="panes">
+          <div class="pane">
+            <div class="pane-head">Source</div>
+            <textarea id="code" spellcheck="false" autocomplete="off" autocapitalize="off"
+                      placeholder="Paste or type your code here…"></textarea>
+          </div>
+          <div class="pane">
+            <div class="pane-head">Preview</div>
+            <pre class="preview"><code id="preview"></code></pre>
+          </div>
+        </div>
+
+        <div class="editor-foot">
+          <span id="save-state" class="save-state">Saved</span>
+          <span id="stamp" class="stamp"></span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="snippet-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

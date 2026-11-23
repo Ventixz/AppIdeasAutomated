@@ -304,4 +304,21 @@ this section next, one project per day. Populated from the
 - [x] Create Zip File Maker — 2026-11-19
 - [x] PDF Generator — 2026-11-20
 - [x] Mp3 Tagger — 2026-11-21
-- [ ] Code Snippet Manager
+- [x] Code Snippet Manager — 2026-11-23
+
+**Files complete — all 6 projects built. The next category, Databases, is now
+unlocked.**
+
+### Databases
+
+Unlocked 2026-11-23 after the Files category was finished. The routine works down
+this section next, one project per day. Populated from the
+[karan/Projects Databases section](https://github.com/karan/Projects).
+
+- [ ] SQL Query Analyzer
+- [ ] Remote SQL Tool
+- [ ] Report Generator
+- [ ] Event Scheduler and Calendar
+- [ ] Budget Tracker
+- [ ] TV Show Tracker
+- [ ] Travel Planner System
