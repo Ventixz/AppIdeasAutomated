@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (76 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (77 built)**
 
 | Category | Status |
 | --- | --- |
@@ -52,7 +52,8 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Classes (OOP) | ✅ Complete — **10 / 10** |
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
-| Files | 🚧 In progress — **5 / 6** |
+| Files | ✅ Complete — **6 / 6** |
+| Databases | 🚧 In progress — **0 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1424,6 +1425,43 @@ One dependency-free core behind a multi-file browser UI with per-file
 missing-field reports, **61 Node checks**, plus a Playwright end-to-end check
 tagging an untagged file in-browser.
 
+The Files category's sixth build, on 2026-11-23, is a **Code Snippet Manager**
+(*"a utility for saving functions, classes or other reusable code for later,
+organized by snippet type or language, optionally with syntax highlighting"*) — a
+local snippet library that saves, tags and searches your code, all in the browser
+with **no syntax-highlighting library**: the highlighter is a hand-written lexer.
+Three things about it are genuinely hard, and all three live in `snippet-core.js`.
+**Trap 1: a syntax highlighter is a lexer, not a bag of regexes** — a `//` inside
+a string (`"http://x"`) and a `#` inside a Python string both look like comment
+markers, and a `\bfor\b` keyword rule still trips over `formatter`/`information`,
+because the right answer depends on *where you already are* in the text; so
+`tokenize` is a single character-level scan that tries token kinds in a fixed
+priority order (comment → string → number → identifier → operator), recognising a
+string as one unit before it ever looks for a comment inside it and reading each
+identifier whole before classifying it — the tests pin that `"http://x//y"` yields
+no comment, a Python string keeps its `#`, and `var information = formatter` has
+exactly one keyword, and that the token stream rejoins to the source byte for byte.
+**Trap 2: highlighting must escape HTML exactly once, after tokenizing** — the code
+is user text full of `<`, `>` and `&`, so a snippet containing `</span><script>` is
+a stored-XSS hole in an innocent-looking viewer; `highlightHtml` tokenizes first
+and escapes each token's text once as it wraps it, so the `<script>` becomes inert
+visible text — proven by stripping the spans and un-escaping back to the exact
+source, and by a Playwright check that types a `<script>` snippet into the page and
+confirms it never executes. **Trap 3: search must rank and compose, and the store
+must never trust its data** — a snippet *named* `parseDate` outranks one that merely
+*calls* it (title hits score far above code hits, terms ANDed), `lang:` and
+`tag:`/`#tag` filters narrow and combine, and `deserialize` parses defensively so a
+corrupt blob yields an empty store rather than a crash (junk records dropped,
+unknown languages coerced, colliding ids de-duped), with the round-trip proven
+byte-exact on code full of quotes, backslashes, newlines, unicode and HTML. One
+dependency-free core backs a two-pane browser UI with live highlighted preview,
+language/tag facet chips and autosave, **112 Node checks**, plus a Playwright
+end-to-end check. **That completes the Files category — all 6 projects built.** Per
+the routine's rules it has unlocked the next karan/Projects category, **Databases**
+(SQL Query Analyzer, Remote SQL Tool, Report Generator, Event Scheduler and
+Calendar, Budget Tracker, TV Show Tracker, Travel Planner System), and works down
+it one project per day from here.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1593,6 +1631,7 @@ tagging an untagged file in-browser.
 | 163 | [Create Zip File Maker](./projects/phase2-files/zip-file-maker/) | Files · Source 2 | 2026-11-19 |
 | 164 | [PDF Generator](./projects/phase2-files/pdf-generator/) | Files · Source 2 | 2026-11-20 |
 | 165 | [MP3 Tagger](./projects/phase2-files/mp3-tagger/) | Files · Source 2 | 2026-11-21 |
+| 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
 
 ## Repository layout
 
@@ -1692,6 +1731,7 @@ projects/
     zip-file-maker/           # add files, zip them into a real .zip — with NO zip library, the format built from the bytes up: a zip is a binary database of files and three parts are hard — a wrong CRC-32 makes every entry "corrupt" (reflected IEEE, pinned to crc32("123456789")===0xCBF43926), so "zip it up" means actually implementing DEFLATE (LZ77 over a 32 KiB window via a hash chain + fixed Huffman, the gotcha being bits pack LSB-first while Huffman codes are MSB-first so each is bit-reversed) — verified not by self-check but by inflating the output with Node's own zlib; and the container is a graph of little-endian offsets that must all agree (local headers ← central directory ← end-of-central-directory), so buildZip tracks every offset and readZip parses it straight back, with each entry choosing DEFLATE only when it comes out smaller. Archives pass `unzip -t` and extract byte-for-byte; one dependency-free core behind a drag-and-drop browser UI, 28 Node checks, plus a Playwright smoke test building a 69%-smaller zip in-browser
     pdf-generator/            # turn a .txt/.html file (or pasted text) into a real .pdf — with NO PDF library, PDF 1.7 built from the bytes up: a reader walks a PDF by byte offset, so three parts are hard — the xref table is ten-digit absolute offsets that must be exact (one byte off = "damaged"), so buildPdf records each object's offset as it streams and an independent parsePdf walks startxref→xref→objects asserting every offset lands on its "N 0 obj"; "generate a PDF" means laying out the text yourself (PDF has no line breaks), so the engine word-wraps and positions every line using the REAL Adobe AFM advance widths of the 14 standard fonts (nothing embedded), which is what makes right/center/justify — spaces stretched via Tw — land where glyphs actually paint; and strings escape ( ) \, non-ASCII is WinAnsi single bytes (never UTF-8, or offsets drift), and each stream's /Length must be byte-exact. Graded not by self-check but by poppler's pdfinfo/pdftotext (a separate implementation) recovering page count and text in order; a small htmlToText handles the "html file" case with no DOM. One dependency-free core behind a browser UI with a live preview, 54 Node checks, plus a Playwright smoke test building a valid PDF in-browser
     mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
+    code-snippet-manager/     # save/tag/search reusable code with syntax highlighting — with NO highlighting library, the highlighter a hand-written lexer: a syntax highlighter is a lexer, not a bag of regexes — a // inside a string and a # inside a Python string both look like comment markers and a \bfor\b rule still trips over "formatter"/"information", because the right answer depends on where you already are, so tokenize is one character-level scan trying token kinds in priority order (comment→string→number→identifier→operator), recognising a string whole before looking for a comment inside it and reading each identifier whole before classifying it (tests: "http://x//y" has no comment, a Python string keeps its #, "var information = formatter" has one keyword, tokens rejoin byte-for-byte); highlighting must escape HTML exactly once AFTER tokenizing, or a snippet containing </span><script> is stored XSS, so highlightHtml tokenizes then escapes each token's text once (proven by stripping spans + un-escaping back to the source, and a Playwright check that a <script> snippet never executes); and search must rank (a snippet NAMED parseDate outranks one that only calls it; lang:/tag:/#tag filters compose) while the store never trusts its data (deserialize drops junk records, coerces unknown languages, de-dupes ids, round-trips nasty code byte-exact). One dependency-free core behind a two-pane browser UI with live preview + autosave, 112 Node checks, plus a Playwright end-to-end check
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
