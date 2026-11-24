@@ -315,7 +315,7 @@ Unlocked 2026-11-23 after the Files category was finished. The routine works dow
 this section next, one project per day. Populated from the
 [karan/Projects Databases section](https://github.com/karan/Projects).
 
-- [ ] SQL Query Analyzer
+- [x] SQL Query Analyzer — 2026-11-24
 - [ ] Remote SQL Tool
 - [ ] Report Generator
 - [ ] Event Scheduler and Calendar

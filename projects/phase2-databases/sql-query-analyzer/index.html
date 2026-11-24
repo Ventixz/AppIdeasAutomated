@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL Query Analyzer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>SQL&nbsp;Query&nbsp;Analyzer</h1>
+  <p class="tagline">Run a query against a local in-browser database — then see exactly how to make it faster.</p>
+</header>
+
+<main>
+  <section class="panel editor-panel">
+    <div class="panel-head">
+      <h2>Query</h2>
+      <div class="toolbar">
+        <button id="load-sample" class="btn">Load sample database</button>
+        <button id="run" class="btn btn-primary">Run &amp; Analyze ▸</button>
+      </div>
+    </div>
+    <textarea id="sql" spellcheck="false" aria-label="SQL query"></textarea>
+    <div class="samples">
+      <span>Try:</span>
+      <button class="chip" data-q="SELECT name, city FROM users WHERE city = 'Berlin';">filter by city</button>
+      <button class="chip" data-q="SELECT u.name, o.total FROM users u JOIN orders o ON o.user_id = u.id WHERE u.city = 'Berlin';">join users &amp; orders</button>
+      <button class="chip" data-q="SELECT city, COUNT(*) AS n, AVG(age) AS avg_age FROM users GROUP BY city ORDER BY n DESC;">group &amp; aggregate</button>
+      <button class="chip" data-q="SELECT * FROM users WHERE UPPER(city) = 'BERLIN';">a slow query</button>
+    </div>
+    <p id="msg" class="msg" role="status"></p>
+  </section>
+
+  <section class="panel analysis-panel">
+    <div class="panel-head"><h2>Analysis</h2><div id="stats" class="stats"></div></div>
+    <div id="suggestions" class="suggestions"></div>
+    <details class="plan-box" open>
+      <summary>Execution plan</summary>
+      <pre id="plan" class="plan"></pre>
+    </details>
+  </section>
+
+  <section class="panel results-panel">
+    <div class="panel-head"><h2>Results</h2><span id="result-count" class="muted"></span></div>
+    <div id="results" class="results"><p class="muted">Load the sample database and run a query.</p></div>
+  </section>
+
+  <section class="panel schema-panel">
+    <div class="panel-head"><h2>Schema</h2></div>
+    <div id="schema" class="schema"><p class="muted">No tables yet.</p></div>
+  </section>
+</main>
+
+<footer class="sitefoot">
+  <p>A dependency-free SQL engine &amp; cost analyzer — no SQL library, no build step.
+     Part of an automated <a href="https://claude.com/claude-code">Claude Code</a> routine
+     building <a href="https://github.com/karan/Projects">karan/Projects</a>.
+     Engine tests: <code>node tests.js</code>.</p>
+</footer>
+
+<script src="sql-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
