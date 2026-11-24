@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (77 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (78 built)**
 
 | Category | Status |
 | --- | --- |
@@ -53,7 +53,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
 | Files | ✅ Complete — **6 / 6** |
-| Databases | 🚧 In progress — **0 / 7** |
+| Databases | 🚧 In progress — **1 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1462,6 +1462,38 @@ the routine's rules it has unlocked the next karan/Projects category, **Database
 Calendar, Budget Tracker, TV Show Tracker, Travel Planner System), and works down
 it one project per day from here.
 
+The **Databases** category opens on 2026-11-24 with a **SQL Query Analyzer**
+(*"a utility application which a user can enter a query and have it run against a
+local database and look for ways to make it more efficient"*) — a real SQL
+database **and** query optimizer that run entirely in the browser with **no SQL
+library** (no sql.js, no WASM SQLite, no parser generator): the whole pipeline is
+hand-written, `tokenize → parse (recursive descent → AST) → plan + execute →
+analyze`. Three things are genuinely hard, all in `sql-core.js`. **Trap 1: SQL is
+parsed, not split on keywords** — a keyword can sit inside a string literal
+(`note = 'see the WHERE clause'`), `<=` is one operator not two, and `a OR b AND
+c` means `a OR (b AND c)` because `AND` binds tighter than `OR`; so there is a
+real tokenizer (recognising a string whole before it looks for keywords) and a
+recursive-descent parser with precedence encoded in the call chain — the tests
+pin that keywords inside a string aren't tokenized as keywords, `'O''Brien'`
+round-trips, and `2 + 3 * 4` is `14` not `20`. **Trap 2: "more efficient" must be
+measured, not asserted** — the executor is instrumented, counting the rows every
+operator reads from storage, so a `WHERE city = 'Berlin'` that full-scans 5,000
+rows becomes an index lookup examining only the ~833 matches once you add the
+index; the analyzer computes that before/after *from the live data* and ships it
+with runnable `CREATE INDEX` DDL, and it knows when an index *won't* help
+(`UPPER(city) = …`, `LIKE '%x'`, a range on a hash index) and says why instead of
+over-promising. **Trap 3: a join's cost is a product** — a nested loop of n × m
+rows collapses to ~n only if the inner side is probed by an index on the join
+key, so the planner picks an index join when it can and the analyzer recommends
+an index on the exact inner join column when it can't (a 100 × 1,000 join drops
+from ~100,000 rows examined to a tenth of that). One dependency-free core behind a
+browser UI with a result grid, an annotated execution plan and one-click
+**Apply & re-run** suggestions, **69 Node checks**, plus a Playwright end-to-end
+check that applies a suggested index in-browser and confirms rows examined fall
+from 5,000 to 833. **This starts the Databases category** (next:
+Remote SQL Tool, Report Generator, Event Scheduler and Calendar, Budget Tracker,
+TV Show Tracker, Travel Planner System), worked one project per day.
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1632,6 +1664,7 @@ it one project per day from here.
 | 164 | [PDF Generator](./projects/phase2-files/pdf-generator/) | Files · Source 2 | 2026-11-20 |
 | 165 | [MP3 Tagger](./projects/phase2-files/mp3-tagger/) | Files · Source 2 | 2026-11-21 |
 | 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
+| 167 | [SQL Query Analyzer](./projects/phase2-databases/sql-query-analyzer/) | Databases · Source 2 | 2026-11-24 |
 
 ## Repository layout
 
@@ -1732,6 +1765,8 @@ projects/
     pdf-generator/            # turn a .txt/.html file (or pasted text) into a real .pdf — with NO PDF library, PDF 1.7 built from the bytes up: a reader walks a PDF by byte offset, so three parts are hard — the xref table is ten-digit absolute offsets that must be exact (one byte off = "damaged"), so buildPdf records each object's offset as it streams and an independent parsePdf walks startxref→xref→objects asserting every offset lands on its "N 0 obj"; "generate a PDF" means laying out the text yourself (PDF has no line breaks), so the engine word-wraps and positions every line using the REAL Adobe AFM advance widths of the 14 standard fonts (nothing embedded), which is what makes right/center/justify — spaces stretched via Tw — land where glyphs actually paint; and strings escape ( ) \, non-ASCII is WinAnsi single bytes (never UTF-8, or offsets drift), and each stream's /Length must be byte-exact. Graded not by self-check but by poppler's pdfinfo/pdftotext (a separate implementation) recovering page count and text in order; a small htmlToText handles the "html file" case with no DOM. One dependency-free core behind a browser UI with a live preview, 54 Node checks, plus a Playwright smoke test building a valid PDF in-browser
     mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
     code-snippet-manager/     # save/tag/search reusable code with syntax highlighting — with NO highlighting library, the highlighter a hand-written lexer: a syntax highlighter is a lexer, not a bag of regexes — a // inside a string and a # inside a Python string both look like comment markers and a \bfor\b rule still trips over "formatter"/"information", because the right answer depends on where you already are, so tokenize is one character-level scan trying token kinds in priority order (comment→string→number→identifier→operator), recognising a string whole before looking for a comment inside it and reading each identifier whole before classifying it (tests: "http://x//y" has no comment, a Python string keeps its #, "var information = formatter" has one keyword, tokens rejoin byte-for-byte); highlighting must escape HTML exactly once AFTER tokenizing, or a snippet containing </span><script> is stored XSS, so highlightHtml tokenizes then escapes each token's text once (proven by stripping spans + un-escaping back to the source, and a Playwright check that a <script> snippet never executes); and search must rank (a snippet NAMED parseDate outranks one that only calls it; lang:/tag:/#tag filters compose) while the store never trusts its data (deserialize drops junk records, coerces unknown languages, de-dupes ids, round-trips nasty code byte-exact). One dependency-free core behind a two-pane browser UI with live preview + autosave, 112 Node checks, plus a Playwright end-to-end check
+  phase2-databases/           # Source 2 (karan/Projects) — Databases category
+    sql-query-analyzer/       # enter a query, run it against a local DB, get told how to make it faster — with NO SQL library (no sql.js/WASM SQLite/parser generator), the whole pipeline hand-written: tokenize→parse(recursive descent→AST)→plan+execute→analyze. SQL is parsed, not split on keywords — a keyword can sit inside a string literal ('see the WHERE clause'), <= is one operator, and a OR b AND c means a OR (b AND c) since AND binds tighter, so there's a real tokenizer (string recognised whole before it looks for keywords) and a precedence-climbing recursive-descent parser (tests: keywords in a string aren't keywords, 'O''Brien' round-trips, 2+3*4==14); "more efficient" is MEASURED not asserted — the executor counts rows examined per operator, so WHERE city='Berlin' full-scans 5000 rows but becomes an index lookup over ~833 once you add the index, and the analyzer computes that before/after from the live data + ships runnable CREATE INDEX DDL, while refusing to promise an index for non-sargable predicates (UPPER(col)=…, LIKE '%x', range on a hash index) and saying why; a join's cost is a product — n×m nested loop collapses to ~n only if the inner side is index-probed on the join key, so the planner picks index-join vs scan-join and suggests the exact inner column (100×1000 join drops from ~100k rows examined to a tenth). One dependency-free core behind a browser UI with result grid, annotated execution plan and one-click Apply-&-re-run suggestions, 69 Node checks, plus a Playwright end-to-end check that applies an index in-browser and watches rows examined fall 5000→833
 PROGRESS.md           # the routine's source of truth
 README.md             # this file
 ```
