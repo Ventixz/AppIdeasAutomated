@@ -316,7 +316,7 @@ this section next, one project per day. Populated from the
 [karan/Projects Databases section](https://github.com/karan/Projects).
 
 - [x] SQL Query Analyzer — 2026-11-24
-- [ ] Remote SQL Tool
+- [x] Remote SQL Tool — 2026-11-25
 - [ ] Report Generator
 - [ ] Event Scheduler and Calendar
 - [ ] Budget Tracker
