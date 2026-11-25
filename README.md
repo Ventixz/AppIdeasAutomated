@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (78 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (79 built)**
 
 | Category | Status |
 | --- | --- |
@@ -53,7 +53,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
 | Files | ✅ Complete — **6 / 6** |
-| Databases | 🚧 In progress — **1 / 7** |
+| Databases | 🚧 In progress — **2 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1494,6 +1494,40 @@ from 5,000 to 833. **This starts the Databases category** (next:
 Remote SQL Tool, Report Generator, Event Scheduler and Calendar, Budget Tracker,
 TV Show Tracker, Travel Planner System), worked one project per day.
 
+Day 168 (2026-11-25) answers the next entry, a **Remote SQL Tool** (*"a utility
+that can execute queries on remote servers from your local computer across the
+Internet"*). Yesterday's analyzer ran a database *inside* the page; the operative
+word today is **remote**, and "remote" means you don't call a function — you
+exchange **framed bytes over a socket**. So this is the other half of talking to
+a database: the **wire protocol**, PostgreSQL's frontend/backend v3, written
+**from the bytes up** with **no `pg`/`libpq`** — even the login crypto (MD5,
+SHA-256, HMAC, PBKDF2) is hand-written, so the SCRAM-SHA-256 handshake is real,
+not stubbed. Three traps, all pinned by tests. **Trap 1: framing is off-by-four
+twice** — a message is `[type][Int32 length][payload]` where the length *counts
+its own 4 bytes but not the type byte*, and the very first message
+(`StartupMessage`) has *no type byte at all*; add to that TCP delivering bytes in
+arbitrary chunks, so the reader buffers and yields only whole messages (a test
+feeds it a two-message stream one byte at a time and still recovers both, and
+proves payload bytes that happen to equal type codes `D`/`T` don't fake a frame
+boundary). **Trap 2: authentication is a protocol, not a string compare** — MD5
+salts a double-MD5 so a captured response can't be replayed, and SCRAM-SHA-256
+(RFC 5802/7677) is a four-message PBKDF2 challenge where the password is never
+sent and the client *must verify the server's signature back* (the MITM guard
+people skip) and check the server nonce extends its own; the whole exchange is
+pinned byte-for-byte to the RFC 7677 worked example, and the server side is
+implemented too so the browser does a genuine round trip. **Trap 3: a row is
+bytes, and `NULL` (column length `-1`) is not the empty string (length `0`)** —
+you only know a column's type from the `RowDescription`'s type OID that arrived
+first, so decoding is OID-driven and keeps `NULL` distinct from `''`. One
+dependency-free core (`pg-core.js`) drives three faces: a browser UI with a
+connection form, a typed result grid and a **live protocol trace** showing every
+message on the wire; a Node CLI (`--demo` offline, or a real TCP connection with
+the password read from `PGPASSWORD`, never a flag); and **92 Node checks** led by
+the crypto vectors and the RFC SCRAM exchange, plus a Playwright end-to-end run
+that connects, queries, renders `NULL`s, and watches a wrong password be rejected
+(next: Report Generator, Event Scheduler and Calendar, Budget Tracker, TV Show
+Tracker, Travel Planner System).
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1665,6 +1699,7 @@ TV Show Tracker, Travel Planner System), worked one project per day.
 | 165 | [MP3 Tagger](./projects/phase2-files/mp3-tagger/) | Files · Source 2 | 2026-11-21 |
 | 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
 | 167 | [SQL Query Analyzer](./projects/phase2-databases/sql-query-analyzer/) | Databases · Source 2 | 2026-11-24 |
+| 168 | [Remote SQL Tool](./projects/phase2-databases/remote-sql-tool/) | Databases · Source 2 | 2026-11-25 |
 
 ## Repository layout
 
@@ -1766,6 +1801,7 @@ projects/
     mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
     code-snippet-manager/     # save/tag/search reusable code with syntax highlighting — with NO highlighting library, the highlighter a hand-written lexer: a syntax highlighter is a lexer, not a bag of regexes — a // inside a string and a # inside a Python string both look like comment markers and a \bfor\b rule still trips over "formatter"/"information", because the right answer depends on where you already are, so tokenize is one character-level scan trying token kinds in priority order (comment→string→number→identifier→operator), recognising a string whole before looking for a comment inside it and reading each identifier whole before classifying it (tests: "http://x//y" has no comment, a Python string keeps its #, "var information = formatter" has one keyword, tokens rejoin byte-for-byte); highlighting must escape HTML exactly once AFTER tokenizing, or a snippet containing </span><script> is stored XSS, so highlightHtml tokenizes then escapes each token's text once (proven by stripping spans + un-escaping back to the source, and a Playwright check that a <script> snippet never executes); and search must rank (a snippet NAMED parseDate outranks one that only calls it; lang:/tag:/#tag filters compose) while the store never trusts its data (deserialize drops junk records, coerces unknown languages, de-dupes ids, round-trips nasty code byte-exact). One dependency-free core behind a two-pane browser UI with live preview + autosave, 112 Node checks, plus a Playwright end-to-end check
   phase2-databases/           # Source 2 (karan/Projects) — Databases category
+    remote-sql-tool/          # run SQL on a REMOTE server = the wire protocol: PostgreSQL v3 hand-written (no pg/libpq, SCRAM-SHA-256 crypto hand-written too). Framing is off-by-four twice (length counts itself not the type byte; StartupMessage has no type byte) over chunked TCP; auth is a protocol not a compare (MD5 salted double-hash; SCRAM four-message PBKDF2 challenge, password never sent, server signature verified back — pinned to the RFC 7677 vector, server side implemented too for a real browser round trip); a DataRow is bytes typed by the RowDescription's OID and NULL (len -1) ≠ '' (len 0). One core drives a browser UI with a live protocol trace, a Node CLI (--demo or real TCP, password from PGPASSWORD), 92 Node checks + a Playwright e2e
     sql-query-analyzer/       # enter a query, run it against a local DB, get told how to make it faster — with NO SQL library (no sql.js/WASM SQLite/parser generator), the whole pipeline hand-written: tokenize→parse(recursive descent→AST)→plan+execute→analyze. SQL is parsed, not split on keywords — a keyword can sit inside a string literal ('see the WHERE clause'), <= is one operator, and a OR b AND c means a OR (b AND c) since AND binds tighter, so there's a real tokenizer (string recognised whole before it looks for keywords) and a precedence-climbing recursive-descent parser (tests: keywords in a string aren't keywords, 'O''Brien' round-trips, 2+3*4==14); "more efficient" is MEASURED not asserted — the executor counts rows examined per operator, so WHERE city='Berlin' full-scans 5000 rows but becomes an index lookup over ~833 once you add the index, and the analyzer computes that before/after from the live data + ships runnable CREATE INDEX DDL, while refusing to promise an index for non-sargable predicates (UPPER(col)=…, LIKE '%x', range on a hash index) and saying why; a join's cost is a product — n×m nested loop collapses to ~n only if the inner side is index-probed on the join key, so the planner picks index-join vs scan-join and suggests the exact inner column (100×1000 join drops from ~100k rows examined to a tenth). One dependency-free core behind a browser UI with result grid, annotated execution plan and one-click Apply-&-re-run suggestions, 69 Node checks, plus a Playwright end-to-end check that applies an index in-browser and watches rows examined fall 5000→833
 PROGRESS.md           # the routine's source of truth
 README.md             # this file

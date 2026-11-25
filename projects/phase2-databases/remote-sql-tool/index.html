@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remote SQL Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⇄</span>
+      <div>
+        <h1>Remote SQL Tool</h1>
+        <p class="tagline">Connect to a database over the wire &mdash; the PostgreSQL protocol, hand-written.</p>
+      </div>
+    </div>
+    <a class="src" href="https://github.com/karan/Projects" target="_blank" rel="noopener">karan/Projects · Databases 2/7</a>
+  </header>
+
+  <p class="note">
+    A real SQL tool connects to a <strong>remote</strong> server across the Internet, so the hard part isn&rsquo;t the
+    SQL &mdash; it&rsquo;s the <strong>wire protocol</strong>: framed bytes, a login handshake, a typed row stream. This page
+    speaks PostgreSQL&rsquo;s v3 protocol from scratch (no <code>pg</code> library; even the SCRAM-SHA-256 crypto is
+    hand-written). Browsers can&rsquo;t open raw TCP, so the &ldquo;server&rdquo; below is an <strong>in-page backend that
+    speaks the same protocol</strong> &mdash; the handshake is genuine. The companion <code>cli.js</code> points the exact
+    same client at a real server over TCP. Watch the <strong>protocol trace</strong> to see every byte exchanged.
+  </p>
+
+  <main>
+    <section class="panel connect" id="connectPanel">
+      <h2>1 · Connection</h2>
+      <div class="grid">
+        <label>Host <input id="host" value="db.internal.example" title="Cosmetic in the browser demo; the CLI dials this over TCP."></label>
+        <label>Port <input id="port" value="5432"></label>
+        <label>Database <input id="database" value="appdb"></label>
+        <label>User <input id="user" value="secure"></label>
+        <label>Password <input id="password" type="password" value="pencil"></label>
+        <label>Server auth
+          <select id="authMethod" title="What the in-page server will demand.">
+            <option value="scram-sha-256" selected>SCRAM-SHA-256</option>
+            <option value="md5">MD5</option>
+            <option value="cleartext">Cleartext</option>
+            <option value="trust">Trust (no password)</option>
+          </select>
+        </label>
+      </div>
+      <div class="actions">
+        <button id="connectBtn" class="primary">Connect</button>
+        <button id="disconnectBtn" disabled>Disconnect</button>
+        <span id="status" class="status off">offline</span>
+      </div>
+      <p class="hint">The in-page server knows these accounts: <code>secure</code>/<code>pencil</code>,
+        <code>app</code>/<code>hunter2</code>, <code>postgres</code>/<code>postgres</code>. Type a wrong password (or an
+        unknown user) to watch authentication fail honestly.</p>
+    </section>
+
+    <section class="panel query">
+      <h2>2 · Query</h2>
+      <div class="chips" id="chips"></div>
+      <textarea id="sql" spellcheck="false" rows="4">SELECT id, name, department, salary FROM employees WHERE salary &gt; 140000 ORDER BY salary DESC</textarea>
+      <div class="actions">
+        <button id="runBtn" class="primary" disabled>Run query &nbsp;<kbd>Ctrl/⌘</kbd>+<kbd>Enter</kbd></button>
+        <span class="hint">Tables: <code>employees</code>, <code>departments</code>. Supports <code>WHERE</code> (AND),
+          <code>ORDER BY</code>, <code>LIMIT</code>, <code>count(*)</code>, <code>version()</code>.</span>
+      </div>
+    </section>
+
+    <section class="panel results">
+      <h2>3 · Result</h2>
+      <div id="result" class="result"><p class="placeholder">Connect, then run a query.</p></div>
+    </section>
+
+    <section class="panel trace">
+      <h2>Protocol trace <small>— the bytes on the wire</small></h2>
+      <div class="trace-legend">
+        <span class="cs">C&rarr;S</span> frontend &rarr; backend &nbsp;·&nbsp;
+        <span class="sc">S&rarr;C</span> backend &rarr; frontend
+      </div>
+      <ol id="trace" class="trace-list"><li class="placeholder">Messages appear here as they cross the wire.</li></ol>
+    </section>
+  </main>
+
+  <footer>
+    <p>An automated <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> routine builds
+      one project a day. Day 168 &mdash; Remote SQL Tool. Run <code>node tests.js</code> for 90 checks; <code>node cli.js
+      --demo --trace "SELECT 1"</code> to see the handshake in a terminal.</p>
+  </footer>
+
+  <script src="pg-core.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
