@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Report Generator</h1>
+  <p class="sub">Group, aggregate and paginate rows from a database into a text, CSV, HTML
+  or <strong>real PDF</strong> report &mdash; the whole engine, PDF bytes included, is
+  <strong>dependency-free</strong> and runs right here in the page.</p>
+</header>
+
+<main>
+  <section class="panel controls">
+    <h2>1 &middot; Report</h2>
+    <label class="field">
+      <span>Title</span>
+      <input id="title" type="text" value="Sales Report">
+    </label>
+
+    <h2>2 &middot; Group by <small>(drag order: outer &rarr; inner)</small></h2>
+    <div id="groupList" class="grouplist"></div>
+
+    <h2>3 &middot; Columns &amp; aggregates</h2>
+    <table class="colcfg">
+      <thead><tr><th>Show</th><th>Column</th><th>Type</th><th>Aggregate</th></tr></thead>
+      <tbody id="colBody"></tbody>
+    </table>
+
+    <h2>4 &middot; Sort rows by</h2>
+    <div class="row">
+      <select id="sortKey"></select>
+      <select id="sortDir">
+        <option value="asc">ascending</option>
+        <option value="desc">descending</option>
+      </select>
+    </div>
+
+    <div class="downloads">
+      <button id="dlPdf" class="primary">Download PDF</button>
+      <button id="dlCsv">Download CSV</button>
+      <button id="dlHtml">Download HTML</button>
+    </div>
+  </section>
+
+  <section class="panel preview">
+    <div class="tabs">
+      <button data-tab="report" class="active">Report</button>
+      <button data-tab="text">Plain text</button>
+      <button data-tab="csv">CSV</button>
+      <button data-tab="pdf">PDF structure</button>
+    </div>
+    <div id="tab-report" class="tabpane active"></div>
+    <pre id="tab-text" class="tabpane mono"></pre>
+    <pre id="tab-csv" class="tabpane mono"></pre>
+    <div id="tab-pdf" class="tabpane"></div>
+  </section>
+</main>
+
+<footer>
+  <p>One dependency-free core (<code>report-core.js</code>) drives this page, a Node CLI
+  (<code>cli.js</code>) and <span id="testcount">97</span> checks. The PDF is written byte
+  by byte &mdash; no library &mdash; and graded by an independent reader and by poppler.
+  Built by an automated <a href="https://claude.com/claude-code">Claude Code</a> routine.</p>
+</footer>
+
+<script src="report-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

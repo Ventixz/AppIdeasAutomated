@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (79 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (80 built)**
 
 | Category | Status |
 | --- | --- |
@@ -53,7 +53,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
 | Files | ✅ Complete — **6 / 6** |
-| Databases | 🚧 In progress — **2 / 7** |
+| Databases | 🚧 In progress — **3 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1528,6 +1528,41 @@ that connects, queries, renders `NULL`s, and watches a wrong password be rejecte
 (next: Report Generator, Event Scheduler and Calendar, Budget Tracker, TV Show
 Tracker, Travel Planner System).
 
+Day 169 (2026-11-26) takes the third Databases entry, a **Report Generator**
+(*"use a database to generate a report in PDF, HTML, etc."*). The first two
+Databases days got rows *out* of a database; this one is the other end of the
+pipeline — turning rows into a document a person reads — and since the interesting
+format is **PDF**, the PDF is **written from the bytes up** (no `pdfkit`/`jspdf`,
+no headless browser): the object graph, content streams, font metrics and
+cross-reference table are all assembled by hand and graded by an independent
+reader **and** by poppler. The pipeline is `filter → sort → group (nested) →
+aggregate → flatten → paginate → render {text|csv|html|PDF}`. Three traps, all
+pinned by tests. **Trap 1: a grand total is *not* the total of the subtotals you
+printed** — true for `SUM`/`COUNT`, but for `AVG`/`MIN`/`MAX` it is quietly wrong
+(the average of two group averages ≠ the overall average), so every aggregate at
+every level is computed from that node's *raw rows*, with full SQL NULL semantics
+(`AVG` divides by the non-null count, `COUNT(*)≠COUNT(col)`, an all-NULL
+aggregate is NULL) — a test pins group averages 3 and 6 whose average-of-averages
+is 4.5 but whose true overall average is 4.0. **Trap 2: one layout model drives
+every renderer** — `flattenReport` turns the group tree into one ordered line
+list and `paginate` re-emits enclosing group headers (marked *continued*) at each
+page break, never orphaning a subtotal or losing a column header, with the
+invariants tested directly (dropping *continued* lines reproduces the stream; no
+page overflows; nothing orphaned). **Trap 3: the PDF xref is absolute byte
+offsets and columns need the *formatted* width** — `buildPdf` records each
+object's offset as it streams and `parsePdf` walks `startxref → xref → N 0 obj`
+asserting every offset lands exactly (a test perturbs one digit and confirms
+rejection; each stream `/Length` is byte-exact), while right-aligning numbers
+uses the real Adobe AFM advance widths of Helvetica (nothing embedded) measured
+on the *formatted* string (`"$1,234.50"`, commas and all) or the alignment
+drifts. One dependency-free core (`report-core.js`) drives a browser report
+builder (group-by chips, per-column aggregates, live preview, a PDF-structure
+inspector, in-browser downloads), a Node CLI (presets or your own JSON; text,
+CSV, HTML or PDF), and **97 Node checks** graded by `parsePdf` + poppler, plus a
+Playwright end-to-end run that downloads a PDF in-browser and confirms poppler
+reads its title, pages and grand total (next: Event Scheduler and Calendar,
+Budget Tracker, TV Show Tracker, Travel Planner System).
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1700,6 +1735,7 @@ Tracker, Travel Planner System).
 | 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
 | 167 | [SQL Query Analyzer](./projects/phase2-databases/sql-query-analyzer/) | Databases · Source 2 | 2026-11-24 |
 | 168 | [Remote SQL Tool](./projects/phase2-databases/remote-sql-tool/) | Databases · Source 2 | 2026-11-25 |
+| 169 | [Report Generator](./projects/phase2-databases/report-generator/) | Databases · Source 2 | 2026-11-26 |
 
 ## Repository layout
 
@@ -1801,6 +1837,7 @@ projects/
     mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
     code-snippet-manager/     # save/tag/search reusable code with syntax highlighting — with NO highlighting library, the highlighter a hand-written lexer: a syntax highlighter is a lexer, not a bag of regexes — a // inside a string and a # inside a Python string both look like comment markers and a \bfor\b rule still trips over "formatter"/"information", because the right answer depends on where you already are, so tokenize is one character-level scan trying token kinds in priority order (comment→string→number→identifier→operator), recognising a string whole before looking for a comment inside it and reading each identifier whole before classifying it (tests: "http://x//y" has no comment, a Python string keeps its #, "var information = formatter" has one keyword, tokens rejoin byte-for-byte); highlighting must escape HTML exactly once AFTER tokenizing, or a snippet containing </span><script> is stored XSS, so highlightHtml tokenizes then escapes each token's text once (proven by stripping spans + un-escaping back to the source, and a Playwright check that a <script> snippet never executes); and search must rank (a snippet NAMED parseDate outranks one that only calls it; lang:/tag:/#tag filters compose) while the store never trusts its data (deserialize drops junk records, coerces unknown languages, de-dupes ids, round-trips nasty code byte-exact). One dependency-free core behind a two-pane browser UI with live preview + autosave, 112 Node checks, plus a Playwright end-to-end check
   phase2-databases/           # Source 2 (karan/Projects) — Databases category
+    report-generator/         # turn queried rows into a grouped, aggregated report (text/CSV/HTML/PDF) — with NO PDF library, the PDF written from the bytes up: pipeline is filter→sort→group(nested)→aggregate→flatten→paginate→render, and three things are hard — a grand total is NOT the total of the subtotals you printed (true for SUM/COUNT but AVG/MIN/MAX quietly wrong: avg-of-group-avgs 4.5 ≠ true overall 4.0), so every aggregate at every level is computed from that node's RAW rows with full SQL NULL semantics (AVG divides by non-null count, COUNT(*)≠COUNT(col), all-NULL→NULL); one layout model drives every renderer so flattenReport→paginate re-emits enclosing group headers (continued) at each page break and never orphans a subtotal or drops a column header (invariants tested: dropping continued lines reproduces the stream, no page overflows, nothing orphaned); and the PDF xref is absolute byte offsets that must be exact (buildPdf records each as it streams, parsePdf walks startxref→xref→"N 0 obj" and a test perturbs one digit to confirm rejection, every /Length byte-exact) while right-aligning numbers needs the REAL Helvetica AFM advance widths (nothing embedded) measured on the FORMATTED string ("$1,234.50", commas and all) or alignment drifts. Graded by an independent reader AND by poppler (pdfinfo/pdftotext). One dependency-free core behind a browser report builder with a PDF-structure inspector, a Node CLI (presets or your own JSON), 97 Node checks + a Playwright e2e that downloads a PDF in-browser and reads it back with poppler
     remote-sql-tool/          # run SQL on a REMOTE server = the wire protocol: PostgreSQL v3 hand-written (no pg/libpq, SCRAM-SHA-256 crypto hand-written too). Framing is off-by-four twice (length counts itself not the type byte; StartupMessage has no type byte) over chunked TCP; auth is a protocol not a compare (MD5 salted double-hash; SCRAM four-message PBKDF2 challenge, password never sent, server signature verified back — pinned to the RFC 7677 vector, server side implemented too for a real browser round trip); a DataRow is bytes typed by the RowDescription's OID and NULL (len -1) ≠ '' (len 0). One core drives a browser UI with a live protocol trace, a Node CLI (--demo or real TCP, password from PGPASSWORD), 92 Node checks + a Playwright e2e
     sql-query-analyzer/       # enter a query, run it against a local DB, get told how to make it faster — with NO SQL library (no sql.js/WASM SQLite/parser generator), the whole pipeline hand-written: tokenize→parse(recursive descent→AST)→plan+execute→analyze. SQL is parsed, not split on keywords — a keyword can sit inside a string literal ('see the WHERE clause'), <= is one operator, and a OR b AND c means a OR (b AND c) since AND binds tighter, so there's a real tokenizer (string recognised whole before it looks for keywords) and a precedence-climbing recursive-descent parser (tests: keywords in a string aren't keywords, 'O''Brien' round-trips, 2+3*4==14); "more efficient" is MEASURED not asserted — the executor counts rows examined per operator, so WHERE city='Berlin' full-scans 5000 rows but becomes an index lookup over ~833 once you add the index, and the analyzer computes that before/after from the live data + ships runnable CREATE INDEX DDL, while refusing to promise an index for non-sargable predicates (UPPER(col)=…, LIKE '%x', range on a hash index) and saying why; a join's cost is a product — n×m nested loop collapses to ~n only if the inner side is index-probed on the join key, so the planner picks index-join vs scan-join and suggests the exact inner column (100×1000 join drops from ~100k rows examined to a tenth). One dependency-free core behind a browser UI with result grid, annotated execution plan and one-click Apply-&-re-run suggestions, 69 Node checks, plus a Playwright end-to-end check that applies an index in-browser and watches rows examined fall 5000→833
 PROGRESS.md           # the routine's source of truth
