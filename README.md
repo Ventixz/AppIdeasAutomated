@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (79 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (80 built)**
 
 | Category | Status |
 | --- | --- |
@@ -53,7 +53,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
 | Files | ✅ Complete — **6 / 6** |
-| Databases | 🚧 In progress — **2 / 7** |
+| Databases | 🚧 In progress — **3 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1528,6 +1528,42 @@ that connects, queries, renders `NULL`s, and watches a wrong password be rejecte
 (next: Report Generator, Event Scheduler and Calendar, Budget Tracker, TV Show
 Tracker, Travel Planner System).
 
+Day 169 (2026-11-27) takes the next entry, a **Report Generator** (*"use a
+database system to produce a report… then produce a report from the records using
+some complex query. Format it nicely"*). The insight the whole project turns on:
+**a flat SQL result grid is not a report** — a report takes sorted records,
+**breaks them into bands**, and prints a subtotal at every group change plus a
+grand total, which is structure that lives *outside* relational algebra (exactly
+why report writers like Crystal and Jasper sit *on top of* a database). So this
+is a **control-break / banded report generator** plus a **crosstab (pivot)**,
+hand-written with no dependencies. Three traps, all pinned by tests. **Trap 1: a
+control break CASCADES** — grouping by `(region, category)`, when `region` breaks
+the open `category` subtotal must also close even if its value didn't change, so
+the break is found at the first differing level, footers unwind **innermost-first**
+while headers nest **outermost-first**, and — because a control break only works
+on sorted input — the engine sorts by the full group key defensively (a test
+shuffles the rows into interleaved order and still gets exactly one band per
+group, proving an unsorted report would silently double a group into two bands).
+**Trap 2: aggregates, NULL, and a total that reconciles** — `AVG` of nothing is
+`NULL` not `0` and never `NaN`; `SUM` skips NULLs; `COUNT(*) ≠ COUNT(col)` when a
+null is present (the ticket dataset has one on purpose); `AVG` is weighted
+(`sum/count`), **not the mean of the group means** (groups `[10,10]` and `[40]`
+average to 20, not 25 — a test asserts 20); and money is **integer cents** so the
+grand total equals the sum of the subtotals *exactly* (a test sums ten `$0.10`
+rows to exactly `$1.00`, the drift floating-point dollars would introduce being
+the bug cents removes). **Trap 3: a crosstab's columns are a sorted UNION** of
+every distinct value (a product only *North* sells still gets a column), an empty
+cell is `null` **not `0`** ("no sales" ≠ "sales of zero"), and the row totals,
+column totals and grand total all **reconcile** — then the monospace renderer
+pads and right-aligns so it reads as a report (every line the same width, a test
+checks it). One dependency-free core (`report-core.js`) drives a browser UI
+(click-to-group, add aggregates, detail columns, filters, a crosstab mode, and
+text/CSV/Markdown export), a Node CLI (built-in datasets or a `--csv` file, banded
+or crosstab, in text/csv/md/html), and **101 Node checks** plus a Playwright
+end-to-end run that builds the report in-browser, applies a filter, and confirms
+the crosstab's margins reconcile on screen (next: Event Scheduler and Calendar,
+Budget Tracker, TV Show Tracker, Travel Planner System).
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1700,6 +1736,7 @@ Tracker, Travel Planner System).
 | 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
 | 167 | [SQL Query Analyzer](./projects/phase2-databases/sql-query-analyzer/) | Databases · Source 2 | 2026-11-24 |
 | 168 | [Remote SQL Tool](./projects/phase2-databases/remote-sql-tool/) | Databases · Source 2 | 2026-11-25 |
+| 169 | [Report Generator](./projects/phase2-databases/report-generator/) | Databases · Source 2 | 2026-11-27 |
 
 ## Repository layout
 
@@ -1801,6 +1838,7 @@ projects/
     mp3-tagger/               # analyze a batch of MP3s, flag the missing ID3 fields, write clean tags back — with NO tagging library, ID3v1/ID3v2 read+written from the bytes up: three byte-level traps, all in id3-core.js — synchsafe integers store the v2 tag size 7 bits per byte (top bit 0) so it can't contain the MP3 frame-sync, and a naive 32-bit read lands ~11% long ("0,0,2,1" is 257, not 513), so the codec is pinned to hand-computed spec values; every v2 version lays frames out differently (v2.2 = 3-char IDs/3-byte sizes, v2.3 = 4-char/plain 32-bit, v2.4 = 4-char/synchsafe), so readV2 detects the version and aliases old IDs onto modern ones, tested against a hand-built v2.2 tag the writer never emits plus "3/12"→track 3 and "(17)"→genre Rock; and each text frame carries an encoding byte (ISO-8859-1 / UTF-16+BOM / UTF-16BE / UTF-8) that must be honoured or titles become mojibake. The audio is never touched — applyTags slices it out between the existing tags and wraps new ones around it (re-tag replaces, not stacks), with tests asserting byte-identical audio still starting on 0xFF 0xFB. Graded when available by id3v2/ffprobe (separate implementations). One dependency-free core behind a multi-file browser UI with per-file missing-field reports, 61 Node checks, plus a Playwright end-to-end check
     code-snippet-manager/     # save/tag/search reusable code with syntax highlighting — with NO highlighting library, the highlighter a hand-written lexer: a syntax highlighter is a lexer, not a bag of regexes — a // inside a string and a # inside a Python string both look like comment markers and a \bfor\b rule still trips over "formatter"/"information", because the right answer depends on where you already are, so tokenize is one character-level scan trying token kinds in priority order (comment→string→number→identifier→operator), recognising a string whole before looking for a comment inside it and reading each identifier whole before classifying it (tests: "http://x//y" has no comment, a Python string keeps its #, "var information = formatter" has one keyword, tokens rejoin byte-for-byte); highlighting must escape HTML exactly once AFTER tokenizing, or a snippet containing </span><script> is stored XSS, so highlightHtml tokenizes then escapes each token's text once (proven by stripping spans + un-escaping back to the source, and a Playwright check that a <script> snippet never executes); and search must rank (a snippet NAMED parseDate outranks one that only calls it; lang:/tag:/#tag filters compose) while the store never trusts its data (deserialize drops junk records, coerces unknown languages, de-dupes ids, round-trips nasty code byte-exact). One dependency-free core behind a two-pane browser UI with live preview + autosave, 112 Node checks, plus a Playwright end-to-end check
   phase2-databases/           # Source 2 (karan/Projects) — Databases category
+    report-generator/         # records -> a REPORT, not a result grid: a control-break / banded report generator + crosstab, no DB library. Trap 1: a control break CASCADES (an outer break forces every inner break; footers unwind inner-first, headers nest outer-first) and only works on sorted input, so buildReport sorts the full group key defensively (a shuffled-rows test proves an unsorted report would split one group into two bands). Trap 2: aggregates + NULL done the SQL way — AVG of nothing is NULL not 0/NaN, SUM skips NULLs, COUNT(*)≠COUNT(col) with a null present, AVG is weighted (sum/count) NOT the mean of group means (a test asserts 20 not 25), and money is integer cents so the grand total == the sum of subtotals EXACTLY (ten $0.10 rows sum to exactly $1.00). Trap 3: a crosstab's columns are the sorted UNION of every distinct value, an empty cell is null NOT 0, and row/col/grand margins reconcile, then the monospace output is padded & right-aligned (every line the same width). One core behind a click-to-build browser UI (banded + crosstab, text/CSV/MD export), a Node CLI (built-in datasets or --csv), 101 Node checks + a Playwright e2e
     remote-sql-tool/          # run SQL on a REMOTE server = the wire protocol: PostgreSQL v3 hand-written (no pg/libpq, SCRAM-SHA-256 crypto hand-written too). Framing is off-by-four twice (length counts itself not the type byte; StartupMessage has no type byte) over chunked TCP; auth is a protocol not a compare (MD5 salted double-hash; SCRAM four-message PBKDF2 challenge, password never sent, server signature verified back — pinned to the RFC 7677 vector, server side implemented too for a real browser round trip); a DataRow is bytes typed by the RowDescription's OID and NULL (len -1) ≠ '' (len 0). One core drives a browser UI with a live protocol trace, a Node CLI (--demo or real TCP, password from PGPASSWORD), 92 Node checks + a Playwright e2e
     sql-query-analyzer/       # enter a query, run it against a local DB, get told how to make it faster — with NO SQL library (no sql.js/WASM SQLite/parser generator), the whole pipeline hand-written: tokenize→parse(recursive descent→AST)→plan+execute→analyze. SQL is parsed, not split on keywords — a keyword can sit inside a string literal ('see the WHERE clause'), <= is one operator, and a OR b AND c means a OR (b AND c) since AND binds tighter, so there's a real tokenizer (string recognised whole before it looks for keywords) and a precedence-climbing recursive-descent parser (tests: keywords in a string aren't keywords, 'O''Brien' round-trips, 2+3*4==14); "more efficient" is MEASURED not asserted — the executor counts rows examined per operator, so WHERE city='Berlin' full-scans 5000 rows but becomes an index lookup over ~833 once you add the index, and the analyzer computes that before/after from the live data + ships runnable CREATE INDEX DDL, while refusing to promise an index for non-sargable predicates (UPPER(col)=…, LIKE '%x', range on a hash index) and saying why; a join's cost is a product — n×m nested loop collapses to ~n only if the inner side is index-probed on the join key, so the planner picks index-join vs scan-join and suggests the exact inner column (100×1000 join drops from ~100k rows examined to a tenth). One dependency-free core behind a browser UI with result grid, annotated execution plan and one-click Apply-&-re-run suggestions, 69 Node checks, plus a Playwright end-to-end check that applies an index in-browser and watches rows examined fall 5000→833
 PROGRESS.md           # the routine's source of truth

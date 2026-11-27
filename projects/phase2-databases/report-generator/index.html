@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Report Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <h1>Report Generator</h1>
+    <p class="tag">Turn records into a <strong>banded report</strong> — grouped, with subtotals at every
+      control break and a grand total that reconciles to the cent. No database library; the engine is
+      <code>report-core.js</code>.</p>
+  </header>
+
+  <main>
+    <section class="panel controls">
+      <div class="row">
+        <label class="field">
+          <span>Dataset</span>
+          <select id="dataset"></select>
+        </label>
+        <label class="field">
+          <span>Mode</span>
+          <select id="mode">
+            <option value="report">Banded report</option>
+            <option value="crosstab">Crosstab (pivot)</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Report mode -->
+      <div id="reportControls">
+        <div class="row">
+          <div class="field grow">
+            <span>Group by (click order = outer → inner)</span>
+            <div id="groupBuilder" class="chips"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field grow">
+            <span>Aggregates</span>
+            <div id="aggBuilder" class="aggrows"></div>
+            <div class="addagg">
+              <select id="aggFn">
+                <option value="count">COUNT(*)</option>
+                <option value="sum">SUM</option>
+                <option value="avg">AVG</option>
+                <option value="min">MIN</option>
+                <option value="max">MAX</option>
+                <option value="countDistinct">COUNT DISTINCT</option>
+              </select>
+              <select id="aggCol"></select>
+              <button id="addAgg" type="button">+ add</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field grow">
+            <span>Detail columns (leave empty for a summary report)</span>
+            <div id="detailBuilder" class="chips"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crosstab mode -->
+      <div id="crosstabControls" hidden>
+        <div class="row">
+          <label class="field"><span>Rows</span><select id="ctRow"></select></label>
+          <label class="field"><span>Columns</span><select id="ctCol"></select></label>
+          <label class="field"><span>Measure</span>
+            <select id="ctFn">
+              <option value="count">COUNT(*)</option>
+              <option value="sum">SUM</option>
+              <option value="avg">AVG</option>
+              <option value="min">MIN</option>
+              <option value="max">MAX</option>
+            </select>
+          </label>
+          <label class="field"><span>of</span><select id="ctMeasureCol"></select></label>
+        </div>
+      </div>
+
+      <div class="row filters">
+        <div class="field grow">
+          <span>Filter (optional)</span>
+          <div class="filterline">
+            <select id="fCol"></select>
+            <select id="fOp">
+              <option>=</option><option>!=</option><option>&gt;</option><option>&gt;=</option>
+              <option>&lt;</option><option>&lt;=</option><option value="contains">contains</option>
+            </select>
+            <input id="fVal" type="text" placeholder="value" />
+            <button id="addFilter" type="button">+ filter</button>
+          </div>
+          <div id="filterChips" class="chips small"></div>
+        </div>
+      </div>
+
+      <div class="row actions">
+        <div class="exports">
+          <button id="exportText" type="button">Copy text</button>
+          <button id="exportCsv" type="button">Download CSV</button>
+          <button id="exportMd" type="button">Download Markdown</button>
+        </div>
+        <span id="status" class="status"></span>
+      </div>
+    </section>
+
+    <section class="panel output">
+      <div id="reportOut"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Source 2 (<a href="https://github.com/karan/Projects">karan/Projects</a>) · <strong>Databases</strong> ·
+      built by an automated <a href="https://claude.com/claude-code">Claude Code</a> routine.
+      See <a href="README.md">README.md</a>. All figures are sample data.</p>
+  </footer>
+
+  <script src="report-core.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -317,7 +317,7 @@ this section next, one project per day. Populated from the
 
 - [x] SQL Query Analyzer — 2026-11-24
 - [x] Remote SQL Tool — 2026-11-25
-- [ ] Report Generator
+- [x] Report Generator — 2026-11-27
 - [ ] Event Scheduler and Calendar
 - [ ] Budget Tracker
 - [ ] TV Show Tracker

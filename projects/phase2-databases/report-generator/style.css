@@ -1,0 +1,127 @@
+:root {
+  --bg: #f4f6f9;
+  --panel: #ffffff;
+  --ink: #1f2733;
+  --muted: #5d6b7e;
+  --line: #d9e0ea;
+  --accent: #2f6df6;
+  --accent-soft: #e7eefe;
+  --band0: #eef3fb;
+  --band1: #f6f8fc;
+  --footer0: #dfeaff;
+  --footer1: #eaf1ff;
+  --grand: #1f2733;
+  --num: #0b3d91;
+  --ok: #1a7f52;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #11151b; --panel: #171d26; --ink: #e6ebf2; --muted: #9aa7b8; --line: #2a333f;
+    --accent: #6f9bff; --accent-soft: #1c2740; --band0: #1b2433; --band1: #161c25;
+    --footer0: #1f2d4a; --footer1: #1a2334; --grand: #e6ebf2; --num: #8fb2ff; --ok: #4fd08b;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); line-height: 1.45;
+}
+.top { padding: 24px 20px 8px; max-width: 1100px; margin: 0 auto; }
+.top h1 { margin: 0 0 6px; font-size: 1.6rem; }
+.tag { margin: 0; color: var(--muted); max-width: 70ch; }
+.tag code { font-family: var(--mono); font-size: 0.85em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+
+main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 0; display: grid; gap: 16px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 12px; }
+.row:last-child { margin-bottom: 0; }
+.field { display: flex; flex-direction: column; gap: 5px; font-size: 0.82rem; color: var(--muted); }
+.field.grow { flex: 1 1 100%; }
+.field > span { font-weight: 600; letter-spacing: 0.01em; }
+select, input, button {
+  font: inherit; color: var(--ink); background: var(--panel);
+  border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px;
+}
+select, input { min-width: 90px; }
+button { cursor: pointer; background: var(--accent-soft); border-color: transparent; font-weight: 600; font-size: 0.85rem; }
+button:hover { filter: brightness(0.97); }
+button.primary { background: var(--accent); color: #fff; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips.small { gap: 6px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 10px;
+  border: 1px solid var(--line); border-radius: 20px; background: var(--panel);
+  font-size: 0.82rem; cursor: pointer; user-select: none;
+}
+.chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 600; }
+.chip .ord { font-size: 0.72rem; background: var(--accent); color: #fff; border-radius: 50%; width: 17px; height: 17px; display: inline-grid; place-items: center; }
+.chip .x { color: var(--muted); font-weight: 700; }
+.chip.filter { background: #fff0f0; border-color: #f2b8b8; color: #9c2b2b; }
+@media (prefers-color-scheme: dark) { .chip.filter { background: #2e1c1c; border-color: #5c2f2f; color: #ffb4b4; } }
+
+.aggrows { display: flex; flex-direction: column; gap: 6px; }
+.aggrow { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+.aggrow .label { font-weight: 600; }
+.aggrow .x { margin-left: auto; cursor: pointer; color: var(--muted); font-weight: 700; }
+.addagg { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.filterline { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.actions { justify-content: space-between; }
+.exports { display: flex; gap: 8px; flex-wrap: wrap; }
+.status { color: var(--ok); font-size: 0.82rem; font-weight: 600; }
+
+/* ---- the report itself ---- */
+.output { overflow-x: auto; }
+.report-title { margin: 0 0 2px; font-size: 1.15rem; }
+.report-subtitle { margin: 0 0 14px; color: var(--muted); font-size: 0.86rem; }
+
+.band { padding: 7px 10px; border-radius: 7px; margin: 10px 0 4px; font-weight: 600; }
+.band-l0 { background: var(--band0); font-size: 1rem; }
+.band-l1 { background: var(--band1); margin-left: 16px; font-size: 0.92rem; }
+.band-l2 { background: var(--band1); margin-left: 32px; font-size: 0.88rem; }
+.band-label { color: var(--muted); font-weight: 600; }
+.band-value { color: var(--ink); }
+
+table.detail { border-collapse: collapse; width: calc(100% - 16px); margin: 2px 0 2px 16px; font-size: 0.86rem; }
+table.detail.band-l2 { margin-left: 32px; width: calc(100% - 32px); }
+table.detail.band-l3 { margin-left: 48px; width: calc(100% - 48px); }
+.detail th, .detail td { padding: 4px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.detail th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.detail .num, .crosstab .num { text-align: right; font-family: var(--mono); color: var(--num); }
+
+.footer { padding: 6px 10px; border-radius: 7px; margin: 2px 0 6px; font-size: 0.88rem; }
+.footer-l0 { background: var(--footer0); font-weight: 700; }
+.footer-l1 { background: var(--footer1); margin-left: 16px; }
+.footer-l2 { background: var(--footer1); margin-left: 32px; }
+.footer .count, .grand-total .count { color: var(--muted); font-weight: 500; }
+.agg { display: inline-block; margin-right: 14px; }
+.agg-label { color: var(--muted); font-size: 0.78rem; }
+
+.grand-total {
+  margin-top: 14px; padding: 10px 12px; border-top: 2px solid var(--grand);
+  font-weight: 800; font-size: 0.95rem;
+}
+
+/* ---- crosstab ---- */
+table.crosstab { border-collapse: collapse; font-size: 0.88rem; }
+.crosstab th, .crosstab td { padding: 6px 12px; border: 1px solid var(--line); }
+.crosstab thead th { background: var(--band0); }
+.crosstab .corner { text-align: left; color: var(--muted); }
+.crosstab .rowhead { text-align: left; font-weight: 600; background: var(--band1); }
+.crosstab td.empty { color: var(--muted); }
+.crosstab .total { font-weight: 700; background: var(--footer1); }
+.crosstab .grandrow .total, .crosstab td.grand { background: var(--footer0); }
+.crosstab td.grand { font-weight: 800; }
+
+.foot { max-width: 1100px; margin: 20px auto; padding: 0 20px 28px; color: var(--muted); font-size: 0.8rem; }
+.foot a { color: var(--accent); }
+
+@media (max-width: 620px) {
+  .field { flex: 1 1 100%; }
+  .band-l1, .footer-l1, table.detail { margin-left: 10px; }
+}
