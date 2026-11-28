@@ -39,7 +39,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | 2 | Intermediate | ✅ Complete — **33 / 33** |
 | 3 | Advanced | ✅ Complete — **20 / 20** |
 
-**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (79 built)**
+**Source 2 — [karan/Projects](https://github.com/karan/Projects) — 🚧 In progress (80 built)**
 
 | Category | Status |
 | --- | --- |
@@ -53,7 +53,7 @@ See [`PROGRESS.md`](./PROGRESS.md) for the live checklist. Quick snapshot:
 | Threading | ✅ Complete — **2 / 2** |
 | Web | ✅ Complete — **9 / 9** |
 | Files | ✅ Complete — **6 / 6** |
-| Databases | 🚧 In progress — **2 / 7** |
+| Databases | 🚧 In progress — **3 / 7** |
 
 > 🎉 **app-ideas is finished — every one of its 88 projects is built** (35
 > Beginner + 33 Intermediate + 20 Advanced). The final one, **Survey App**, went
@@ -1528,6 +1528,39 @@ that connects, queries, renders `NULL`s, and watches a wrong password be rejecte
 (next: Report Generator, Event Scheduler and Calendar, Budget Tracker, TV Show
 Tracker, Travel Planner System).
 
+Day 169 (2026-11-28) answers the next entry, a **Report Generator** (*"a utility
+that generates a report based on some tables in a database… a sales report based
+on the order / order-details tables, or sums up the day's current database
+activity"*). The previous two days *ran* queries; today the question is what you
+*do* with the rows — so this is a small **report writer** over a sample sales
+database (customers, products, orders, order_items): sales grouped by category
+with a grand total, a two-level region→category breakdown with subtotals, a Top-N
+customer ranking, monthly revenue with a running total, a category-by-month
+pivot, and a one-day activity digest. Each report is built once as a *model* then
+rendered to **text, HTML, CSV, Markdown or JSON** — the same figures five ways —
+with no dependencies. Three things are genuinely hard, all in `report-core.js`.
+**Trap 1: subtotals are a control break, and you cannot average the averages** —
+a region subtotal must land *after* its own rows and *before* the next region,
+and every subtotal and the grand total are re-aggregated from the **raw rows**
+for that prefix, because the average of group-averages is not the overall average
+and the same order id in two groups must count once; the tests pin a set whose
+group-averages average to 22.5 but whose true average is 20.0, and a distinct id
+shared across two groups that totals 2, not 3. **Trap 2: a pivot's columns are
+data, and the gaps are zero** — the month columns aren't known until every row is
+scanned, so they're discovered then sorted for a stable layout, empty cells are a
+real `0` (not blank), and the table reconciles two ways at once (row totals and
+column totals sum to the same grand total, both checked). **Trap 3: one model,
+many renderers, so the formats can't disagree** — a number is formatted in
+exactly one place (`formatValue` in the model) that every renderer calls, so the
+CSV, HTML and text all show `$1,234.50` identically; the renderers only lay out
+(text measures widths and rules the grand total, CSV does RFC-4180 quoting, HTML
+escapes and tags subtotal/grand rows). One dependency-free core drives a browser
+UI (report picker, live format switch, inline-SVG bar chart, download) and a Node
+CLI (`--list`, `--format`, `--limit`, `--date`, `--out`), with **118 Node checks**
+plus a Playwright end-to-end run that confirms the region subtotals and the pivot
+grand total render in-browser (next: Event Scheduler and Calendar, Budget
+Tracker, TV Show Tracker, Travel Planner System).
+
 ## Projects built so far
 
 | # | Project | Tier | Date |
@@ -1700,6 +1733,7 @@ Tracker, Travel Planner System).
 | 166 | [Code Snippet Manager](./projects/phase2-files/code-snippet-manager/) | Files · Source 2 | 2026-11-23 |
 | 167 | [SQL Query Analyzer](./projects/phase2-databases/sql-query-analyzer/) | Databases · Source 2 | 2026-11-24 |
 | 168 | [Remote SQL Tool](./projects/phase2-databases/remote-sql-tool/) | Databases · Source 2 | 2026-11-25 |
+| 169 | [Report Generator](./projects/phase2-databases/report-generator/) | Databases · Source 2 | 2026-11-28 |
 
 ## Repository layout
 
