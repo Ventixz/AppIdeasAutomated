@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Report Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Report Generator</h1>
+  <p class="tag">Builds reports from a sample sales database — grouped subtotals,
+  crosstabs, rankings and a day's activity digest — then renders the same report
+  as a table, text, CSV, Markdown or JSON.</p>
+</header>
+
+<main>
+  <section class="controls">
+    <div class="field">
+      <label for="report">Report</label>
+      <select id="report"></select>
+    </div>
+    <div class="field" id="field-limit" hidden>
+      <label for="limit">Top N</label>
+      <input id="limit" type="number" min="1" max="10" value="5">
+    </div>
+    <div class="field" id="field-date" hidden>
+      <label for="date">Date</label>
+      <select id="date"></select>
+    </div>
+    <div class="field">
+      <label for="format">Output</label>
+      <select id="format">
+        <option value="table">Table (rendered)</option>
+        <option value="text">Text</option>
+        <option value="csv">CSV</option>
+        <option value="md">Markdown</option>
+        <option value="json">JSON</option>
+      </select>
+    </div>
+    <div class="field grow">
+      <button id="download">Download</button>
+    </div>
+  </section>
+
+  <p class="describe" id="describe"></p>
+
+  <section id="chart-wrap" class="panel" hidden>
+    <h2>Chart</h2>
+    <div id="chart"></div>
+  </section>
+
+  <section class="panel">
+    <h2 id="output-title">Report</h2>
+    <div id="table-view"></div>
+    <pre id="source-view" hidden></pre>
+  </section>
+
+  <section class="panel notes">
+    <h2>What's interesting here</h2>
+    <ul>
+      <li><b>Control-break subtotals.</b> The region report groups by region then
+      category; each region's subtotal lands right after its own rows, and every
+      total is recomputed from the raw order lines — so an average is over the
+      whole group, never an average of averages.</li>
+      <li><b>Pivot / crosstab.</b> "Category by Month" turns one column's values
+      into columns. The month set is discovered from the data, sorted, and empty
+      cells are a real <code>0</code>; row totals and column totals reconcile to
+      the same grand total.</li>
+      <li><b>One model, many renderers.</b> Switch the Output selector — the
+      figures never change shape, because every renderer formats numbers through
+      the same function in the model.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Part of an automated <a href="https://claude.com/claude-code">Claude Code</a>
+  routine building one project a day. Source 2 · karan/Projects · Databases.
+  No dependencies — view source.</p>
+</footer>
+
+<script src="report-core.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
